@@ -1,8 +1,135 @@
 % cap3.tex
 
-\chapter{Desarrollo Metodológico} \label{MCP:subastador} % la etiqueta para referencias
+\chapter{Methodology} \label{capMethods} % la etiqueta para referencias
 
 
-\section{Modelos econométricos XXX}
+\section{Model}
 
-describir modelos y fuentes de datos
+Initial Idea: incorporate to \citeA{xandri_liquidity_2022} a second network that competes to the base network in terms of transaction-waiting cost. Networks should be weighted in the spirit of \citeA{jalan_incentive-aware_2024} and adoption of one network with respect to the other is inspired in \citeA{hinzen_bitcoins_2022}. We should also consider hackers following \citeA{crettez_general_2022} to differentiate networks in terms of waiting costs and hacking activity.
+
+In terms of results, the approach by \cite{jalan_incentive-aware_2024} considers network stability in terms of \cite{bich_perfect_2023,bich_existence_2020}.
+
+\section{A twist from Jalan et alii}
+
+The objective function in \citeA{jalan_incentive-aware_2024} is given by
+$$g_i(W,P)=w_i^T(\mu_i-Pe_i)-\gamma_iw_i^T\Sigma w_i$$
+
+We would like to include a second network to transfer. Let us assume that the following decomposition is possible:
+
+$$W=\tilde W+\hat W,$$
+
+where $\tilde W$ represents the traditional network and $\hat W$ the blockchain.
+
+{\bf Question:} What should be the new objective function?
+
+Proposal: 
+
+\begin{eqnarray}
+    b_i(\tilde W,\hat W,\tilde P,\hat P)&=&\tilde w_i^T(\tilde \mu_i-\tilde Pe_i)-\gamma_i\tilde w_i^T\tilde \Sigma \tilde w_i\nonumber\\
+            &+&\hat w_i^T(\hat \mu_i-\hat Pe_i)-\gamma_i\hat w_i^T\hat \Sigma \hat w_i\label{eq:b}
+\end{eqnarray}
+
+In this case the optimal choice is given by $\max_{\tilde W,\hat W}b(\tilde W,\hat W,\tilde P,\hat P)$
+
+{\bf Question:} Is it possible to simplify the notation such that $\tilde w_i=w_i-\tilde w_i$? in such a way that once the blockchain operation is defined, the traditional transfers are defined.
+
+{\bf Question:} Potential notation/normalization, $\hat w_i=\alpha w_i$ thus $\tilde w_i=(1-\alpha) w_i$ for $\alpha\in[0,1]$
+
+Let us re-write \ref{eq:b} with the new notation:
+
+\begin{eqnarray}
+    b_i(W,\tilde P,\hat P)&=&(1-\alpha) w_i^T(\tilde \mu_i-\tilde Pe_i)-\gamma_i(1-\alpha) w_i^T\tilde \Sigma (1-\alpha) w_i\nonumber\\
+            &+&\alpha w_i^T(\hat \mu_i-\hat Pe_i)-\gamma_i\alpha w_i^T\hat \Sigma \alpha w_i\label{eq:b}
+\end{eqnarray}
+
+The optimization problem is $\max_{\alpha, W}b(W,\tilde P, \hat P)$.
+
+
+\subsection{Motivating example}
+
+Firm A wants to transfer to firm K. In the traditional network the cost is $\tilde c$. There is a firm L such that A is able to transfer to L and L is able to transfer to K at a cost $\hat c<\tilde c$.
+\section{Posible Problema de Maximización}
+
+El agente optimiza dos decisiones clave:
+\begin{itemize}
+    \item $\alpha$: La proporción de la transacción destinada a blockchain.
+    \item $w_i$: El tamaño total de la transacción.
+\end{itemize}
+
+Y tiene que resolver el siguiente problema de optimización:
+
+\[
+\max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
+\]
+
+\subsection{Función de Utilidad}
+
+\[
+U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
+\]
+\[
++ \alpha w_i^T (\hat{\mu}_i - \hat{P}e_i) - \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i
+\]
+\[
+- \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}} 
+- \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
+\]
+
+\subsection{Explicación de términos y parámetros}
+
+\begin{enumerate}
+    \item \textbf{Distribución del contrato entre sistemas}:
+    \begin{itemize}
+        \item $(1 - \alpha) w_i$: Proporción del contrato total $w_i$ que el agente asigna al \textit{sistema tradicional}.
+        \item $\alpha w_i$: Proporción del contrato total que el agente asigna a \textit{blockchain}.
+        \item $\alpha$: Proporción de la transacción destinada a blockchain, con $\alpha \in [0, 1]$.
+    \end{itemize}
+    
+    \item \textbf{Beneficios esperados}:
+    \begin{itemize}
+        \item \textit{Para el sistema tradicional}:
+        \begin{itemize}
+            \item $\tilde{\mu}_i$: Beneficios esperados por el agente en el sistema tradicional.
+            \item $\tilde{P}$: Costos de transacción en el sistema tradicional (tarifas bancarias, costos de intermediación).
+            \item $e_i$: Vector que representa al agente.
+        \end{itemize}
+        \item \textit{Para blockchain}:
+        \begin{itemize}
+            \item $\hat{\mu}_i$: Beneficios esperados en blockchain.
+            \item $\hat{P}$: Costos de transacción en blockchain (comisiones de gas).
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{Riesgos financieros en cada sistema (ponderados por $\gamma_i$)}:
+    \begin{itemize}
+        \item \textit{Sistema tradicional}:
+        \[
+        - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
+        \]
+        Este término representa los \textit{riesgos financieros} (volatilidad) en el sistema tradicional, con $\tilde{\Sigma}$ como la matriz de covarianza de riesgos.
+        
+        \item \textit{Blockchain}:
+        \[
+        - \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i
+        \]
+        Riesgos financieros en blockchain, ponderados por $\alpha$, donde $\hat{\Sigma}$ es la matriz de covarianza de los riesgos financieros en blockchain.
+    \end{itemize}
+    
+    \item \textbf{Riesgos interdependientes entre sistemas}:
+    \begin{itemize}
+        \item $\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})$: Este término refleja el \textit{riesgo regulatorio} en el sistema tradicional, que depende del tamaño de la transacción ($w_i$) y del riesgo de hackeo en blockchain ($H_{\text{blockchain}}$).
+        \item $\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}$: Riesgo de hackeo en blockchain, que depende del tamaño de la red ($N_{\text{blockchain}}$) y el riesgo en el sistema tradicional.
+    \end{itemize}
+    
+    \item \textbf{Confianza institucional en el sistema tradicional}:
+    \[
+    \phi_i \cdot C_{\text{tradicional}}
+    \]
+    Término que captura el nivel de \textit{confianza institucional} en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.
+    
+    \item \textbf{Efectos de red en blockchain}:
+    \[
+    \eta_i \cdot N_{\text{blockchain}}
+    \]
+    Término que mide el \textit{efecto de red} en blockchain. A medida que el número de participantes en la red ($N_{\text{blockchain}}$) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.
+\end{enumerate}

@@ -1,11 +1,106 @@
 % cap2.tex
 
-\chapter{Marco Teórico}
-\label{c2} 
+\chapter{Theory}
+\label{cT} 
 
 
-\section{titulo de sección}\label{c22}
+\section{General Equilibrium}\label{cTGE}
 %Agregar desde segundo párrafo de la Revision bibliográfica del hito 1
+General equilibrium theory provides a comprehensive framework for analyzing how supply and demand across different markets interact to achieve a state of balance within an economy. It examines the conditions under which all markets simultaneously clear, meaning that the quantities supplied equal the quantities demanded across all markets. This state of balance is crucial for understanding how prices are determined in an economy and how resources are allocated efficiently. The theory has been foundational in the study of economic systems and has been applied to various fields, including welfare economics, public finance, international trade, and environmental economics.
+
+The concept of general equilibrium revolves around the idea that markets are interconnected, and the equilibrium in one market depends on the equilibrium in others. The theory assumes that economic agents, such as consumers and producers, make rational decisions aimed at maximizing their utility and profit, respectively. In a general equilibrium framework, all markets are assumed to be perfectly competitive, with prices adjusting to ensure that supply equals demand in each market.
+
+Key elements of general equilibrium include the existence of a price system that coordinates the decisions of all agents in the economy, the concept of Pareto efficiency, and the role of market clearing in ensuring that there are no excess supplies or demands. These foundational principles form the basis for understanding how an economy operates as a cohesive system, where the actions of individual agents contribute to overall economic stability.
+
+Traditional general equilibrium models assume that agents are fully rational and have perfect foresight. However, the cryptocurrency market is often driven by speculative behavior, which deviates from these assumptions. Incorporating behavioral factors, such as herd behavior or market sentiment, into general equilibrium models could provide a more accurate representation of how these markets function.
+Cryptocurrency markets are known for their extreme volatility, which can disrupt the equilibrium and lead to market instability. Traditional general equilibrium models may not fully capture these dynamics, particularly in periods of rapid price fluctuations. More sophisticated models that account for price volatility and the factors driving it are needed to better understand the long-term equilibrium of cryptocurrency markets.
+
+\subsection{Application of General Equilibrium to Cryptocurrency}
+
+    \begin{itemize}
+        \item \textbf{Cryptocurrency as a Risky Asset:} \citeA{crettez_general_2022} model cryptocurrency as a risky asset due to its susceptibility to hacks and fraud. This risk affects how it is priced in the market and how it competes with central bank currencies in achieving market equilibrium.
+        \item \textbf{Transaction Costs:} The inclusion of transaction costs in the model is crucial, as these costs influence the attractiveness of holding cryptocurrency versus central bank currency. The paper finds that the price of cryptocurrency can increase with its quantity if transaction costs decrease as the cryptocurrency's supply grows
+        \item \textbf{Finite Supply Dynamics:} The model also accounts for the finite supply of cryptocurrencies like Bitcoin, which affects long-term equilibrium prices. As the supply reaches its upper limit, price dynamics shift, impacting how markets clear in the presence of both cryptocurrencies and traditional currencies.
+        \item \textbf{Steady-State and Transitional Equilibria:} The paper explores both the steady-state equilibrium (where supply and demand have stabilized) and the transitional dynamics leading up to this state. These findings highlight how expectations about future prices influence current market behavior and equilibrium outcomes.
+    \end{itemize}
+
+General equilibrium theory, when applied to cryptocurrencies as done by Crettez and Morhaim, provides a robust framework for understanding the complex interactions between digital and traditional currencies in an economy. By incorporating real-world factors like transaction costs and hack risks into an OLG model, the authors offer valuable insights into how cryptocurrencies can achieve equilibrium in the market and affect the stability of central bank currencies. This application of general equilibrium theory is particularly relevant as the global economy increasingly integrates digital currencies into its financial systems.     
+\citeA{crettez_general_2022} 
+
+\section{Blockchain}\label{cTGE}
+
+Blockchain technology was first introduced in 2008 by the pseudonymous Satoshi Nakamoto as the underlying structure for Bitcoin, the first cryptocurrency. At its core, blockchain is a decentralized and distributed ledger system that enables secure, transparent, and immutable recording of transactions across a network of computers (nodes). Unlike traditional centralized systems where a single entity controls the ledger, blockchain distributes this control across all participants in the network, thereby eliminating the need for intermediaries and enhancing trust among users.
+\citeA{nakamoto_bitcoin_2008} \\
+
+\subsection{Key concepts of blockchain}
+\begin{itemize}
+    \item Decentralization:
+        \begin{itemize}
+            \item Decentralized Ledgers: Blockchain removes the need for a central authority by distributing the ledger across all participants in the network. This decentralization is a core feature that enhances security and trust in the system by reducing the single point of failure and potential for centralized control.
+            \item Consensus Mechanisms: To validate transactions and maintain the integrity of the blockchain, participants must reach a consensus. Common mechanisms include Proof of Work (PoW) and Proof of Stake (PoS), which ensure that only legitimate transactions are recorded.
+        \end{itemize}
+    \item Transparency and Immutability:
+        \begin{itemize}
+            \item Transparency: Every transaction on a blockchain is visible to all participants in the network, making the system highly transparent. This transparency fosters trust among users and reduces the need for intermediaries.
+            \item Immutability: Once a transaction is recorded on the blockchain, it cannot be altered or deleted. This immutability is secured through cryptographic hashing, where each block of transactions is linked to the previous one, forming a chain that is extremely difficult to tamper with.
+        \end{itemize}
+    \item Security:
+        \begin{itemize}
+            \item Cryptographic Security: Blockchain relies on cryptographic techniques to secure data and transactions. Each participant has a private key for signing transactions and a public key for verifying them, ensuring that transactions are secure and authenticated.
+            \item Resistance to Attacks: The distributed nature of blockchain makes it highly resistant to attacks. An attacker would need to control a majority of the network's computing power to alter the ledger, which is practically unfeasible in large, well-distributed networks.
+        \end{itemize}
+    \item Smart Contracts:
+        \begin{itemize}
+            \item Automated Agreements: Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They automatically execute and enforce the contract when the predefined conditions are met, eliminating the need for intermediaries and reducing transaction costs.
+        \end{itemize}
+\end{itemize}
+
+Blockchain's decentralization challenges traditional financial systems by removing the need for central intermediaries such as banks and payment processors. As Brunnermeier discusses, this has the potential to democratize finance, making it more accessible and less costly. However, the rise of cryptocurrencies and decentralized finance also poses challenges for monetary policy. Central banks could face difficulties in controlling the money supply and interest rates if digital currencies become widely adopted, potentially leading to greater financial instability.
+\citeA{abadi_blockchain_2022} \\
+
+Morhaim’s research highlights how blockchain can fundamentally alter market structures by enabling peer-to-peer transactions and decentralized markets. This transformation can increase competition, lower transaction costs, and create new forms of economic interaction. However, these changes also introduce new complexities in market dynamics, which traditional economic models may not fully capture. The strong network effects associated with blockchain networks, where the value of the network increases as more participants join, can lead to rapid growth and innovation but also pose challenges for regulation and market stability.
+\citeA{morhaim_blockchain_2019}\\
+
+
+
+\section{Networks}\label{cTGE}
+A network is a collection of nodes (which can represent individuals, firms, or other entities) connected by links (which represent relationships or interactions between the nodes). Networks can be used to model a wide range of systems, including social, economic, and technological structures.\citeA{bich_existence_2020} \\
+
+Network theory is rooted in graph theory, where a network is represented as a graph consisting of nodes (representing entities like individuals or firms) and edges (representing the relationships or interactions between these nodes). The study of networks involves analyzing the structure and dynamics of these connections to understand how they influence the behavior of the entire system.
+
+The properties of networks include degree distribution, which describes how connections are distributed among nodes, and clustering coefficient, which measures the degree to which nodes tend to cluster together. Another crucial concept is path length, which indicates the average number of steps required to travel between nodes in the network, reflecting the network's connectivity.
+
+Networks can be broadly categorized into different types, such as social networks, economic networks, and technological networks. Social networks describe the relationships between individuals or organizations, while economic networks focus on the interactions between economic agents. Technological networks, like the internet, represent physical or digital infrastructures that facilitate these interactions.
+
+The structure of a trade network can influence the flow of goods and services across countries, affecting global economic stability and growth. Similarly, financial networks, which represent the interconnectedness of banks and financial institutions, are crucial in understanding systemic risk and the potential for financial contagion.
+
+Within economics, network theory provides a powerful tool for understanding the complex interactions that shape market dynamics and economic outcomes. Networks in economics can be broadly categorized into:
+
+\begin{itemize}
+    \item Market Networks: These networks model the relationships between firms and consumers, analyzing how these connections influence competition, pricing, and market power. For example, firms within a network might form alliances or engage in collaborative ventures to enhance their market position or innovation capabilities.
+    \item Innovation Networks: Innovation often spreads through networks of firms or research institutions, where the structure of these networks determines the speed and extent of innovation diffusion. Highly connected networks facilitate rapid dissemination of new ideas and technologies, while fragmented networks might slow the process.
+    \item Financial Networks: The interconnectedness of financial institutions forms complex networks where risks can propagate quickly. Understanding the topology of these networks is essential for assessing systemic risk and preventing financial crises. For example, the 2008 financial crisis highlighted how the failure of key financial institutions could trigger widespread disruptions across the entire network.
+\end{itemize}
+
+Network theory in economics often intersects with game theory, where agents (nodes) make strategic decisions about forming or severing links (edges) based on the expected benefits and costs. This intersection is crucial for analyzing how stable network structures emerge and persist over time. Concepts such as pairwise stability are used to examine whether a network configuration is likely to be maintained or altered by the agents involved. \citeA{bich_perfect_2023} \\
+Network models often assume that agents are rational and make decisions based on complete information. However, incorporating insights from behavioral economics—such as bounded rationality, cognitive biases, and social preferences—can provide a more realistic understanding of how networks form and function.
+\citeA{jalan_incentive-aware_2024} \\
+
+
+
+evaluar relación con \url{https://ieeexplore.ieee.org/document/8717636}
+
+\section{Certification}
+
+No olvidar estos orígenes para mantener algo de relación \url{https://x.com/ecmaeditors/status/1763576677446168946?s=46&t=Dr3LkTdf66mhJ0sByHoQrQ}
+
+
+
+
+
+
+
+
 
 
 
