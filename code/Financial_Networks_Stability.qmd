@@ -1,0 +1,129 @@
+---
+title: "Blockchain adoption"
+format: html
+jupyter: python3
+---
+
+<a href="https://colab.research.google.com/github/ingUANDES/BlockchainAdoption/blob/main/code/Financial_Networks_Stability.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+
+
+---
+
+## Actualización  2/10/2024
+
+### **Objetivo**
+
+El objetivo general es desarrollar un modelo teórico que permita analizar cómo los agentes financieros optimizan la distribución de sus transacciones entre sistemas financieros tradicionales y blockchain, maximizando su utilidad total.
+
+
+El modelo teórico derivará las condiciones bajo las cuales los agentes alcanzan un equilibrio estable entre la cantidad de transacciones que destinan a blockchain y a los sistemas tradicionales, o en qué condiciones uno de los sistemas prevalece sobre el otro.
+
+
+### **Problema de Maximización**
+El agente optimiza dos decisiones clave:
+
+- **$\alpha$**: La proporción de la transacción destinada a blockchain.
+
+- **$w_i$**: El tamaño total de la transacción.
+
+Y tiene que resolver el siguiente problema de optimización:
+
+$$
+\max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
+$$
+
+### Función de Utilidad
+
+$$
+U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
+$$
+$$
++ \alpha w_i^T (\hat{\mu}_i - \hat{P}e_i) - \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i
+$$
+$$
+- \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}}
+- \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
+$$
+
+
+
+
+### Explicación de cada término y parámetro:
+
+1. **Distribución del contrato entre sistemas**:
+   - $(1 - \alpha) w_i$: Proporción del contrato total $w_i$ que el agente asigna al **sistema tradicional**.
+   - $\alpha w_i$: Proporción del contrato total que el agente asigna a **blockchain**.
+   - $\alpha$: Proporción de la transacción destinada a blockchain, con $\alpha \in [0, 1]$.
+
+2. **Beneficios esperados**:
+   - **Para el sistema tradicional**:
+     - $\tilde{\mu}_i$: Beneficios esperados por el agente en el sistema tradicional.
+     - $\tilde{P}$: Costos de transacción en el sistema tradicional (tarifas bancarias, costos de intermediación).
+     - $e_i$: Vector que representa al agente.
+   - **Para blockchain**:
+     - $\hat{\mu}_i$: Beneficios esperados en blockchain.
+     - $\hat{P}$: Costos de transacción en blockchain (comisiones de gas).
+
+3. **Riesgos financieros en cada sistema (ponderados por $\gamma_i$)**:
+   - **Sistema tradicional**:
+     - $- \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i$: Este término representa los **riesgos financieros** (volatilidad) en el sistema tradicional, con $\tilde{\Sigma}$ como la matriz de covarianza de riesgos.
+   - **Blockchain**:
+     - $- \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i$: Riesgos financieros en blockchain, ponderados por $\alpha$, donde $\hat{\Sigma}$ es la matriz de covarianza de los riesgos financieros en blockchain.
+
+4. **Riesgos interdependientes entre sistemas**:
+   - $\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})$: Este término refleja el **riesgo regulatorio** en el sistema tradicional, que depende del tamaño de la transacción ($w_i$) y del riesgo de hackeo en blockchain ($H_{\text{blockchain}}$).
+   - $\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}$: Riesgo de hackeo en blockchain, que depende del tamaño de la red ($N_{\text{blockchain}}$) y el riesgo en el sistema tradicional.
+
+5. **Confianza institucional en el sistema tradicional**:
+   - $\phi_i \cdot C_{\text{tradicional}}$: Término que captura el nivel de **confianza institucional** en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.
+
+6. **Efectos de red en blockchain**:
+   - $\eta_i \cdot N_{\text{blockchain}}$: Término que mide el **efecto de red** en blockchain. A medida que el número de participantes en la red ($N_{\text{blockchain}}$) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.
+
+---
+
+
+## Idea de Tesis 26/09/2024
+Comparar la utilidad y los riesgos que enfrentan los participantes en sistemas financieros basados en blockchain frente a los sistemas financieros tradicionales. A través de funciones de utilidad para ambos sistemas, se analizarán los costos de transacción, riesgos de seguridad, confianza institucional y efectos de red. El objetivo es entender qué factores determinan la preferencia de los usuarios y si es posible lograr un equilibrio estable en cada sistema o si uno prevalecerá sobre el otro.
+
+
+### Posible función de utilidad en un sistema blockchain
+
+La función de utilidad para un participante $i$ en un sistema blockchain se definiría como:
+
+$$
+U_{\text{blockchain}, i} = w_i^T (\mu_i - C e_i) - \gamma_i \cdot w_i^T \Sigma_i w_i - \lambda_i \cdot H_i + \eta_i \cdot N_i
+$$
+
+Donde:
+
+- $w_i$: Tamaño de las transacciones o contratos del participante $i$.
+- $\mu_i$: Beneficios esperados de las transacciones.
+- $C$: Costos de utilizar blockchain (fees).
+- $\gamma_i$: Coeficiente de aversión al riesgo.
+- $\Sigma_i$: Matriz de covarianza de riesgos.
+- $\lambda_i$: Coeficiente de riesgo de hackeo.
+- $H_i$: Riesgo de hackeo.
+- $\eta_i$: Coeficiente de efecto de red.
+- $N_i$: Tamaño de la red o liquidez.
+
+
+
+### Posible función de utilidad en un sistema tradicional
+
+$$
+U_{\text{tradicional}, i} = w_i^T (\mu_i - F e_i) - \beta_i \cdot R_i + \phi_i \cdot C_i
+$$
+
+Donde:
+
+- $w_i$: Tamaño de las transacciones del participante $i$.
+- $\mu_i$: Beneficios esperados en el sistema tradicional.
+- $F$: Costos de transacción (comisiones bancarias, tarifas de intermediarios).
+- $e_i$: Vector que representa al participante $i$.
+- $\beta_i$: Coeficiente de aversión al riesgo regulatorio.
+- $R_i$: Riesgo regulatorio (cumplimiento normativo, costos legales).
+- $\phi_i$: Sensibilidad a la confianza institucional (protección por parte de bancos o entidades financieras).
+- $C_i$: Nivel de confianza en las instituciones tradicionales.
+
