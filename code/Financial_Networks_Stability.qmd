@@ -1,6 +1,18 @@
 ---
-title: "Blockchain adoption"
+title: Blockchain adoption
+date: 'Septiembre, 2024'
+author:
+  - name: Hernán Venegas
+    roles: Alumno
+    affiliation:
+      - id: uandes
+        name: Universidad de Los Andes
+        city: Santiago
+  - name: Sebastián Cea
+    roles: Profesor guía
 format: html
+toc: true
+number-sections: true
 jupyter: python3
 ---
 
@@ -12,7 +24,7 @@ jupyter: python3
 
 ## Actualización  2/10/2024
 
-### **Objetivo**
+### Objetivo
 
 El objetivo general es desarrollar un modelo teórico que permita analizar cómo los agentes financieros optimizan la distribución de sus transacciones entre sistemas financieros tradicionales y blockchain, maximizando su utilidad total.
 
@@ -20,7 +32,7 @@ El objetivo general es desarrollar un modelo teórico que permita analizar cómo
 El modelo teórico derivará las condiciones bajo las cuales los agentes alcanzan un equilibrio estable entre la cantidad de transacciones que destinan a blockchain y a los sistemas tradicionales, o en qué condiciones uno de los sistemas prevalece sobre el otro.
 
 
-### **Problema de Maximización**
+### Problema de Maximización
 El agente optimiza dos decisiones clave:
 
 - **$\alpha$**: La proporción de la transacción destinada a blockchain.
@@ -33,7 +45,7 @@ $$
 \max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
 $$
 
-### Función de Utilidad
+### Función de Utilidad:
 
 $$
 U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
@@ -49,14 +61,13 @@ $$
 
 
 
-### Explicación de cada término y parámetro:
+#### Distribución del contrato entre sistemas:
 
-1. **Distribución del contrato entre sistemas**:
    - $(1 - \alpha) w_i$: Proporción del contrato total $w_i$ que el agente asigna al **sistema tradicional**.
    - $\alpha w_i$: Proporción del contrato total que el agente asigna a **blockchain**.
    - $\alpha$: Proporción de la transacción destinada a blockchain, con $\alpha \in [0, 1]$.
 
-2. **Beneficios esperados**:
+####  Beneficios esperados:
    - **Para el sistema tradicional**:
      - $\tilde{\mu}_i$: Beneficios esperados por el agente en el sistema tradicional.
      - $\tilde{P}$: Costos de transacción en el sistema tradicional (tarifas bancarias, costos de intermediación).
@@ -65,21 +76,25 @@ $$
      - $\hat{\mu}_i$: Beneficios esperados en blockchain.
      - $\hat{P}$: Costos de transacción en blockchain (comisiones de gas).
 
-3. **Riesgos financieros en cada sistema (ponderados por $\gamma_i$)**:
+####  Riesgos financieros en cada sistema:
+
    - **Sistema tradicional**:
      - $- \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i$: Este término representa los **riesgos financieros** (volatilidad) en el sistema tradicional, con $\tilde{\Sigma}$ como la matriz de covarianza de riesgos.
    - **Blockchain**:
      - $- \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i$: Riesgos financieros en blockchain, ponderados por $\alpha$, donde $\hat{\Sigma}$ es la matriz de covarianza de los riesgos financieros en blockchain.
 
-4. **Riesgos interdependientes entre sistemas**:
+####  Riesgos interdependientes entre sistemas:
+
    - $\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})$: Este término refleja el **riesgo regulatorio** en el sistema tradicional, que depende del tamaño de la transacción ($w_i$) y del riesgo de hackeo en blockchain ($H_{\text{blockchain}}$).
    - $\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}$: Riesgo de hackeo en blockchain, que depende del tamaño de la red ($N_{\text{blockchain}}$) y el riesgo en el sistema tradicional.
 
-5. **Confianza institucional en el sistema tradicional**:
+####  Confianza institucional en el sistema tradicional:
+
    - $\phi_i \cdot C_{\text{tradicional}}$: Término que captura el nivel de **confianza institucional** en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.
 
-6. **Efectos de red en blockchain**:
-   - $\eta_i \cdot N_{\text{blockchain}}$: Término que mide el **efecto de red** en blockchain. A medida que el número de participantes en la red ($N_{\text{blockchain}}$) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.
+####  Efectos de red en blockchain:
+
+   - $\eta_i \cdot N_{\text{blockchain}}$: Término que mide el efecto de red en blockchain. A medida que el número de participantes en la red ($N_{\text{blockchain}}$) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.
 
 ---
 
