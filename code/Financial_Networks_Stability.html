@@ -77,16 +77,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#actualización-2102024" id="toc-actualización-2102024" class="nav-link active" data-scroll-target="#actualización-2102024"><span class="header-section-number">1</span> Actualización 2/10/2024</a>
+  <li><a href="#actualización-8102024" id="toc-actualización-8102024" class="nav-link active" data-scroll-target="#actualización-8102024"><span class="header-section-number">1</span> Actualización 8/10/2024</a>
   <ul class="collapse">
-  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo"><span class="header-section-number">1.1</span> Objetivo</a></li>
-  <li><a href="#problema-de-maximización" id="toc-problema-de-maximización" class="nav-link" data-scroll-target="#problema-de-maximización"><span class="header-section-number">1.2</span> Problema de Maximización</a></li>
-  <li><a href="#función-de-utilidad" id="toc-función-de-utilidad" class="nav-link" data-scroll-target="#función-de-utilidad"><span class="header-section-number">1.3</span> Función de Utilidad:</a></li>
+  <li><a href="#teorema-1-existencia-y-unicidad-de-un-punto-estable" id="toc-teorema-1-existencia-y-unicidad-de-un-punto-estable" class="nav-link" data-scroll-target="#teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">1.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</a></li>
+  <li><a href="#teorema-4-condiciones-de-convergencia" id="toc-teorema-4-condiciones-de-convergencia" class="nav-link" data-scroll-target="#teorema-4-condiciones-de-convergencia"><span class="header-section-number">1.2</span> Teorema 4 (Condiciones de convergencia)</a></li>
   </ul></li>
-  <li><a href="#idea-de-tesis-26092024" id="toc-idea-de-tesis-26092024" class="nav-link" data-scroll-target="#idea-de-tesis-26092024"><span class="header-section-number">2</span> Idea de Tesis 26/09/2024</a>
+  <li><a href="#actualización-2102024" id="toc-actualización-2102024" class="nav-link" data-scroll-target="#actualización-2102024"><span class="header-section-number">2</span> Actualización 2/10/2024</a>
   <ul class="collapse">
-  <li><a href="#posible-función-de-utilidad-en-un-sistema-blockchain" id="toc-posible-función-de-utilidad-en-un-sistema-blockchain" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">2.1</span> Posible función de utilidad en un sistema blockchain</a></li>
-  <li><a href="#posible-función-de-utilidad-en-un-sistema-tradicional" id="toc-posible-función-de-utilidad-en-un-sistema-tradicional" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">2.2</span> Posible función de utilidad en un sistema tradicional</a></li>
+  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo"><span class="header-section-number">2.1</span> Objetivo</a></li>
+  <li><a href="#problema-de-maximización" id="toc-problema-de-maximización" class="nav-link" data-scroll-target="#problema-de-maximización"><span class="header-section-number">2.2</span> Problema de Maximización</a></li>
+  <li><a href="#función-de-utilidad" id="toc-función-de-utilidad" class="nav-link" data-scroll-target="#función-de-utilidad"><span class="header-section-number">2.3</span> Función de Utilidad:</a></li>
+  </ul></li>
+  <li><a href="#idea-de-tesis-26092024" id="toc-idea-de-tesis-26092024" class="nav-link" data-scroll-target="#idea-de-tesis-26092024"><span class="header-section-number">3</span> Idea de Tesis 26/09/2024</a>
+  <ul class="collapse">
+  <li><a href="#posible-función-de-utilidad-en-un-sistema-blockchain" id="toc-posible-función-de-utilidad-en-un-sistema-blockchain" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">3.1</span> Posible función de utilidad en un sistema blockchain</a></li>
+  <li><a href="#posible-función-de-utilidad-en-un-sistema-tradicional" id="toc-posible-función-de-utilidad-en-un-sistema-tradicional" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">3.2</span> Posible función de utilidad en un sistema tradicional</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -138,27 +143,39 @@ window.Quarto = {
 
 <p><a href="https://colab.research.google.com/github/ingUANDES/BlockchainAdoption/blob/main/code/Financial_Networks_Stability.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <hr>
-<section id="actualización-2102024" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="actualización-2102024"><span class="header-section-number">1</span> Actualización 2/10/2024</h2>
-<section id="objetivo" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">1.1</span> Objetivo</h3>
+<section id="actualización-8102024" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="actualización-8102024"><span class="header-section-number">1</span> Actualización 8/10/2024</h2>
+<p>Demostrar que existe un punto de equilibrio único y estable, para garantizar que los agentes alcanzan un equilibrio óptimo en la distribución de sus transacciones, y que sus decisiones convergerán a ese punto.</p>
+<section id="teorema-1-existencia-y-unicidad-de-un-punto-estable" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">1.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</h3>
+<p>Los agentes alcanzarán siempre el mismo punto de equilibrio si comienzan desde condiciones iniciales diferentes.</p>
+</section>
+<section id="teorema-4-condiciones-de-convergencia" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="teorema-4-condiciones-de-convergencia"><span class="header-section-number">1.2</span> Teorema 4 (Condiciones de convergencia)</h3>
+<p>Punto estable al cual se converge.</p>
+</section>
+</section>
+<section id="actualización-2102024" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="actualización-2102024"><span class="header-section-number">2</span> Actualización 2/10/2024</h2>
+<section id="objetivo" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">2.1</span> Objetivo</h3>
 <p>El objetivo general es desarrollar un modelo teórico que permita analizar cómo los agentes financieros optimizan la distribución de sus transacciones entre sistemas financieros tradicionales y blockchain, maximizando su utilidad total.</p>
 <p>El modelo teórico derivará las condiciones bajo las cuales los agentes alcanzan un equilibrio estable entre la cantidad de transacciones que destinan a blockchain y a los sistemas tradicionales, o en qué condiciones uno de los sistemas prevalece sobre el otro.</p>
 </section>
-<section id="problema-de-maximización" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="problema-de-maximización"><span class="header-section-number">1.2</span> Problema de Maximización</h3>
-<p>El agente optimiza dos decisiones clave:</p>
+<section id="problema-de-maximización" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="problema-de-maximización"><span class="header-section-number">2.2</span> Problema de Maximización</h3>
+<p>El agente debe optimizar dos decisiones:</p>
 <ul>
-<li><p><strong><span class="math inline">\(\alpha\)</span></strong>: La proporción de la transacción destinada a blockchain.</p></li>
-<li><p><strong><span class="math inline">\(w_i\)</span></strong>: El tamaño total de la transacción.</p></li>
+<li><strong><span class="math inline">\(\alpha\)</span></strong>: La proporción de la transacción destinada a blockchain.</li>
+<li><strong><span class="math inline">\(w_i\)</span></strong>: El tamaño total de la transacción.</li>
 </ul>
 <p>Y tiene que resolver el siguiente problema de optimización:</p>
 <p><span class="math display">\[
 \max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
 \]</span></p>
 </section>
-<section id="función-de-utilidad" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="función-de-utilidad"><span class="header-section-number">1.3</span> Función de Utilidad:</h3>
+<section id="función-de-utilidad" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="función-de-utilidad"><span class="header-section-number">2.3</span> Función de Utilidad:</h3>
 <p><span class="math display">\[
 U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
 \]</span> <span class="math display">\[
@@ -167,16 +184,16 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 - \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}}
 - \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
 \]</span></p>
-<section id="distribución-del-contrato-entre-sistemas" class="level4" data-number="1.3.1">
-<h4 data-number="1.3.1" class="anchored" data-anchor-id="distribución-del-contrato-entre-sistemas"><span class="header-section-number">1.3.1</span> Distribución del contrato entre sistemas:</h4>
+<section id="distribución-del-contrato-entre-sistemas" class="level4" data-number="2.3.1">
+<h4 data-number="2.3.1" class="anchored" data-anchor-id="distribución-del-contrato-entre-sistemas"><span class="header-section-number">2.3.1</span> Distribución del contrato entre sistemas:</h4>
 <ul>
 <li><span class="math inline">\((1 - \alpha) w_i\)</span>: Proporción del contrato total <span class="math inline">\(w_i\)</span> que el agente asigna al <strong>sistema tradicional</strong>.</li>
 <li><span class="math inline">\(\alpha w_i\)</span>: Proporción del contrato total que el agente asigna a <strong>blockchain</strong>.</li>
 <li><span class="math inline">\(\alpha\)</span>: Proporción de la transacción destinada a blockchain, con <span class="math inline">\(\alpha \in [0, 1]\)</span>.</li>
 </ul>
 </section>
-<section id="beneficios-esperados" class="level4" data-number="1.3.2">
-<h4 data-number="1.3.2" class="anchored" data-anchor-id="beneficios-esperados"><span class="header-section-number">1.3.2</span> Beneficios esperados:</h4>
+<section id="beneficios-esperados" class="level4" data-number="2.3.2">
+<h4 data-number="2.3.2" class="anchored" data-anchor-id="beneficios-esperados"><span class="header-section-number">2.3.2</span> Beneficios esperados:</h4>
 <ul>
 <li><strong>Para el sistema tradicional</strong>:
 <ul>
@@ -191,8 +208,8 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </ul></li>
 </ul>
 </section>
-<section id="riesgos-financieros-en-cada-sistema" class="level4" data-number="1.3.3">
-<h4 data-number="1.3.3" class="anchored" data-anchor-id="riesgos-financieros-en-cada-sistema"><span class="header-section-number">1.3.3</span> Riesgos financieros en cada sistema:</h4>
+<section id="riesgos-financieros-en-cada-sistema" class="level4" data-number="2.3.3">
+<h4 data-number="2.3.3" class="anchored" data-anchor-id="riesgos-financieros-en-cada-sistema"><span class="header-section-number">2.3.3</span> Riesgos financieros en cada sistema:</h4>
 <ul>
 <li><strong>Sistema tradicional</strong>:
 <ul>
@@ -204,21 +221,21 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </ul></li>
 </ul>
 </section>
-<section id="riesgos-interdependientes-entre-sistemas" class="level4" data-number="1.3.4">
-<h4 data-number="1.3.4" class="anchored" data-anchor-id="riesgos-interdependientes-entre-sistemas"><span class="header-section-number">1.3.4</span> Riesgos interdependientes entre sistemas:</h4>
+<section id="riesgos-interdependientes-entre-sistemas" class="level4" data-number="2.3.4">
+<h4 data-number="2.3.4" class="anchored" data-anchor-id="riesgos-interdependientes-entre-sistemas"><span class="header-section-number">2.3.4</span> Riesgos interdependientes entre sistemas:</h4>
 <ul>
 <li><span class="math inline">\(\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})\)</span>: Este término refleja el <strong>riesgo regulatorio</strong> en el sistema tradicional, que depende del tamaño de la transacción (<span class="math inline">\(w_i\)</span>) y del riesgo de hackeo en blockchain (<span class="math inline">\(H_{\text{blockchain}}\)</span>).</li>
 <li><span class="math inline">\(\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}\)</span>: Riesgo de hackeo en blockchain, que depende del tamaño de la red (<span class="math inline">\(N_{\text{blockchain}}\)</span>) y el riesgo en el sistema tradicional.</li>
 </ul>
 </section>
-<section id="confianza-institucional-en-el-sistema-tradicional" class="level4" data-number="1.3.5">
-<h4 data-number="1.3.5" class="anchored" data-anchor-id="confianza-institucional-en-el-sistema-tradicional"><span class="header-section-number">1.3.5</span> Confianza institucional en el sistema tradicional:</h4>
+<section id="confianza-institucional-en-el-sistema-tradicional" class="level4" data-number="2.3.5">
+<h4 data-number="2.3.5" class="anchored" data-anchor-id="confianza-institucional-en-el-sistema-tradicional"><span class="header-section-number">2.3.5</span> Confianza institucional en el sistema tradicional:</h4>
 <ul>
 <li><span class="math inline">\(\phi_i \cdot C_{\text{tradicional}}\)</span>: Término que captura el nivel de <strong>confianza institucional</strong> en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.</li>
 </ul>
 </section>
-<section id="efectos-de-red-en-blockchain" class="level4" data-number="1.3.6">
-<h4 data-number="1.3.6" class="anchored" data-anchor-id="efectos-de-red-en-blockchain"><span class="header-section-number">1.3.6</span> Efectos de red en blockchain:</h4>
+<section id="efectos-de-red-en-blockchain" class="level4" data-number="2.3.6">
+<h4 data-number="2.3.6" class="anchored" data-anchor-id="efectos-de-red-en-blockchain"><span class="header-section-number">2.3.6</span> Efectos de red en blockchain:</h4>
 <ul>
 <li><span class="math inline">\(\eta_i \cdot N_{\text{blockchain}}\)</span>: Término que mide el efecto de red en blockchain. A medida que el número de participantes en la red (<span class="math inline">\(N_{\text{blockchain}}\)</span>) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.</li>
 </ul>
@@ -226,11 +243,11 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </section>
 </section>
 </section>
-<section id="idea-de-tesis-26092024" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="idea-de-tesis-26092024"><span class="header-section-number">2</span> Idea de Tesis 26/09/2024</h2>
+<section id="idea-de-tesis-26092024" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="idea-de-tesis-26092024"><span class="header-section-number">3</span> Idea de Tesis 26/09/2024</h2>
 <p>Comparar la utilidad y los riesgos que enfrentan los participantes en sistemas financieros basados en blockchain frente a los sistemas financieros tradicionales. A través de funciones de utilidad para ambos sistemas, se analizarán los costos de transacción, riesgos de seguridad, confianza institucional y efectos de red. El objetivo es entender qué factores determinan la preferencia de los usuarios y si es posible lograr un equilibrio estable en cada sistema o si uno prevalecerá sobre el otro.</p>
-<section id="posible-función-de-utilidad-en-un-sistema-blockchain" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">2.1</span> Posible función de utilidad en un sistema blockchain</h3>
+<section id="posible-función-de-utilidad-en-un-sistema-blockchain" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">3.1</span> Posible función de utilidad en un sistema blockchain</h3>
 <p>La función de utilidad para un participante <span class="math inline">\(i\)</span> en un sistema blockchain se definiría como:</p>
 <p><span class="math display">\[
 U_{\text{blockchain}, i} = w_i^T (\mu_i - C e_i) - \gamma_i \cdot w_i^T \Sigma_i w_i - \lambda_i \cdot H_i + \eta_i \cdot N_i
@@ -248,8 +265,8 @@ U_{\text{blockchain}, i} = w_i^T (\mu_i - C e_i) - \gamma_i \cdot w_i^T \Sigma_i
 <li><span class="math inline">\(N_i\)</span>: Tamaño de la red o liquidez.</li>
 </ul>
 </section>
-<section id="posible-función-de-utilidad-en-un-sistema-tradicional" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">2.2</span> Posible función de utilidad en un sistema tradicional</h3>
+<section id="posible-función-de-utilidad-en-un-sistema-tradicional" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">3.2</span> Posible función de utilidad en un sistema tradicional</h3>
 <p><span class="math display">\[
 U_{\text{tradicional}, i} = w_i^T (\mu_i - F e_i) - \beta_i \cdot R_i + \phi_i \cdot C_i
 \]</span></p>

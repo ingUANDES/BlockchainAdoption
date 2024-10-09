@@ -1,0 +1,4 @@
+- source: Financial_Networks_Stability.qmd
+  quarto-pub:
+    - id: 18fcaa8d-f098-4327-95a2-82a0e8b28cda
+      url: 'https://hvenegas.quarto.pub/blockchain-adoption'
