@@ -18,9 +18,19 @@ jupyter: python3
 
 <a href="https://colab.research.google.com/github/ingUANDES/BlockchainAdoption/blob/main/code/Financial_Networks_Stability.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
-
-
 ---
+
+## Actualización 8/10/2024
+
+Demostrar que existe un punto de equilibrio único y estable, para garantizar que los agentes alcanzan un equilibrio óptimo en la distribución de sus transacciones, y que sus decisiones convergerán a ese punto.
+
+### Teorema 1 (Existencia y unicidad de un punto estable) 
+
+Los agentes alcanzarán siempre el mismo punto de equilibrio si comienzan desde condiciones iniciales diferentes.
+
+### Teorema 4 (Condiciones de convergencia)
+
+Punto estable al cual se converge.
 
 ## Actualización  2/10/2024
 
@@ -33,10 +43,10 @@ El modelo teórico derivará las condiciones bajo las cuales los agentes alcanza
 
 
 ### Problema de Maximización
-El agente optimiza dos decisiones clave:
+
+El agente debe optimizar dos decisiones:
 
 - **$\alpha$**: La proporción de la transacción destinada a blockchain.
-
 - **$w_i$**: El tamaño total de la transacción.
 
 Y tiene que resolver el siguiente problema de optimización:
@@ -57,9 +67,6 @@ $$
 - \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}}
 - \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
 $$
-
-
-
 
 #### Distribución del contrato entre sistemas:
 
