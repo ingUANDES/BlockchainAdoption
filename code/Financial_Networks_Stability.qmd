@@ -11,6 +11,7 @@ author:
   - name: Sebastián Cea
     roles: Profesor guía
 format: html
+code-fold: true
 toc: true
 number-sections: true
 jupyter: python3
@@ -19,6 +20,524 @@ jupyter: python3
 <a href="https://colab.research.google.com/github/ingUANDES/BlockchainAdoption/blob/main/code/Financial_Networks_Stability.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 ---
+
+## Ejemplo 5 Jalan et alii (2024) 4/11/2024
+
+### Ejemplo 5 
+La firma local no puede acceder al banco nacional.
+Consider a three-firm loans network containing a national bank (firm 1), local bank (firm 2), and local firm (firm 3). Suppose that the local firm cannot access the national bank, so the edge between firms 1 and 3 is prohibited.
+
+**Importar librerías necesarias**
+
+```{python}
+from sympy import *
+init_printing()
+from numpy.linalg import *
+import matplotlib.pyplot as plt
+import seaborn as sns
+from pandas import Series, DataFrame
+from scipy.stats import truncnorm, wishart
+from scipy.linalg import solve, solve_sylvester
+from functools import partial
+from scipy.linalg import toeplitz
+import numpy as np
+```
+
+**Funciones para calcular W y P**
+
+```{python}
+DEFAULT_NUM_FIRMS = 3
+
+####################
+## Gen fns
+####################
+def generate_firm_covariances(num_firms = DEFAULT_NUM_FIRMS,
+                              num_samples = DEFAULT_NUM_FIRMS,
+        risk_aversion = 1.0, entry_distribution = 'gaussian',
+        noise_param = 1.0, subtract_mean = False, return_inv = False):
+    cov_matrix = np.zeros(shape = (num_firms, num_firms))
+    # need n iterations. at each iteration add a random rank-1 matrix.
+
+    for i in range(num_samples):
+        if entry_distribution == 'gaussian':
+            A = np.random.normal(loc = 0.0, scale = noise_param, size=(num_firms, 1))
+        elif entry_distribution == 'exponential':
+            A = np.random.exponential(noise_param, size=(num_firms, 1))
+        elif entry_distribution == 'eye':
+            A = np.eye(1, num_firms, i).T
+        else:
+            raise Exception(f'Distribution {entry_distribution} is unknown')
+        symmA = np.matmul(A, A.T)
+        cov_matrix += symmA
+    cov_matrix_normalized = np.copy(cov_matrix)
+    if subtract_mean:
+        cov_matrix_normalized = cov_matrix - cov_matrix.mean(axis=1, keepdims=True)
+
+    # normalize by num_samples so it has a reasonable scale.
+    if entry_distribution != 'eye':
+        cov_matrix_normalized *= (1.0 / num_samples)
+
+    # scale by risk aversion parameter.
+    cov_matrix_normalized *= risk_aversion
+
+    if return_inv:
+        return cov_matrix_normalized, np.linalg.inv(cov_matrix_normalized)
+    return cov_matrix_normalized
+
+def generate_means(num_firms = DEFAULT_NUM_FIRMS):
+    init = np.random.normal(loc = 5, scale = 1.0, size=(num_firms, num_firms))
+    for i in range(num_firms):
+        init[i][i] = 0.0
+    return init
+
+####################
+## Solver fns
+####################
+
+def construct_prohibition_matrices(n, prohibited_tuples):
+    # tuples belong to {0, 1, ..., n-1}
+
+    # Initialize an empty list to store the matrices
+    matrices = [np.eye(n) for _ in range(n)]
+    rows_to_delete = {i: [] for i in range(n)}
+
+    # Create the identity matrix of size n x n
+    # identity_matrix = np.identity(n)
+
+    # Loop through each prohibited tuple
+    for prohibited_edge in prohibited_tuples:
+        i, j = prohibited_edge
+        rows_to_delete[i].append(j)
+        rows_to_delete[j].append(i)
+    matrices = [np.delete(np.eye(n), rows_to_delete[i], axis=0) for i in range(n)]
+    return matrices
+
+def construct_q_matrices(Sigma_matrices, prohibition_matrices, Gamma = None):
+    out = []
+    n = len(Sigma_matrices)
+    if Gamma is None:
+        Gamma = np.eye(n)
+    for i in range(n):
+        inner = 2 * Gamma[i, i] * (prohibition_matrices[i] @ Sigma_matrices[i] @ prohibition_matrices[i].T)
+        outer = prohibition_matrices[i].T @ np.linalg.inv(inner) @ prohibition_matrices[i]
+        out.append(outer.copy())
+    return out
+
+
+
+
+def opt_portfolio_mat(S_inv, M, P, Gamma = None):
+    sol_mat = np.matmul(0.5 * S_inv, M - P)
+    if Gamma is None:
+        return sol_mat
+    return np.matmul(sol_mat, np.linalg.inv(Gamma))
+
+# todo update price sylvester for Gamma
+def price_soln_sylvester(S_inv, mean_matrix):
+    Q = 0.5 * S_inv
+    return la.solve_sylvester(Q, Q,
+        np.matmul(Q, mean_matrix) - np.matmul(mean_matrix.T, Q))
+
+################################
+################################
+# Dynamics
+################################
+################################
+def get_percent_change(current, previous):
+    if current == previous:
+        return 100.0
+    try:
+        return (abs(current - previous) / previous) * 100.0
+    except ZeroDivisionError:
+        return 0
+
+def get_iden_missing_row(n, i):
+    iden = np.eye(n)
+    iden[i, i] = 0.0
+    return iden
+
+def price_update_naive(i, j, P_init, Q_matrices_list, mean_matrix, eta = 1.0):
+    if i == j:
+        return 0.0
+
+    diff_mat = mean_matrix - P_init
+    prod_i = Q_matrices_list[i] @ diff_mat
+    prod_j = Q_matrices_list[j] @ diff_mat
+
+    diff_scalar = prod_j[i, j] - prod_i[j, i]
+    denom = Q_matrices_list[i][j, j] + Q_matrices_list[j][i,i]
+
+    shift = diff_scalar / denom
+    old_price = P_init[i, j]
+    p_prime = shift + old_price
+    new_price = eta * p_prime + (1.0 - eta) * old_price
+    return new_price
+
+# assuming shared Sigma and Gamma = I
+def opt_w_with_edge_constraints(Q_matrices_list, M, P):
+    n = M.shape[0]
+    # prohibition_matrices = construct_prohibition_matrices(n, prohibited_edges_tuples)
+    # Q_matrices_list = construct_q_matrices([Sigma_shared.copy() for _ in range(n)], prohibition_matrices)
+    w_list = []
+    for i in range(n):
+        w_i = Q_matrices_list[i] @ (M[:, i] - P[:, i])
+        w_list.append(w_i)
+    W_mat = np.vstack(w_list).T
+    # print('W opt is ', W_mat)
+    return W_mat
+
+def run_price_dyanmics_one_step(Q_matrices_list, mean_matrix, P_init, prohibited_edges_tuples = [], eta = 1.0):
+    # prohibited_edges_tuples is a list of pairs, e.g. [(1, 3), (2, 3), (2, 5)]
+
+    # sinv = np.linalg.inv(sigma_shared)
+    # W_current = opt_portfolio_mat(sinv, mean_matrix, P_init)
+    # print('q matrices are: ', Q_matrices_list)
+    W_current = opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_init)
+    P_new = np.zeros(shape = P_init.shape)
+    n = P_init.shape[0]
+
+    for i in range(n):
+        for j in range(i):
+            # check that contract prices disagree
+            if (j, i) not in prohibited_edges_tuples and (i, j) not in prohibited_edges_tuples:
+                # print(f'Updating price at {(j,i)}')
+                # print(W_current)
+                # print(W_current.shape)
+                pct_w_diff = get_percent_change(W_current[i, j], W_current[j, i])
+                if np.abs(pct_w_diff) > 1e-1:
+                    updated_price_ij = price_update_naive(i, j, P_init, Q_matrices_list, mean_matrix, eta = eta)
+                    P_new[i, j] = updated_price_ij
+                    P_new[j, i] = -1 * updated_price_ij
+                else:
+                    P_new[i, j] = P_init[i, j]
+                    P_new[j, i] = P_init[j, i]
+    # W_new = opt_portfolio_mat(sinv, mean_matrix, P_new)
+    W_new = opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_new)
+    return W_new, P_new
+
+def run_price_dynamics(sigma_shared, mean_matrix, prohibited_edges_tuples = [],
+                       num_iterations = 50,
+                       eta = 0.0, Gamma=None):
+    n = mean_matrix.shape[0]
+    prohibition_matrices = construct_prohibition_matrices(n, prohibited_edges_tuples)
+    Q_matrices_list = construct_q_matrices([sigma_shared.copy() for _ in range(n)], prohibition_matrices,
+                                          Gamma=Gamma)
+    #print(f'Q matrices: {Q_matrices_list}')
+    P_current = np.zeros_like(sigma_shared)
+    # sinv = np.linalg.inv(sigma_shared)
+    W_current = opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_current)
+
+    W_list = []
+    P_list = []
+    W_list.append(W_current)
+    P_list.append(P_current)
+
+    for idx in range(num_iterations):
+        W_current, P_current = run_price_dyanmics_one_step(Q_matrices_list, mean_matrix, P_current, prohibited_edges_tuples, eta = eta)
+        W_list.append(W_current)
+        P_list.append(P_current)
+        #if idx % 500 == 0:
+            #print(idx)
+        # print(f'At step {_}')
+    return W_list, P_list
+
+pairwise_negotiations_recompute = True
+```
+
+**Valores para los parámetros y restricciones**
+
+```{python}
+if pairwise_negotiations_recompute:
+    cov_mat = np.array([
+        [1.0, 0.25, 0.75],
+        [0.25, 1.0, 0.6],
+        [0.75, 0.6, 1.0]
+    ])
+
+    mean_mat = np.array([
+        [0.0, 0.9, 0.9],
+        [0.75, 0.0, 0.95],
+        [0.5, 0.8, 0.0]
+    ])
+    gamma_mat = np.eye(3)
+    
+P_current = np.zeros_like(cov_mat)
+
+W_list, P_list = run_price_dynamics(cov_mat,
+                                    mean_mat,
+                                    [(0,2)], eta = 0.5, 
+                                    Gamma = gamma_mat,
+                                    num_iterations=500
+                                   )
+```
+
+**Valor de P**
+
+```{python}
+fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+
+mask = [[False, False,  True],
+       [False, False, False],
+       [ True, False, False]]
+
+global_min = -1.0
+global_max = 1.0
+# Iterate over the heatmaps and axes
+index_set = [0, 1, 2, -1]
+custom_annotations = [
+    ("X", 0, 2),  # (text, row, column)
+    ("X", 2, 0),
+]
+
+for i, ax in enumerate(axes):
+
+    data_with_mask = np.where(mask, np.nan, P_list[index_set[i]])
+
+    res = sns.heatmap(data_with_mask, annot=True, ax=ax, cmap='Blues', cbar=False,
+                annot_kws={"size": 24}, vmin=global_min, vmax=global_max, fmt='.2f')
+    for _, spine in res.spines.items():
+        spine.set_visible(True)
+        spine.set_linewidth(2)
+        spine.set_color('k')
+
+# Create arrows from 0 to 1 and 1 to 2
+arrowprops = dict(facecolor='black', shrink=0.05)
+
+# Remove y-axis labels for the second and third subplots
+axes[1].set_yticklabels([])
+axes[2].set_yticklabels([])
+axes[3].set_yticklabels([])
+
+axes[0].set_yticklabels([
+    'National Bank', 'Local Bank', 'Local Firm'
+], rotation=0
+)
+
+axes[1].set_xticklabels([])
+axes[2].set_xticklabels([])
+axes[0].set_xticklabels([])
+axes[3].set_xticklabels([])
+
+for i in range(3):
+    axes[i].set_xlabel(fr'$P_{{{index_set[i]}}}$')
+axes[3].set_xlabel(r'$P_\infty$')
+
+# Adjust subplot spacing
+plt.tight_layout()
+# plt.savefig('../figs/prices_side_by_side.eps', format='eps', dpi=700)
+```
+
+Los valores reflejan cómo el Local Bank actúa como intermediario entre las otras dos firmas, recibiendo pagos de ambas. Debido a la restricción entre el National Bank y la Local Firm, el Local Bank aprovecha su posición y establece precios y tamaños de contrato que maximizan su utilidad en el sistema.
+
+**Valor de W**
+
+```{python}
+fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+
+global_min = -1.0
+global_max = 1.0
+# Iterate over the heatmaps and axes
+#index_set = [0, 1, 2, -1]
+# custom_annotations = [
+#     ("X", 0, 2),  # (text, row, column)
+#     ("X", 2, 0),
+# ]
+mask = [[False, False,  True],
+       [False, False, False],
+       [ True, False, False]]
+
+for i, ax in enumerate(axes):
+    data_with_mask = np.where(mask, np.nan, W_list[index_set[i]])
+
+    res = sns.heatmap(data_with_mask, annot=True, ax=ax, cmap='Blues', cbar=False,
+                annot_kws={"size": 24}, vmin=global_min, vmax=global_max, fmt='.2f')
+    for _, spine in res.spines.items():
+        spine.set_visible(True)
+        spine.set_linewidth(2)
+        spine.set_color('k')
+
+    # for annotation in custom_annotations:
+    #     text, row, col = annotation
+    #     ax.annotate(text, xy=(col + 0.5, row + 0.5), color='red',
+    #                 fontsize=80, ha='center', va='center')
+
+
+# Create arrows from 0 to 1 and 1 to 2
+arrowprops = dict(facecolor='black', shrink=0.05)
+
+
+# Remove y-axis labels for the second and third subplots
+axes[1].set_yticklabels([])
+axes[2].set_yticklabels([])
+axes[3].set_yticklabels([])
+
+axes[0].set_yticklabels([
+    'National Bank', 'Local Bank', 'Local Firm'
+], rotation=0
+)
+
+axes[1].set_xticklabels([])
+axes[2].set_xticklabels([])
+axes[0].set_xticklabels([])
+axes[3].set_xticklabels([])
+
+for i in range(3):
+    axes[i].set_xlabel(fr'$W_{{{index_set[i]}}}$')
+axes[3].set_xlabel(r'$W_\infty$')
+
+# Adjust subplot spacing
+plt.tight_layout()
+# plt.savefig('../figs/w_side_by_side.eps', format='eps', dpi=700)
+```
+
+Los valores reflejan el equilibrio en un sistema donde la firma 2 (Local Bank) mantiene contratos con ambas firmas, maximizando su utilidad como intermediario entre el National Bank y la Local Firm, quienes no pueden interactuar directamente.
+
+### Ejemplo 5 (sin restricciones)
+
+```{python}
+if pairwise_negotiations_recompute:
+    cov_mat = np.array([
+        [1.0, 0.25, 0.75],
+        [0.25, 1.0, 0.6],
+        [0.75, 0.6, 1.0]
+    ])
+
+    mean_mat = np.array([
+        [0.0, 0.9, 0.9],
+        [0.75, 0.0, 0.95],
+        [0.5, 0.8, 0.0]
+    ])
+    gamma_mat = np.eye(3)
+    
+P_current = np.zeros_like(cov_mat)
+
+W_list, P_list = run_price_dynamics(cov_mat,
+                                    mean_mat,
+                                    [], eta = 0.5, #corchetes vacíos para que no existan restricciones
+                                    Gamma = gamma_mat,
+                                    num_iterations=500
+                                   )
+```
+
+**Valor de P**
+
+```{python}
+fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+
+mask = [[False, False,  False],
+       [False, False, False],
+       [ False, False, False]]
+
+global_min = -1.0
+global_max = 1.0
+# Iterate over the heatmaps and axes
+index_set = [0, 1, 2, -1]
+custom_annotations = [
+    ("X", 0, 2),  # (text, row, column)
+    ("X", 2, 0),
+]
+
+for i, ax in enumerate(axes):
+
+    data_with_mask = np.where(mask, np.nan, P_list[index_set[i]])
+
+    res = sns.heatmap(data_with_mask, annot=True, ax=ax, cmap='Blues', cbar=False,
+                annot_kws={"size": 24}, vmin=global_min, vmax=global_max, fmt='.2f')
+    for _, spine in res.spines.items():
+        spine.set_visible(True)
+        spine.set_linewidth(2)
+        spine.set_color('k')
+
+# Create arrows from 0 to 1 and 1 to 2
+arrowprops = dict(facecolor='black', shrink=0.05)
+
+# Remove y-axis labels for the second and third subplots
+axes[1].set_yticklabels([])
+axes[2].set_yticklabels([])
+axes[3].set_yticklabels([])
+
+axes[0].set_yticklabels([
+    'National Bank', 'Local Bank', 'Local Firm'
+], rotation=0
+)
+
+axes[1].set_xticklabels([])
+axes[2].set_xticklabels([])
+axes[0].set_xticklabels([])
+axes[3].set_xticklabels([])
+
+for i in range(3):
+    axes[i].set_xlabel(fr'$P_{{{index_set[i]}}}$')
+axes[3].set_xlabel(r'$P_\infty$')
+
+# Adjust subplot spacing
+plt.tight_layout()
+# plt.savefig('../figs/prices_side_by_side.eps', format='eps', dpi=700)
+```
+
+
+**Valor de W**
+
+```{python}
+fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+
+global_min = -1.0
+global_max = 1.0
+# Iterate over the heatmaps and axes
+#index_set = [0, 1, 2, -1]
+# custom_annotations = [
+#     ("X", 0, 2),  # (text, row, column)
+#     ("X", 2, 0),
+# ]
+mask = [[False, False,  False],
+       [False, False, False],
+       [ False, False, False]]
+
+for i, ax in enumerate(axes):
+    data_with_mask = np.where(mask, np.nan, W_list[index_set[i]])
+
+    res = sns.heatmap(data_with_mask, annot=True, ax=ax, cmap='Blues', cbar=False,
+                annot_kws={"size": 24}, vmin=global_min, vmax=global_max, fmt='.2f')
+    for _, spine in res.spines.items():
+        spine.set_visible(True)
+        spine.set_linewidth(2)
+        spine.set_color('k')
+
+    # for annotation in custom_annotations:
+    #     text, row, col = annotation
+    #     ax.annotate(text, xy=(col + 0.5, row + 0.5), color='red',
+    #                 fontsize=80, ha='center', va='center')
+
+
+# Create arrows from 0 to 1 and 1 to 2
+arrowprops = dict(facecolor='black', shrink=0.05)
+
+
+# Remove y-axis labels for the second and third subplots
+axes[1].set_yticklabels([])
+axes[2].set_yticklabels([])
+axes[3].set_yticklabels([])
+
+axes[0].set_yticklabels([
+    'National Bank', 'Local Bank', 'Local Firm'
+], rotation=0
+)
+
+axes[1].set_xticklabels([])
+axes[2].set_xticklabels([])
+axes[0].set_xticklabels([])
+axes[3].set_xticklabels([])
+
+for i in range(3):
+    axes[i].set_xlabel(fr'$W_{{{index_set[i]}}}$')
+axes[3].set_xlabel(r'$W_\infty$')
+
+# Adjust subplot spacing
+plt.tight_layout()
+# plt.savefig('../figs/w_side_by_side.eps', format='eps', dpi=700)
+```
+
+Sin restricciones el National Bank le presta directamente a la Local Firm, los tamaños de los contratos W aumentan y los precios P muestran que ahora la Local Firm pide prestado a ambas firmas.
 
 ## Actualización 8/10/2024
 
