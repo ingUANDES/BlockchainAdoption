@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -77,22 +111,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#actualización-8102024" id="toc-actualización-8102024" class="nav-link active" data-scroll-target="#actualización-8102024"><span class="header-section-number">1</span> Actualización 8/10/2024</a>
+  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">0.1</span> 4/11/2024</a>
   <ul class="collapse">
-  <li><a href="#teorema-1-existencia-y-unicidad-de-un-punto-estable" id="toc-teorema-1-existencia-y-unicidad-de-un-punto-estable" class="nav-link" data-scroll-target="#teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">1.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</a></li>
-  <li><a href="#teorema-4-condiciones-de-convergencia" id="toc-teorema-4-condiciones-de-convergencia" class="nav-link" data-scroll-target="#teorema-4-condiciones-de-convergencia"><span class="header-section-number">1.2</span> Teorema 4 (Condiciones de convergencia)</a></li>
+  <li><a href="#ejemplo-5-jalan-et-alii-2024" id="toc-ejemplo-5-jalan-et-alii-2024" class="nav-link" data-scroll-target="#ejemplo-5-jalan-et-alii-2024"><span class="header-section-number">0.1.1</span> Ejemplo 5 Jalan et alii (2024)</a></li>
+  <li><a href="#importar-librerías-necesarias" id="toc-importar-librerías-necesarias" class="nav-link" data-scroll-target="#importar-librerías-necesarias"><span class="header-section-number">0.1.2</span> Importar librerías necesarias</a></li>
   </ul></li>
-  <li><a href="#actualización-2102024" id="toc-actualización-2102024" class="nav-link" data-scroll-target="#actualización-2102024"><span class="header-section-number">2</span> Actualización 2/10/2024</a>
+  <li><a href="#ejemplo-5-sin-restricciones" id="toc-ejemplo-5-sin-restricciones" class="nav-link" data-scroll-target="#ejemplo-5-sin-restricciones"><span class="header-section-number">0.2</span> Ejemplo 5 sin restricciones</a></li>
+  <li><a href="#actualización-8102024" id="toc-actualización-8102024" class="nav-link" data-scroll-target="#actualización-8102024"><span class="header-section-number">0.3</span> Actualización 8/10/2024</a>
   <ul class="collapse">
-  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo"><span class="header-section-number">2.1</span> Objetivo</a></li>
-  <li><a href="#problema-de-maximización" id="toc-problema-de-maximización" class="nav-link" data-scroll-target="#problema-de-maximización"><span class="header-section-number">2.2</span> Problema de Maximización</a></li>
-  <li><a href="#función-de-utilidad" id="toc-función-de-utilidad" class="nav-link" data-scroll-target="#función-de-utilidad"><span class="header-section-number">2.3</span> Función de Utilidad:</a></li>
+  <li><a href="#teorema-1-existencia-y-unicidad-de-un-punto-estable" id="toc-teorema-1-existencia-y-unicidad-de-un-punto-estable" class="nav-link" data-scroll-target="#teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">0.3.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</a></li>
+  <li><a href="#teorema-4-condiciones-de-convergencia" id="toc-teorema-4-condiciones-de-convergencia" class="nav-link" data-scroll-target="#teorema-4-condiciones-de-convergencia"><span class="header-section-number">0.3.2</span> Teorema 4 (Condiciones de convergencia)</a></li>
   </ul></li>
-  <li><a href="#idea-de-tesis-26092024" id="toc-idea-de-tesis-26092024" class="nav-link" data-scroll-target="#idea-de-tesis-26092024"><span class="header-section-number">3</span> Idea de Tesis 26/09/2024</a>
+  <li><a href="#actualización-2102024" id="toc-actualización-2102024" class="nav-link" data-scroll-target="#actualización-2102024"><span class="header-section-number">0.4</span> Actualización 2/10/2024</a>
   <ul class="collapse">
-  <li><a href="#posible-función-de-utilidad-en-un-sistema-blockchain" id="toc-posible-función-de-utilidad-en-un-sistema-blockchain" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">3.1</span> Posible función de utilidad en un sistema blockchain</a></li>
-  <li><a href="#posible-función-de-utilidad-en-un-sistema-tradicional" id="toc-posible-función-de-utilidad-en-un-sistema-tradicional" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">3.2</span> Posible función de utilidad en un sistema tradicional</a></li>
+  <li><a href="#objetivo" id="toc-objetivo" class="nav-link" data-scroll-target="#objetivo"><span class="header-section-number">0.4.1</span> Objetivo</a></li>
+  <li><a href="#problema-de-maximización" id="toc-problema-de-maximización" class="nav-link" data-scroll-target="#problema-de-maximización"><span class="header-section-number">0.4.2</span> Problema de Maximización</a></li>
+  <li><a href="#función-de-utilidad" id="toc-función-de-utilidad" class="nav-link" data-scroll-target="#función-de-utilidad"><span class="header-section-number">0.4.3</span> Función de Utilidad:</a></li>
   </ul></li>
+  <li><a href="#idea-de-tesis-26092024" id="toc-idea-de-tesis-26092024" class="nav-link" data-scroll-target="#idea-de-tesis-26092024"><span class="header-section-number">0.5</span> Idea de Tesis 26/09/2024</a>
+  <ul class="collapse">
+  <li><a href="#posible-función-de-utilidad-en-un-sistema-blockchain" id="toc-posible-función-de-utilidad-en-un-sistema-blockchain" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">0.5.1</span> Posible función de utilidad en un sistema blockchain</a></li>
+  <li><a href="#posible-función-de-utilidad-en-un-sistema-tradicional" id="toc-posible-función-de-utilidad-en-un-sistema-tradicional" class="nav-link" data-scroll-target="#posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">0.5.2</span> Posible función de utilidad en un sistema tradicional</a></li>
+  </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">1</span> </a></li>
   </ul>
 </nav>
 </div>
@@ -143,27 +184,594 @@ window.Quarto = {
 
 <p><a href="https://colab.research.google.com/github/ingUANDES/BlockchainAdoption/blob/main/code/Financial_Networks_Stability.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 <hr>
-<section id="actualización-8102024" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="actualización-8102024"><span class="header-section-number">1</span> Actualización 8/10/2024</h2>
+<section id="section" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="section"><span class="header-section-number">0.1</span> 4/11/2024</h2>
+<section id="ejemplo-5-jalan-et-alii-2024" class="level3" data-number="0.1.1">
+<h3 data-number="0.1.1" class="anchored" data-anchor-id="ejemplo-5-jalan-et-alii-2024"><span class="header-section-number">0.1.1</span> Ejemplo 5 Jalan et alii (2024)</h3>
+</section>
+<section id="importar-librerías-necesarias" class="level3" data-number="0.1.2">
+<h3 data-number="0.1.2" class="anchored" data-anchor-id="importar-librerías-necesarias"><span class="header-section-number">0.1.2</span> Importar librerías necesarias</h3>
+<div id="cell-4" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sympy <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>init_printing()</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpy.linalg <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas <span class="im">import</span> Series, DataFrame</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> truncnorm, wishart</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.linalg <span class="im">import</span> solve, solve_sylvester</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.linalg <span class="im">import</span> toeplitz</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-5" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>DEFAULT_NUM_FIRMS <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">####################</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Gen fns</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">####################</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_firm_covariances(num_firms <span class="op">=</span> DEFAULT_NUM_FIRMS,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                              num_samples <span class="op">=</span> DEFAULT_NUM_FIRMS,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        risk_aversion <span class="op">=</span> <span class="fl">1.0</span>, entry_distribution <span class="op">=</span> <span class="st">'gaussian'</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        noise_param <span class="op">=</span> <span class="fl">1.0</span>, subtract_mean <span class="op">=</span> <span class="va">False</span>, return_inv <span class="op">=</span> <span class="va">False</span>):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    cov_matrix <span class="op">=</span> np.zeros(shape <span class="op">=</span> (num_firms, num_firms))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># need n iterations. at each iteration add a random rank-1 matrix.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_samples):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> entry_distribution <span class="op">==</span> <span class="st">'gaussian'</span>:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            A <span class="op">=</span> np.random.normal(loc <span class="op">=</span> <span class="fl">0.0</span>, scale <span class="op">=</span> noise_param, size<span class="op">=</span>(num_firms, <span class="dv">1</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> entry_distribution <span class="op">==</span> <span class="st">'exponential'</span>:</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            A <span class="op">=</span> np.random.exponential(noise_param, size<span class="op">=</span>(num_firms, <span class="dv">1</span>))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> entry_distribution <span class="op">==</span> <span class="st">'eye'</span>:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            A <span class="op">=</span> np.eye(<span class="dv">1</span>, num_firms, i).T</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">Exception</span>(<span class="ss">f'Distribution </span><span class="sc">{</span>entry_distribution<span class="sc">}</span><span class="ss"> is unknown'</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        symmA <span class="op">=</span> np.matmul(A, A.T)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        cov_matrix <span class="op">+=</span> symmA</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    cov_matrix_normalized <span class="op">=</span> np.copy(cov_matrix)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> subtract_mean:</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        cov_matrix_normalized <span class="op">=</span> cov_matrix <span class="op">-</span> cov_matrix.mean(axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># normalize by num_samples so it has a reasonable scale.</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> entry_distribution <span class="op">!=</span> <span class="st">'eye'</span>:</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        cov_matrix_normalized <span class="op">*=</span> (<span class="fl">1.0</span> <span class="op">/</span> num_samples)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scale by risk aversion parameter.</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    cov_matrix_normalized <span class="op">*=</span> risk_aversion</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> return_inv:</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> cov_matrix_normalized, np.linalg.inv(cov_matrix_normalized)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cov_matrix_normalized</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_means(num_firms <span class="op">=</span> DEFAULT_NUM_FIRMS):</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    init <span class="op">=</span> np.random.normal(loc <span class="op">=</span> <span class="dv">5</span>, scale <span class="op">=</span> <span class="fl">1.0</span>, size<span class="op">=</span>(num_firms, num_firms))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_firms):</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        init[i][i] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> init</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="co">####################</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="co">## Solver fns</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co">####################</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> construct_prohibition_matrices(n, prohibited_tuples):</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tuples belong to {0, 1, ..., n-1}</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty list to store the matrices</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    matrices <span class="op">=</span> [np.eye(n) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n)]</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    rows_to_delete <span class="op">=</span> {i: [] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)}</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the identity matrix of size n x n</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># identity_matrix = np.identity(n)</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through each prohibited tuple</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> prohibited_edge <span class="kw">in</span> prohibited_tuples:</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        i, j <span class="op">=</span> prohibited_edge</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        rows_to_delete[i].append(j)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        rows_to_delete[j].append(i)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    matrices <span class="op">=</span> [np.delete(np.eye(n), rows_to_delete[i], axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)]</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> matrices</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> construct_q_matrices(Sigma_matrices, prohibition_matrices, Gamma <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> []</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(Sigma_matrices)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> Gamma <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        Gamma <span class="op">=</span> np.eye(n)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        inner <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> Gamma[i, i] <span class="op">*</span> (prohibition_matrices[i] <span class="op">@</span> Sigma_matrices[i] <span class="op">@</span> prohibition_matrices[i].T)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>        outer <span class="op">=</span> prohibition_matrices[i].T <span class="op">@</span> np.linalg.inv(inner) <span class="op">@</span> prohibition_matrices[i]</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        out.append(outer.copy())</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opt_portfolio_mat(S_inv, M, P, Gamma <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    sol_mat <span class="op">=</span> np.matmul(<span class="fl">0.5</span> <span class="op">*</span> S_inv, M <span class="op">-</span> P)</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> Gamma <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> sol_mat</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.matmul(sol_mat, np.linalg.inv(Gamma))</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a><span class="co"># todo update price sylvester for Gamma</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> price_soln_sylvester(S_inv, mean_matrix):</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> S_inv</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> la.solve_sylvester(Q, Q,</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>        np.matmul(Q, mean_matrix) <span class="op">-</span> np.matmul(mean_matrix.T, Q))</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="co">################################</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="co">################################</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Dynamics</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a><span class="co">################################</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a><span class="co">################################</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_percent_change(current, previous):</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> current <span class="op">==</span> previous:</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">100.0</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="bu">abs</span>(current <span class="op">-</span> previous) <span class="op">/</span> previous) <span class="op">*</span> <span class="fl">100.0</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_iden_missing_row(n, i):</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    iden <span class="op">=</span> np.eye(n)</span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>    iden[i, i] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> iden</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> price_update_naive(i, j, P_init, Q_matrices_list, mean_matrix, eta <span class="op">=</span> <span class="fl">1.0</span>):</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">==</span> j:</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fl">0.0</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>    diff_mat <span class="op">=</span> mean_matrix <span class="op">-</span> P_init</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    prod_i <span class="op">=</span> Q_matrices_list[i] <span class="op">@</span> diff_mat</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    prod_j <span class="op">=</span> Q_matrices_list[j] <span class="op">@</span> diff_mat</span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    diff_scalar <span class="op">=</span> prod_j[i, j] <span class="op">-</span> prod_i[j, i]</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>    denom <span class="op">=</span> Q_matrices_list[i][j, j] <span class="op">+</span> Q_matrices_list[j][i,i]</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    shift <span class="op">=</span> diff_scalar <span class="op">/</span> denom</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    old_price <span class="op">=</span> P_init[i, j]</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    p_prime <span class="op">=</span> shift <span class="op">+</span> old_price</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    new_price <span class="op">=</span> eta <span class="op">*</span> p_prime <span class="op">+</span> (<span class="fl">1.0</span> <span class="op">-</span> eta) <span class="op">*</span> old_price</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> new_price</span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a><span class="co"># assuming shared Sigma and Gamma = I</span></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opt_w_with_edge_constraints(Q_matrices_list, M, P):</span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> M.shape[<span class="dv">0</span>]</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prohibition_matrices = construct_prohibition_matrices(n, prohibited_edges_tuples)</span></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Q_matrices_list = construct_q_matrices([Sigma_shared.copy() for _ in range(n)], prohibition_matrices)</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>    w_list <span class="op">=</span> []</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>        w_i <span class="op">=</span> Q_matrices_list[i] <span class="op">@</span> (M[:, i] <span class="op">-</span> P[:, i])</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>        w_list.append(w_i)</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>    W_mat <span class="op">=</span> np.vstack(w_list).T</span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print('W opt is ', W_mat)</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> W_mat</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_price_dyanmics_one_step(Q_matrices_list, mean_matrix, P_init, prohibited_edges_tuples <span class="op">=</span> [], eta <span class="op">=</span> <span class="fl">1.0</span>):</span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prohibited_edges_tuples is a list of pairs, e.g. [(1, 3), (2, 3), (2, 5)]</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sinv = np.linalg.inv(sigma_shared)</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>    <span class="co"># W_current = opt_portfolio_mat(sinv, mean_matrix, P_init)</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print('q matrices are: ', Q_matrices_list)</span></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>    W_current <span class="op">=</span> opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_init)</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>    P_new <span class="op">=</span> np.zeros(shape <span class="op">=</span> P_init.shape)</span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> P_init.shape[<span class="dv">0</span>]</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i):</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>            <span class="co"># check that contract prices disagree</span></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (j, i) <span class="kw">not</span> <span class="kw">in</span> prohibited_edges_tuples <span class="kw">and</span> (i, j) <span class="kw">not</span> <span class="kw">in</span> prohibited_edges_tuples:</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>                <span class="co"># print(f'Updating price at {(j,i)}')</span></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>                <span class="co"># print(W_current)</span></span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>                <span class="co"># print(W_current.shape)</span></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>                pct_w_diff <span class="op">=</span> get_percent_change(W_current[i, j], W_current[j, i])</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> np.<span class="bu">abs</span>(pct_w_diff) <span class="op">&gt;</span> <span class="fl">1e-1</span>:</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>                    updated_price_ij <span class="op">=</span> price_update_naive(i, j, P_init, Q_matrices_list, mean_matrix, eta <span class="op">=</span> eta)</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>                    P_new[i, j] <span class="op">=</span> updated_price_ij</span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>                    P_new[j, i] <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">*</span> updated_price_ij</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>                    P_new[i, j] <span class="op">=</span> P_init[i, j]</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>                    P_new[j, i] <span class="op">=</span> P_init[j, i]</span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>    <span class="co"># W_new = opt_portfolio_mat(sinv, mean_matrix, P_new)</span></span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a>    W_new <span class="op">=</span> opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_new)</span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> W_new, P_new</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_price_dynamics(sigma_shared, mean_matrix, prohibited_edges_tuples <span class="op">=</span> [],</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>                       num_iterations <span class="op">=</span> <span class="dv">50</span>,</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>                       eta <span class="op">=</span> <span class="fl">0.0</span>, Gamma<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> mean_matrix.shape[<span class="dv">0</span>]</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>    prohibition_matrices <span class="op">=</span> construct_prohibition_matrices(n, prohibited_edges_tuples)</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>    Q_matrices_list <span class="op">=</span> construct_q_matrices([sigma_shared.copy() <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n)], prohibition_matrices,</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>                                          Gamma<span class="op">=</span>Gamma)</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Q matrices: </span><span class="sc">{</span>Q_matrices_list<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>    P_current <span class="op">=</span> np.zeros_like(sigma_shared)</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sinv = np.linalg.inv(sigma_shared)</span></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>    W_current <span class="op">=</span> opt_w_with_edge_constraints(Q_matrices_list, mean_matrix, P_current)</span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>    W_list <span class="op">=</span> []</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>    P_list <span class="op">=</span> []</span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a>    W_list.append(W_current)</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>    P_list.append(P_current)</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(num_iterations):</span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>        W_current, P_current <span class="op">=</span> run_price_dyanmics_one_step(Q_matrices_list, mean_matrix, P_current, prohibited_edges_tuples, eta <span class="op">=</span> eta)</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>        W_list.append(W_current)</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>        P_list.append(P_current)</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> idx <span class="op">%</span> <span class="dv">500</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(idx)</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(f'At step {_}')</span></span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> W_list, P_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-6" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pairwise_negotiations_recompute <span class="op">=</span> <span class="va">True</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-7" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pairwise_negotiations_recompute:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    cov_mat <span class="op">=</span> np.array([</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">1.0</span>, <span class="fl">0.25</span>, <span class="fl">0.75</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.25</span>, <span class="fl">1.0</span>, <span class="fl">0.6</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.75</span>, <span class="fl">0.6</span>, <span class="fl">1.0</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    mean_mat <span class="op">=</span> np.array([</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>],</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.75</span>, <span class="fl">0.0</span>, <span class="fl">0.95</span>],</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.0</span>]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    gamma_mat <span class="op">=</span> np.eye(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="cell-8" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>P_current <span class="op">=</span> np.zeros_like(cov_mat)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>P_current</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array([[0., 0., 0.],
+       [0., 0., 0.],
+       [0., 0., 0.]])</code></pre>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>W_list, P_list <span class="op">=</span> run_price_dynamics(cov_mat,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                                    mean_mat,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                                    [(<span class="dv">0</span>,<span class="dv">2</span>)], eta <span class="op">=</span> <span class="fl">0.5</span>, <span class="co">#poner '(0,2)' dentro de los corchetes para replicar el ejemplo 5 o dejarlo vacío para que no existan restricciones</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                                    Gamma <span class="op">=</span> gamma_mat,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                    num_iterations<span class="op">=</span><span class="dv">500</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Q matrices: [array([[ 0.53333333, -0.13333333,  0.        ],
+       [-0.13333333,  0.53333333,  0.        ],
+       [ 0.        ,  0.        ,  0.        ]]), array([[ 1.33333333,  0.41666667, -1.25      ],
+       [ 0.41666667,  0.91145833, -0.859375  ],
+       [-1.25      , -0.859375  ,  1.953125  ]]), array([[ 0.     ,  0.     ,  0.     ],
+       [ 0.     ,  0.78125, -0.46875],
+       [ 0.     , -0.46875,  0.78125]])]
+0</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> [[<span class="va">False</span>, <span class="va">False</span>,  <span class="va">True</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       [<span class="va">False</span>, <span class="va">False</span>, <span class="va">False</span>],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       [ <span class="va">True</span>, <span class="va">False</span>, <span class="va">False</span>]]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>global_min <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>global_max <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the heatmaps and axes</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>index_set <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>custom_annotations <span class="op">=</span> [</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"X"</span>, <span class="dv">0</span>, <span class="dv">2</span>),  <span class="co"># (text, row, column)</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"X"</span>, <span class="dv">2</span>, <span class="dv">0</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    data_with_mask <span class="op">=</span> np.where(mask, np.nan, P_list[index_set[i]])</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> sns.heatmap(data_with_mask, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'Blues'</span>, cbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                annot_kws<span class="op">=</span>{<span class="st">"size"</span>: <span class="dv">24</span>}, vmin<span class="op">=</span>global_min, vmax<span class="op">=</span>global_max, fmt<span class="op">=</span><span class="st">'.2f'</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, spine <span class="kw">in</span> res.spines.items():</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        spine.set_visible(<span class="va">True</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        spine.set_linewidth(<span class="dv">2</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        spine.set_color(<span class="st">'k'</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create arrows from 0 to 1 and 1 to 2</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>arrowprops <span class="op">=</span> <span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">'black'</span>, shrink<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove y-axis labels for the second and third subplots</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels([])</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_yticklabels([])</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_yticklabels([])</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticklabels([</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'National Bank'</span>, <span class="st">'Local Bank'</span>, <span class="st">'Local Firm'</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>], rotation<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels([])</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xticklabels([])</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels([])</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xticklabels([])</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="vs">fr'$P_</span><span class="ch">{{</span><span class="sc">{</span>index_set[i]<span class="sc">}</span><span class="ch">}}</span><span class="vs">$'</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xlabel(<span class="vs">r'$P_\infty$'</span>)</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust subplot spacing</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('../figs/prices_side_by_side.eps', format='eps', dpi=700)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Financial_Networks_Stability_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>global_min <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>global_max <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the heatmaps and axes</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#index_set = [0, 1, 2, -1]</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># custom_annotations = [</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     ("X", 0, 2),  # (text, row, column)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     ("X", 2, 0),</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ]</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> [[<span class="va">False</span>, <span class="va">False</span>,  <span class="va">True</span>],</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>       [<span class="va">False</span>, <span class="va">False</span>, <span class="va">False</span>],</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       [ <span class="va">True</span>, <span class="va">False</span>, <span class="va">False</span>]]</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    data_with_mask <span class="op">=</span> np.where(mask, np.nan, W_list[index_set[i]])</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> sns.heatmap(data_with_mask, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'Blues'</span>, cbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                annot_kws<span class="op">=</span>{<span class="st">"size"</span>: <span class="dv">24</span>}, vmin<span class="op">=</span>global_min, vmax<span class="op">=</span>global_max, fmt<span class="op">=</span><span class="st">'.2f'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, spine <span class="kw">in</span> res.spines.items():</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        spine.set_visible(<span class="va">True</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        spine.set_linewidth(<span class="dv">2</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        spine.set_color(<span class="st">'k'</span>)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for annotation in custom_annotations:</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     text, row, col = annotation</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     ax.annotate(text, xy=(col + 0.5, row + 0.5), color='red',</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                 fontsize=80, ha='center', va='center')</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Create arrows from 0 to 1 and 1 to 2</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>arrowprops <span class="op">=</span> <span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">'black'</span>, shrink<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove y-axis labels for the second and third subplots</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels([])</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_yticklabels([])</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_yticklabels([])</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticklabels([</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'National Bank'</span>, <span class="st">'Local Bank'</span>, <span class="st">'Local Firm'</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>], rotation<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels([])</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xticklabels([])</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels([])</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xticklabels([])</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="vs">fr'$W_</span><span class="ch">{{</span><span class="sc">{</span>index_set[i]<span class="sc">}</span><span class="ch">}}</span><span class="vs">$'</span>)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xlabel(<span class="vs">r'$W_\infty$'</span>)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust subplot spacing</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('../figs/w_side_by_side.eps', format='eps', dpi=700)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Financial_Networks_Stability_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-5-sin-restricciones" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="ejemplo-5-sin-restricciones"><span class="header-section-number">0.2</span> Ejemplo 5 sin restricciones</h2>
+<div id="cell-13" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>W_list, P_list <span class="op">=</span> run_price_dynamics(cov_mat,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                    mean_mat,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                    [], eta <span class="op">=</span> <span class="fl">0.5</span>, <span class="co">#poner '(0,2)' dentro de los corchetes para replicar el ejemplo 5 o dejarlo vacío para que no existan restricciones</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                                    Gamma <span class="op">=</span> gamma_mat,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                                    num_iterations<span class="op">=</span><span class="dv">500</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Q matrices: [array([[ 1.33333333,  0.41666667, -1.25      ],
+       [ 0.41666667,  0.91145833, -0.859375  ],
+       [-1.25      , -0.859375  ,  1.953125  ]]), array([[ 1.33333333,  0.41666667, -1.25      ],
+       [ 0.41666667,  0.91145833, -0.859375  ],
+       [-1.25      , -0.859375  ,  1.953125  ]]), array([[ 1.33333333,  0.41666667, -1.25      ],
+       [ 0.41666667,  0.91145833, -0.859375  ],
+       [-1.25      , -0.859375  ,  1.953125  ]])]
+0</code></pre>
+</div>
+</div>
+<div id="cell-14" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> [[<span class="va">False</span>, <span class="va">False</span>,  <span class="va">True</span>],</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       [<span class="va">False</span>, <span class="va">False</span>, <span class="va">False</span>],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       [ <span class="va">True</span>, <span class="va">False</span>, <span class="va">False</span>]]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>global_min <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>global_max <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the heatmaps and axes</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>index_set <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>custom_annotations <span class="op">=</span> [</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"X"</span>, <span class="dv">0</span>, <span class="dv">2</span>),  <span class="co"># (text, row, column)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"X"</span>, <span class="dv">2</span>, <span class="dv">0</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    data_with_mask <span class="op">=</span> np.where(mask, np.nan, P_list[index_set[i]])</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> sns.heatmap(data_with_mask, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'Blues'</span>, cbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                annot_kws<span class="op">=</span>{<span class="st">"size"</span>: <span class="dv">24</span>}, vmin<span class="op">=</span>global_min, vmax<span class="op">=</span>global_max, fmt<span class="op">=</span><span class="st">'.2f'</span>)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, spine <span class="kw">in</span> res.spines.items():</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        spine.set_visible(<span class="va">True</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        spine.set_linewidth(<span class="dv">2</span>)</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        spine.set_color(<span class="st">'k'</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create arrows from 0 to 1 and 1 to 2</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>arrowprops <span class="op">=</span> <span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">'black'</span>, shrink<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove y-axis labels for the second and third subplots</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels([])</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_yticklabels([])</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_yticklabels([])</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticklabels([</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'National Bank'</span>, <span class="st">'Local Bank'</span>, <span class="st">'Local Firm'</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>], rotation<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels([])</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xticklabels([])</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels([])</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xticklabels([])</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="vs">fr'$P_</span><span class="ch">{{</span><span class="sc">{</span>index_set[i]<span class="sc">}</span><span class="ch">}}</span><span class="vs">$'</span>)</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xlabel(<span class="vs">r'$P_\infty$'</span>)</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust subplot spacing</span></span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('../figs/prices_side_by_side.eps', format='eps', dpi=700)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Financial_Networks_Stability_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">4</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>global_min <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>global_max <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the heatmaps and axes</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#index_set = [0, 1, 2, -1]</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># custom_annotations = [</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#     ("X", 0, 2),  # (text, row, column)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     ("X", 2, 0),</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ]</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> [[<span class="va">False</span>, <span class="va">False</span>,  <span class="va">True</span>],</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>       [<span class="va">False</span>, <span class="va">False</span>, <span class="va">False</span>],</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>       [ <span class="va">True</span>, <span class="va">False</span>, <span class="va">False</span>]]</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, ax <span class="kw">in</span> <span class="bu">enumerate</span>(axes):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    data_with_mask <span class="op">=</span> np.where(mask, np.nan, W_list[index_set[i]])</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> sns.heatmap(data_with_mask, annot<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'Blues'</span>, cbar<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                annot_kws<span class="op">=</span>{<span class="st">"size"</span>: <span class="dv">24</span>}, vmin<span class="op">=</span>global_min, vmax<span class="op">=</span>global_max, fmt<span class="op">=</span><span class="st">'.2f'</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, spine <span class="kw">in</span> res.spines.items():</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>        spine.set_visible(<span class="va">True</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>        spine.set_linewidth(<span class="dv">2</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        spine.set_color(<span class="st">'k'</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for annotation in custom_annotations:</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     text, row, col = annotation</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     ax.annotate(text, xy=(col + 0.5, row + 0.5), color='red',</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#                 fontsize=80, ha='center', va='center')</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Create arrows from 0 to 1 and 1 to 2</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>arrowprops <span class="op">=</span> <span class="bu">dict</span>(facecolor<span class="op">=</span><span class="st">'black'</span>, shrink<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove y-axis labels for the second and third subplots</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yticklabels([])</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_yticklabels([])</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_yticklabels([])</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_yticklabels([</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">'National Bank'</span>, <span class="st">'Local Bank'</span>, <span class="st">'Local Firm'</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>], rotation<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xticklabels([])</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_xticklabels([])</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xticklabels([])</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xticklabels([])</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>    axes[i].set_xlabel(<span class="vs">fr'$W_</span><span class="ch">{{</span><span class="sc">{</span>index_set[i]<span class="sc">}</span><span class="ch">}}</span><span class="vs">$'</span>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">3</span>].set_xlabel(<span class="vs">r'$W_\infty$'</span>)</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust subplot spacing</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('../figs/w_side_by_side.eps', format='eps', dpi=700)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Financial_Networks_Stability_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="actualización-8102024" class="level2" data-number="0.3">
+<h2 data-number="0.3" class="anchored" data-anchor-id="actualización-8102024"><span class="header-section-number">0.3</span> Actualización 8/10/2024</h2>
 <p>Demostrar que existe un punto de equilibrio único y estable, para garantizar que los agentes alcanzan un equilibrio óptimo en la distribución de sus transacciones, y que sus decisiones convergerán a ese punto.</p>
-<section id="teorema-1-existencia-y-unicidad-de-un-punto-estable" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">1.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</h3>
+<section id="teorema-1-existencia-y-unicidad-de-un-punto-estable" class="level3" data-number="0.3.1">
+<h3 data-number="0.3.1" class="anchored" data-anchor-id="teorema-1-existencia-y-unicidad-de-un-punto-estable"><span class="header-section-number">0.3.1</span> Teorema 1 (Existencia y unicidad de un punto estable)</h3>
 <p>Los agentes alcanzarán siempre el mismo punto de equilibrio si comienzan desde condiciones iniciales diferentes.</p>
 </section>
-<section id="teorema-4-condiciones-de-convergencia" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="teorema-4-condiciones-de-convergencia"><span class="header-section-number">1.2</span> Teorema 4 (Condiciones de convergencia)</h3>
+<section id="teorema-4-condiciones-de-convergencia" class="level3" data-number="0.3.2">
+<h3 data-number="0.3.2" class="anchored" data-anchor-id="teorema-4-condiciones-de-convergencia"><span class="header-section-number">0.3.2</span> Teorema 4 (Condiciones de convergencia)</h3>
 <p>Punto estable al cual se converge.</p>
 </section>
 </section>
-<section id="actualización-2102024" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="actualización-2102024"><span class="header-section-number">2</span> Actualización 2/10/2024</h2>
-<section id="objetivo" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">2.1</span> Objetivo</h3>
+<section id="actualización-2102024" class="level2" data-number="0.4">
+<h2 data-number="0.4" class="anchored" data-anchor-id="actualización-2102024"><span class="header-section-number">0.4</span> Actualización 2/10/2024</h2>
+<section id="objetivo" class="level3" data-number="0.4.1">
+<h3 data-number="0.4.1" class="anchored" data-anchor-id="objetivo"><span class="header-section-number">0.4.1</span> Objetivo</h3>
 <p>El objetivo general es desarrollar un modelo teórico que permita analizar cómo los agentes financieros optimizan la distribución de sus transacciones entre sistemas financieros tradicionales y blockchain, maximizando su utilidad total.</p>
 <p>El modelo teórico derivará las condiciones bajo las cuales los agentes alcanzan un equilibrio estable entre la cantidad de transacciones que destinan a blockchain y a los sistemas tradicionales, o en qué condiciones uno de los sistemas prevalece sobre el otro.</p>
 </section>
-<section id="problema-de-maximización" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="problema-de-maximización"><span class="header-section-number">2.2</span> Problema de Maximización</h3>
+<section id="problema-de-maximización" class="level3" data-number="0.4.2">
+<h3 data-number="0.4.2" class="anchored" data-anchor-id="problema-de-maximización"><span class="header-section-number">0.4.2</span> Problema de Maximización</h3>
 <p>El agente debe optimizar dos decisiones:</p>
 <ul>
 <li><strong><span class="math inline">\(\alpha\)</span></strong>: La proporción de la transacción destinada a blockchain.</li>
@@ -174,8 +782,8 @@ window.Quarto = {
 \max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
 \]</span></p>
 </section>
-<section id="función-de-utilidad" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="función-de-utilidad"><span class="header-section-number">2.3</span> Función de Utilidad:</h3>
+<section id="función-de-utilidad" class="level3" data-number="0.4.3">
+<h3 data-number="0.4.3" class="anchored" data-anchor-id="función-de-utilidad"><span class="header-section-number">0.4.3</span> Función de Utilidad:</h3>
 <p><span class="math display">\[
 U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
 \]</span> <span class="math display">\[
@@ -184,16 +792,16 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 - \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}}
 - \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
 \]</span></p>
-<section id="distribución-del-contrato-entre-sistemas" class="level4" data-number="2.3.1">
-<h4 data-number="2.3.1" class="anchored" data-anchor-id="distribución-del-contrato-entre-sistemas"><span class="header-section-number">2.3.1</span> Distribución del contrato entre sistemas:</h4>
+<section id="distribución-del-contrato-entre-sistemas" class="level4" data-number="0.4.3.1">
+<h4 data-number="0.4.3.1" class="anchored" data-anchor-id="distribución-del-contrato-entre-sistemas"><span class="header-section-number">0.4.3.1</span> Distribución del contrato entre sistemas:</h4>
 <ul>
 <li><span class="math inline">\((1 - \alpha) w_i\)</span>: Proporción del contrato total <span class="math inline">\(w_i\)</span> que el agente asigna al <strong>sistema tradicional</strong>.</li>
 <li><span class="math inline">\(\alpha w_i\)</span>: Proporción del contrato total que el agente asigna a <strong>blockchain</strong>.</li>
 <li><span class="math inline">\(\alpha\)</span>: Proporción de la transacción destinada a blockchain, con <span class="math inline">\(\alpha \in [0, 1]\)</span>.</li>
 </ul>
 </section>
-<section id="beneficios-esperados" class="level4" data-number="2.3.2">
-<h4 data-number="2.3.2" class="anchored" data-anchor-id="beneficios-esperados"><span class="header-section-number">2.3.2</span> Beneficios esperados:</h4>
+<section id="beneficios-esperados" class="level4" data-number="0.4.3.2">
+<h4 data-number="0.4.3.2" class="anchored" data-anchor-id="beneficios-esperados"><span class="header-section-number">0.4.3.2</span> Beneficios esperados:</h4>
 <ul>
 <li><strong>Para el sistema tradicional</strong>:
 <ul>
@@ -208,8 +816,8 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </ul></li>
 </ul>
 </section>
-<section id="riesgos-financieros-en-cada-sistema" class="level4" data-number="2.3.3">
-<h4 data-number="2.3.3" class="anchored" data-anchor-id="riesgos-financieros-en-cada-sistema"><span class="header-section-number">2.3.3</span> Riesgos financieros en cada sistema:</h4>
+<section id="riesgos-financieros-en-cada-sistema" class="level4" data-number="0.4.3.3">
+<h4 data-number="0.4.3.3" class="anchored" data-anchor-id="riesgos-financieros-en-cada-sistema"><span class="header-section-number">0.4.3.3</span> Riesgos financieros en cada sistema:</h4>
 <ul>
 <li><strong>Sistema tradicional</strong>:
 <ul>
@@ -221,21 +829,21 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </ul></li>
 </ul>
 </section>
-<section id="riesgos-interdependientes-entre-sistemas" class="level4" data-number="2.3.4">
-<h4 data-number="2.3.4" class="anchored" data-anchor-id="riesgos-interdependientes-entre-sistemas"><span class="header-section-number">2.3.4</span> Riesgos interdependientes entre sistemas:</h4>
+<section id="riesgos-interdependientes-entre-sistemas" class="level4" data-number="0.4.3.4">
+<h4 data-number="0.4.3.4" class="anchored" data-anchor-id="riesgos-interdependientes-entre-sistemas"><span class="header-section-number">0.4.3.4</span> Riesgos interdependientes entre sistemas:</h4>
 <ul>
 <li><span class="math inline">\(\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})\)</span>: Este término refleja el <strong>riesgo regulatorio</strong> en el sistema tradicional, que depende del tamaño de la transacción (<span class="math inline">\(w_i\)</span>) y del riesgo de hackeo en blockchain (<span class="math inline">\(H_{\text{blockchain}}\)</span>).</li>
 <li><span class="math inline">\(\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}\)</span>: Riesgo de hackeo en blockchain, que depende del tamaño de la red (<span class="math inline">\(N_{\text{blockchain}}\)</span>) y el riesgo en el sistema tradicional.</li>
 </ul>
 </section>
-<section id="confianza-institucional-en-el-sistema-tradicional" class="level4" data-number="2.3.5">
-<h4 data-number="2.3.5" class="anchored" data-anchor-id="confianza-institucional-en-el-sistema-tradicional"><span class="header-section-number">2.3.5</span> Confianza institucional en el sistema tradicional:</h4>
+<section id="confianza-institucional-en-el-sistema-tradicional" class="level4" data-number="0.4.3.5">
+<h4 data-number="0.4.3.5" class="anchored" data-anchor-id="confianza-institucional-en-el-sistema-tradicional"><span class="header-section-number">0.4.3.5</span> Confianza institucional en el sistema tradicional:</h4>
 <ul>
 <li><span class="math inline">\(\phi_i \cdot C_{\text{tradicional}}\)</span>: Término que captura el nivel de <strong>confianza institucional</strong> en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.</li>
 </ul>
 </section>
-<section id="efectos-de-red-en-blockchain" class="level4" data-number="2.3.6">
-<h4 data-number="2.3.6" class="anchored" data-anchor-id="efectos-de-red-en-blockchain"><span class="header-section-number">2.3.6</span> Efectos de red en blockchain:</h4>
+<section id="efectos-de-red-en-blockchain" class="level4" data-number="0.4.3.6">
+<h4 data-number="0.4.3.6" class="anchored" data-anchor-id="efectos-de-red-en-blockchain"><span class="header-section-number">0.4.3.6</span> Efectos de red en blockchain:</h4>
 <ul>
 <li><span class="math inline">\(\eta_i \cdot N_{\text{blockchain}}\)</span>: Término que mide el efecto de red en blockchain. A medida que el número de participantes en la red (<span class="math inline">\(N_{\text{blockchain}}\)</span>) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.</li>
 </ul>
@@ -243,11 +851,11 @@ U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (
 </section>
 </section>
 </section>
-<section id="idea-de-tesis-26092024" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="idea-de-tesis-26092024"><span class="header-section-number">3</span> Idea de Tesis 26/09/2024</h2>
+<section id="idea-de-tesis-26092024" class="level2" data-number="0.5">
+<h2 data-number="0.5" class="anchored" data-anchor-id="idea-de-tesis-26092024"><span class="header-section-number">0.5</span> Idea de Tesis 26/09/2024</h2>
 <p>Comparar la utilidad y los riesgos que enfrentan los participantes en sistemas financieros basados en blockchain frente a los sistemas financieros tradicionales. A través de funciones de utilidad para ambos sistemas, se analizarán los costos de transacción, riesgos de seguridad, confianza institucional y efectos de red. El objetivo es entender qué factores determinan la preferencia de los usuarios y si es posible lograr un equilibrio estable en cada sistema o si uno prevalecerá sobre el otro.</p>
-<section id="posible-función-de-utilidad-en-un-sistema-blockchain" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">3.1</span> Posible función de utilidad en un sistema blockchain</h3>
+<section id="posible-función-de-utilidad-en-un-sistema-blockchain" class="level3" data-number="0.5.1">
+<h3 data-number="0.5.1" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-blockchain"><span class="header-section-number">0.5.1</span> Posible función de utilidad en un sistema blockchain</h3>
 <p>La función de utilidad para un participante <span class="math inline">\(i\)</span> en un sistema blockchain se definiría como:</p>
 <p><span class="math display">\[
 U_{\text{blockchain}, i} = w_i^T (\mu_i - C e_i) - \gamma_i \cdot w_i^T \Sigma_i w_i - \lambda_i \cdot H_i + \eta_i \cdot N_i
@@ -265,8 +873,8 @@ U_{\text{blockchain}, i} = w_i^T (\mu_i - C e_i) - \gamma_i \cdot w_i^T \Sigma_i
 <li><span class="math inline">\(N_i\)</span>: Tamaño de la red o liquidez.</li>
 </ul>
 </section>
-<section id="posible-función-de-utilidad-en-un-sistema-tradicional" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">3.2</span> Posible función de utilidad en un sistema tradicional</h3>
+<section id="posible-función-de-utilidad-en-un-sistema-tradicional" class="level3" data-number="0.5.2">
+<h3 data-number="0.5.2" class="anchored" data-anchor-id="posible-función-de-utilidad-en-un-sistema-tradicional"><span class="header-section-number">0.5.2</span> Posible función de utilidad en un sistema tradicional</h3>
 <p><span class="math display">\[
 U_{\text{tradicional}, i} = w_i^T (\mu_i - F e_i) - \beta_i \cdot R_i + \phi_i \cdot C_i
 \]</span></p>
@@ -282,6 +890,9 @@ U_{\text{tradicional}, i} = w_i^T (\mu_i - F e_i) - \beta_i \cdot R_i + \phi_i \
 <li><span class="math inline">\(C_i\)</span>: Nivel de confianza en las instituciones tradicionales.</li>
 </ul>
 </section>
+</section>
+<section id="section-1" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> </h1>
 </section>
 
 </main>
