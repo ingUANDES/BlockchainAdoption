@@ -48,88 +48,207 @@ The optimization problem is $\max_{\alpha, W}b(W,\tilde P, \hat P)$.
 \subsection{Motivating example}
 
 Firm A wants to transfer to firm K. In the traditional network the cost is $\tilde c$. There is a firm L such that A is able to transfer to L and L is able to transfer to K at a cost $\hat c<\tilde c$.
-\section{Posible Problema de Maximización}
 
-El agente optimiza dos decisiones clave:
+\section{The model}
+
+This model is inspired in the work done by \cite{jalan_incentive-aware_2024}. They proposed a model where networks emerges from interactions between utility-maximizing firms. There is always a stable network that depends on the firm's beliefs (expected returns and perceived risk of trading with each agent). 
+Now we add a second network (blockchain) that competes with the traditional, and we also consider a benefit for transparency. The adapted utility function for two networks is: 
+
+$$ g_i(W_T, W_B, P_T, P_B) := w_{Ti}' (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}' \Sigma_{Ti} w_{Ti}  $$
+$$+ w_{Bi}' (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}' \Sigma_{Bi} w_{Bi} - \lambda(\tilde W_i - \hat W_B)$$
+
+where $W_T$ and $W_B$ are the matrix of contract sizes. $P_T$ and $P_B$ are the price matrix of the contracts. The vectors $w_{Ti}$ and $w_{Bi}$ are the $i$th column of each matrix. Agent $i$'s beliefs are represented by the vectors $\mu_{Ti}$ and $\mu_{Bi}$ of expected returns, and $\Sigma_{Ti}$ and $\Sigma_{Bi}$ are covariance matrix, that represents perceived risk of trading with other firms. The vector $e_i,...,e_n$ denote the standard basis in $\mathbb{R}^n$. $\gamma_{Ti}$ and $\gamma_{Bi}$ are the risk aversion parameters for each network.
+     
+    $\lambda(\tilde W_i - \hat W_B)$ represents the utility for being able to see the transactions of other agents (transparency).
+    \begin{itemize}
+        \item $\tilde W_i$ represents the exogenous expectation of transactions of agent $i$.
+        \item $\hat W_B$: transaction matrix observed in Blockchain (endogenously).
+    \end{itemize}
+
+\subsection{Original Results}
+A national bank, a local bank and a local firm, the national bank cant have transactions with the local firm. After 500 iterations these are the results.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_overtime.png}
+    \caption{Contracts matrix $W_t$}
+    \label{fig:etiqueta}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/P_overtime.png}
+    \caption{Payments matrix $P_t$}
+    \label{fig:etiqueta}
+\end{figure}
+
+Those stables matrix means that the local firm gives money to the local bank, and the national bank also makes a payment to the national bank.
+If we take out the restrictions we get the followings matrix.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_overtime_NR.png}
+    \caption{Contracts matrix $W_t$ without restrictions.}
+    \label{fig:etiqueta}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/P_overtime_NR.png}
+    \caption{Payments matrix $P_t$ without restrictions.}
+    \label{fig:etiqueta}
+\end{figure}
+
+That changes in the matrix means that without the restrictions, the local firm would transact with the national bank and the local bank.
+
+\subsection{Foundations of the Jalan and Chakrabarti (2024) Model}
+
+The starting point of this thesis is the model proposed by \cite{jalan_incentive-aware_2024}, which provides a formal structure for the endogenous formation of financial networks. In this framework, financial links emerge from the bilateral interactions of utility-maximizing agents, typically interpreted as firms or institutions in a financial system.
+
+Each agent evaluates the desirability of transacting with others by considering two main factors: the expected return from trading with each potential counterparty, and the associated risk. These beliefs are encoded in a vector of expected returns \( \mu_i \in \mathbb{R}^n \) and a covariance matrix \( \Sigma \in \mathbb{R}^{n \times n} \), shared across agents or agent-specific depending on the context.
+
+Agents are risk-averse, with risk aversion parameter \( \gamma_i > 0 \), and aim to form a portfolio of bilateral contracts \( w_i \in \mathbb{R}^n \) that maximizes their utility. The utility function of agent \( i \) in the traditional network is given by:
+
+\begin{equation}
+U_i = w_i^\top (\mu_i - p_i) - \gamma_i \cdot w_i^\top \Sigma w_i,
+\end{equation}
+
+where \( p_i \in \mathbb{R}^n \) is the vector of contract prices faced by agent \( i \). The first term captures the expected profit from the contracts, while the second term penalizes the agent for the risk exposure of the chosen portfolio.
+
+Prices are not exogenous: they are formed through an iterative negotiation process. For each pair of agents \( i, j \), the price \( p_{ij} \) is adjusted until the contract demands between both agents are mutually agreeable. This bilateral adjustment process leads to the emergence of a stable network of financial linkages, in which no agent has an incentive to unilaterally alter their portfolio.
+
+An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
+
+
+
+\subsection{Foundations of the Jalan and Chakrabarti (2024) Model}
+
+The starting point of this thesis is the model proposed by \cite{jalan_incentive-aware_2024}, which provides a formal structure for the endogenous formation of financial networks. In this framework, financial links emerge from the bilateral interactions of utility-maximizing agents, typically interpreted as firms or institutions in a financial system.
+
+Each agent evaluates the desirability of transacting with others by considering two main factors: the expected return from trading with each potential counterparty, and the associated risk. These beliefs are encoded in a vector of expected returns \( \mu_i \in \mathbb{R}^n \) and a covariance matrix \( \Sigma \in \mathbb{R}^{n \times n} \), shared across agents or agent-specific depending on the context.
+
+Agents are risk-averse, with risk aversion parameter \( \gamma_i > 0 \), and aim to form a portfolio of bilateral contracts \( w_i \in \mathbb{R}^n \) that maximizes their utility. The utility function of agent \( i \) in the traditional network is given by:
+
+\begin{equation}
+U_i = w_i^\top (\mu_i - p_i) - \gamma_i \cdot w_i^\top \Sigma w_i,
+\end{equation}
+
+where \( p_i \in \mathbb{R}^n \) is the vector of contract prices faced by agent \( i \). The first term captures the expected profit from the contracts, while the second term penalizes the agent for the risk exposure of the chosen portfolio.
+
+Prices are not exogenous: they are formed through an iterative negotiation process. For each pair of agents \( i, j \), the price \( p_{ij} \) is adjusted until the contract demands between both agents are mutually agreeable. This bilateral adjustment process leads to the emergence of a stable network of financial linkages, in which no agent has an incentive to unilaterally alter their portfolio.
+
+An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
+
+\subsubsection{Algorithmic Formation of Network Links and Prices}
+
+The prices and resulting network structure are not exogenously imposed but instead emerge through a decentralized negotiation process. This algorithm simulates a dynamic where each pair of agents adjusts their bilateral contract based on mutual agreement:
+
 \begin{itemize}
-    \item $\alpha$: La proporción de la transacción destinada a blockchain.
-    \item $w_i$: El tamaño total de la transacción.
+    \item Each agent \( i \) computes its optimal desired contracts \( w_i \), given the current prices.
+    \item For each pair \( (i,j) \), we compare the amount \( i \) wants from \( j \) and what \( j \) wants from \( i \).
+    \item If \( w_{ij} \ne w_{ji} \), it means there is a disagreement. The algorithm adjusts the price \( p_{ij} \) to reduce the difference between their desired contract sizes.
+    \item This negotiation is bilateral and iterative. Over time, the price moves towards a level where both agents agree: \( w_{ij} = w_{ji} \).
+    \item Once agreement is reached, the bilateral contract is formed. Otherwise, it is not established.
 \end{itemize}
 
-Y tiene que resolver el siguiente problema de optimización:
+This procedure is repeated for all pairs, across multiple iterations, until the entire system reaches a stable equilibrium in which no agent wants to modify their portfolio. At this point, the network has emerged endogenously from decentralized decisions and mutual negotiations.
 
-\[
-\max_{\alpha, w_i} U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}})
-\]
+An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
 
-\subsection{Función de Utilidad}
 
-\[
-U_i(W, \alpha, \tilde{P}, \hat{P}, N_{\text{blockchain}}) = (1 - \alpha) w_i^T (\tilde{\mu}_i - \tilde{P}e_i) - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
-\]
-\[
-+ \alpha w_i^T (\hat{\mu}_i - \hat{P}e_i) - \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i
-\]
-\[
-- \gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}}) + \phi_i \cdot C_{\text{tradicional}} 
-- \gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}} + \eta_i \cdot N_{\text{blockchain}}
-\]
+\subsection{Extension: Dual-Network Environment with Transparency Incentives}
 
-\subsection{Explicación de términos y parámetros}
+This thesis extends the original model by incorporating a second financial network that coexists and competes with the traditional one. This second layer, referred to as the blockchain network, allows agents to form alternative financial contracts that differ in their structural and informational characteristics. Agents may choose to interact in both networks simultaneously, a behavior known as multihoming.
+
+The blockchain network is characterized by:
+\begin{itemize}
+    \item Lower perceived risk (reflected in a different covariance matrix \( \Sigma^{(B)} \)),
+    \item A potentially different structure of expected returns \( \mu^{(B)} \),
+    \item Lower risk aversion due to technological trust or regulatory factors \( \gamma^{(B)} \),
+    \item An additional utility derived from transparency.
+\end{itemize}
+
+The utility function of an agent \( i \) in this dual-network setting becomes:
+
+\begin{align*}
+g_i(W_T, W_B, P_T, P_B) := &\; w_{Ti}^\top (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}^\top \Sigma_{Ti} w_{Ti} \\
+&+ w_{Bi}^\top (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}^\top \Sigma_{Bi} w_{Bi} \\
+&+ \lambda \cdot (\tilde{W}_i - \hat{W}_{Bi})
+\end{align*}
+
+\noindent where all variables are defined analogously to the traditional model, but indexed by network type (T for traditional, B for blockchain). The term \( \lambda (\tilde{W}_i - \hat{W}_{Bi}) \) captures the utility benefit from transparency:
+
+\begin{itemize}
+    \item \( \tilde{W}_i \) is the agent's exogenous target or expected participation level,
+    \item \( \hat{W}_{Bi} \) is the observed contract volume of the agent in the blockchain network,
+    \item \( \lambda > 0 \) measures the marginal benefit of observing and participating in transparent contracts.
+\end{itemize}
+
+This formulation reflects the hypothesis that blockchain technologies may offer not only different risk-return profiles but also institutional advantages such as verifiability, regulatory compliance, and reduced information asymmetries.
+
+In this dual environment, agents simultaneously choose their optimal contract vectors \( w_{Ti} \) and \( w_{Bi} \), while the prices \( P_T \) and \( P_B \) evolve through iterative bilateral negotiation. The resulting financial structure is a multilayer network that emerges endogenously from agents' strategic interactions across both layers.
+
+\subsubsection{Extension of the Algorithm for Dual Networks}
+
+The algorithmic structure of the model is adapted to accommodate the presence of two simultaneous and interacting financial layers. The key differences with respect to the original model are:
+
+\begin{itemize}
+    \item Agents now solve a joint optimization problem across both networks, balancing expected returns, risk, and transparency incentives.
+    \item For each time step, the desired contract vectors \( w_{Ti} \) and \( w_{Bi} \) are computed independently, but influenced by their respective prices and beliefs.
+    \item Price adjustments are performed in parallel across both layers. Each pair \( (i, j) \) negotiates simultaneously in the traditional and blockchain networks.
+    \item The transparency term introduces a new driver in the decision-making process: agents are incentivized to increase their participation in the blockchain if their observed volume falls short of expectations.
+\end{itemize}
+
+Formally, the algorithm alternates between:
+\begin{enumerate}
+    \item Computing desired contracts \( W_T \) and \( W_B \) using the updated utility function,
+    \item Updating prices \( P_T \) and \( P_B \) to reduce discrepancies between bilateral demands in each network,
+    \item Repeating the process until convergence in both layers is achieved.
+\end{enumerate}
+
+The convergence criteria, as in the original model, are based on mutual agreement: a contract \( (i, j) \) is formed in a given network only if both agents agree on the price and quantity. By introducing transparency into the incentive structure, this algorithm allows us to examine how information availability and institutional trust shape the formation and adoption of financial networks.
+
+
+\subsection{Formal Equations and Stability Conditions}
+
+The evolution of the financial system is governed by the interaction between contract optimization and bilateral price adjustments. At each time step, agents solve the following optimization problem:
+
+\begin{equation}
+\max_{w_{Ti}, w_{Bi}}\; g_i(W_T, W_B, P_T, P_B)
+\end{equation}
+
+subject to potential constraints on the allowed set of counterparties or total exposure.
+
+The equilibrium contract matrices \( W_T^* \) and \( W_B^* \), together with the corresponding equilibrium price matrices \( P_T^* \) and \( P_B^* \), must satisfy two conditions:
 
 \begin{enumerate}
-    \item \textbf{Distribución del contrato entre sistemas}:
-    \begin{itemize}
-        \item $(1 - \alpha) w_i$: Proporción del contrato total $w_i$ que el agente asigna al \textit{sistema tradicional}.
-        \item $\alpha w_i$: Proporción del contrato total que el agente asigna a \textit{blockchain}.
-        \item $\alpha$: Proporción de la transacción destinada a blockchain, con $\alpha \in [0, 1]$.
-    \end{itemize}
+    \item \textbf{Mutual Agreement:} For every contract \( (i, j) \), both agents must agree on the contract size and price in both networks:
+    \begin{equation}
+    w_{ij}^{(T)}(P_T^*) = w_{ji}^{(T)}(P_T^*), \quad w_{ij}^{(B)}(P_B^*) = w_{ji}^{(B)}(P_B^*)
+    \end{equation}
     
-    \item \textbf{Beneficios esperados}:
-    \begin{itemize}
-        \item \textit{Para el sistema tradicional}:
-        \begin{itemize}
-            \item $\tilde{\mu}_i$: Beneficios esperados por el agente en el sistema tradicional.
-            \item $\tilde{P}$: Costos de transacción en el sistema tradicional (tarifas bancarias, costos de intermediación).
-            \item $e_i$: Vector que representa al agente.
-        \end{itemize}
-        \item \textit{Para blockchain}:
-        \begin{itemize}
-            \item $\hat{\mu}_i$: Beneficios esperados en blockchain.
-            \item $\hat{P}$: Costos de transacción en blockchain (comisiones de gas).
-        \end{itemize}
-    \end{itemize}
-
-    \item \textbf{Riesgos financieros en cada sistema (ponderados por $\gamma_i$)}:
-    \begin{itemize}
-        \item \textit{Sistema tradicional}:
-        \[
-        - \gamma_i (1 - \alpha) w_i^T \tilde{\Sigma} (1 - \alpha) w_i
-        \]
-        Este término representa los \textit{riesgos financieros} (volatilidad) en el sistema tradicional, con $\tilde{\Sigma}$ como la matriz de covarianza de riesgos.
-        
-        \item \textit{Blockchain}:
-        \[
-        - \gamma_i \alpha w_i^T \hat{\Sigma} \alpha w_i
-        \]
-        Riesgos financieros en blockchain, ponderados por $\alpha$, donde $\hat{\Sigma}$ es la matriz de covarianza de los riesgos financieros en blockchain.
-    \end{itemize}
-    
-    \item \textbf{Riesgos interdependientes entre sistemas}:
-    \begin{itemize}
-        \item $\gamma \cdot R_{\text{tradicional}}(w_i, H_{\text{blockchain}})$: Este término refleja el \textit{riesgo regulatorio} en el sistema tradicional, que depende del tamaño de la transacción ($w_i$) y del riesgo de hackeo en blockchain ($H_{\text{blockchain}}$).
-        \item $\gamma \cdot \frac{H_{\text{blockchain}}(w_i, R_{\text{tradicional}})}{N_{\text{blockchain}}}$: Riesgo de hackeo en blockchain, que depende del tamaño de la red ($N_{\text{blockchain}}$) y el riesgo en el sistema tradicional.
-    \end{itemize}
-    
-    \item \textbf{Confianza institucional en el sistema tradicional}:
-    \[
-    \phi_i \cdot C_{\text{tradicional}}
-    \]
-    Término que captura el nivel de \textit{confianza institucional} en las instituciones financieras tradicionales, que afecta positivamente la utilidad derivada de operar en ese sistema.
-    
-    \item \textbf{Efectos de red en blockchain}:
-    \[
-    \eta_i \cdot N_{\text{blockchain}}
-    \]
-    Término que mide el \textit{efecto de red} en blockchain. A medida que el número de participantes en la red ($N_{\text{blockchain}}$) crece, la seguridad y la liquidez aumentan, lo que incrementa la utilidad para los agentes.
+    \item \textbf{Individual Optimality:} Each agent maximizes their utility given current prices and the observed network state.
 \end{enumerate}
+
+The system is iteratively updated via bilateral negotiations, where price updates follow:
+
+\begin{equation}
+p_{ij}^{(T,new)} = \eta \cdot \hat{p}_{ij}^{(T)} + (1 - \eta) \cdot p_{ij}^{(T)},
+\end{equation}
+
+where \( \hat{p}_{ij}^{(T)} \) is the price that would equalize the demands from both agents, and \( \eta \in (0, 1] \) controls the speed of adjustment. A symmetric equation applies for the blockchain layer.
+
+A stable network configuration is reached when price updates converge and no agent wishes to change their portfolio in either network. Formally, convergence is achieved when the norm of the price update becomes negligible for all agent pairs.
+
+This structure enables us to explore how parameters such as \( \lambda \) (transparency incentive), \( \gamma \) (risk aversion), or \( \mu \) (expected returns) influence the allocation of contracts across layers and the emergent topology of the financial network.
+
+\subsection{Economic Interpretation of the Transparency Parameter}
+
+The parameter \( \lambda \) introduced in the utility function represents an agent's valuation of transparency within the blockchain network. It plays a critical role in determining the incentive to adopt or expand participation in that network. Economically, transparency can be interpreted as the ability to observe, verify, and audit transactions, which can reduce counterparty risk, improve reputation effects, and enhance regulatory compliance.
+
+A higher value of \( \lambda \) implies that agents derive more utility from being part of a visible and auditable system. As \( \lambda \) increases, the marginal benefit of transacting on the blockchain becomes more significant, leading agents to reallocate a greater portion of their portfolio to that network. Conversely, when \( \lambda = 0 \), the model collapses to a purely risk-return framework with no added value from transparency.
+
+This parameter thus serves as a lever to explore under what conditions the blockchain layer becomes dominant or complementary. It allows for comparative statics that analyze how institutional incentives (e.g., legal recognition, auditing standards, regulatory endorsements) might shift the structure of financial linkages away from traditional opaque systems and toward transparent architectures.
+
+Furthermore, the inclusion of \( \lambda \) introduces a form of endogenous adoption dynamics: agents who initially do not value transparency may still increase their participation as others do, due to network externalities. In this sense, \( \lambda \) captures both a private preference and a systemic force shaping the evolution of multilayer financial networks.
+

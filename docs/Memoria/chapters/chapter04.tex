@@ -1,6 +1,46 @@
 % cap4.tex
 
-\chapter{Análisis de Resultados}
+\chapter{Methodology}
 \label{c4} % la etiqueta para referencias
 
+\subsection{Computational Implementation of the Model}
+
+The model is implemented in Python, utilizing numerical libraries such as NumPy, SciPy, and Seaborn for matrix operations, optimization, and visualization. The architecture follows a modular design, separating the core components of the simulation: utility functions, price negotiation dynamics, network evolution, and visualization.
+
+Each simulation initializes the parameters and beliefs of the agents, and then iteratively updates prices and contract sizes in both the traditional and blockchain networks. The dual-layer structure is explicitly encoded in two sets of matrices: \( W_T, P_T \) for the traditional layer, and \( W_B, P_B \) for the blockchain layer.
+
+\subsection{Pairwise Negotiation and Optimization Algorithm}
+
+At each time step, agents solve their individual utility maximization problems given current prices. The contract matrices \( W_T \) and \( W_B \) are updated using closed-form expressions derived from the first-order conditions of the utility function. These solutions depend on Q-matrices constructed from the covariance structure and constraints.
+
+Prices are updated via a bilateral negotiation algorithm. If agent \( i \) demands a different amount from agent \( j \) than vice versa, the corresponding price \( p_{ij} \) is adjusted toward a midpoint that balances these demands. This process is repeated until convergence.
+
+\subsection{Simulation Parameters and Configuration}
+
+Simulations are configured with a small number of agents (typically 3 to 10) to allow for detailed tracking of dynamics. Key parameters include:
+
+\begin{itemize}
+    \item Expected returns \( \mu_{Ti}, \mu_{Bi} \)
+    \item Covariance matrices \( \Sigma_T, \Sigma_B \)
+    \item Risk aversion coefficients \( \gamma_T, \gamma_B \)
+    \item Transparency incentive \( \lambda \)
+    \item Price adjustment speed \( \eta \)
+    \item Prohibited links (e.g., institutional constraints)
+\end{itemize}
+
+The model allows for full flexibility in varying these inputs to explore comparative statics.
+
+\subsection{Evaluation Metrics and Network Comparison}
+
+To evaluate the behavior of the system and compare outcomes across different configurations, we track the following metrics:
+
+\begin{itemize}
+    \item Contract volumes by agent and by network layer
+    \item Total utility per agent
+    \item Distribution of exposures (centrality, inequality)
+    \item Participation rate in the blockchain layer
+    \item Stability indicators (convergence speed, volatility)
+\end{itemize}
+
+Visual outputs include heatmaps of contract matrices, evolution of prices over time, and comparison plots for different values of \( \lambda \) and \( \gamma \). These metrics serve to quantify the role of transparency, heterogeneity, and network constraints in shaping multilayer financial networks.
 

@@ -1,7 +1,293 @@
 % cap2.tex
 
-\chapter{Theory}
-\label{cT} 
+\chapter{Bibliographic review}
+\section{Traditional Financial Networks}
+A network is a collection of nodes (which can represent individuals, firms, or other entities) connected by links (which represent relationships or interactions between the nodes). Networks can be used to model a wide range of systems, including social, economic, financial and technological structures. Social networks describe the relationships between individuals or organizations, while economic networks focus on the interactions between economic agents. Technological networks, like the internet, represent physical or digital infrastructures that facilitate these interactions. \cite{bich_existence_2020}
+
+The structure of a trade network can influence the flow of goods and services across countries, affecting global economic stability and growth. Similarly, financial networks, which represent the interconnectedness of banks and financial institutions, are crucial in understanding systemic risk and the potential for financial contagion.
+
+
+Network theory in economics often intersects with game theory, where agents (nodes) make strategic decisions about forming or severing links (edges) based on the expected benefits and costs. This intersection is crucial for analyzing how stable network structures emerge and persist over time. Concepts such as pairwise stability are used to examine whether a network configuration is likely to be maintained or altered by the agents involved. \cite{bich_perfect_2023} \\
+
+Below, we detail the key aspects of traditional financial networks, including their modeling, limitations, and network effects.
+
+\subsection{Modeling of Financial Networks}
+
+Traditional financial networks are conceptualized as structures connecting nodes (agents) via links (financial transactions), where interactions are subject to costs, benefits, and risks. Mathematical and economic models are used to analyze their functionality and stability.
+
+\paragraph{Basic Models}
+\begin{itemize}
+    \item \textbf{\citeA{eisenberg_systemic_2001}:} Introduced a pioneering model representing financial networks through a matrix of obligations between agents. This model is widely cited for its ability to capture how defaults can propagate through cascading effects within the network.
+    \item \textbf{\citeA{elliott_financial_2014}:} Proposed a network-based approach to study financial contagion, demonstrating how the structure of connections can amplify or mitigate systemic risks.
+    \item \textbf{\citeA{jalan_incentive-aware_2024}:} Use a square matrix to represent origin-destination transactions and another matrix for associated prices, introducing a mean-variance utility function to model financial agents' decisions.
+\end{itemize}
+
+\paragraph{Risk Propagation}
+Traditional networks are highly vulnerable to financial contagion, especially when a critical node (such as a systemic bank) fails. \citeA{glasserman_contagion_2016} emphasize that dense networks can be resilient to small shocks but fragile under systemic crises.
+
+\paragraph{Stability and Resilience}
+Studies such as \citeA{acemoglu_systemic_2015} highlight how diversification in connections can initially increase stability but, beyond a certain point, may create systemic risks due to interdependence.
+
+\subsection{Limitations of Traditional Financial Networks}
+
+Despite their widespread acceptance, traditional financial networks face significant limitations that impact their efficiency and equity:
+
+\paragraph{High Intermediation Costs}
+Financial intermediaries, like banks and clearinghouses, impose substantial fees for processing transactions. These include:
+
+\begin{itemize}
+    \item Fees for international transfers.
+    \item Risk management and compliance costs.
+\end{itemize}
+
+High costs are also a barrier to financial inclusion, especially in emerging markets.
+
+\paragraph{Opacity and Information Asymmetries}
+In traditional networks, transaction information is typically restricted to the involved parties, making it difficult to assess risks and encouraging opportunistic behavior. \citeA{elliott_financial_2014} emphasize that a lack of transparency exacerbates financial contagion under uncertainty.
+
+\paragraph{Systemic Risk}
+Centralization in key institutions, such as large banks or centralized markets, creates single points of failure. \citeA{elliott_financial_2014} note that this concentration of risk makes traditional networks more susceptible to propagate macroeconomic shocks or liquidity events.
+
+\paragraph{Low Financial Inclusion}
+Traditional networks often exclude agents who do not meet formal criteria, such as credit history or access to bank accounts. This issue is particularly acute in developing countries, where a large portion of the population remains outside the formal financial system. \cite{singer_financial_2017}
+
+\subsection{Network Effects in Traditional Systems}
+
+Network effects are central to understanding the dynamics and behavior of traditional financial networks. These effects reflect how network size, connectivity, and characteristics influence the perceived utility of agents and the system's stability.
+
+\paragraph{Positive Network Effects}
+\begin{itemize}
+\item \textbf{Increased Access and Connectivity:} Greater connectivity in the network allows agents to access more financing opportunities and diversify risk.
+
+\end{itemize}
+
+\paragraph{Negative Network Effects}
+\begin{itemize}
+    \item \textbf{Congestion:} As the network grows, operational frictions and processing times can increase, raising transactional costs. \cite{hinzen_bitcoins_2022,iyengar_economics_2023} 
+\end{itemize}
+
+\paragraph{Centralized Structures}
+Traditional financial networks often rely on centralized structures, such as central banks. While this facilitates management and regulation, it also concentrates risks in a few key nodes. \citeA{gofman_eciency_nodate} argue that large interconnected banks improve efficiency mainly because
+they decrease the length of intermediation chains in the market.  
+
+
+\section{Blockchain}
+Blockchain technology was first introduced in 2008 by the pseudonymous Satoshi Nakamoto as the underlying structure for Bitcoin, the first cryptocurrency. At its core, blockchain is a decentralized and distributed ledger system that enables secure, transparent, and immutable recording of transactions across a network of computers (nodes). Unlike traditional centralized systems where a single entity controls the ledger, blockchain distributes this control across all participants in the network, thereby eliminating the need for intermediaries and enhancing trust among users. \cite{nakamoto_bitcoin_2008} \\ 
+
+Today the blockchain technology is challenging the traditional financial networks by offering decentralized, transparent, and secure alternatives. Its unique features address several limitations of traditional systems, such as intermediation costs, eficiency, traceability and security. This section explores the core characteristics of blockchain, its applications in finance, adoption barriers, and the competitive advantage of transparency.
+
+\subsection{Core Characteristics of Blockchain}
+
+Blockchain is a distributed ledger technology where transactions are recorded in blocks, linked cryptographically to ensure immutability and security. Its key characteristics include:
+
+\paragraph{Decentralization}
+Unlike traditional systems that rely on centralized intermediaries, blockchain operates on a peer-to-peer network, reducing reliance on single points of failure. This decentralization enhances resilience and democratizes access to financial services. \cite{morhaim_blockchain_2019}
+
+\paragraph{Transparency and Traceability}
+All transactions on a blockchain are visible to participants, providing unparalleled levels of transparency. This characteristic addresses the opacity of traditional systems and reduces information asymmetries. \cite{nakamoto_bitcoin_2008}
+
+\paragraph{Security}
+Transactions are secured through cryptographic mechanisms and consensus protocols (e.g., proof-of-work, proof-of-stake), ensuring the integrity of the data and protecting against unauthorized changes. \cite{iyengar_economics_2023}
+
+\paragraph{Programmability}
+Smart contracts enable automated execution of predefined rules, facilitating complex financial transactions without intermediaries. This feature has expanded blockchain's applications in areas such as derivatives, lending, and supply chain finance. \cite{morhaim_blockchain_2019} \\ 
+
+
+\subsection{Blockchain types}
+
+Blockchain technology encompasses a variety of implementations that differ in their accessibility, governance, and application. Understanding the types of blockchain systems is critical to evaluating their suitability for financial networks and their potential to complement or disrupt traditional systems. Broadly, blockchains can be classified into three main categories: public blockchains, private blockchains, and consortium blockchains.
+
+\subsubsection{Public Blockchains}
+
+Public blockchains are open and decentralized networks where anyone can participate as a user, miner, or validator. These blockchains are permissionless, meaning that no central authority controls access or governance. Key examples include Bitcoin and Ethereum, which are widely used for cryptocurrency transactions and decentralized applications (dApps). \cite{cachin_blockchain_2017}
+
+\paragraph{Characteristics of Public Blockchains:}
+\begin{itemize}
+    \item \textbf{Decentralization:} Public blockchains operate through a peer-to-peer network, ensuring that no single entity has control over the ledger.
+    \item \textbf{Transparency:} All transactions are recorded on a public ledger, accessible to anyone. This transparency fosters trust among participants but may raise privacy concerns.
+    \item \textbf{Security:} Transactions are validated through consensus mechanisms such as Proof of Work (PoW) or Proof of Stake (PoS), which ensure the integrity of the ledger. However, these mechanisms can be energy-intensive.
+\end{itemize}
+
+Public blockchains offer several advantages, including high transparency and trust due to their open and decentralized nature. Their robust security is ensured by consensus mechanisms such as Proof of Work (PoW) or Proof of Stake (PoS), which make them resistant to tampering. These networks are particularly well-suited for applications requiring openness and inclusivity, such as cryptocurrency systems and decentralized finance (DeFi). However, they face significant challenges, such as scalability issues, where high transaction volumes can lead to congestion and increased fees. Additionally, PoW-based blockchains are criticized for their energy consumption, and the public nature of the ledger can raise privacy concerns for participants. 
+
+\subsubsection{Private Blockchains}
+
+Private blockchains are permissioned networks where access is restricted to a predefined group of participants. These blockchains are typically governed by a single organization or a consortium, making them more centralized than public blockchains. Examples include Hyperledger Fabric, used in supply chain management and enterprise applications. 
+
+
+\paragraph{Characteristics of Private Blockchains:}
+\begin{itemize}
+    \item \textbf{Restricted Access:} Only authorized participants can join and validate transactions.
+    \item \textbf{Centralized Governance:} A central authority or consortium determines the rules and manages the network.
+    \item \textbf{Customizability:} Private blockchains can be tailored to meet specific organizational needs, such as higher transaction throughput or stricter privacy requirements.
+\end{itemize}
+
+Private blockchains excel in efficiency and privacy, as their restricted access and centralized governance allow for faster transaction processing and greater control over data. These characteristics make them ideal for enterprise applications, where customization and confidentiality are crucial. 
+However, their centralized nature can introduce vulnerabilities, such as single points of failure, and limit transparency compared to public blockchains. Moreover, external stakeholders may question the integrity of privately managed ledgers, potentially reducing trust in the system. \cite{androulaki_hyperledger_2018}
+
+\subsubsection{Consortium Blockchains}
+
+Consortium blockchains, also known as federated blockchains, blend elements of public and private blockchains. They are governed by a group of organizations rather than a single entity, making them semi-decentralized. These blockchains are often used in industries that require collaboration among multiple parties, such as banking and supply chain management. \cite{cachin_blockchain_2017}
+
+\paragraph{Characteristics of Consortium Blockchains:}
+\begin{itemize}
+    \item \textbf{Shared Governance:} Decisions are made collectively by the participating organizations.
+    \item \textbf{Permissioned Access:} Only authorized entities can participate in the network.
+    \item \textbf{Inter-Organizational Collaboration:} Consortium blockchains facilitate data sharing and transaction processing across multiple stakeholders.
+\end{itemize}
+
+Consortium blockchains balance the benefits of public and private blockchains by enabling shared governance and permissioned access. They are particularly advantageous for applications requiring collaboration among multiple organizations, such as cross-border payments and trade finance, as they reduce the risk of single points of failure and provide moderate transparency. However, these systems can be complex to govern due to the involvement of multiple stakeholders, leading to potential inefficiencies in decision-making. Furthermore, their limited accessibility compared to public blockchains restricts their openness and inclusivity.
+
+\subsubsection{Comparison of Blockchain Types}
+
+Table \ref{table:BlockchainComparison} summarizes the key features, advantages, and challenges of public, private, and consortium blockchains. \cite{cachin_blockchain_2017}
+
+\begin{table}[h!]
+    \centering
+    \caption{Comparison of Blockchain Types}
+    \label{table:BlockchainComparison}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Feature} & \textbf{Public} & \textbf{Private} & \textbf{Consortium} \\ \hline
+        Access & Permissionless & Permissioned & Permissioned \\ \hline
+        Governance & Decentralized & Centralized & Semi-Decentralized \\ \hline
+        Transparency & High & Low & Medium \\ \hline
+        Security & High (PoW/PoS) & Medium & Medium \\ \hline
+        Scalability & Limited & High & Moderate \\ \hline
+        Use Cases & Cryptocurrencies, DeFi & Enterprise Applications & Industry Collaboration \\ \hline
+    \end{tabular}
+\end{table}
+
+Understanding the differences among blockchain types is essential for evaluating their potential roles in the financial ecosystem. Public blockchains prioritize decentralization and transparency, making them ideal for open financial systems. Private blockchains, with their efficiency and privacy, are better suited for enterprise applications. Consortium blockchains provide a middle ground, enabling collaboration across organizations. These distinctions are key to analyzing how blockchain technologies can complement or compete with traditional financial networks.
+
+\subsection{Consensus Models}
+
+Consensus models are the backbone of blockchain technology, ensuring that all participants in the network agree on the state of the ledger without the need for a central authority. These models play a crucial role in maintaining security, consistency, and trust in decentralized systems. This section explores the primary consensus mechanisms used in blockchain networks, including Proof of Work (PoW), Proof of Stake (PoS), and alternative models, highlighting their principles, advantages, and challenges.
+
+\subsubsection{Proof of Work (PoW)}
+
+Proof of Work, introduced by \citeA{nakamoto_bitcoin_2008} in Bitcoin, is one of the earliest and most widely used consensus mechanisms. In PoW, network participants (miners) compete to solve complex mathematical puzzles, and the first to solve the puzzle adds a new block to the blockchain and earn a reward. This process requires significant computational resources, ensuring the integrity and security of the ledger.
+
+PoW provides robust security against attacks, such as double-spending, due to the high computational cost required to alter the blockchain. Its decentralization ensures that no single entity controls the network. Additionally, PoW is well-tested and forms the foundation of Bitcoin and other major cryptocurrencies.
+
+PoW is highly energy-intensive, with networks like Bitcoin consuming as much energy as some small countries. The computational cost also creates barriers for smaller participants, potentially leading to a natural oligopoly. \cite{arnosti_bitcoin_2022} \\
+The transaction throughput is limited, making scalability a challenge for large-scale applications. Furthermore, PoW is vulnerable to a "51\% attack", where an entity controlling more than half of the network’s computational power can manipulate the blockchain. This includes reversing transactions, double-spending, and excluding other participants from adding new blocks.  
+
+
+\subsubsection{Proof of Stake (PoS)}
+
+Proof of Stake was introduced as an energy-efficient alternative to PoW. In PoS, validators are chosen to create new blocks based on the amount of cryptocurrency they hold and are willing to "stake" as collateral. Ethereum’s transition from PoW to PoS with Ethereum 2.0 represents a significant shift towards more sustainable blockchain operations.
+
+PoS significantly reduces energy consumption compared to PoW, as it does not rely on intensive computations. The model is more inclusive, allowing a wider range of participants to validate transactions without the need for expensive hardware. Additionally, PoS offers faster transaction confirmation times, improving scalability. \cite{nguyen_proof--stake_2019}
+
+PoS faces concerns about centralization, as participants with larger stakes have more influence over the network. This "rich-get-richer" dynamic can create governance issues. Furthermore, security mechanisms like "slashing", which penalize malicious validators, are complex to implement effectively.
+
+\subsubsection{Alternative Consensus Models}
+
+Blockchain technology has evolved beyond PoW and PoS, with several alternative consensus mechanisms emerging to address specific use cases and limitations.
+
+\paragraph{Delegated Proof of Stake (DPoS)}
+DPoS involves a smaller number of elected delegates who validate transactions and produce blocks. This mechanism, used in networks like EOS and TRON, improves scalability and transaction throughput but relies on a semi-decentralized structure.
+
+\paragraph{Proof of Authority (PoA)}
+PoA assigns validation rights to a small group of trusted participants, making it suitable for private or consortium blockchains. While efficient and fast, PoA sacrifices decentralization and is less suitable for open public networks.
+
+\subsubsection{Byzantine Fault Tolerance (BFT) Algorithms}
+BFT-based consensus, such as Tendermint, ensures agreement among participants even when some act maliciously or fail. This model is common in permissioned blockchains and is valued for its high throughput and fault tolerance.
+
+
+Alternative models often prioritize scalability, efficiency, and customization. However, they may trade off decentralization, making them more appropriate for specific contexts, such as enterprise or consortium networks.
+
+\subsubsection{Comparison of Consensus Models}
+
+Table \ref{table:ConsensusComparison} summarizes the key features, advantages, and challenges of the primary consensus models. \cite{cachin_blockchain_2017}
+
+\begin{table}[h!]
+    \centering
+    \caption{Comparison of Consensus Models}
+    \label{table:ConsensusComparison}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Feature} & \textbf{PoW} & \textbf{PoS} & \textbf{Alternative Models} \\ \hline
+        Energy Efficiency & Low & High & Varies \\ \hline
+        Decentralization & High & Medium & Medium to Low \\ \hline
+        Scalability & Low & Medium & High \\ \hline
+        Security & Very High & High & Varies \\ \hline
+        Example Networks & Bitcoin, Ethereum (pre-2.0) & Ethereum 2.0, Cardano & EOS, Tendermint \\ \hline
+    \end{tabular}
+\end{table}
+
+Consensus models are critical to the operation of blockchain networks, balancing the trade-offs between security, scalability, decentralization, and efficiency. While PoW has set the standard for robust security in public blockchains, PoS and alternative models offer promising paths towards more scalable and sustainable blockchain systems. 
+
+
+
+\subsection{Applications in Finance}
+
+Blockchain's versatility has led to its adoption in various financial sectors, often addressing inefficiencies in traditional systems.
+
+\paragraph{Cross-Border Payments}
+Blockchain facilitates cross-border transactions by bypassing intermediaries and reducing settlement times. Ripple and Stellar are prominent examples of blockchain-based platforms enabling seamless international payments.
+
+\paragraph{Tokenization of Assets}
+Assets such as real estate, art, and securities can be tokenized on blockchain platforms, allowing fractional ownership and increasing liquidity. 
+
+\paragraph{Decentralized Finance (DeFi)}
+DeFi leverages blockchain to provide financial services such as lending, borrowing, and trading without intermediaries. Platforms like Aave and Uniswap exemplify how blockchain disrupts traditional banking models.
+
+\paragraph{Smart Contracts}
+There are costumers with financial investment needs, they make financial investments online through investment advisors of centralized financial institutions. The wages earned by investment advisors are essentially commissions given by the product side. Therefore, from the perspective of interests, the starting point of investment advisors is to sell more products. This can easily lead to centralized financial institutions losing the trust of their customers.
+\citeA{xiong_financial_2023} propose a solution based on smart contracts to  solve the distrust problem in financial investment caused by information asymmetry. 
+
+
+\subsection{Barriers to Adoption}
+\citeA{iyengar_economics_2023} establishes that blockchain adoption can enhance total welfare, even by an arbitrarily large amount, and yet fail to arise in equilibrium. This possibility, termed an \textit{adoption failure}, occurs because of a misalignment between those who gain from blockchain adoption and those who decide whether to adopt the blockchain. \\
+Despite its potential, blockchain adoption faces several challenges that hinder its widespread integration:
+
+\paragraph{High Initial Costs}
+Setting up and maintaining blockchain infrastructure involves significant investment in hardware, software, and energy consumption, especially for proof-of-work networks like Bitcoin.
+
+\paragraph{Scalability Issues}
+Blockchain networks often struggle to handle high transaction volumes efficiently. Ethereum, for instance, faces congestion and high fees during periods of peak demand, raising concerns about its scalability. \cite{hinzen_bitcoins_2022}
+
+\paragraph{Regulatory Uncertainty}
+The decentralized nature of blockchain conflicts with traditional regulatory frameworks, creating uncertainty for financial institutions and investors. Governments worldwide are grappling with how to classify and regulate blockchain-based assets.
+
+\paragraph{Trust Barriers}
+Traditional financial systems may enjoy higher institutional trust, whereas blockchain's trustless model requires a paradigm shift for users unfamiliar with decentralized systems. As \citeA{guegan_probative_2019} says, " One can encounter difficulty in converting
+Bitcoins into Euros (for instance) (no guarantee of convertibility of the currency by the public
+authorities). The circulation speed of the Bitcoin is low: only 4\% of the bitcoins in circulation are weekly use. This is more like a casino economy, and since there is currently no regulation, no
+central bank ensures the stability of the value". Also \citeA{biais_equilibrium_2023} shows that the equilibrium prices in Bitcoin can exhibit extrinsic volatility.
+
+\subsection{Transparency as a Competitive Advantage}
+
+Blockchain's transparency provides unique benefits that distinguish it from traditional systems and can incentivize adoption even among non-participants:
+
+\paragraph{Reduction of Information Asymmetries}
+Blockchain's public ledger ensures that all participants can verify transactions, reducing the risk of opportunistic behavior and enabling better decision-making for financial agents. 
+
+\paragraph{Enhanced Accountability}
+Transparency in blockchain transactions promotes accountability among counterparties, especially in supply chains and financial markets. This feature is particularly valuable in mitigating risks associated with fraud and corruption.
+
+\paragraph{Indirect Benefits for Non-Participants}
+Even agents not directly transacting on blockchain can derive value from the visibility of transactions, improving their ability to evaluate counterparties and market conditions. \cite{iyengar_economics_2023}
+
+\subsection{Blockchain Versus Traditional Networks}
+
+The competition between blockchain and traditional financial networks revolves around key trade-offs:
+
+\paragraph{Cost Efficiency}
+While blockchain reduces intermediation costs, it introduces new costs related to infrastructure and energy consumption, which must be weighed against the benefits of decentralization.
+
+\paragraph{Trust Models}
+Traditional networks rely on institutional trust, whereas blockchain uses cryptographic trust mechanisms. \\
+
+Blockchain's decentralization challenges traditional financial systems by removing the need for central intermediaries such as banks and payment processors. As Brunnermeier discusses, this has the potential to democratize finance, making it more accessible and less costly. However, the rise of cryptocurrencies and decentralized finance also poses challenges for monetary policy. Central banks could face difficulties in controlling the money supply and interest rates if digital currencies become widely adopted, potentially leading to greater financial instability.
+\cite{abadi_blockchain_2022} \\
+
+Morhaim’s research highlights how blockchain can fundamentally alter market structures by enabling peer-to-peer transactions and decentralized markets. This transformation can increase competition, lower transaction costs, and create new forms of economic interaction. However, these changes also introduce new complexities in market dynamics, which traditional economic models may not fully capture. The strong network effects associated with blockchain networks, where the value of the network increases as more participants join, can lead to rapid growth and innovation but also pose challenges for regulation and market stability.
+\cite{morhaim_blockchain_2019}\\
+
+Blockchain offers a promising alternative to traditional financial networks by addressing their limitations in cost, transparency, and security. However, adoption barriers such as scalability, regulatory uncertainty, and trust issues must be resolved for blockchain to achieve its full potential. Its ability to provide transparency and reduce information asymmetries positions blockchain as a disruptive force in the financial ecosystem, with implications for both participants and non-participants alike.
 
 
 \section{General Equilibrium}\label{cTGE}
@@ -18,90 +304,10 @@ Cryptocurrency markets are known for their extreme volatility, which can disrupt
 \subsection{Application of General Equilibrium to Cryptocurrency}
 
     \begin{itemize}
-        \item \textbf{Cryptocurrency as a Risky Asset:} \citeA{crettez_general_2022} model cryptocurrency as a risky asset due to its susceptibility to hacks and fraud. This risk affects how it is priced in the market and how it competes with central bank currencies in achieving market equilibrium.
-        \item \textbf{Transaction Costs:} The inclusion of transaction costs in the model is crucial, as these costs influence the attractiveness of holding cryptocurrency versus central bank currency. The paper finds that the price of cryptocurrency can increase with its quantity if transaction costs decrease as the cryptocurrency's supply grows
+        \item \textbf{Cryptocurrency as a Risky Asset:} \citeA{crettez_general_2022} model cryptocurrency as a risky asset due to its susceptibility to hacks and fraud. This risk affects how it is priced in the market and how it competes with central bank currencies in achieving market equilibrium. \citeA{biais_equilibrium_2023} demonstrate that a large part of the variation in Bitcoin prices is not explained by changes in fundamentals, exhibiting extrinsic volatility.
+        \item \textbf{Transaction Costs:} The inclusion of transaction costs in the model is crucial, as these costs influence the attractiveness of holding cryptocurrency versus central bank currency. \citeA{crettez_general_2022} finds that the effect of an increase in cryptocurrency, on the currency prices, notably depends on the transaction costs borne by people to buy cryptocurrency.
         \item \textbf{Finite Supply Dynamics:} The model also accounts for the finite supply of cryptocurrencies like Bitcoin, which affects long-term equilibrium prices. As the supply reaches its upper limit, price dynamics shift, impacting how markets clear in the presence of both cryptocurrencies and traditional currencies.
-        \item \textbf{Steady-State and Transitional Equilibria:} The paper explores both the steady-state equilibrium (where supply and demand have stabilized) and the transitional dynamics leading up to this state. These findings highlight how expectations about future prices influence current market behavior and equilibrium outcomes.
+        \item \textbf{Steady-State and Transitional Equilibrium:} \citeA{crettez_general_2022} explores both the steady-state equilibrium (where supply and demand have stabilized) and the transitional dynamics leading up to this state. These findings highlight how expectations about future prices influence current market behavior and equilibrium outcomes.
     \end{itemize}
 
-General equilibrium theory, when applied to cryptocurrencies as done by Crettez and Morhaim, provides a robust framework for understanding the complex interactions between digital and traditional currencies in an economy. By incorporating real-world factors like transaction costs and hack risks into an OLG model, the authors offer valuable insights into how cryptocurrencies can achieve equilibrium in the market and affect the stability of central bank currencies. This application of general equilibrium theory is particularly relevant as the global economy increasingly integrates digital currencies into its financial systems.     
-\citeA{crettez_general_2022} 
-
-\section{Blockchain}\label{cTGE}
-
-Blockchain technology was first introduced in 2008 by the pseudonymous Satoshi Nakamoto as the underlying structure for Bitcoin, the first cryptocurrency. At its core, blockchain is a decentralized and distributed ledger system that enables secure, transparent, and immutable recording of transactions across a network of computers (nodes). Unlike traditional centralized systems where a single entity controls the ledger, blockchain distributes this control across all participants in the network, thereby eliminating the need for intermediaries and enhancing trust among users.
-\citeA{nakamoto_bitcoin_2008} \\
-
-\subsection{Key concepts of blockchain}
-\begin{itemize}
-    \item Decentralization:
-        \begin{itemize}
-            \item Decentralized Ledgers: Blockchain removes the need for a central authority by distributing the ledger across all participants in the network. This decentralization is a core feature that enhances security and trust in the system by reducing the single point of failure and potential for centralized control.
-            \item Consensus Mechanisms: To validate transactions and maintain the integrity of the blockchain, participants must reach a consensus. Common mechanisms include Proof of Work (PoW) and Proof of Stake (PoS), which ensure that only legitimate transactions are recorded.
-        \end{itemize}
-    \item Transparency and Immutability:
-        \begin{itemize}
-            \item Transparency: Every transaction on a blockchain is visible to all participants in the network, making the system highly transparent. This transparency fosters trust among users and reduces the need for intermediaries.
-            \item Immutability: Once a transaction is recorded on the blockchain, it cannot be altered or deleted. This immutability is secured through cryptographic hashing, where each block of transactions is linked to the previous one, forming a chain that is extremely difficult to tamper with.
-        \end{itemize}
-    \item Security:
-        \begin{itemize}
-            \item Cryptographic Security: Blockchain relies on cryptographic techniques to secure data and transactions. Each participant has a private key for signing transactions and a public key for verifying them, ensuring that transactions are secure and authenticated.
-            \item Resistance to Attacks: The distributed nature of blockchain makes it highly resistant to attacks. An attacker would need to control a majority of the network's computing power to alter the ledger, which is practically unfeasible in large, well-distributed networks.
-        \end{itemize}
-    \item Smart Contracts:
-        \begin{itemize}
-            \item Automated Agreements: Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They automatically execute and enforce the contract when the predefined conditions are met, eliminating the need for intermediaries and reducing transaction costs.
-        \end{itemize}
-\end{itemize}
-
-Blockchain's decentralization challenges traditional financial systems by removing the need for central intermediaries such as banks and payment processors. As Brunnermeier discusses, this has the potential to democratize finance, making it more accessible and less costly. However, the rise of cryptocurrencies and decentralized finance also poses challenges for monetary policy. Central banks could face difficulties in controlling the money supply and interest rates if digital currencies become widely adopted, potentially leading to greater financial instability.
-\citeA{abadi_blockchain_2022} \\
-
-Morhaim’s research highlights how blockchain can fundamentally alter market structures by enabling peer-to-peer transactions and decentralized markets. This transformation can increase competition, lower transaction costs, and create new forms of economic interaction. However, these changes also introduce new complexities in market dynamics, which traditional economic models may not fully capture. The strong network effects associated with blockchain networks, where the value of the network increases as more participants join, can lead to rapid growth and innovation but also pose challenges for regulation and market stability.
-\citeA{morhaim_blockchain_2019}\\
-
-
-
-\section{Networks}\label{cTGE}
-A network is a collection of nodes (which can represent individuals, firms, or other entities) connected by links (which represent relationships or interactions between the nodes). Networks can be used to model a wide range of systems, including social, economic, and technological structures.\citeA{bich_existence_2020} \\
-
-Network theory is rooted in graph theory, where a network is represented as a graph consisting of nodes (representing entities like individuals or firms) and edges (representing the relationships or interactions between these nodes). The study of networks involves analyzing the structure and dynamics of these connections to understand how they influence the behavior of the entire system.
-
-The properties of networks include degree distribution, which describes how connections are distributed among nodes, and clustering coefficient, which measures the degree to which nodes tend to cluster together. Another crucial concept is path length, which indicates the average number of steps required to travel between nodes in the network, reflecting the network's connectivity.
-
-Networks can be broadly categorized into different types, such as social networks, economic networks, and technological networks. Social networks describe the relationships between individuals or organizations, while economic networks focus on the interactions between economic agents. Technological networks, like the internet, represent physical or digital infrastructures that facilitate these interactions.
-
-The structure of a trade network can influence the flow of goods and services across countries, affecting global economic stability and growth. Similarly, financial networks, which represent the interconnectedness of banks and financial institutions, are crucial in understanding systemic risk and the potential for financial contagion.
-
-Within economics, network theory provides a powerful tool for understanding the complex interactions that shape market dynamics and economic outcomes. Networks in economics can be broadly categorized into:
-
-\begin{itemize}
-    \item Market Networks: These networks model the relationships between firms and consumers, analyzing how these connections influence competition, pricing, and market power. For example, firms within a network might form alliances or engage in collaborative ventures to enhance their market position or innovation capabilities.
-    \item Innovation Networks: Innovation often spreads through networks of firms or research institutions, where the structure of these networks determines the speed and extent of innovation diffusion. Highly connected networks facilitate rapid dissemination of new ideas and technologies, while fragmented networks might slow the process.
-    \item Financial Networks: The interconnectedness of financial institutions forms complex networks where risks can propagate quickly. Understanding the topology of these networks is essential for assessing systemic risk and preventing financial crises. For example, the 2008 financial crisis highlighted how the failure of key financial institutions could trigger widespread disruptions across the entire network.
-\end{itemize}
-
-Network theory in economics often intersects with game theory, where agents (nodes) make strategic decisions about forming or severing links (edges) based on the expected benefits and costs. This intersection is crucial for analyzing how stable network structures emerge and persist over time. Concepts such as pairwise stability are used to examine whether a network configuration is likely to be maintained or altered by the agents involved. \citeA{bich_perfect_2023} \\
-Network models often assume that agents are rational and make decisions based on complete information. However, incorporating insights from behavioral economics—such as bounded rationality, cognitive biases, and social preferences—can provide a more realistic understanding of how networks form and function.
-\citeA{jalan_incentive-aware_2024} \\
-
-
-
-evaluar relación con \url{https://ieeexplore.ieee.org/document/8717636}
-
-\section{Certification}
-
-No olvidar estos orígenes para mantener algo de relación \url{https://x.com/ecmaeditors/status/1763576677446168946?s=46&t=Dr3LkTdf66mhJ0sByHoQrQ}
-
-
-
-
-
-
-
-
-
-
-
-
+General equilibrium theory, when applied to cryptocurrencies as done by \citeA{crettez_general_2022}, provides a robust framework for understanding the complex interactions between digital and traditional currencies in an economy. By incorporating real-world factors like transaction costs and hack risks into an OLG model, the authors offer valuable insights into how cryptocurrencies can achieve equilibrium in the market and affect the stability of central bank currencies. 

@@ -1,0 +1,60 @@
+---
+title: "Blockchain Adoption"
+format:
+  revealjs:
+    smaller: true
+    scrollable: true
+    html-math-method: katex
+    chalkboard: true
+editor: visual
+---
+
+## Benchmark
+
+-   Red tradicional sin restricciones: $w_i^*\in arg\max\limits_{w_i^T\in I} g_i^T(w_i^T,P^T)$
+
+-   Incluir Blockchain asumiendo que $w_i^*=w_i^T+w_i^B$ con $w_i^T\in I$ y solucionando $\max\limits_{w_i^T\in[0,w^*], P^T=P^B}
+    g_i(w_i^T,P^T, w_i^B,P^B)$
+
+    $$
+    g_i(w_i^T,P^T, w_i^B,P^B)=\overbrace{{w_i^T}'(m_i-P^Te_i)-\gamma_i {w_i^T}'\Sigma_iw_i^T}^{g_i^T(w_i^T,P^T)}
+    $$ $$
+    +{(\underbrace{w^*_i-w_i^T}_{w_i^B})}'(m_i-P^Te_i)-\gamma_i {(w^*_i-w_i^T)}'\Sigma_i
+    $$
+
+    -   $w_i^T=w_i^*$ ó $w_i^B=w_i^*$ dependiendo del orden del código
+
+## Inclusión de restricciones
+
+-   Este es el modelo de Jalan et alii $\bar w_i\in arg\max\limits_{w_i^T\in\Psi} g_i^T(w_i^T,P^T)$
+
+-   Incluir Blockchain asumiendo que $w_i^*=w_i^T+w_i^B$ con $w_i^T\in\Psi$ (verificando que $w_i^B\notin\Psi$) solucionando $\max\limits_{w_i^T\in[0,w^*]\cap\Psi, P^T,P^B}
+    g_i(w_i^T,P^T, w_i^B,P^B)$
+
+    $$
+    g_i(w_i^T,P^T, w_i^B,P^B)={w_i^T}'(m_i-P^Te_i)-\gamma_i {w_i^T}'\Sigma_iw_i^T
+    $$ $$
+    +{(w^*_i-w_i^T)}'(m_i-P^Te_i)-\gamma_i {(w^*_i-w_i^T)}'\Sigma_i(w^*_i-w_i^T)
+    $$
+
+    -   Sea $\hat w_i^T\in arg\max\limits_{w_i^T\in[0,w^*]\cap\Psi, P^T,P^B}g_i(w_i^T,P^T, w_i^B,P^B)$
+
+    -   tenemos $\hat w_i^T\neq w_i^*$ y $\hat w_i^T\neq\bar w_i$, $\frac{\hat w_i^T+\hat w_i^B}{w_i^*}<1$
+
+    -   debiera ser factible y óptimo $w^B_i=w_i^*$, por lo que $\hat w_i^T=0$
+
+## Preguntas
+
+-   Qué configuraciones de $m_i,m_i^B,\Sigma_i,\Sigma_i^B$ hacen que $\hat w_i^T\neq0$ ?
+
+-   Y cómo se incluyen costos tipo fricción o beneficios como transparencia
+
+------------------------------------------------------------------------
+
+```         
+$$
+g_i(w_i^T,P^T, w_i^B,P^B)=\overbrace{{w_i^T}'(m_i-P^Te_i)-\gamma_i {w_i^T}'\Sigma_iw_i^T}^{g_i^T(w_i^T,P^T)}
+$$ $$
++{(\underbrace{w^*_i-w_i^T}_{w_i^B})}'(m_i^B-P^Te_i)-\gamma_i {(w^*_i-w_i^T)}'\Sigma_i^Bw_i^T
+$$
+```

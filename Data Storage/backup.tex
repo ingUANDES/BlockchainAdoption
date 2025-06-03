@@ -1,0 +1,211 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage[
+backend=biber,
+style=bwl-FU,
+sorting=ynt
+]{biblatex}
+\usepackage{graphicx}
+%\usepackage[final]{changes}
+\usepackage[draft]{changes}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+\addbibresource{references.bib} % Specify the bibliography file
+
+\title{Financial Model: Traditional vs. Blockchain Storage}
+\date{2024-10-16}
+%\author{Malte Kerl}
+
+\usetheme[language=english]{LTU}
+
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Context}
+		\begin{itemize}
+        \item \textbf{Objective}: Develop a financial model to evaluate and compare traditional and blockchain-based data storage systems.
+        \item \textbf{Motivation}:
+        \begin{itemize}
+            \item Increasing data storage needs demand efficient and secure solutions.
+            \item Blockchain offers a decentralized alternative with unique costs and benefits.
+        \end{itemize}
+        \item \textbf{Goal}: Highlight trade-offs in costs, risks, and scalability.
+    \end{itemize}
+        
+	\end{frame}
+ 
+	\begin{frame}{Conceptual Framework}
+    \begin{itemize}
+        \item \textbf{Traditional Data Storage}
+        \begin{itemize}
+            \item Centralized infrastructure with single entity control.
+            \item Key Costs: Operational, security, redundancy.
+        \end{itemize}
+        \item \textbf{Blockchain-Based Data Storage}
+        \begin{itemize}
+            \item Decentralized peer-to-peer network.
+            \item Key Costs: Consensus, security, latency.
+        \end{itemize}
+        \item \textbf{Comparison Basis}: Financial sustainability, risk, and stability.
+    \end{itemize}
+    \end{frame}
+ 
+    \begin{frame}{Utility Function Overview}
+    \begin{itemize}
+        \item \textbf{Purpose}: To analyze the adoption of each system.
+        \item \textbf{Structure of Utility Functions}:
+        \begin{itemize}
+            \item Revenue/benefits minus system-specific costs.
+            \item Incorporates network effects, risk, and stability considerations.
+        \end{itemize}
+        \item \textbf{Inspired by \cite{jalan_incentive-aware_2024} }: Incentive-aware agents, network interactions, cost-sharing.
+    \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Similarities between data storage and financial transfers}{Network Structure and Connectivity}
+    
+    Both financial and data storage networks involve strategic interactions among nodes. \vspace{3mm}
+    
+    \begin{itemize}
+        \item \textbf{Financial Networks}: Banks or institutions form connections (loans or asset sharing) based on mutual benefits and risks.
+        \item \textbf{Data Storage Networks (Blockchain)}: Nodes maintain data and achieve consensus with other nodes, validating each other’s data integrity.
+        \item The network structure in both systems depends on the cost-benefit analysis of forming connections.
+    \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Similarities between data storage and financial transfers}{Network Stability and Resilience}
+        
+    Network stability in both financial and data storage networks relies on maintaining beneficial connections.
+    \vspace{3mm}
+    
+    \begin{itemize}
+        \item \textbf{Financial Networks}: Stability depends on sustaining links that provide risk-sharing or diversification benefits.
+        \item \textbf{Blockchain Storage}: Stability is achieved when nodes are incentivized to stay active, preserving data integrity and availability.
+        \item Stability in both networks emerges from balancing the cost of maintaining links with the overall benefit they provide.
+    \end{itemize}
+    \end{frame}
+    
+    % Slide 4: Cost Optimization and Incentives
+    \begin{frame}{Similarities between data storage and financial transfers}{Cost Optimization and Incentives}
+        
+    Both models optimize utility by balancing the costs of participation with incentives or returns.
+    \vspace{3mm}
+    
+    \begin{itemize}
+         \item \textbf{Financial Networks}: Agents connect based on a cost-benefit analysis of maintaining financial relationships.
+         \item \textbf{Blockchain Storage}: Nodes participate in data validation based on rewards (e.g., transaction fees) versus consensus costs.
+        \item Each system seeks to maximize net utility by optimizing connections and incentives, aligning with \cite{jalan_incentive-aware_2024} incentive-aware approach.
+    \end{itemize}
+    \end{frame}
+    
+    % Slide 5: Network Impact on Risk and Security
+    \begin{frame}{Similarities between data storage and financial transfers}{Network Impact on Risk and Security}
+
+\added{Narrar Ejemplo 5 de Jalan et alii interpretado para el caso}
+    
+    The structure of both networks influences the spread and containment of risks.
+    \vspace{3mm}
+    
+    \begin{itemize}
+        \item \textbf{Financial Networks}: Risk of contagion arises when institutions are interlinked, potentially spreading failures.
+        \item \textbf{Blockchain Storage}: Security risks (e.g., 51\% attacks) threaten data integrity across the network if nodes fail to maintain consensus.
+        \item Both networks manage collective risks by structuring connections that either limit or control the spread of adverse events.
+    \end{itemize}
+    \end{frame}
+    
+    % Slide 6: Incentives for Participation and Stability
+    \begin{frame}{Similarities between data storage and financial transfers}{Incentives for Participation and Stability}
+        
+    Both networks rely on effective incentives to maintain active participation and stability.
+    \vspace{3mm}
+        
+    \begin{itemize}
+        \item \textbf{Financial Networks}: Banks or institutions maintain connections if the benefits (liquidity, risk-sharing) exceed the costs.
+        \item \textbf{Blockchain Storage}: Nodes are incentivized through rewards to participate in validation, maintaining network stability.
+        \item Both systems use incentives to ensure that nodes continue to participate, securing the network's overall functionality and resilience.
+    \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Traditional Data Storage Utility Function}
+        \begin{block}{Utility Function}
+        \[
+        U_T(\overbrace{w_T}^\text{completar}, P) = w_T^T (\mu_T - P e_T) - \gamma_T \cdot w_T^T \Sigma_T w_T - \sum_{j \in N(T)} c_{Tj} w_{Tj}
+        \]
+        \end{block}
+        \begin{itemize}
+            \item \( w_T^T (\mu_T - P e_T) \): Expected returns after operational costs.
+            \item \( \gamma_T \cdot w_T^T \Sigma_T w_T \): Risk-adjusted returns.
+            \item \( \sum_{j \in N(T)} c_{Tj} w_{Tj} \): Cost of connections for redundancy and security.
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Blockchain-Based Data Storage Utility Function}
+        \begin{block}{Utility Function}
+        \[
+        U_B(w_B, P) = w_B^T (\mu_B - P e_B) - \gamma_B \cdot w_B^T \Sigma_B w_B - \sum_{j \in N(B)} c_{Bj} w_{Bj}
+        \]
+        \end{block}
+        \begin{itemize}
+            \item \( w_B^T (\mu_B - P e_B) \): Expected rewards and benefits of decentralized storage.
+            \item \( \gamma_B \cdot w_B^T \Sigma_B w_B \): Risk-adjusted returns.
+            \item \( \sum_{j \in N(B)} c_{Bj} w_{Bj} \): Cost of maintaining connections with other nodes.
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Comparative Utility Model}
+        \begin{block}{Utility Difference}
+        \[
+        \Delta U = U_B(w_B, P) - U_T(w_T, P)
+        \]
+        \end{block}
+        \begin{itemize}
+            \item \( \Delta U > 0 \): Blockchain storage is more financially viable.
+            \item \( \Delta U < 0 \): Traditional storage is preferable.
+        \end{itemize}
+        \begin{itemize}
+            \item \textbf{Purpose}: Quantify relative advantage under different conditions.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Key Trade-Offs for Comparison}
+        \begin{itemize}
+            \item \textbf{Security and Redundancy}
+            \begin{itemize}
+                \item Traditional: Costly redundancy systems.
+                \item Blockchain: Decentralization provides redundancy, with consensus costs.
+            \end{itemize}
+            \item \textbf{Operational and Consensus Costs}
+            \begin{itemize}
+                \item Traditional: Stable operational costs.
+                \item Blockchain: Variable consensus costs with network size.
+            \end{itemize}
+            \item \textbf{Latency and Scalability}
+            \begin{itemize}
+                \item Traditional: Low latency due to centralization.
+                \item Blockchain: Higher latency, affected by consensus.
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Conclusion}
+        \begin{itemize}
+            \item Presented a financial model comparing traditional and blockchain-based storage.
+            
+            \item \textbf{Future Directions}: Multi-period analysis, dynamic network adjustments, regulatory impacts.
+        \end{itemize}
+    \end{frame}
+    
+	\begin{frame}[allowframebreaks]
+		\frametitle{References}
+		\printbibliography
+	\end{frame}
+\end{document}

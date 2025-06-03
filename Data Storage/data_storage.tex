@@ -1,0 +1,232 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage[
+backend=biber,
+style=bwl-FU,
+sorting=ynt
+]{biblatex}
+\usepackage{graphicx}
+%\usepackage[final]{changes}
+\usepackage[draft]{changes}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+\addbibresource{references.bib} % Specify the bibliography file
+
+\title{Financial Model: Traditional vs. Blockchain Storage}
+\date{2024-11-04}
+%\author{Malte Kerl}
+
+\usetheme[language=english]{LTU}
+
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+
+ \begin{frame}{Context}
+    \begin{itemize}
+        \item \textbf{Growing Data Needs}: Organizations and individuals are generating more data than ever, requiring scalable and secure storage solutions.
+        \item \textbf{Importance of Security}: Data breaches and cyber threats highlight the need for robust storage that protects against unauthorized access.
+        \item \textbf{New Technologies}: Blockchain has emerged as a decentralized alternative, promising enhanced security and data integrity.
+        \item \textbf{Decision Point}: Agent needs to choose a storage solution that balances \textbf{cost, security, and efficiency}—traditional or blockchain?
+    \end{itemize}
+\end{frame}
+
+
+
+ \begin{frame}{Context}
+    \begin{itemize}
+        \item \textbf{Objective}: Develop a financial model to evaluate and compare between traditional and blockchain-based data storage.
+        
+        \item Analyze the adoption of each system.
+        
+        \item \textbf{Goal}: Highlight trade-offs in \textbf{expected benefits}, \textbf{costs}, and \textbf{risks} in each storage option.
+
+        \item \textbf{Inspired by \cite{jalan_incentive-aware_2024} }: Incentive-aware agents, network interactions, cost-sharing.
+        
+    \end{itemize}
+\end{frame}
+
+
+    
+\begin{frame}{\citeauthor{jalan_incentive-aware_2024} Model for Financial Networks}
+    \begin{itemize}
+        \item An agent (firms, countries or individuals) makes strategic decisions in a financial network, allocating resources across contracts to maximize returns while managing risk. Using a utility function that balances expected returns and volatility.
+        
+        \item In Jalan's model, a financial agent maximizes their utility by choosing strategic contracts within a network.
+        
+        \item \textbf{Utility Function}:
+        \[
+        g_i(W, P) := w_i' (\mu_i - P e_i) - \gamma_i \cdot w_i' \Sigma_i w_i.
+        \]
+        \item Components:
+        \begin{itemize}
+            \item \( w_i \): Contracts size.
+            \item \( \mu_i \): Expected return from each contract.
+            \item \( P e_i \): Contract price.
+            \item \( \gamma_i \): Risk aversion.
+            \item \( \Sigma_i \): Risk covariance matrix.
+        \end{itemize}
+        
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Agent’s Storage Dilemma}
+    \begin{itemize}
+        \item Agent has critical data that requires reliable and secure storage.
+        \item \textbf{Two Options}:
+        \begin{itemize}
+            \item \textbf{Traditional Storage}: Centralized, predictable, familiar.
+            \item \textbf{Blockchain Storage}: Decentralized, secure, innovative.
+        \end{itemize}
+        \item \textbf{Key Question}: Which option offers the best trade-off between cost, security, and accessibility?
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Parameter Comparison for Data Storage Model}
+    \begin{itemize}
+        \item We adapt each component of Jalan’s model to fit agent A’s decision between data storage systems.
+    \end{itemize}
+    \vspace{0.3cm}
+    \resizebox{\textwidth}{!}{ % Ajusta la tabla al ancho de la diapositiva
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Variables} & \textbf{Financial Model} & \textbf{Data Storage Model} \\ \hline
+            \( w_i \)          & Size of the contracts    & Data allocation  \\ \hline
+            \( P e_i \)        & Price of the contract   & Price of storage  \\ \hline
+        \end{tabular}
+    }
+
+    \vspace{0.5cm}
+    
+    \resizebox{\textwidth}{!}{ % Ajusta la tabla al ancho de la diapositiva
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Parameter} & \textbf{Financial Model} & \textbf{Data Storage Model} \\ \hline
+            \( \mu_i \)        & Expected return & Expected benefit \\ \hline
+            \( \gamma_i \)     & Risk aversion    & Risk aversion  \\ \hline
+            \( \Sigma_i \)     & Perceived risk of trading & Risk of each storage option \\ \hline
+        \end{tabular}
+    }
+\end{frame}
+
+
+
+\begin{frame}{Utility Function Adapted for Data Storage}
+    \begin{block}{Agent A's Utility Function for Data Storage}
+    \[
+    g_i(W, P) := w_i' (\mu_i - P e_i) - \gamma_i \cdot w_i' \Sigma_i w_i.
+    \]
+    \end{block}
+    \begin{itemize}
+        \item \textbf{Objective}: Maximize storage benefits while minimizing risk.
+        \item Components:
+        \begin{itemize}
+            \item \( w_i \): Data allocation across traditional or blockchain storage.
+            \item \( \mu_i \): Expected benefit from each storage option.
+            \item \( P e_i \): Price of data storage.
+            \item \( \gamma_i \): Agent A's risk aversion.
+            \item \( \Sigma_i \): Risk matrix for storage stability.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Benefit Component: \( w_i' (\mu_i - P e_i) \)}
+    \begin{itemize}
+        \item \( w_i \): Allocation of data across storage options.
+        \item \( \mu_i \): Expected benefits.
+        \begin{itemize}
+            \item Traditional: Ease of access, central control.
+            \item Blockchain: Security, transparency, decentralization.
+        \end{itemize}
+        \item \( P e_i \): Price of storage.
+        \begin{itemize}
+            \item Traditional: Fixed cost per GB.
+            \item Blockchain: Variable, based on network fees.
+        \end{itemize}
+        \item Maximize net benefit from each storage system by balancing expected benefits and prices.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Risk Adjustment: \( - \gamma_i \cdot w_i' \Sigma_i w_i \)}
+    \begin{itemize}
+        \item \( \gamma_i \): Agent A's risk aversion level.
+        \item \( \Sigma_i \): Risk of each storage option.
+        \begin{itemize}
+            \item Traditional: Server failures, data breaches.
+            \item Blockchain: Consensus instability, 51\% attack risk.
+        \end{itemize}
+        \item Minimize risk by adjusting storage choices based on agent A's tolerance for potential failures or instability.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Parameter Comparison for Data Storage Model}
+    \begin{itemize}
+        \item \cite{jalan_incentive-aware_2024} models a single network, we propose to include a second one.
+        \item We adapt each component of the model to fit the specifications of each storage systems.
+    \end{itemize}
+    \vspace{0.3cm}
+    
+    \resizebox{\textwidth}{!}{ % Ajusta la tabla al ancho de la diapositiva
+    \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Variables} & \textbf{Traditional Storage (T)} & \textbf{Blockchain Storage (B)} \\ \hline
+            \( w_i \)          & Data allocation in traditional system    & Data allocation on blockchain \\ \hline
+            \( P e_i \)        & Price per GB                & Blockchain storage price (e.g., network fees) \\ \hline
+        \end{tabular}
+    }
+    
+    \vspace{0.5cm}
+    
+    \resizebox{\textwidth}{!}{ % Ajusta la tabla al ancho de la diapositiva
+        \begin{tabular}{|c|c|c|}
+            \hline
+            \textbf{Parameter} & \textbf{Traditional Storage (T)} & \textbf{Blockchain Storage (B)} \\ \hline
+            \( \mu_i \)        & Expected benefit from security, accessibility, and control & Benefit from decentralization, cryptographic security \\ \hline
+            \( \gamma_i \)     & Risk aversion to failures   & Risk aversion to consensus issues or attacks \\ \hline
+            \( \Sigma_i \)     & Risk of server failures & Consensus stability and attack risks \\ \hline
+        \end{tabular}
+    }
+\end{frame}
+
+
+\begin{frame}{Complete Utility Function for agent A}
+    \begin{block}{Maximizing agent A’s Utility for Data Storage}
+    \[
+    \textbf{Utility function:} \quad g_i(W_T, W_B, P_T, P_B) := w_{Ti}' (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}' \Sigma_{Ti} w_{Ti} + \\
+    w_{Bi}' (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}' \Sigma_{Bi} w_{Bi} + \lambda(\tilde w - \hat w)
+    \]
+    \end{block}
+    \begin{itemize}
+    \item $\lambda$: Benefit for blockchain transparency. 
+        \item \textbf{Objective}: Maximize the utility of storage choice by balancing:
+        \begin{itemize}
+            \item Expected benefits and storage prices.
+            \item Risk of each storage type based on agent A's tolerance.
+        \end{itemize}
+        \item \textbf{If agent A chooses Blockchain}: High value on security and transparency, willing to accept variable costs.
+        \item \textbf{If agent A chooses Traditional Storage}: Preference for control and stable access at fixed prices, less focus on decentralization.
+    \end{itemize}
+\end{frame}
+    
+    
+	\begin{frame}[allowframebreaks]
+		\frametitle{References}
+		\printbibliography
+	\end{frame}
+\end{document}
