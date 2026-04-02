@@ -1,46 +1,1229 @@
-% cap4.tex
+\chapter{Results}
+\label{cap:Results}
 
-\chapter{Methodology}
-\label{c4} % la etiqueta para referencias
+This chapter presents the findings in progressive stages. First, we establish the baseline problem of regulatory constraints and quantify their impact on network efficiency (Section \ref{sec:baseline}). Second, we evaluate how the entry of a new agent in the market affects outcomes while maintaining existing regulatory restrictions (Section \ref{sec:fintech}). Third, we examine an alternative mechanism through parallel network infrastructure that circumvents regulatory constraints (Section \ref{sec:structural_solution}). Finally, we integrate all scenarios to systematically compare the effectiveness of these two mechanisms.
 
-\subsection{Computational Implementation of the Model}
+\section{Baseline: The Restrictions Problem}
+\label{sec:baseline}
 
-The model is implemented in Python, utilizing numerical libraries such as NumPy, SciPy, and Seaborn for matrix operations, optimization, and visualization. The architecture follows a modular design, separating the core components of the simulation: utility functions, price negotiation dynamics, network evolution, and visualization.
+We begin by establishing the fundamental problem created by regulatory constraints. Using the example detailed in the previous chapter (Section \ref{sec:example5}), we demonstrate how prohibiting direct connections creates inefficiency in financial networks.
 
-Each simulation initializes the parameters and beliefs of the agents, and then iteratively updates prices and contract sizes in both the traditional and blockchain networks. The dual-layer structure is explicitly encoded in two sets of matrices: \( W_T, P_T \) for the traditional layer, and \( W_B, P_B \) for the blockchain layer.
+\subsubsection{Network Structure Under Regulatory Constraint}
 
-\subsection{Pairwise Negotiation and Optimization Algorithm}
+Recall our baseline scenario with a National Bank (Firm 1), a Local Bank (Firm 2), and a Local Firm (Firm 3). The regulatory environment prohibits direct contracting between the National Bank and the Local Firm ($W_{13} = 0$). 
 
-At each time step, agents solve their individual utility maximization problems given current prices. The contract matrices \( W_T \) and \( W_B \) are updated using closed-form expressions derived from the first-order conditions of the utility function. These solutions depend on Q-matrices constructed from the covariance structure and constraints.
+Figure \ref{fig:network_3f_with} illustrates the equilibrium network structure. The Local Bank emerges as a central agent, having a contract of size $W_{12} = 0.26$ with the National Bank and $W_{23} = 0.56$ with the Local Firm. 
 
-Prices are updated via a bilateral negotiation algorithm. If agent \( i \) demands a different amount from agent \( j \) than vice versa, the corresponding price \( p_{ij} \) is adjusted toward a midpoint that balances these demands. This process is repeated until convergence.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/network3_with_con.png}
+    \caption{Network structure with regulatory constraint.}
+    \label{fig:network_3f_with}
+\end{figure}
 
-\subsection{Simulation Parameters and Configuration}
+\subsubsection{Counterfactual (Benchmark Scenario): Network Without Constraints}
 
-Simulations are configured with a small number of agents (typically 3 to 10) to allow for detailed tracking of dynamics. Key parameters include:
+To quantify the efficiency loss imposed by the regulatory constraint, we compare the constrained equilibrium with a counterfactual scenario where direct contracting is permitted. In this unrestricted case, all firms can contract freely without barriers, allowing us to observe the natural stable structure ($\Psi_i=I_n$ for all $i$).
+
+The pairwise negotiation algorithm converges to stable values (full convergence process in Appendix \ref{ex:convergence_nc}):
+
+\begin{align}
+    W_\infty &= \begin{bmatrix} 
+        -0.76 & -0.07 & 1.03 \\ 
+        -0.07 & -0.51 & 0.88 \\ 
+        1.03 & 0.88 & -1.30 
+    \end{bmatrix} &
+    P_\infty &= \begin{bmatrix} 
+        0.00 & -0.03 & 0.35 \\ 
+        0.03 & 0.00 & 0.24 \\ 
+        -0.35 & -0.24 & 0.00 
+    \end{bmatrix}
+\end{align}
+
+The converged network reveals a different structure, with the Local Firm now having the bigger contract with the National Bank ($W_{13}=1.03$), while the contract with the Local Bank is $W_{23} = 0.88$. In contrast, direct interaction between the two banks is minimal ($W_{12} = -0.07$), indicating they primarily serve as parallel funding sources for the Local Firm rather than as counterparties to each other.
+
+This network structure is supported by corresponding payment flows. The Local Firm pays unit prices of $P_{31} = -0.35$ to the National Bank and $P_{32} = -0.24$ to the Local Bank. The minimal direct interaction between the banks is priced at $P_{12} = -0.03$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/network3_without_con.png}
+    \caption{Network structure without regulatory constraint (3-firm baseline). The previously prohibited link between the National Bank and Local Firm now emerges as the largest contract in the network ($W_{13}=1.03$).}
+    \label{fig:network_3f_without}
+\end{figure}
+
+As shown in Figure \ref{fig:network_3f_without}, the removal of the regulatory constraint alters the network topology. The direct National Bank-Local Firm link dominates, while the National Bank-Local Bank connection becomes negligible.
+
+\subsubsection{Quantifying the Cost of Regulatory Constraints}
+
+The structural change in the network has profound implications for both network activity and agent welfare, as summarized in Table \ref{tab:baselinecomparison}.
+
+\begin{table}[h]
+\centering
+\caption{Baseline Comparison: Impact of Regulatory Constraint (3-Firm Scenarios)}
+\label{tab:baselinecomparison}
+\begin{tabular}{lccc}
+\hline
+\textbf{Metric} & \textbf{With Const.} & \textbf{Without Const.} & \textbf{Change (\%)} \\
+\hline
+\textit{\textbf{Network Activity}} & & & \\
+Bilateral Volume & 0.822 & 1.976 & +140.4\% \\
+Total Positions (incl. self) & 1.626 & 4.543 & +179.3\% \\
+\textbf{Activity Loss (Volume)} & \textbf{58.4\%} & -- & -- \\
+\hline
+\textit{\textbf{Agent Welfare (Utility)}} & & & \\
+Utility (National Bank) & 0.0636 & 0.4125 & +548.6\% \\
+Utility (Local Bank) & 0.4405 & 0.4254 & -3.4\% \\
+Utility (Local Firm) & 0.2020 & 0.5959 & +195.0\% \\ \hline
+\textbf{Total System Utility} & \textbf{0.7061} & \textbf{1.4338} & \textbf{+103.0\%} \\
+\textbf{Welfare Loss (Utility)} & \textbf{50.8\%} & -- & -- \\
+\hline
+\textit{\textbf{Rent Decomposition}} & \multicolumn{3}{c}{\textit{(Net payments: $\sum_j P_{ij} \cdot W_{ij}$)}} \\
+Rents (National Bank) & 0.0681 & -0.3598 & -628.1\% \\
+Rents (Local Bank) & -0.1977 & -0.2100 & +6.2\% \\
+Rents (Local Firm) & 0.1297 & 0.5699 & +339.5\% \\ \hline
+\textbf{Total System Rents} & \textbf{0.000} & \textbf{0.000} & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+The biggest impact is on network volume. The regulatory constraint eliminates the dominant $W_{13}$ contract, causing total bilateral volume to fall from 1.976 to 0.822, a 58.4\% activity loss. When including self-investments, total positions decreased 64.2\% (from 4.543 to 1.626).
+
+This inefficiency translates directly into welfare losses. Total system utility falls from 1.4338 to 0.7061, representing a 50.8\% welfare loss. Approximately half of the system's potential welfare is gone beacuse of the restriction.
+
+\paragraph{Distributional Effects}
+
+The constraint's impacts are not the same for each agent:
 
 \begin{itemize}
-    \item Expected returns \( \mu_{Ti}, \mu_{Bi} \)
-    \item Covariance matrices \( \Sigma_T, \Sigma_B \)
-    \item Risk aversion coefficients \( \gamma_T, \gamma_B \)
-    \item Transparency incentive \( \lambda \)
-    \item Price adjustment speed \( \eta \)
-    \item Prohibited links (e.g., institutional constraints)
+    \item \textbf{National Bank}: Suffers the largest relative loss, with utility declining by 84.6\% (from 0.4125 to 0.0636). Its net payment position reverses from receiving (-0.3598) to making net payments (0.0681).
+    
+    \item \textbf{Local Bank}: The only beneficiary, with utility increasing by 3.6\% (from 0.4254 to 0.4405) under the constraint. However, its net payment position remains negative in both scenarios (-0.2100 vs. -0.1977), indicating that in both scenarios still receive payments, but a little bit less with the constraint.
+
+    \item \textbf{Local Firm}: Also affected, with utility falling by 66.1\% (from 0.5959 to 0.2020). Its net payments go down by 77.2\% (from 0.5699 to 0.1297)..
 \end{itemize}
 
-The model allows for full flexibility in varying these inputs to explore comparative statics.
+\subsubsection{Interpretation and Implications}
 
-\subsection{Evaluation Metrics and Network Comparison}
+The results reveal two insights about the regulatory constraints:
 
-To evaluate the behavior of the system and compare outcomes across different configurations, we track the following metrics:
+\begin{enumerate}
+    \item \textbf{Deadweight Loss}: The constraint creates inefficiency, reducing bilateral volume by 58.4\% and system welfare by 50.8\%. This represents that the constraint does not reallocate welfare but destroys it.
+    
+    \item \textbf{Structural Monopoly Privilege}: While the constraint harms overall efficiency, it creates a ``structural privilege'' for the Local Bank. This agent benefits through its monopoly position as the central agent. The constraint transforms the Local Bank into a necessary bottleneck, potentially enhancing its bargaining position in bilateral negotiations.
+\end{enumerate}
+
+The zero-sum nature of net payments in both scenarios confirms both networks represent stable Nash equilibria.
+
+This 58.4\% activity loss and 50.8\% welfare loss provide the benchmark against which we evaluate potential solutions. In Section \ref{sec:fintech}, we examine whether introducing competition can mitigate these costs while the constraint remains in place.
+
+
+\section{Fintech Entry: Competition Within Constraints}
+\label{sec:fintech}
+
+Having established the welfare costs of the regulatory constraint, we now examine whether introducing competition can restore efficiency even while the constraint between the National Bank and the Local Firm ($W_{13}=0$) remains.
+
+\subsection{Experimental Design}
+
+To isolate the pure effect of competition, we introduce a fourth agent, which we will call the  ``Fintech'', as a direct competitor to the Local Bank. The experimental design, detailed in Section \ref{limitations}, ensures that from the perspective of the National Bank and Local Firm, the Local Bank and Fintech are nearly identical. 
+The model parameters are:
+
+\vspace{10pt} 
+
+\textbf{Covariance matrix} (with $\rho = 0.99$):
+
+\begin{align} \label{eq:cov_mat_4}
+\Sigma =
+\begin{bmatrix}
+    1.0  & 0.25 & 0.75 & 0.25 \\
+    0.25 & 1.0  & 0.60 & \rho \\
+    0.75 & 0.60 & 1.0  & 0.6  \\
+    0.25 & \rho  & 0.60 & 1.0
+\end{bmatrix}
+\end{align}
+
+\textbf{Expected returns matrix}:
+\begin{align} \label{eq:mean_mat_4}
+M =
+\begin{bmatrix}
+    0.0  & 0.9  & 0.9  & 0.9  \\
+    0.75 & 0.0  & 0.95 & 0.0  \\
+    0.5  & 0.8  & 0.0  & 0.8  \\
+    0.75 & 0.0  & 0.95 & 0.0
+\end{bmatrix}
+\end{align}
+
+\textbf{Risk aversion} (identical across all firms):
+\begin{align} \label{eq:gamma_4}
+    \gamma_1 = \gamma_2 = \gamma_3 = \gamma_4 = 1
+\end{align}
+
+\textbf{Constraint matrix} (prohibiting $W_{13}$ and $W_{31}$):
+\begin{align} \label{eq:psi_4}
+\Psi_1 =
+\begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1
+\end{bmatrix} & \quad
+\Psi_3 =
+\begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{bmatrix}
+\end{align}
+
+
+\begin{align} \label{eq:psi_2}
+\Psi_2 = \Psi_4 = I_4=
+\begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{bmatrix} 
+\end{align}
+
+Note that rows and columns 2 and 4 of $\Sigma$ and $M$ are nearly identical, ensuring that Firms 1 and 3 perceive the two firms as close substitutes.
+
+\subsection{Equilibrium with Competition}
+
+The pairwise negotiation process converges to:
+
+\begin{align} 
+    W_\infty &= \begin{bmatrix} 
+        -0.11 & 0.21 & 0.00 & 0.21 \\ 
+        0.21 & -0.14 & 0.39 & -0.14\\ 
+        0.00 & 0.39 & -0.47 & 0.39\\
+        0.21 & -0.14 & 0.39 & -0.14
+    \end{bmatrix} & 
+    P_\infty &= \begin{bmatrix} 
+        0.00 & 0.03 & 0.00 & 0.03 \\ 
+        -0.03 & 0.00 & -0.05 & 0.00 \\ 
+        0.00 & 0.05 & 0.00 & 0.05 \\
+        -0.03 & 0.00 & -0.05 & 0.00
+    \end{bmatrix}
+\end{align}
+
+The equilibrium structure exhibits symmetry: the Local Bank and Fintech hold identical positions (rows/columns 2 and 4 are identical).
+
+\subsection{Impact on Market Structure and Concentration}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/network4_with_con.png}
+    \caption{Network structure with 4 agents under regulatory constraint. The introduction of the Fintech creates perfect competition, with both agents doing the same.}
+    \label{fig:network4fwith}
+\end{figure}
+
+As shown in Figure \ref{fig:network4fwith}, the introduction of Fintech fundamentally transforms the network structure. The Local Bank's monopoly is eliminated, with the participation splitting almost perfectly between the two agents, the Local Bank and the Fintech.
+
+Table \ref{tab:fintech_impact} quantifies this structural change and its welfare implications between the scenario with 3 agents with the restriction (3F-WITH) and the scenario with 4 agents and the same restriction (4F-WITH).
+
+\begin{table}[h]
+\centering
+\caption{Impact of Fintech Entry on Network Activity and Welfare}
+\label{tab:fintech_impact}
+\begin{tabular}{lccc}
+\hline
+\textbf{Metric} & \textbf{3F-WITH} & \textbf{4F-WITH} & \textbf{Change (\%)} \\ \hline
+\textit{\textbf{Network Activity}} & & & \\
+Bilateral Volume & 0.822 & 1.351 & \textbf{+64.3\%} \\
+Total Positions (incl. self) & 1.626 & 2.216 & +36.3\% \\
+\hline
+\textit{\textbf{Agent Welfare (Utility)}} & & & \\
+Utility (National Bank) & 0.0636 & 0.1651 & +159.6\% \\
+Utility (Local Firm) & 0.2020 & 0.3910 & +93.6\% \\
+Utility (Local Bank) & 0.4405 & 0.2390 & -45.7\% \\
+Utility (Fintech) & -- & 0.2390 & -- \\ \hline
+\textbf{Total System Utility} & \textbf{0.7061} & \textbf{1.0341} & \textbf{+46.5\%} \\
+\hline
+\textit{\textbf{Rent Decomposition (Net Payments)}} & & & \\
+Rents (National Bank) & 0.0681 & -0.0146 & -- \\
+Rents (Local Bank) & -0.1977 & 0.0256 & -- \\
+Rents (Local Firm) & 0.1297 & -0.0365 & -- \\
+Rents (Fintech) & -- & 0.0256 & -- \\ \hline
+\textbf{Total System Rents} & \textbf{0.000} & \textbf{0.000} & -- \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Efficiency and Welfare Gains}
+
+Competition under constraint generates some improvements:
 
 \begin{itemize}
-    \item Contract volumes by agent and by network layer
-    \item Total utility per agent
-    \item Distribution of exposures (centrality, inequality)
-    \item Participation rate in the blockchain layer
-    \item Stability indicators (convergence speed, volatility)
+    \item Bilateral Volume increases by 64.3\% (from 0.822 to 1.351).
+    \item Total System Utility increases by 46.5\% (from 0.7061 to 1.0341).
 \end{itemize}
 
-Visual outputs include heatmaps of contract matrices, evolution of prices over time, and comparison plots for different values of \( \lambda \) and \( \gamma \). These metrics serve to quantify the role of transparency, heterogeneity, and network constraints in shaping multilayer financial networks.
+The welfare gains are for the National Bank and the Local Firm:
+\begin{itemize}
+    \item The National Bank sees utility increase by 159.6\% (from 0.0636 to 0.1651).
+    \item The Local Firm sees utility increase by 93.6\% (from 0.2020 to 0.3910).
+    \item The Local Bank loses its monopoly rents, with utility falling 45.7\% (from 0.4405 to 0.2390).
+\end{itemize}
+
+The Local Bank and Fintech achieve identical utilities (0.2390), confirming the symmetric competitive stability.
+
+\subsection{The Persistent Efficiency Gap}
+
+Despite these gains, competition cannot fully compensate for the constraint. When compared to the unconstrained 3-firm benchmark, the competitive equilibrium still exhibits inefficiency.
+
+To quantify this persistent gap, we compare the 4-firm constrained equilibrium against a counterfactual where all three firms can contract freely:
+
+\begin{table}[h]
+\centering
+\caption{The Limits of Competition: Comparison Against Unrestricted Benchmark}
+\label{tab:4firm_comparison}
+\begin{tabular}{lccc}
+\hline
+\textbf{Metric} & \textbf{4F-WITH} & \textbf{3F-WITHOUT} & \textbf{Gap (\%)} \\ 
+ & (Competition) & (Benchmark) & \\ \hline
+\textit{\textbf{Network Activity}} & & & \\
+Bilateral Volume & 1.351 & 1.976 & -31.6\% \\
+Total Positions & 2.216 & 4.543 & -51.2\% \\
+\hline
+\textit{\textbf{Agent Welfare}} & & & \\
+Utility (National Bank) & 0.1651 & 0.4125 & -60.0\% \\
+Utility (Local Bank) & 0.2390 & 0.4254 & -43.8\% \\
+Utility (Local Firm) & 0.3910 & 0.5959 & -34.4\% \\
+Utility (Fintech) & 0.2390 & -- & -- \\ \hline
+\textbf{Total System Utility} & \textbf{1.0341} & \textbf{1.4338} & \textbf{-27.9\%} \\
+\textbf{Welfare Gap} & \textbf{27.9\%} & -- & -- \\
+\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Benchmark is 3F-WITHOUT (unrestricted 3-agent case, utility = 1.4338). Even with competition, a 27.9\% welfare gap persists relative to simply removing the constraint.
+\end{tablenotes}
+\end{table}
+
+As shown in Table \ref{tab:4firm_comparison}, even with competition, the constrained network with the new agent exhibits:
+
+\begin{itemize}
+    \item 31.6\% lower bilateral volume (1.351 vs. 1.976)
+    \item 27.9\% lower total welfare (1.0341 vs. 1.4338)
+\end{itemize}
+
+The welfare gap calculation confirms this:
+\begin{equation}
+\text{Welfare Gap} = \frac{U_{\text{3F-WITHOUT}} - U_{\text{4F-WITH}}}{U_{\text{3F-WITHOUT}}} = \frac{1.4338 - 1.0341}{1.4338} = 27.9\%
+\end{equation}
+
+\subsection{Interpretation: Competition vs. Constraint}
+
+These results confirms that only the central agents are better in the constrained case. 
+
+While Fintech entry generates gains (46.5\% increase in welfare relative to the monopoly case), it cannot replicate the efficiency of simply removing the constraint. The constraint itself acts as a ceiling on efficiency. No amount of competition within that constrained system can achieve the welfare levels attainable in an unconstrained network.
+
+This finding has important implications:
+\begin{enumerate}
+    \item \textbf{First-Best Solution}: Removing the regulatory constraint itself generates far larger welfare gains than introducing competition (welfare increases by 103.0\% when moving from 3F-WITH to 3F-WITHOUT). See Table \ref{tab:baselinecomparison}.
+    
+    \item \textbf{Second-Best Solution}: If regulatory constraints cannot be removed, promoting competition can recover an important fraction of lost welfare (46.5\% gain), but 27.9\% of potential welfare is still lost.
+    
+    \item \textbf{Complementarity}: The two approaches are not substitutes. Even with competition, the structural constraint continues to generate deadweight loss.
+\end{enumerate}
+
+The persistent 27.9\% welfare gap shows that regulations or constraints could be more important than market structure. 
+
+\section{Unconstrained Four-Firm Benchmark}
+\label{sec:noconstaint_4f}
+
+We briefly examine the unconstrained 4-firm equilibrium.
+
+When all four agents can contract freely ($\Psi_i = I_4$ for all $i$), the network achieves:
+\begin{itemize}
+    \item Bilateral Volume: 2.372 (highest across all scenarios)
+    \item Total System Utility: 1.7413 (highest welfare)
+\end{itemize}
+
+This scenario confirms that the constraint, not the number of agents, drives inefficiency. Comparing 3F-WITHOUT (bilateral volume = 1.976) with 4F-WITHOUT (bilateral volume = 2.372) shows that adding a fourth agent increases volume by only 20.0\%, whereas removing the constraint in the 3-firm case increases volume by 140.4\%.
+
+The dominant relation of the unconstrained 4-firm network is the National Bank-Local Firm contract ($W_{13} = 1.035$), mirroring the pattern observed in the 3-firm unconstrained case. 
+
+\section{Summary of Results}
+\label{sec:summary_results}
+
+Table \ref{tab:master_summary} synthesizes the key metrics across all four scenarios.
+
+\begin{table}[h]
+\centering
+\caption{Master Comparison: Network Efficiency and Welfare Across All Scenarios}
+\label{tab:master_summary}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Metric} & \textbf{3F-WITH} & \textbf{3F-WITHOUT} & \textbf{4F-WITH} & \textbf{4F-WITHOUT} \\ 
+ & (Baseline) & (Benchmark) & (Competition) & (Ideal) \\ \hline
+\textit{\textbf{Network Activity}} & & & & \\
+Bilateral Volume & 0.822 & 1.976 & 1.351 & 2.372 \\
+Total Positions & 1.626 & 4.543 & 2.216 & 4.951 \\
+\hline
+\textit{\textbf{Welfare}} & & & & \\
+Total System Utility & 0.7061 & 1.4338 & 1.0341 & 1.7413 \\
+Welfare Gap vs. 3F-WITHOUT & 50.8\% & 0.0\% & 27.9\% & -- \\
+Welfare Gap vs. 4F-WITHOUT & 59.5\% & 17.6\% & 40.6\% & 0.0\% \\
+\hline
+\textit{\textbf{Key Exposures}} & & & & \\
+Direct $W_{13}$ & 0.000 & 1.033 & 0.000 & 1.035 \\
+\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Two welfare gaps are reported. "Welfare Gap vs. 3F-WITHOUT" measures inefficiency relative to the unrestricted 3-agent benchmark (1.4338), the minimum threshold any solution should achieve. "Welfare Gap vs. 4F-WITHOUT" measures inefficiency relative to the ideal 4-agent case (1.7413), representing the absolute best outcome.
+\end{tablenotes}
+\end{table}
+
+
+The results establish three conclusions:
+
+\begin{enumerate}
+    \item \textbf{Constraints Dominate Market Structure}: The presence or absence of the regulatory constraint explains far more variation in welfare (59.5\% in 3F case, 40.6\% in 4F case) than the number of agents.
+    
+    \item \textbf{Competition Helps, But Cannot Substitute for Deregulation}: Introducing competition increases welfare by 46.5\% relative to monopoly, but still leaves a 27.9\% welfare gap relative to the unconstrained benchmark with 3 agents.
+\end{enumerate}
+
+These findings motivate our theoretical investigation in Chapter \ref{capMethods}, where we extend the \citeA{jalan_incentive-aware_2024} model to formally characterize the effects of competition in constrained networks and derive conditions under which second-best policies (promoting competition) can approximate first-best outcomes (removing constraints).
+
+\section{The Structural Solution: Alternative Network}
+\label{sec:structural_solution}
+
+The previous section demonstrated that introducing competition (Fintech entry) generated welfare gains of 46.5\% relative to the monopoly baseline. However, this solution remained incomplete: a 27.9\% welfare gap persisted relative to the unconstrained benchmark.
+
+This section examines a second approach, allowing agents to access an alternative network infrastructure that operates without the constraint present in the traditional network.
+
+\subsection{Conceptual Validation: The 3-Agent Case}
+\label{sec:dual_3agents}
+
+We begin by validating the dual-network mechanism in the 3-agent setting.
+
+\subsubsection{Dual Network Without Restriction}
+
+First, we establish a baseline where both networks are unrestricted and operate under identical parameters ($\tau=0$, $\lambda_B=0$, $\Psi_T=\Psi_B=I_3$). This configuration tests whether the dual-network framework introduces distortions when networks are indistinguishable.
+
+The results, presented in Table \ref{tab:3f_dual_baseline}, show that agents divide their portfolios evenly between networks (50.0\% adoption rate), and total system utility (1.434) matches the single-network unconstrained case from Table \ref{tab:baselinecomparison}.
+
+\begin{table}[h]
+\centering
+\caption{3-Agent Dual Network: Symmetric Baseline (No Restrictions)}
+\label{tab:3f_dual_baseline}
+\begin{tabular}{lcc}
+\hline
+\textbf{Metric} & \textbf{Traditional (T)} & \textbf{Blockchain (B)} \\ \hline
+Bilateral Volume & 0.990 & 0.990 \\
+Total Positions (incl. self) & 1.633 & 1.633 \\
+Market Share & 50.0\% & 50.0\% \\
+Direct Link $W_{13}$ & 0.515 & 0.515 \\
+\hline
+\multicolumn{3}{l}{\textit{System Metrics}} \\
+Total System Utility & \multicolumn{2}{c}{1.434} \\
+Combined Bilateral Volume & \multicolumn{2}{c}{1.980} \\
+Price Differential (avg) & \multicolumn{2}{c}{0.000} \\
+\hline
+\end{tabular}
+\end{table}
+
+When networks are identical, agents distribute contracts equally across both infrastructures. The 50/50 allocation represents an equilibrium where marginal utility from either network is equivalent. The dual system generates no efficiency loss compared to the single-network case; it provides redundancy without cost.
+
+This confirms that the dual-network framework is correctly specified: when $\tau=0$, $\lambda_B=0$ and $\Psi_T=\Psi_B=I_3$, the model converges to the single-network outcome without distortions.
+
+\subsubsection{Dual Network With Restriction}
+
+We now impose the regulatory constraint $(W_{13}=0)$ exclusively in the Traditional Network, while the Alternative Network remains unrestricted. This configuration tests whether a parallel infrastructure can circumvent structural inefficiency. Results are presented in Table \ref{tab:3f_dual_restricted}.
+
+\begin{table}[h]
+\centering
+\caption{3-Agent Dual Network: Restriction in Traditional Network Only}
+\label{tab:3f_dual_restricted}
+\begin{tabular}{lcc}
+\hline
+\textbf{Metric} & \textbf{Traditional (T)} & \textbf{Alternative (A)} \\ \hline
+Bilateral Volume & 0.568 & 1.486 \\
+Total Positions (incl. self) & 1.220 & 2.128 \\
+Market Share & 27.6\% & 72.4\% \\
+Direct Link $W_{13}$ & 0.000 (blocked) & \textbf{1.030} \\
+\hline
+\multicolumn{3}{l}{\textit{System Metrics}} \\
+Total System Utility & \multicolumn{2}{c}{\textbf{1.434}} \\
+Combined Bilateral Volume & \multicolumn{2}{c}{2.054} \\
+Price Differential (avg) & \multicolumn{2}{c}{0.059} \\
+\hline
+\multicolumn{3}{l}{\textit{Agent-Level Utilities}} \\
+National Bank & \multicolumn{2}{c}{0.238} \\
+Local Bank & \multicolumn{2}{c}{0.345} \\
+Local Firm & \multicolumn{2}{c}{0.851} \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Finding 1: Complete Welfare Recovery}
+
+The dual network achieves Total System Utility = 1.434, identical to the unrestricted single-network benchmark. Despite the constraint in the Traditional Network, the system recovers 100\% of potential welfare.
+
+Comparison to the constrained single-network case (Scenario 1, Table \ref{tab:baselinecomparison}):
+\begin{itemize}
+    \item \textbf{Single Network (3F-WITH)}: Utility = 0.706 (50.8\% welfare loss)
+    \item \textbf{Dual Network (3F-DUAL-WITH)}: Utility = 1.434 (0\% welfare loss)
+    \item \textbf{Welfare Recovery}: +103.0\% relative to constrained baseline
+\end{itemize}
+
+The structural solution eliminates the inefficiency created by the regulatory constraint.
+
+\paragraph{Finding 2: Network Allocation Pattern}
+
+The Blockchain Network captures 72.4\% of bilateral volume, including the entirety of the previously blocked direct link ($W_{13} = 1.030$). The Traditional Network retains 27.6\% of volume despite its constraint.
+
+This mixed equilibrium reflects strategic portfolio allocation. Agents do not abandon the Traditional Network entirely; instead, they distribute contracts across both platforms:
+\begin{itemize}
+    \item The Blockchain Network absorbs the blocked contract
+    \item The Traditional Network retains volume
+    \item Both networks coexist in equilibrium
+\end{itemize}
+
+\paragraph{Finding 3: Endogenous Price Differential}
+
+Despite setting $\tau=0$ and $\lambda_B=0$, an average price differential of 0.059 emerges between networks. This differential is not uniform: it concentrates on pairs affected by the Traditional Network constraint.
+
+For the blocked pair (National Bank-Local Firm):
+\begin{itemize}
+    \item Traditional Network: $P^T_{13} = 0$ (contract prohibited)
+    \item Blockchain Network: $P^B_{13} \neq 0$ (contract executes)
+\end{itemize}
+
+For unrestricted pairs, price differentials remain near zero, reflecting network symmetry. The observed differential captures the shadow price of the constraint in the Traditional Network.
+
+\paragraph{Finding 4: Distributional Effects}
+
+Table \ref{tab:3f_dual_welfare_decomp} presents the distribution of welfare gains across agents, comparing the single and dual network with the restricition in both cases.
+
+\begin{table}[h]
+\centering
+\caption{3-Agent Dual Network: Welfare Distribution}
+\label{tab:3f_dual_welfare_decomp}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Agent} & \textbf{Single (WITH)} & \textbf{Dual (WITH)} & \textbf{Change (\%)} \\ \hline
+National Bank & 0.064 & 0.238 & +272.5\% \\
+Local Bank & 0.441 & 0.345 & -21.7\% \\
+Local Firm & 0.202 & 0.851 & +321.3\% \\
+\hline
+\textbf{TOTAL} & 0.706 & 1.434 & +103.0\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The structural solution generates differential welfare effects:
+\begin{itemize}
+    \item \textbf{Local Firm}: +321.3\% utility increase
+    \item \textbf{National Bank}: +272.5\% utility increase
+    \item \textbf{Local Bank}: -21.7\% utility decrease
+\end{itemize}
+
+The Local Bank sees a utility decline from 0.441 to 0.345, reflecting the loss of its structural position as the central agent in the constrained single-network equilibrium. However, its final utility (0.345) exceeds its utility in the competitive single-network case (0.239, Table \ref{tab:fintech_impact}).
+
+\paragraph{Finding 5: Volume Expansion}
+
+Combined bilateral volume in the dual-network system (2.054) exceeds the volume in both the unrestricted single-network case (1.976) and the constrained single-network case (0.822).
+
+Comparison of bilateral volumes:
+\begin{itemize}
+    \item 3F-WITHOUT (single network, unrestricted): 1.976
+    \item 3F-DUAL-WITH (dual network, T restricted): 2.054
+    \item Increase: +3.9\%
+\end{itemize}
+
+This volume expansion occurs despite identical total system utility (1.434 in both cases), indicating that the dual-network structure generates a different equilibrium allocation pattern while maintaining welfare equivalence.
+
+\subsubsection{Validation Summary}
+
+The 3-agent dual-network experiments establish three results:
+
+\begin{enumerate}
+    \item \textbf{Framework Validity}: The dual-network model replicates single-network outcomes when networks operate under identical parameters (Table \ref{tab:3f_dual_baseline}).
+    
+    \item \textbf{Complete Welfare Recovery}: The Blockchain Network circumvents the regulatory constraint, recovering 100\% of welfare lost in the constrained single-network case (Table \ref{tab:3f_dual_restricted}).
+    
+    \item \textbf{Coexistence Equilibrium}: Agents allocate contracts strategically across both networks rather than migrating entirely to the unrestricted platform.
+\end{enumerate}
+
+Having validated the mechanism in the 3-agent setting, we proceed to examine scenarios incorporating competition.
+
+\subsection{The Complete Solution: 4-Agent Dual Network}
+\label{sec:dual_4agents}
+
+Having validated the dual-network mechanism in the 3-agent case, we now examine the scenario combining competition with the structural solution: four agents (including Fintech) with the regulatory constraint active exclusively in the Traditional Network.
+
+This configuration tests whether the structural solution maintains its effectiveness when combined with competition.
+
+\subsubsection{Dual Network Without Restriction}
+
+We first establish the symmetric baseline with four agents and no restrictions in either network. Results are presented in Table \ref{tab:4f_dual_baseline}.
+
+\begin{table}[h]
+\centering
+\caption{4-Agent Dual Network: Symmetric Baseline (No Restrictions)}
+\label{tab:4f_dual_baseline}
+\begin{tabular}{lcc}
+\hline
+\textbf{Metric} & \textbf{Traditional (T)} & \textbf{Alternative (A)} \\ \hline
+Bilateral Volume & 1.183 & 1.183 \\
+Total Positions (incl. self) & 1.828 & 1.828 \\
+Market Share & 50.0\% & 50.0\% \\
+Direct Link $W_{13}$ & 0.518 & 0.518 \\
+\hline
+\multicolumn{3}{l}{\textit{System Metrics}} \\
+Total System Utility & \multicolumn{2}{c}{1.741} \\
+Combined Bilateral Volume & \multicolumn{2}{c}{2.365} \\
+Price Differential (avg) & \multicolumn{2}{c}{0.000} \\
+\hline
+\end{tabular}
+\end{table}
+
+Symmetric networks produce a 50/50 allocation with no efficiency loss. Total welfare (1.741) matches the single-network unconstrained case exactly (Table \ref{tab:thesis_comparison_final}, Scenario 4F-WITHOUT).
+
+This confirms that adding the Fintech does not alter the behavior of the dual-network framework when networks operate under identical parameters.
+
+\subsubsection{The Structural Solution with Competition}
+
+We now impose the constraint $(W_{13}=0)$ exclusively in the Traditional Network. This configuration tests whether the structural solution achieves the welfare benchmark when competition exists.
+
+Complete results are presented in Table \ref{tab:4f_dual_restricted}.
+
+\begin{table}[h]
+\centering
+\caption{4-Agent Dual Network: Structural Solution (Restriction in T Only)}
+\label{tab:4f_dual_restricted}
+\begin{tabular}{lcc}
+\hline
+\textbf{Metric} & \textbf{Traditional (T)} & \textbf{Alternative (A)} \\ \hline
+Bilateral Volume & 1.567 & 1.442 \\
+Total Positions (incl. self) & 2.178 & 2.183 \\
+Market Share & 52.1\% & 47.9\% \\
+Direct Link $W_{13}$ & 0.000 (blocked) & \textbf{1.035} \\
+\hline
+\multicolumn{3}{l}{\textit{System Metrics}} \\
+Total System Utility & \multicolumn{2}{c}{\textbf{1.741}} \\
+Combined Bilateral Volume & \multicolumn{2}{c}{3.009} \\
+Price Differential (avg) & \multicolumn{2}{c}{0.032} \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Finding 1: Complete Welfare Recovery}
+
+The dual network achieves Total System Utility = 1.741, matching the unconstrained 4-firm benchmark. This represents:
+\begin{itemize}
+    \item A 146.6\% welfare gain over the constrained monopoly baseline (0.706 → 1.741)
+    \item A 68.4\% welfare gain over the constrained competition scenario (1.034 → 1.741)
+    \item 100\% closure of the welfare gap relative to the unconstrained benchmark
+\end{itemize}
+
+Comparison across all scenarios (from Table \ref{tab:thesis_comparison_final}):
+\begin{itemize}
+    \item Monopoly (3F-WITH): 0.706 (59.5\% below benchmark)
+    \item Competition (4F-WITH): 1.034 (40.6\% below benchmark)
+    \item Structural Solution (4F-DUAL-WITH): 1.741 (0.0\% gap)
+\end{itemize}
+
+The structural solution is the only mechanism that completely resolves the inefficiency created by the regulatory constraint.
+
+\paragraph{Finding 2: Altered Adoption Pattern with Competition}
+
+The adoption pattern in the 4-agent case differs from the 3-agent scenario:
+
+\begin{table}[h]
+\centering
+\caption{Alternative Network Adoption: 3-Agent vs 4-Agent Comparison}
+\label{tab:adoption_comparison}
+\begin{tabular}{lcc}
+\hline
+\textbf{Metric} & \textbf{3 Agents} & \textbf{4 Agents} \\ \hline
+Alternative Network Share & 72.4\% & 47.9\% \\
+Traditional Network Volume & 0.568 & 1.567 \\
+Alternative Network Volume & 1.486 & 1.442 \\
+\hline
+\end{tabular}
+\end{table}
+
+With competition (4 agents), Alternative Network adoption falls to 47.9\%, compared to 72.4\% in the monopoly case. This occurs because competition in the Traditional Network increases its efficiency even under constraint, reducing the relative advantage of the Alternative Network.
+
+The Traditional Network retains 52.1\% of bilateral volume despite the active constraint, indicating that agents use both networks strategically rather than migrating entirely to the unrestricted platform.
+
+\paragraph{Finding 3: Volume Expansion Through Complementarity}
+
+Combined bilateral volume (3.009) exceeds both the symmetric dual-network baseline (2.365) and the single-network unconstrained benchmark (2.372):
+
+\begin{itemize}
+    \item 4F-WITHOUT (single network, unrestricted): 2.372
+    \item 4F-DUAL-WITHOUT (dual network, symmetric): 2.365
+    \item 4F-DUAL-WITH (dual network, T restricted): 3.009
+    \item Volume increase: +26.8\% vs single-network benchmark
+\end{itemize}
+
+This volume expansion occurs while maintaining identical total system utility (1.741 in all cases), indicating that the constraint-induced asymmetry generates higher measured bilateral activity through strategic reallocation across networks. Agents use both platforms complementarily rather than substitutively, resulting in more observable network activity to achieve the same welfare outcome.
+
+
+\paragraph{Finding 4: Distribution of Welfare Gains}
+
+Table \ref{tab:4f_dual_welfare_comparison} presents agent-level utilities across scenarios.
+
+\begin{table}[h]
+\centering
+\caption{4-Agent Scenarios: Agent-Level Welfare Comparison}
+\label{tab:4f_dual_welfare_comparison}
+\begin{tabular}{lrrrr}
+\hline
+\textbf{Agent} & \textbf{Monopoly} & \textbf{Competition} & \textbf{Dual Network} & \textbf{Change (\%)} \\ 
+ & (3F-WITH) & (4F-WITH) & (4F-DUAL-WITH) & (Comp→Dual) \\ \hline
+National Bank & 0.064 & 0.165 & 0.243 & +47.3\% \\
+Local Bank & 0.441 & 0.239 & 0.256 & +7.1\% \\
+Local Firm & 0.202 & 0.391 & 0.988 & +152.6\% \\
+Fintech & -- & 0.239 & 0.256 & +7.1\% \\
+\hline
+\textbf{TOTAL} & 0.706 & 1.034 & 1.741 & +68.4\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The structural solution generates differential welfare effects:
+\begin{itemize}
+    \item \textbf{Local Firm}: Utility increases from 0.391 to 0.988 (+152.6\%). The blocked party captures the majority of welfare gains.
+    \item \textbf{National Bank}: Utility increases from 0.165 to 0.243 (+47.3\%)
+    \item \textbf{Local Bank and Fintech}: Utilities increase from 0.239 to 0.256 (+7.1\%). 
+\end{itemize}
+
+The Local Firm captures 56.8\% of the total welfare improvement (0.597 out of 1.035 total gain from 3F-WITH baseline).
+
+\subsubsection{Network Coexistence Mechanism}
+
+The constraint in the Traditional Network creates a price differential that supports network coexistence. While the blocked contract ($W_{13}$) migrates entirely to the Alternative Network (1.035 volume), other contracts remain distributed across both platforms.
+
+Key features of the equilibrium:
+\begin{enumerate}
+    \item The Alternative Network absorbs the blocked contract, generating welfare gains for the constrained parties
+    \item The Traditional Network retains 52.1\% of bilateral volume, indicating competitive viability despite the constraint
+    \item Central agents (Local Bank, Fintech) maintain presence in both networks, preserving their market position
+    \item The price differential (avg 0.032) reflects the shadow cost of the Traditional Network constraint
+\end{enumerate}
+
+This represents a complementary rather than substitutive relationship between networks. The Alternative Network functions as a mechanism for circumventing specific constraints rather than replacing the Traditional Network entirely.
+
+\subsection{Integrated Comparative Analysis}
+\label{sec:final_comparison}
+
+Having analyzed all scenarios, we now synthesize the findings to evaluate the two proposed solutions: competition-based approaches versus structural reform through alternative infrastructure.
+
+Table \ref{tab:thesis_comparison_final} presents the complete comparison across all scenarios.
+
+\begin{table}[h!]
+\centering
+\caption{Comparison of All Scenarios: Complete Results}
+\label{tab:thesis_comparison_final}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\hline
+ & \textbf{Scenario 1:} & \textbf{Scenario 2:} & \textbf{Scenario 3:} & \textbf{Scenario 4:} & \textbf{Scenario 5:} & \textbf{Scenario 6:} \\
+\textbf{Metric} & \textbf{Baseline} & \textbf{Ideal} & \textbf{Competition} & \textbf{3F-Dual} & \textbf{3F-Dual} & \textbf{4F-Dual} \\
+ & (3F-WITH) & (4F-WITHOUT) & (4F-WITH) & (No Rest.) & (With Rest.) & (With Rest.) \\ \hline
+\multicolumn{7}{l}{\textit{\textbf{System Welfare}}} \\
+Total Utility & 0.706 & 1.741 & 1.034 & 1.434 & 1.434 & \textbf{1.741} \\
+Gap vs. 3F-WITHOUT (\%) & 50.8 & -- & 27.9 & 0.0 & 0.0 & \textbf{--} \\
+Gap vs. 4F-WITHOUT (\%) & 59.5 & 0.0 & 40.6 & 17.6 & 17.6 & \textbf{0.0} \\
+Improvement vs S1 (\%) & -- & +146.6 & +46.5 & +103.0 & +103.0 & \textbf{+146.6} \\
+\hline
+\multicolumn{7}{l}{\textit{\textbf{Agent Utilities}}} \\
+National Bank & 0.064 & 0.508 & 0.165 & 0.242 & 0.238 & 0.243 \\
+Local Bank & 0.441 & 0.216 & 0.239 & 0.328 & 0.345 & 0.256 \\
+Local Firm & 0.202 & 0.802 & 0.391 & 0.864 & 0.851 & \textbf{0.988} \\
+Fintech & -- & 0.216 & 0.239 & -- & -- & 0.256 \\
+\hline
+\multicolumn{7}{l}{\textit{\textbf{Network Structure}}} \\
+Bilateral Volume & 0.822 & 2.372 & 1.351 & 1.980 & 2.054 & 3.009 \\
+Total Positions & 1.626 & 4.951 & 2.216 & 3.265 & 3.348 & 4.361 \\
+Direct Link $W_{13}$ & 0.000 & 1.035 & 0.000 & 1.030 & 1.030 & 1.035 \\
+Alt. Adoption (\%) & -- & -- & -- & 50.0 & 72.4 & 47.9 \\
+Price Diff. (avg) & -- & -- & -- & 0.000 & 0.059 & 0.032 \\
+\hline
+\end{tabular}
+}
+\begin{tablenotes}
+\small
+\item Note: Two welfare gaps are shown. "Gap vs. 3F-WITHOUT" measures performance against the unrestricted 3-agent benchmark (1.4338)—the minimum any solution should achieve. "Gap vs. 4F-WITHOUT" measures against the ideal 4-agent case (1.7413)—the absolute best outcome. Scenarios 5 and 6 achieve zero gap vs. 3F-WITHOUT, demonstrating complete welfare recovery relative to simply removing the constraint.
+\end{tablenotes}
+\end{table}
+
+
+\subsubsection{Findings}
+
+\paragraph{Finding 1: Only the Structural Solution Achieves Complete Welfare Recovery}
+
+The progression of total system utilities across scenarios establishes the relative effectiveness of each approach:
+
+\begin{enumerate}
+    \item \textbf{Monopoly (S1)}: 0.706 — Baseline with constraint (59.5\% welfare loss)
+    \item \textbf{Competition (S3)}: 1.034 — Partial recovery (+46.5\%), 40.6\% gap remains
+    \item \textbf{3F-Dual (S4-S5)}: 1.434 — Mechanism validation (+103.0\%), but 17.6\% gap persists due to 3-agent limitation
+    \item \textbf{4F-Dual (S6)}: 1.741 — Complete recovery (+146.6\%, 0\% gap)
+\end{enumerate}
+
+The structural solution is the only mechanism that completely resolves the inefficiency created by the regulatory constraint. Competition improves outcomes but cannot overcome the structural limitation imposed by the regulation itself.
+
+The 17.6\% gap in the 3-agent dual-network case (S5) reflects the absence of competition rather than a failure of the structural mechanism. When competition is added (S6), the gap closes entirely.
+
+\paragraph{Finding 2: Distributional Effects Across Solutions}
+
+Agent-level analysis reveals differential welfare impacts across approaches:
+
+\begin{table}[h]
+\centering
+\caption{Agent Utility Changes: Competition vs. Structural Solution}
+\label{tab:agent_utility_changes}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Agent} & \textbf{Monopoly} & \textbf{Competition} & \textbf{Structural} \\
+ & (3F-WITH) & (4F-WITH) & (4F-DUAL-WITH) \\ \hline
+Local Firm & 0.202 & 0.391 (+93.6\%) & \textbf{0.988 (+389.1\%)} \\
+National Bank & 0.064 & 0.165 (+159.6\%) & 0.243 (+280.2\%) \\
+Local Bank & 0.441 & 0.239 (-45.7\%) & 0.256 (-42.0\%) \\
+Fintech & -- & 0.239 (new entry) & 0.256 (+7.1\%) \\
+\hline
+\textbf{TOTAL} & \textbf{0.706} & \textbf{1.034} & \textbf{1.741} \\
+\hline
+\end{tabular}
+\end{table}
+
+The \textbf{Local Firm} (the blocked party) captures the majority of gains from the structural solution:
+\begin{itemize}
+    \item Competition increases its utility by 93.6\% (0.202 → 0.391)
+    \item Structural solution increases its utility by 389.1\% (0.202 → 0.988)
+    \item The incremental gain from structural solution is 152.6\% beyond competition
+\end{itemize}
+
+The structural solution directly enables the blocked connection ($W_{13} = 1.035$ in the Alternative Network), while competition can only reduce prices within the constrained Traditional Network. This explains why the blocked party gains substantially more from structural reform.
+
+Central agents (Local Bank, Fintech) experience utility increases of 7.1\% when moving from competition alone (S3) to the structural solution (S6). This indicates that alternative infrastructure and competition are complementary.
+
+\paragraph{Finding 3: Competition Reduces Alternative Network Adoption}
+
+The adoption rates across dual-network scenarios reveal an interaction between competition and infrastructure choice:
+
+\begin{itemize}
+    \item \textbf{3F-Dual (No Restriction)}: 50.0\% adoption — Symmetric baseline
+    \item \textbf{3F-Dual (With Restriction)}: 72.4\% adoption — High migration due to monopoly
+    \item \textbf{4F-Dual (With Restriction)}: 47.9\% adoption — Low migration due to competition
+\end{itemize}
+
+Alternative Network adoption falls from 72.4\% to 47.9\% when competition is introduced, despite identical constraint configurations. This occurs because competition between Local Bank and Fintech reduces prices in the Traditional Network, making it more attractive even under constraint.
+
+Supporting evidence:
+\begin{itemize}
+    \item Traditional Network bilateral volume: 0.568 (monopoly) → 1.567 (competition), +176\% increase
+    \item Price differential: 0.059 (monopoly) → 0.032 (competition), -46\% reduction
+\end{itemize}
+
+This pattern demonstrates that competition and alternative infrastructure are partially substitutable mechanisms for mitigating monopolistic inefficiency. However, this substitutability is incomplete: while competition reduces the extent of migration to the Alternative Network, it cannot eliminate the need for alternative infrastructure. The welfare gap remains 40.6\% with competition alone, while the dual-network solution achieves 100\% efficiency recovery with only 47.9\% Alternative Network adoption.
+
+\paragraph{Finding 4: Network Coexistence as Equilibrium Outcome}
+
+The structural solution generates network coexistence rather than complete migration. Even when the Alternative Network is unconstrained, both networks retain substantial volume:
+
+\begin{table}[h]
+\centering
+\caption{Network Volume Distribution Across Scenarios}
+\label{tab:network_volume_dist}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Scenario} & \textbf{Traditional} & \textbf{Alternative} & \textbf{Combined} \\ \hline
+3F-Dual (No Rest.) & 0.990 & 0.990 & 1.980 \\
+3F-Dual (With Rest.) & 0.568 & 1.486 & 2.054 \\
+4F-Dual (With Rest.) & 1.567 & 1.442 & 3.009 \\
+\hline
+\end{tabular}
+\end{table}
+
+Key observations:
+\begin{enumerate}
+    \item Both networks maintain positive volume in all scenarios
+    \item Combined bilateral volume exceeds single-network benchmarks (3.009 vs 2.372 for 4F-WITHOUT)
+    \item The Traditional Network retains 52.1\% of volume in the competitive dual-network case despite the active constraint
+\end{enumerate}
+
+This coexistence reflects strategic complementarity: agents use both networks to achieve portfolio objectives, with the Alternative Network serving as a mechanism for circumventing specific constraints rather than replacing the Traditional Network entirely.
+
+\textbf{Volume Expansion Mechanism:} The increase in combined bilateral volume (3.009 vs 2.372) occurs while maintaining identical total system utility (1.741). This indicates that the constraint-induced asymmetry generates higher measured bilateral activity through strategic reallocation across networks. Each agent maintains their optimal total portfolio ($w^*_i = w^T_i + w^A_i$), but asymmetric allocation across networks produces more observable network activity to achieve the same welfare outcome.
+
+\paragraph{Finding 5: Robustness Across Configurations}
+
+The structural solution demonstrates consistent performance across different specifications:
+
+\begin{itemize}
+    \item \textbf{3-Agent Case}: Achieves 1.434 utility (matches 3-agent unconstrained single-network benchmark)
+    \item \textbf{4-Agent Case}: Achieves 1.741 utility (matches 4-agent unconstrained single-network benchmark)
+    \item \textbf{Baseline Setting}: Functions with single central agent (72.4\% adoption)
+    \item \textbf{Competitive Setting}: Functions with multiple central agents (47.9\% adoption)
+    \item \textbf{Symmetric Baseline}: Produces no distortions when $\tau=\lambda_A=0$
+\end{itemize}
+
+This robustness across agent counts, market structures, and parameter configurations indicates the mechanism is fundamental rather than an artifact of specific modeling assumptions.
+
+
+The comparative analysis establishes three conclusions:
+
+\begin{enumerate}
+    \item \textbf{Structural Solutions Dominate Competition}: Enabling alternative infrastructure generates complete welfare recovery (0\% gap), while competition alone leaves 40.6\% of potential welfare unrecovered. When regulatory constraints create inefficiency, infrastructure policy should take precedence over competition policy.
+    
+    \item \textbf{Complementarity of Mechanisms}: Competition reduces Alternative Network adoption from 72.4\% to 47.9\%, indicating that competition and alternative infrastructure are partially substitutable. However, both mechanisms remain valuable when implemented simultaneously: the structural solution achieves 100\% efficiency recovery with lower infrastructure adoption when competition is present.
+    
+    \item \textbf{Coexistence Design Principle}: Alternative infrastructure should be designed to complement rather than replace existing systems. The equilibrium features both networks operating simultaneously (52.1\% Traditional, 47.9\% Alternative), suggesting that infrastructure policy should enable choice rather than mandate migration.
+\end{enumerate}
+
+\section{Distributional Analysis and Market Structure Transformation}
+\label{sec:distributional}
+
+While the analysis established that alternative infrastructure enables complete welfare recovery from regulatory restrictions, the aggregate result obscures substantial redistribution across market participants. This section examines how dual-network equilibria alter both (i) utility allocations among agents and (ii) the underlying payment structure that determines transfer patterns in the financial network.
+
+The analysis reveals that alternative network adoption reshapes market power dynamics. The direction of net payment flows reverses for key participants as market structure evolves.
+
+\subsection{Winner-Loser Analysis: Utility Redistribution}
+
+Table \ref{tab:utilities_comparison} presents agent-level utilities across four scenarios: the restricted baseline (4F-WITH), the unrestricted benchmark (4F-WITHOUT), the dual-network equilibrium (4F-DUAL), and the three-agent dual network (3F-DUAL) for reference.
+
+\begin{table}[ht]
+\centering
+\caption{Agent-Level Utilities Across Scenarios}
+\label{tab:utilities_comparison}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Agent} & \textbf{4F-WITH} & \textbf{4F-WITHOUT} & \textbf{4F-DUAL} & \textbf{3F-DUAL} & \textbf{Gain} & \textbf{\% Gain} \\
+\midrule
+National Bank  & 0.1651 & 0.5081 & 0.2428 & 0.2378 & +0.0777 & +47.1\% \\
+Local Bank     & 0.2390 & 0.2159 & 0.2555 & 0.3447 & +0.0165 & +6.9\% \\
+Local Firm     & 0.3910 & 0.8015 & 0.9875 & 0.8512 & \textbf{+0.5965} & \textbf{+152.6\%} \\
+Fintech        & 0.2390 & 0.2159 & 0.2555 & — & +0.0165 & +6.9\% \\
+\midrule
+\textbf{TOTAL} & 1.0341 & 1.7413 & 1.7413 & 1.4337 & +0.7072 & +68.4\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Gain calculated as 4F-DUAL minus 4F-WITH. The Local Firm captures 84.3\% of total welfare improvement despite representing 25\% of market participants.
+\end{tablenotes}
+\end{table}
+
+\subsubsection{The Local Firm as Primary Beneficiary}
+
+The distributional analysis reveals asymmetry in welfare gains: the \textbf{Local Firm captures 84.3\%} of aggregate welfare improvement (0.597 out of 0.707), despite being one of four market participants. Its utility increases by 152.6\% (from 0.391 to 0.988), driven primarily by restored access to the National Bank via the Alternative Network (the previously restricted link).
+
+Central agents experience differential outcomes:
+\begin{itemize}
+    \item \textbf{National Bank}: 47.1\% utility increase, recovering from a depressed baseline (0.165 in 4F-WITH). The restriction imposed costs on the National Bank; the Alternative Network provides partial restoration but does not fully compensate for losses relative to the unconstrained benchmark (0.508).
+    
+    \item \textbf{Local Bank \& Fintech}: Nearly identical outcomes (6.9\% increase each), indicating they operate under symmetric competitive conditions in the dual-network equilibrium. Their limited gains reflect competitive pricing.
+\end{itemize}
+
+\subsubsection{Comparison with Three-Agent Configuration}
+
+The 3F-DUAL scenario (without Fintech) provides insight into competitive effects. Comparing 3F-DUAL to 4F-DUAL:
+
+\begin{itemize}
+    \item \textbf{Local Bank}: Utility falls 26.6\% (0.345 $\rightarrow$ 0.256) upon Fintech entry, consistent with competitive pressure effects
+    
+    \item \textbf{Local Firm}: Utility rises 16.0\% (0.851 $\rightarrow$ 0.988), indicating end-clients benefit from competition
+    
+    \item \textbf{National Bank}: Nearly unchanged (0.238 $\rightarrow$ 0.243, +2.1\%), suggesting the wholesale banking layer remains relatively insulated from retail-level competition
+\end{itemize}
+
+Fintech entry generates redistribution (Local Bank loses more than Fintech gains in absolute terms) while creating positive surplus for the end-agents.  
+
+\subsection{Payment Structure Transformation}
+
+Beyond utility allocations, alternative network adoption alters payment flow patterns in equilibrium. Table \ref{tab:net_rents_comparison} presents net rent positions—defined as total inflows minus outflows from price-mediated transfers—across scenarios.
+
+\begin{table}[ht]
+\centering
+\caption{Net Rent Positions: Payment Flow Structure}
+\label{tab:net_rents_comparison}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Agent} & \textbf{4F-WITH} & \textbf{4F-WITHOUT} & \textbf{4F-DUAL} & \textbf{3F-DUAL} & \textbf{Change}  \\
+\midrule
+National Bank  & -0.0146 & -0.4656 & -0.1996 & -0.1846 & -0.1850 \\
+Local Bank     & +0.0256 & +0.0367 & -0.0034 & -0.1300 & \textbf{-0.0290}  \\
+Local Firm     & -0.0365 & +0.3927 & +0.2064 & +0.3146 & +0.2429  \\
+Fintech        & +0.0256 & +0.0367 & -0.0034 & — & -0.0290  \\
+\midrule
+\textbf{TOTAL} & 0.0000 & 0.0004 & 0.0000 & 0.0000 & —  \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Positive values indicate net receipts; negative values indicate net payments. Change computed as 4F-DUAL minus 4F-WITH.
+\end{tablenotes}
+\end{table}
+
+\subsubsection{Payment Structure Reversal}
+
+In the restricted baseline, both Local Bank and Fintech maintain positive net rent positions (+0.026 each). The dual-network stability reverses this flow: both central agents shift to negative positions (-0.003 each).
+
+This transition—from +0.026 to -0.003—represents a reversal in payment direction. While the absolute magnitude is small, the qualitative shift indicates central agents transform from rent extractors to near-zero-profit competitors.
+
+\subsubsection{National Bank Payment Obligations}
+
+National Bank's net rent position changes from -0.015 (4F-WITH) to -0.200 (4F-DUAL)—a 13-fold increase in net payments. This pattern reflects its role as liquidity provider in the system.
+
+The mechanism operates as follows:
+\begin{enumerate}
+    \item Fintech entry intensifies competition for Local Firm's business
+    \item Competition reduce margins to near-zero
+    \item National Bank offers favorable wholesale terms to central agents to maintain market access
+    \item These terms manifest as increased net payments (-0.200)
+\end{enumerate}
+
+Despite larger net payments, National Bank's utility increases (47.1\%) because the Alternative Network restores access to the Local Firm directly. The bank accepts higher payment obligations to access counterparties.
+
+\subsubsection{Local Firm Payment Reversal}
+
+Local Firm shifts from net payer (-0.037 in 4F-WITH) to net recipient (+0.206 in 4F-DUAL)—a 665\% reversal. This change reflects two factors:
+
+\begin{itemize}
+    \item \textbf{Direct access restoration}: The Alternative Network enables direct contracting with National Bank
+    
+    \item \textbf{Competitive pricing}: Central agents compete to serve Local Firm, transferring surplus through favorable contract terms
+\end{itemize}
+
+Comparing 4F-DUAL to 3F-DUAL reveals that Local Firm receives lower net rents under four-agent competition (+0.206 vs +0.315), a 35\% reduction. 
+
+The pattern—Local Firm achieves higher utility (0.988 vs 0.851) but lower rents (0.206 vs 0.315) under competition—reflects that utility depends on risk-adjusted returns while rents reflect pure transfers. Competitive markets provide superior risk-sharing opportunities despite yielding smaller transfer receipts.
+
+\subsection{Network-Specific Payment Patterns}
+
+Table \ref{tab:net_rents_decomposition} decomposes net rents by network, revealing how the Alternative Network alters payment channels.
+
+\begin{table}[ht]
+\centering
+\caption{Net Rent Decomposition by Network (4F-DUAL)}
+\label{tab:net_rents_decomposition}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Agent} & \textbf{Traditional (T)} & \textbf{Alternative (A)} & \textbf{Total} & \textbf{A Share (\%)} \\
+\midrule
+National Bank  & -0.0006 & -0.1990 & -0.1996 & 99.7\% \\
+Local Bank     & -0.0035 & +0.0001 & -0.0034 & -2.9\% \\
+Local Firm     & +0.0076 & +0.1989 & +0.2064 & 96.3\% \\
+Fintech        & -0.0035 & +0.0001 & -0.0034 & -2.9\% \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Traditional (T) network exhibits near-zero rent flows; Alternative (A) network concentrates transfers. "A Share" indicates percentage of total rents flowing through Alternative network.
+\end{tablenotes}
+\end{table}
+
+\subsubsection{Alternative Network as Primary Transfer Channel}
+
+Transfer flows concentrate in the Alternative Network: 99.7\% of National Bank's net payments and 96.3\% of Local Firm's net receipts flow through this channel, despite the Alternative Network representing only 47.9\% of bilateral volume (Table \ref{tab:4f_dual_restricted}). Traditional Network transfers approach zero for all participants.
+
+This concentration reflects the Alternative Network's role as circumvention mechanism for the restricted link (National Bank-Local Firm). The previously prohibited relationship generates bilateral transfers when executed via the Alternative Network, while Traditional Network contracts remain competitively priced at near-zero margins.
+
+\subsubsection{Central Agents Neutrality Across Networks}
+
+Both Local Bank and Fintech exhibit near-zero rents in both networks: -0.004 in Traditional, +0.0001 in Alternative. This dual neutrality indicates that competitive forces operate across network boundaries—they cannot extract rents in either venue.
+
+The Alternative Network's marginal positive contribution (+0.0001) for central agents likely reflects numerical residuals rather than economic profits. The pattern confirms that competition equalizes rents across networks.
+
+\subsection{Comparative Analysis: Three-Agent vs Four-Agent Structure}
+
+Contrasting 3F-DUAL with 4F-DUAL isolates the competitive effect of Fintech entry (Table \ref{tab:3f_vs_4f_rents}).
+
+\begin{table}[ht]
+\centering
+\caption{Payment Structure: Competitive Effect of Fintech Entry}
+\label{tab:3f_vs_4f_rents}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Agent} & \textbf{3F-DUAL} & \textbf{4F-DUAL} & \textbf{Change}  \\
+\midrule
+National Bank  & -0.1846 & -0.1996 & -0.0150  \\
+Local Bank     & -0.1300 & -0.0034 & \textbf{+0.1266} \\
+Local Firm     & +0.3146 & +0.2064 & -0.1082 \\
+Fintech        & — & -0.0034 & —  \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: Change computed as 4F-DUAL minus 3F-DUAL. Positive change for Local Bank indicates movement toward zero (rent dissipation).
+\end{tablenotes}
+\end{table}
+
+\subsubsection{Local Bank Rent Dissipation}
+
+Local Bank's net payment obligation falls 97.4\% (from -0.130 to -0.003) upon Fintech entry. In the three-agent configuration, Local Bank operates as monopolistic central agent with substantial payment obligations. With Fintech competition, these obligations approach zero.
+
+This change does not represent a direct transfer to Fintech. The aggregate position (Local Bank + Fintech) in 4F-DUAL is -0.007, compared to Local Bank alone at -0.130 in 3F-DUAL. This represents a net reduction in payments. The surplus redistributes to end-clients: Local Firm's utility increases 16.0\% despite receiving lower net rents.
+
+\subsubsection{Utility-Rent Divergence Under Competition}
+
+Local Firm receives lower net rents (+0.206 vs +0.315) but achieves higher utility (0.988 vs 0.851) under competition. This divergence reflects that:
+
+\begin{enumerate}
+    \item Net rents reflect transfer payments
+    \item Utility reflects risk-adjusted surplus, including diversification benefits
+    \item Competition improves contract quality (risk-sharing) while reducing transfer quantity
+\end{enumerate}
+
+The Local Firm faces a trade-off: baseline case yields higher net receipts (+0.315) but inferior risk allocation, while competition provides superior risk-sharing (16.0\% utility gain) despite lower transfers (+0.206). The dual-network equilibrium favors risk-sharing quality over transfer quantity, consistent with mean-variance utility maximization.
+
+\subsection{Summary of Distributional Effects}
+
+The distributional analysis establishes three patterns:
+
+\begin{enumerate}
+    \item \textbf{Asymmetric Welfare Distribution}: The Local Firm (blocked party) captures 84.3\% of welfare gains, while central agents receive 6.9\% increases each. This concentration reflects that the Alternative Network directly addresses the constraint affecting the Local Firm.
+    
+    \item \textbf{Payment Structure Reversal}: Central agents shift from rent extractors (+0.026) to near-zero profit competitors (-0.003), while the Local Firm transitions from net payer (-0.037) to net recipient (+0.206). These reversals indicate fundamental restructuring of market power relationships.
+    
+    \item \textbf{Competition-Quality Trade-off}: Baseline case generates higher transfer receipts for end-clients but lower risk-sharing quality. Competition reverses this: lower transfers but superior risk allocation and higher utility.
+\end{enumerate}
+
+These findings indicate that alternative infrastructure policy generates differential impacts: blocked parties gain substantially, central agents maintain viability under competitive conditions, and overall market structure shifts toward competitive pricing with near-zero rents.
+
+
+\section{Robustness and Sensitivity Analysis}
+\label{sec:sensitivity}
+
+The structural welfare recovery demonstrated in Section \ref{sec:summary_results} 
+relies on specific parametrizations of operational friction ($\lambda_A$) and 
+transparency benefits ($\tau$). This section examines the robustness of our 
+findings across a broader parameter space, analyzing how alternative network adoption and welfare outcomes respond to variations in these mechanisms.
+
+A critical observation guides our analysis: under the portfolio constraint 
+$W^T + W^B = W^*$, total system welfare remains constant at 1.741 
+across all friction-transparency combinations. This invariance reflects the 
+model's fixed risk-return structure—agents reallocate positions between 
+networks but maintain their optimal total exposure. 
+
+
+\subsection{Friction Sensitivity: Operational Costs and Market Structure}
+
+We first examine how operational friction ($\lambda_A$) affects adoption when transparency benefits are absent ($\tau = 0$). Figure 
+\ref{fig:friction_analysis} presents four complementary perspectives on this 
+relationship.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\textwidth]{docs/Memoria/chapters/friction_sensitivity.png}
+\caption{Sensitivity to Operational Friction ($\lambda_A$) with $\tau = 0$}
+\label{fig:friction_analysis}
+\end{figure}
+
+{Panel A shows alternative network utility, which decreases monotonically from 1.74 to 1.05 as friction increases. Panel B displays adoption rates, falling from 50\% to 25\% as $\lambda_A$ rises from 0 to 0.5. Panel C shows alternative network volume following a similar downward trajectory. Panel D presents the Local Firm's utility from the alternative network, which counterintuitively increases from 0.64 to 0.77, suggesting improved bargaining power as blockchain becomes less competitive.}
+
+\subsubsection{Monotonic Decline in Network Attractiveness}
+
+Panel A of Figure \ref{fig:friction_analysis} demonstrates that alternative 
+network utility declines monotonically as operational friction increases, 
+falling 40\% from 1.74 ($\lambda_A = 0$) to 1.05 ($\lambda_A = 0.5$). This 
+validates the theoretical prediction that transaction costs directly erode 
+the value proposition of blockchain infrastructure.
+
+The corresponding decline in adoption (Panel B) exhibits a near-linear 
+relationship with friction: each 0.1 increase in $\lambda_A$ reduces adoption 
+by approximately 5 percentage points. The critical threshold occurs 
+at $\lambda_A \approx 0.15$, where adoption falls below 40\%—our benchmark 
+for meaningful market penetration.
+
+
+\subsubsection{Volume Dynamics and Cost Sensitivity}
+
+Alternative network volume (Panel C) closely tracks adoption rates, declining 
+from 1.83 to 0.96 units as friction increases. The proportional relationship 
+between volume and adoption indicates that friction affects both extensive 
+(participation) and intensive (contract size) margins similarly.
+
+Notably, the volume decline accelerates at higher friction levels, suggesting 
+increasing \textit{elasticity of substitution} between networks. At low 
+friction ($\lambda_A < 0.15$), agents view networks as imperfect substitutes; 
+at high friction ($\lambda_A > 0.30$), the traditional network dominates 
+almost completely.
+
+\subsection{Transparency Benefits: Information Asymmetry Reduction}
+
+Figure \ref{fig:transparency_analysis} examines how transparency benefits 
+($\tau$) affect market outcomes under moderate friction ($\lambda_A = 0.15$).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\textwidth]{docs/Memoria/chapters/transparency_sensitivity_lambda0.15.png}
+\caption{Sensitivity to Transparency Benefits ($\tau$) with $\lambda_A = 0.15$}
+\label{fig:transparency_analysis}
+\end{figure}
+
+\subsubsection{Linear Utility Enhancement}
+
+Alternative network utility (Panel A) increases nearly linearly with 
+transparency: each 0.1 increment in $\tau$ adds approximately 0.10 units 
+of utility. The relationship's linearity suggests transparency benefits 
+operate through a \textit{direct additive mechanism} rather than 
+multiplicative interaction with existing frictions.
+
+By $\tau = 0.5$, alternative utility reaches 1.87—a 35\% increase over the 
+baseline. This effect confirms that information asymmetry 
+reduction represents a determinant of alternative networks 
+value proposition.
+
+
+\subsubsection{Modest Adoption Response}
+
+Despite the strong utility effect, adoption (Panel B) increases only 
+moderately—from 37\% to 45\% across the full transparency range. This 
+muted response reflects two countervailing forces:
+
+\begin{enumerate}
+    \item \textbf{Network complementarity}: As blockchain becomes more 
+    attractive, agents increase positions in \textit{both} networks to 
+    maintain diversification benefits
+    
+    \item \textbf{Price adjustment}: Higher transparency increases 
+    blockchain contract prices (Panel C), partially offsetting the 
+    information advantage
+\end{enumerate}
+
+The limited adoption elasticity ($\varepsilon_{\text{adopt},\tau} \approx 0.16$) 
+suggests transparency alone cannot overcome substantial operational friction. 
+Achieving high adoption (>45\%) requires either very low friction 
+($\lambda_A < 0.10$) or \textit{combined} improvements in both dimensions.
+
+\subsection{Robustness Summary and Implications}
+
+Our sensitivity analysis yields four primary findings:
+
+\begin{enumerate}
+    \item \textbf{Friction dominance}: Operational costs ($\lambda_A$) exert 
+    3.3 times more influence on adoption than transparency benefits ($\tau$)
+    
+    \item \textbf{Limited compensation}: Transparency cannot fully offset 
+    high friction—beyond $\lambda_A \approx 0.35$, adoption remains below 
+    40\% even with maximal transparency
+    
+    
+    \item \textbf{Circumvention rebound}: Regulatory restrictions generate 
+    non-monotonic adoption curves, with blockchain usage rising at high 
+    friction levels due to evasion dynamics
+\end{enumerate}
+
+These findings collectively demonstrate that the structural welfare recovery 
+documented in Section \ref{sec:summary_results} is robust to moderate 
+parameter variations ($\lambda_A \leq 0.20$, $\tau \geq 0.10$) but 
+fragile under extreme friction ($\lambda_A > 0.35$). The viability 
+region covers approximately 44\% of the tested parameter space, suggesting 
+blockchain networks can coexist with traditional infrastructure under 
+relatively broad conditions—provided operational friction remains manageable.
+
+The circumvention analysis further reveals that regulatory design must account 
+for \textit{cross-network spillovers}: restrictions in one venue amplify 
+activity in alternative channels, potentially undermining policy objectives. 
+This strategic complementarity between networks reinforces the core result 
+that dual-network equilibria can emerge as stable long-run outcomes rather 
+than transitional phenomena.
 

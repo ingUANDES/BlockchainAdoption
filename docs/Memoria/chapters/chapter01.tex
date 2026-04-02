@@ -1,52 +1,130 @@
-% cap1.tex
+\chapter{Introduction}\label{chapter:Intro}
 
-\chapter{Introduction}\label{chapter:Intro} % la etiqueta para referencias
-For decades, traditional financial networks have been the backbone of the global financial system. These networks, organized around intermediaries such as banks or firms, enable individuals and businesses to conduct transactions and manage resources. However, they exhibit significant limitations. The reliance on intermediaries increases transaction costs and often reduces transparency, as transaction details are not easily accessible to all participants. Furthermore, trust in these networks depends heavily on the reputation and practices of intermediaries, which may not always guarantee security and efficiency. For example, the \citeA{world_bank_remittance_2024} estimates that global remittance fees averaged 6.35\% in 2024, still far from the G20 commitment to reduce the global average to 3 percent. traditional banks remain the most expensive type of service provider, with an average cost of 12.66\%, underscoring the inefficiencies in traditional financial systems.
+Financial regulation creates structural constraints on network formation. When regulations prohibit direct bilateral relationships, agents must route transactions through connected parties, generating inefficiency costs. Traditional policy responses focus on promoting competition among intermediaries within the constrained network. This thesis examines an alternative mechanism: parallel infrastructure operating under different regulatory treatment. This alternatives infrastructures, that could be for example, non-banking financial intermediaries (NBFI), today represent \$238 trillion globally—49.1\% of global financial assets \cite{board_global_2024}.
 
-Blockchain technology has emerged as a promising solution to these challenges. In a blockchain network, transactions are recorded in a decentralized manner, eliminating the need for intermediaries and potentially reducing costs while improving efficiency. Moreover, each transaction is logged on a “ledger” accessible to all network participants, enabling full traceability and simplifying information verification. This transparency and traceability introduce a new paradigm of trust, where individuals and businesses can rely on the system itself rather than on centralized intermediaries.
+We demonstrate that competition among intermediaries provides only partial welfare recovery. In contrast, dual-network infrastructure achieves complete welfare restoration through coexistence rather than displacement of traditional systems.
 
-Despite its potential, blockchain adoption in financial networks is not without challenges. Maintaining a decentralized network incurs infrastructure costs, and the technology introduces unique security risks. Also, blockchain may have positive and negative network effects. These challenges raise critical questions: Can blockchain completely replace traditional networks? Will traditional systems retain their role in the financial system? Alternatively, is it possible for both systems to coexist, leveraging their respective strengths to reach a financial equilibrium?
+\section{Regulatory Constraints and Network Efficiency}
 
+Regulatory restrictions serve policy objectives—prudential regulation limits exposure to risky counterparties, capital controls manage cross-border flows, ring-fencing separates banking activities. These restrictions impose costs by preventing direct contracting when agents would benefit from bilateral relationships.
 
-\section{Hypothesis}
-Financial agents optimize their transaction allocation by choosing between traditional financial systems and blockchain-based systems, based on factors such as transaction costs, transparency, and security. Under certain conditions, the benefits of blockchain will allow it to co-exist with traditional systems. However, in contexts of high intermediation and lack of transparency in traditional systems, blockchain may become the preferred choice.
+We quantify this cost in a three-agent network where regulation prohibits one direct connection. In our example, the constraint erases 50.8\% of potential welfare relative to an unconstrained benchmark. A National Bank and Local Firm can only transact through a Local Bank, creating a structural bottleneck.
 
+The conventional response is promoting competition. Introducing a second central agent (Fintech) that competes with the Local Bank increases welfare by 46.5\% relative to the baseline. However, a 27.9\% welfare gap persists. Competition improves outcomes but cannot overcome the structural inefficiency created by the constraint itself.
 
-\section{Goals}
-\subsection{Main goal}
-%nuevo objetivo
-The primary objective of this thesis is to develop and analyze a theoretical optimization model that explains how financial agents allocate their transactions between traditional financial systems and blockchain-based systems. By integrating key factors such as transaction costs, security risks, institutional trust, and network effects, this research aims to provide a comprehensive understanding of the decision-making processes that guide these allocations.
+\section{Alternative Network Infrastructure}
 
-The model will explore the interactions between both systems, capturing the interdependent risks and the influence of network growth within blockchain. This study will seek to identify the conditions under which financial agents reach an optimal equilibrium, balancing their use of blockchain and traditional systems, and will investigate whether both systems can sustainably coexist or if one will ultimately prevail.
+Alternative financial infrastructures operate alongside traditional systems under different regulatory treatment:
 
-Ultimately, this research aims to offer insight into the future landscape of financial systems, shed light on how blockchain technologies may complement or challenge traditional structures, and provide a robust framework for understanding the economic and strategic implications for financial agents and regulators.
+\begin{itemize}
+    \item Shadow banks, or NBFI operate outside traditional banking regulations 
+    \item Offshore financial centers enable cross-border transactions that domestic regulations constrain
+    \item Non-bank financial institutions operate under distinct regulatory frameworks
+    \item Fintech platforms offer payments and credit outside traditional banking
+    \item Decentralized finance protocols enable trading and lending without centralized intermediaries
+\end{itemize}
 
-\subsection{Specific goals}
+These infrastructures share a mechanism: they enable financial relationships that regulatory constraints prevent in traditional systems. Shadow banks lend to borrowers that prudential regulation restricts traditional banks from serving. Offshore centers process transactions that capital controls block domestically. DeFi protocols facilitate derivatives trading that exchange regulations prohibit.
 
-The specific goals of this thesis are to:
+The question is whether alternative infrastructure can restore efficiency losses from regulatory constraints while restrictions remain in the traditional network.
 
-\begin{enumerate}
-\item Develop a utility-based model that represents how financial agents allocate transactions between traditional financial systems and blockchain systems. This model will incorporate transaction costs, security risks, trust in institutions, and network effects to capture the agent decision-making process.
+\section{The Dual-Network Framework}
 
-\item Analyze the role of transaction costs in both systems, determining how the costs associated with traditional intermediaries and blockchain networks affect the optimal allocation of financial resources by agents.
+We model agents accessing two parallel networks: a Traditional Network subject to regulatory constraints, and an Alternative Network operating under different regulatory treatment. Agents allocate contracts strategically across networks to maximize welfare, subject to a portfolio constraint $w^*_i = w^T_i + w^A_i$.
 
-\item Investigate the influence of security and regulatory risks in both financial environments. The model will include risk factors such as the likelihood of hacking in blockchain systems and institutional risks in traditional systems, aiming to understand how agents manage these risks in their transaction decisions.
+The Alternative Network absorbs contracts prohibited in the Traditional Network. The Traditional Network retains volume where established infrastructure can offer advantages. Coexistence generates aggregate welfare matching the unconstrained benchmark—complete efficiency recovery.
 
-\item Evaluate the impact of network effects on blockchain systems, especially how the growth of the blockchain network can enhance security, reduce costs, and increase liquidity, but potentially slow it down.
+This mechanism differs from pure competition. Under competition alone, the Local Bank's utility falls 45.7\%. Under dual-network equilibrium, all agents experience utility gains: central agents increase 6.9\% each, while the blocked party (Local Firm) captures 84.3\% of total welfare improvement.
 
-\item Explore the interdependence of risks between blockchain and traditional financial systems, focusing on how increased risks in one system may affect the stability, costs, or adoption of the other system.
+\section{Theoretical Framework}
 
-\item Derive conditions for equilibrium in which financial agents reach a stable allocation of transactions between the two systems, or alternatively, identify the circumstances in which one system may dominate over the other.
+Our analysis extends \citeA{jalan_incentive-aware_2024}, who characterize pairwise stable equilibria where agents negotiate bilateral contracts. We introduce three extensions:
 
-\item Provide a comprehensive framework that explains the economic and strategic implications of blockchain adoption, offering insights into whether blockchain will complement or disrupt traditional financial systems, and under what conditions each system can thrive.
+\subsection{Dual Network Competition}
 
-\item Understand how information spreads and social learning occurs with respect to blockchain
-technologies.
+While \citeA{jalan_incentive-aware_2024} analyze equilibria in a single network, we model competition between two parallel infrastructures. The portfolio constraint $w^*_i = w^T_i + w^A_i$ fixes total exposure but allows optimized allocation between Traditional ($T$) and Alternative ($A$) networks.
 
-\item Assess how cryptocurrency price uncertainty affects the provision of blockchain net-
-works as public goods.
-\end{enumerate}
+This captures:
+\begin{itemize}
+    \item Asymmetric regulatory treatment (constraints differ across networks)
+    \item Network-specific costs (frictions $\lambda_A$)
+    \item Network-specific benefits (network advantages $\tau$)
+\end{itemize}
 
+\subsection{Transparency-Friction Trade-off}
 
-\section{Document structure}
-This thesis is organized as follows. Chapter 2 provides a comprehensive bibliographic review, covering traditional financial networks, blockchain, and general equilibrium models. Chapter 3 presents the theoretical framework and outlines the proposed utility function that captures agents' decision-making processes. Chapter 4 discusses the conditions for equilibrium and analyzes the stability of the proposed model. Finally, Chapter 5 summarizes the findings, discusses their implications, and suggests  future research.
+Alternative infrastructures exhibit trade-offs between informational benefits and operational costs. Parameter $\tau$ captures reductions in information asymmetries—blockchain's public ledger visibility, shadow banking's credit assessment, NBFI's relationship monitoring. Parameter $\lambda_A$ captures operational costs including transaction fees, settlement delays, and liquidity fragmentation.
+
+Empirical evidence shows cost variation: traditional cross-border remittances average 6.35\% fees, while alternative channels achieve under 1\% \cite{world_bank_remittance_2024}. Our model characterizes when these trade-offs favor adoption versus concentration in traditional systems.
+
+\section{Main Results}
+
+\subsection{Competition Provides Partial Recovery}
+
+Competition among central agents reduces rents but cannot eliminate deadweight loss from regulatory constraints. In the example used, the constraint destroys 50.8\% of welfare. Adding a competing agent improves welfare, but a gap persists.
+
+This establishes that competition is necessary but insufficient. The structural constraint creates inefficiency that competition cannot overcome.
+
+\subsection{Alternative Infrastructure Achieves Complete Recovery}
+
+A dual-network system where the Alternative Network operates without the constraint achieves utility of 1.43, matching the unconstrained benchmark. This represents 103\% improvement over the baseline and eliminates the 27.9\% welfare gap.
+
+The mechanism operates through strategic coexistence: agents route 72\% of bilateral volume through the Alternative Network, retaining 28\% in Traditional channels. The prohibited National Bank-Local Firm connection migrates entirely to the Alternative Network.
+
+\subsection{Regulatory Arbitrage Drives Adoption}
+
+Alternative Network adoption exhibits sensitivity to market structure. Regulatory arbitrage—accessing blocked contracts—drives adoption rather than technological superiority. When competition improves Traditional Network activity, the relative advantage of alternative infrastructure declines proportionally.
+
+\subsection{Welfare Gains Concentrate on Blocked Parties}
+
+The Local Firm (prevented from directly contracting with the National Bank) captures 84.3\% of aggregate welfare gains. This reflects that alternative infrastructure directly addresses the constraint binding this party. Intermediaries receive 6.9\% gains each.
+
+Unlike pure competition (which reduces incumbent utility 45.7\%), the structural solution generates positive gains for all parties.
+
+\section{Policy Implications}
+
+\subsection{Infrastructure Policy Over Competition Policy}
+
+When welfare losses stem from structural constraints, enabling alternative infrastructure (0\% welfare gap) dominates promoting competition within constrained networks (27.9\% gap). Competition improves Traditional Network efficiency but cannot eliminate inefficiency from forced intermediation.
+
+Where constraints no longer serve original objectives, removing them captures all welfare gains. Where constraints serve legitimate objectives (systemic risk mitigation, consumer protection), enabling alternative infrastructure achieves welfare restoration while maintaining Traditional Network restrictions.
+
+\subsection{Design for Coexistence, Not Displacement}
+
+The optimal outcome arises from coexistence. Traditional Network retains 52.1\% of volume despite the constraint. Agents use Alternative Networks for blocked transactions while maintaining Traditional relationships where established infrastructure offers operational advantages.
+
+Policy should facilitate access to alternative infrastructure—clarifying legal treatment of shadow banking, providing regulatory sandboxes for fintech, establishing frameworks for decentralized protocols—rather than mandating migration or prohibiting parallel systems.
+
+\subsection{Competition and Infrastructure Are Complementary}
+
+Competition reduces Alternative Network adoption from 72.4\% to 47.9\%, indicating partial substitutability. However, both remain valuable: welfare recovery is complete despite lower adoption because competition improves Traditional Network activity under constraint.
+
+Regulators should pursue both mechanisms: enabling alternative infrastructure access and reducing barriers to entry. The combination generates welfare superior to either approach alone.
+
+\section{Relation to Alternative Infrastructures}
+
+\paragraph{Shadow Banking and NBFIs}
+Shadow banking emerged to provide credit outside prudential regulation. Our model predicts adoption is highest where traditional banking faces regulatory constraints—consistent with shadow banking's growth following post-2008 capital requirements \cite{buchak_fintech_2018}.
+
+\paragraph{Offshore Financial Centers}
+Cross-border flows route through offshore jurisdictions to circumvent capital controls or tax regulations. Our framework formalizes this: the offshore system serves as Alternative Network enabling transactions that domestic regulation blocks.
+
+\paragraph{Fintech and P2P Lending}
+Peer-to-peer platforms connect borrowers directly with lenders, bypassing traditional bank intermediation. Our results suggest these platforms succeed in markets where banking regulation constrains traditional lending rather than achieving technological superiority. \citeA{buchak_fintech_2018} provide empirical support: 60\% of shadow banking expansion stems from regulatory burdens.
+
+\paragraph{Decentralized Finance Protocols}
+Blockchain-based DeFi enables trading, lending, and derivatives without centralized intermediaries. Our framework predicts adoption is highest where traditional systems face regulatory constraints, transparency benefits are valuable, operational frictions remain manageable, and traditional intermediaries operate with limited competition.
+
+This pattern aligns with observed DeFi adoption in cross-border payments (traditional fees 6-12\%) and decentralized derivatives (regulatory constraints limit traditional access).
+
+The key insight: alternative infrastructure value stems from regulatory arbitrage—accessing prohibited contracts—rather than technological advantages alone. This reframes policy debates: rather than "should we allow alternative networks?", regulators should examine whether restrictions justify the circumvention they induce.
+
+\section{Document Structure}
+
+Chapter \ref{capreview} reviews literature on financial networks, platform competition, and alternative infrastructures.
+
+Chapter \ref{capMethods} develops the theoretical model, extending \citeA{jalan_incentive-aware_2024} to incorporate dual-network competition, transparency-friction trade-offs, and asymmetric regulatory constraints.
+
+Chapter \ref{cap:Results} presents findings through four scenarios: (1) baseline inefficiency from regulatory constraints, (2) partial recovery through competition, (3) conceptual validation of the structural solution, and (4) complete recovery through dual-network stability.
+
+Chapter \ref{chap:conclusion} concludes with policy implications, limitations, and directions for future research.

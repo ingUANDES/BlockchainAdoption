@@ -1,254 +1,1073 @@
-% cap3.tex
+\chapter{Model} \label{capMethods}
 
-\chapter{Methodology} \label{capMethods} % la etiqueta para referencias
+The original model from \cite{jalan_incentive-aware_2024} shows how financial networks emerge from individual optimization decisions. The following definitions establish the components of the model: the beliefs and constraints of market participants, the feasibility conditions for market outcomes, and the conditions that ensure stability. Lets start with some definitions to understand the model.
 
-
-\section{Model}
-
-Initial Idea: incorporate to \citeA{xandri_liquidity_2022} a second network that competes to the base network in terms of transaction-waiting cost. Networks should be weighted in the spirit of \citeA{jalan_incentive-aware_2024} and adoption of one network with respect to the other is inspired in \citeA{hinzen_bitcoins_2022}. We should also consider hackers following \citeA{crettez_general_2022} to differentiate networks in terms of waiting costs and hacking activity.
-
-In terms of results, the approach by \cite{jalan_incentive-aware_2024} considers network stability in terms of \cite{bich_perfect_2023,bich_existence_2020}.
-
-\section{A twist from Jalan et alii}
-
-The objective function in \citeA{jalan_incentive-aware_2024} is given by
-$$g_i(W,P)=w_i^T(\mu_i-Pe_i)-\gamma_iw_i^T\Sigma w_i$$
-
-We would like to include a second network to transfer. Let us assume that the following decomposition is possible:
-
-$$W=\tilde W+\hat W,$$
-
-where $\tilde W$ represents the traditional network and $\hat W$ the blockchain.
-
-{\bf Question:} What should be the new objective function?
-
-Proposal: 
-
-\begin{eqnarray}
-    b_i(\tilde W,\hat W,\tilde P,\hat P)&=&\tilde w_i^T(\tilde \mu_i-\tilde Pe_i)-\gamma_i\tilde w_i^T\tilde \Sigma \tilde w_i\nonumber\\
-            &+&\hat w_i^T(\hat \mu_i-\hat Pe_i)-\gamma_i\hat w_i^T\hat \Sigma \hat w_i\label{eq:b}
-\end{eqnarray}
-
-In this case the optimal choice is given by $\max_{\tilde W,\hat W}b(\tilde W,\hat W,\tilde P,\hat P)$
-
-{\bf Question:} Is it possible to simplify the notation such that $\tilde w_i=w_i-\tilde w_i$? in such a way that once the blockchain operation is defined, the traditional transfers are defined.
-
-{\bf Question:} Potential notation/normalization, $\hat w_i=\alpha w_i$ thus $\tilde w_i=(1-\alpha) w_i$ for $\alpha\in[0,1]$
-
-Let us re-write \ref{eq:b} with the new notation:
-
-\begin{eqnarray}
-    b_i(W,\tilde P,\hat P)&=&(1-\alpha) w_i^T(\tilde \mu_i-\tilde Pe_i)-\gamma_i(1-\alpha) w_i^T\tilde \Sigma (1-\alpha) w_i\nonumber\\
-            &+&\alpha w_i^T(\hat \mu_i-\hat Pe_i)-\gamma_i\alpha w_i^T\hat \Sigma \alpha w_i\label{eq:b}
-\end{eqnarray}
-
-The optimization problem is $\max_{\alpha, W}b(W,\tilde P, \hat P)$.
+% Tablita con notacion
+\begin{table}[H]
+\centering
+\caption{Notation for Network Setting}
+\label{tab:network_notation}
+\begin{tabular}{ll}
+\hline
+\textbf{Symbol} & \textbf{Description} \\
+\hline
+$\mu_i \in \mathbb{R}^n$ & agent $i$'s expected return beliefs from contracts with all agents \\
+$M \in \mathbb{R}^{n \times n}$ & matrix whose $i$-th column is $\mu_i$ \\
+$\gamma_i > 0$ & agent $i$'s risk aversion parameter \\
+$\Gamma$ & diagonal matrix with $\Gamma_{ii} = \gamma_i$ \\
+$\Sigma_i \succ 0$ & agent $i$'s covariance matrix of return beliefs \\
+$J_i \subseteq [n]$ & set of agents with whom agent $i$ can contract \\
+$\Psi_i \in \{0,1\}^{|J_i| \times n}$ & binary selection matrix encoding permissible counterparties for agent $i$ \\
+$e_i$ & is the $i$-th canonical unit vector \\
+$W \in \mathbb{R}^{n\times n}$ & Weighted network between $n$ agents \\
+$W_{ij}$  & Represents the size of a contract between
+agents $i$ and $j$ \\
+$w_{i}$ & $i$th column of W \\
+$P_{ij}$ & price per contract between agents $i$ and $j$\\
+\hline
+\end{tabular}
+\end{table}
 
 
-\subsection{Motivating example}
-
-Firm A wants to transfer to firm K. In the traditional network the cost is $\tilde c$. There is a firm L such that A is able to transfer to L and L is able to transfer to K at a cost $\hat c<\tilde c$.
-
-\section{The model}
-
-This model is inspired in the work done by \cite{jalan_incentive-aware_2024}. They proposed a model where networks emerges from interactions between utility-maximizing firms. There is always a stable network that depends on the firm's beliefs (expected returns and perceived risk of trading with each agent). 
-Now we add a second network (blockchain) that competes with the traditional, and we also consider a benefit for transparency. The adapted utility function for two networks is: 
-
-$$ g_i(W_T, W_B, P_T, P_B) := w_{Ti}' (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}' \Sigma_{Ti} w_{Ti}  $$
-$$+ w_{Bi}' (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}' \Sigma_{Bi} w_{Bi} - \lambda(\tilde W_i - \hat W_B)$$
-
-where $W_T$ and $W_B$ are the matrix of contract sizes. $P_T$ and $P_B$ are the price matrix of the contracts. The vectors $w_{Ti}$ and $w_{Bi}$ are the $i$th column of each matrix. Agent $i$'s beliefs are represented by the vectors $\mu_{Ti}$ and $\mu_{Bi}$ of expected returns, and $\Sigma_{Ti}$ and $\Sigma_{Bi}$ are covariance matrix, that represents perceived risk of trading with other firms. The vector $e_i,...,e_n$ denote the standard basis in $\mathbb{R}^n$. $\gamma_{Ti}$ and $\gamma_{Bi}$ are the risk aversion parameters for each network.
-     
-    $\lambda(\tilde W_i - \hat W_B)$ represents the utility for being able to see the transactions of other agents (transparency).
-    \begin{itemize}
-        \item $\tilde W_i$ represents the exogenous expectation of transactions of agent $i$.
-        \item $\hat W_B$: transaction matrix observed in Blockchain (endogenously).
-    \end{itemize}
-
-\subsection{Original Results}
-A national bank, a local bank and a local firm, the national bank cant have transactions with the local firm. After 500 iterations these are the results.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_overtime.png}
-    \caption{Contracts matrix $W_t$}
-    \label{fig:etiqueta}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/P_overtime.png}
-    \caption{Payments matrix $P_t$}
-    \label{fig:etiqueta}
-\end{figure}
-
-Those stables matrix means that the local firm gives money to the local bank, and the national bank also makes a payment to the national bank.
-If we take out the restrictions we get the followings matrix.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_overtime_NR.png}
-    \caption{Contracts matrix $W_t$ without restrictions.}
-    \label{fig:etiqueta}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/P_overtime_NR.png}
-    \caption{Payments matrix $P_t$ without restrictions.}
-    \label{fig:etiqueta}
-\end{figure}
-
-That changes in the matrix means that without the restrictions, the local firm would transact with the national bank and the local bank.
-
-\subsection{Foundations of the Jalan and Chakrabarti (2024) Model}
-
-The starting point of this thesis is the model proposed by \cite{jalan_incentive-aware_2024}, which provides a formal structure for the endogenous formation of financial networks. In this framework, financial links emerge from the bilateral interactions of utility-maximizing agents, typically interpreted as firms or institutions in a financial system.
-
-Each agent evaluates the desirability of transacting with others by considering two main factors: the expected return from trading with each potential counterparty, and the associated risk. These beliefs are encoded in a vector of expected returns \( \mu_i \in \mathbb{R}^n \) and a covariance matrix \( \Sigma \in \mathbb{R}^{n \times n} \), shared across agents or agent-specific depending on the context.
-
-Agents are risk-averse, with risk aversion parameter \( \gamma_i > 0 \), and aim to form a portfolio of bilateral contracts \( w_i \in \mathbb{R}^n \) that maximizes their utility. The utility function of agent \( i \) in the traditional network is given by:
+Each agent has a mean-variance utility (Markowitz 1952), agent $i's$ utility is:
 
 \begin{equation}
-U_i = w_i^\top (\mu_i - p_i) - \gamma_i \cdot w_i^\top \Sigma w_i,
+\label{eq:original_utility}
+g_i(W, P) := w_i^T(\mu_i-Pe_i)-\gamma_i \cdot w_i^T \Sigma_iw_i   
 \end{equation}
 
-where \( p_i \in \mathbb{R}^n \) is the vector of contract prices faced by agent \( i \). The first term captures the expected profit from the contracts, while the second term penalizes the agent for the risk exposure of the chosen portfolio.
 
-Prices are not exogenous: they are formed through an iterative negotiation process. For each pair of agents \( i, j \), the price \( p_{ij} \) is adjusted until the contract demands between both agents are mutually agreeable. This bilateral adjustment process leads to the emergence of a stable network of financial linkages, in which no agent has an incentive to unilaterally alter their portfolio.
+The mean-variance utility function captures the fundamental trade-off that drives all portfolio decisions. The first term, $w_i^T(\mu_i - Pe_i)$, represents the agent's expected net return after accounting for contract prices. The second term, $\gamma_i w_i^T\Sigma_i w_i$, penalizes portfolio risk, with the magnitude of the penalty determined by the agent's risk aversion $\gamma_i$. This formulation naturally leads to diversification as agents seek to balance expected returns against portfolio variance.
 
-An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
+The model assumes that $P_{ji}$ does not change the perceived risk, and doesn't consider how firms raise funds.
 
+Because contracts need mutual agreement, $W_{ij} = W_{ji}$. We take $W_{ii}$ to represent $i$'s investment in itself. A negative contract ($W_{ij} = W_{ji} < 0$) is a valid contract that reverses the content of a positive contract. For example, if a positive contract is a derivative trade between two firms, the negative contract swaps the roles of the two firms.
 
+\section{Example: Loan Contract Network}
 
-\subsection{Foundations of the Jalan and Chakrabarti (2024) Model}
+To build intuition for how the model works, we present a simple example of a loan relationship between a borrower and a lender. This example illustrates the key mechanisms through which heterogeneous beliefs, risk considerations, and pricing interact to shape financial contracts.
 
-The starting point of this thesis is the model proposed by \cite{jalan_incentive-aware_2024}, which provides a formal structure for the endogenous formation of financial networks. In this framework, financial links emerge from the bilateral interactions of utility-maximizing agents, typically interpreted as firms or institutions in a financial system.
+\begin{example}[Based on Jalan Example 3]
+\label{ex:loan_contract}
 
-Each agent evaluates the desirability of transacting with others by considering two main factors: the expected return from trading with each potential counterparty, and the associated risk. These beliefs are encoded in a vector of expected returns \( \mu_i \in \mathbb{R}^n \) and a covariance matrix \( \Sigma \in \mathbb{R}^{n \times n} \), shared across agents or agent-specific depending on the context.
+Consider a loan relationship where firm $i$ (the borrower) wants to obtain financing from firm $j$ (the lender). The loan has size $W_{ij}$, which both parties must agree upon. 
 
-Agents are risk-averse, with risk aversion parameter \( \gamma_i > 0 \), and aim to form a portfolio of bilateral contracts \( w_i \in \mathbb{R}^n \) that maximizes their utility. The utility function of agent \( i \) in the traditional network is given by:
+\paragraph{Why Beliefs Differ.} The lender and borrower naturally have different perspectives on the same loan:
 
-\begin{equation}
-U_i = w_i^\top (\mu_i - p_i) - \gamma_i \cdot w_i^\top \Sigma w_i,
-\end{equation}
-
-where \( p_i \in \mathbb{R}^n \) is the vector of contract prices faced by agent \( i \). The first term captures the expected profit from the contracts, while the second term penalizes the agent for the risk exposure of the chosen portfolio.
-
-Prices are not exogenous: they are formed through an iterative negotiation process. For each pair of agents \( i, j \), the price \( p_{ij} \) is adjusted until the contract demands between both agents are mutually agreeable. This bilateral adjustment process leads to the emergence of a stable network of financial linkages, in which no agent has an incentive to unilaterally alter their portfolio.
-
-An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
-
-\subsubsection{Algorithmic Formation of Network Links and Prices}
-
-The prices and resulting network structure are not exogenously imposed but instead emerge through a decentralized negotiation process. This algorithm simulates a dynamic where each pair of agents adjusts their bilateral contract based on mutual agreement:
-
+\textbf{The lender's view ($\mu_{j,i}$)}: The lender sees the loan as an investment that will generate returns through interest payments. However, the lender must assess:
 \begin{itemize}
-    \item Each agent \( i \) computes its optimal desired contracts \( w_i \), given the current prices.
-    \item For each pair \( (i,j) \), we compare the amount \( i \) wants from \( j \) and what \( j \) wants from \( i \).
-    \item If \( w_{ij} \ne w_{ji} \), it means there is a disagreement. The algorithm adjusts the price \( p_{ij} \) to reduce the difference between their desired contract sizes.
-    \item This negotiation is bilateral and iterative. Over time, the price moves towards a level where both agents agree: \( w_{ij} = w_{ji} \).
-    \item Once agreement is reached, the bilateral contract is formed. Otherwise, it is not established.
+    \item Will the borrower repay? (default risk)
+    \item If not, how much can be recovered? (recovery rate)
 \end{itemize}
 
-This procedure is repeated for all pairs, across multiple iterations, until the entire system reaches a stable equilibrium in which no agent wants to modify their portfolio. At this point, the network has emerged endogenously from decentralized decisions and mutual negotiations.
+For example, a conservative bank might estimate that a loan to a mid-sized corporation has an expected net return of $\mu_{j,i} = 0.03$ (3\%).
 
-An important feature of the model is its ability to incorporate institutional or structural constraints, such as prohibitions on specific links, or heterogeneity in agent beliefs and risk preferences. This flexibility makes the model well-suited to be extended into more complex environments, such as the dual-network framework developed in the next section.
+\textbf{The borrower's view ($\mu_{i,j}$)}: The borrower sees the loan as enabling profitable activities. If the loan finances new equipment, then $\mu_{i,j}$ represents the net present value of profits generated by that equipment, minus the interest costs. 
 
+For instance, if the new equipment generates a 15\% return and the loan costs 8\%, the borrower expects a net benefit of $\mu_{i,j} = 0.07$ (7\%).
 
-\subsection{Extension: Dual-Network Environment with Transparency Incentives}
+These beliefs need not sum to zero: $\mu_{i,j} + \mu_{j,i} \neq 0$. Both parties can expect to benefit from the transaction. In our example, the borrower expects 7\% net benefit and the lender expects 3\%.
 
-This thesis extends the original model by incorporating a second financial network that coexists and competes with the traditional one. This second layer, referred to as the blockchain network, allows agents to form alternative financial contracts that differ in their structural and informational characteristics. Agents may choose to interact in both networks simultaneously, a behavior known as multihoming.
+\paragraph{Risk and Portfolio Considerations.} Beyond expected returns, both parties care about risk. The covariance matrices $\Sigma_i$ and $\Sigma_j$ capture how this particular loan relates to their other positions.
 
-The blockchain network is characterized by:
-\begin{itemize}
-    \item Lower perceived risk (reflected in a different covariance matrix \( \Sigma^{(B)} \)),
-    \item A potentially different structure of expected returns \( \mu^{(B)} \),
-    \item Lower risk aversion due to technological trust or regulatory factors \( \gamma^{(B)} \),
-    \item An additional utility derived from transparency.
-\end{itemize}
+\textbf{For the lender}: Suppose the bank already has many loans to companies in the same industry as this borrower. If that industry enters a recession, many borrowers might default simultaneously. This positive correlation across loans (captured in $\Sigma_j$) makes the portfolio riskier than if loans were independent. A risk-averse lender (high $\gamma_j$) will therefore limit exposure to correlated borrowers, even if expected returns are attractive.
 
-The utility function of an agent \( i \) in this dual-network setting becomes:
+\textbf{For the borrower}: Suppose the borrower has floating-rate debt that becomes expensive when interest rates rise, but revenues that are stable. Taking a fixed-rate loan creates a \textit{negative} correlation with existing liabilities—when floating rates rise (hurting the borrower), the fixed-rate loan becomes relatively cheaper. This diversification benefit might make the borrower willing to pay a premium for fixed-rate financing.
 
-\begin{align*}
-g_i(W_T, W_B, P_T, P_B) := &\; w_{Ti}^\top (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}^\top \Sigma_{Ti} w_{Ti} \\
-&+ w_{Bi}^\top (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}^\top \Sigma_{Bi} w_{Bi} \\
-&+ \lambda \cdot (\tilde{W}_i - \hat{W}_{Bi})
-\end{align*}
-
-\noindent where all variables are defined analogously to the traditional model, but indexed by network type (T for traditional, B for blockchain). The term \( \lambda (\tilde{W}_i - \hat{W}_{Bi}) \) captures the utility benefit from transparency:
+\paragraph{The Need for Pricing.} Even when both parties want to transact, they typically disagree about the optimal loan size. Without the ability to make side payments, agreement might be impossible:
 
 \begin{itemize}
-    \item \( \tilde{W}_i \) is the agent's exogenous target or expected participation level,
-    \item \( \hat{W}_{Bi} \) is the observed contract volume of the agent in the blockchain network,
-    \item \( \lambda > 0 \) measures the marginal benefit of observing and participating in transparent contracts.
+    \item The borrower might want $W_{ij} = 100$ (can profitably invest up to \$100, after maximizing its utility)
+    \item The lender might only want $W_{ij} = 60$ (risk concerns limit exposure, also after maximizing its utility)
 \end{itemize}
 
-This formulation reflects the hypothesis that blockchain technologies may offer not only different risk-return profiles but also institutional advantages such as verifiability, regulatory compliance, and reduced information asymmetries.
-
-In this dual environment, agents simultaneously choose their optimal contract vectors \( w_{Ti} \) and \( w_{Bi} \), while the prices \( P_T \) and \( P_B \) evolve through iterative bilateral negotiation. The resulting financial structure is a multilayer network that emerges endogenously from agents' strategic interactions across both layers.
-
-\subsubsection{Extension of the Algorithm for Dual Networks}
-
-The algorithmic structure of the model is adapted to accommodate the presence of two simultaneous and interacting financial layers. The key differences with respect to the original model are:
+This is where the price $P_{ij}$ becomes crucial. Think of it as an adjustment to the standard terms:
 
 \begin{itemize}
-    \item Agents now solve a joint optimization problem across both networks, balancing expected returns, risk, and transparency incentives.
-    \item For each time step, the desired contract vectors \( w_{Ti} \) and \( w_{Bi} \) are computed independently, but influenced by their respective prices and beliefs.
-    \item Price adjustments are performed in parallel across both layers. Each pair \( (i, j) \) negotiates simultaneously in the traditional and blockchain networks.
-    \item The transparency term introduces a new driver in the decision-making process: agents are incentivized to increase their participation in the blockchain if their observed volume falls short of expectations.
+    \item If $P_{ij} > 0$: firm $j$ must pay firm $i$ an amount $P_{ij} \cdot W_{ij}$. 
+    
+    \item If $P_{ij} < 0$: the firm $i$ makes the payments, an amount $|P_{ij}| \cdot W_{ij}$. 
 \end{itemize}
+\end{example}
 
-Formally, the algorithm alternates between:
+\section{Formal Definitions and Mathematical Structure}
+
+\begin{definition}[Network Setting - Original Model]
+\label{def:original_network_setting}
+A \textit{network setting} $(\mu_i, \gamma_i, \Sigma_i, \Psi_i)_{i \in [n]}$ captures the beliefs and constraints of $n$ agents.
+
+When there are no regulatory constraints (all edges allowed), we set $\Psi_i = I_n$ and omit the constraint matrices. We use $M \in \mathbb{R}^{n \times n}$ to denote the matrix whose $i$-th column is $\mu_i$, and $\Gamma$ for the diagonal matrix with $\Gamma_{ii} = \gamma_i$.
+\end{definition}
+
+This definition encapsulates the heterogeneity that drives network formation. Different agents may have vastly different expectations about the profitability of contracts ($\mu_i$), varying degrees of risk tolerance ($\gamma_i$), and distinct perceptions of how contract risks are correlated ($\Sigma_i$). The prohibition matrix $\Psi_i$ captures real-world constraints such as regulatory restrictions that prevent banks from contracting with certain entities, or institutional policies that limit exposure to specific sectors.
+
+\begin{definition}[Feasible Point - Original Model]
+\label{def:original_feasible}
+A tuple $(W, P)$ is \textit{feasible} if:
 \begin{enumerate}
-    \item Computing desired contracts \( W_T \) and \( W_B \) using the updated utility function,
-    \item Updating prices \( P_T \) and \( P_B \) to reduce discrepancies between bilateral demands in each network,
-    \item Repeating the process until convergence in both layers is achieved.
+   \item $W = W^T$ (contract matrix is symmetric)
+   \item $P = -P^T$ (price matrix is skew-symmetric)  
+   \item $W$ and $P$ satisfy the regulatory constraints encoded in $(\Psi_i)_{i \in [n]}$
 \end{enumerate}
 
-The convergence criteria, as in the original model, are based on mutual agreement: a contract \( (i, j) \) is formed in a given network only if both agents agree on the price and quantity. By introducing transparency into the incentive structure, this algorithm allows us to examine how information availability and institutional trust shape the formation and adoption of financial networks.
+The element $W_{ij}$ represents the size of the contract between agents $i$ and $j$, while $P_{ij}$ represents the price that agent $j$ pays to agent $i$ per unit of contract.
+\end{definition}
+
+The feasibility conditions reflect fundamental properties of bilateral contracting. Symmetry of the contract matrix ($W = W^T$) ensures that both parties agree on the contract size—a basic requirement for any bilateral agreement. The skew-symmetry of prices ($P = -P^T$) captures the zero-sum nature of price payments: what one party pays, the other receives. 
 
 
-\subsection{Formal Equations and Stability Conditions}
-
-The evolution of the financial system is governed by the interaction between contract optimization and bilateral price adjustments. At each time step, agents solve the following optimization problem:
-
+\begin{definition}[Stable Point - Original Model]
+\label{def:original_stable}
+A feasible $(W, P)$ is \textit{stable} if each agent achieves maximum possible utility given prices $P$:
 \begin{equation}
-\max_{w_{Ti}, w_{Bi}}\; g_i(W_T, W_B, P_T, P_B)
+g_i(W, P) = \max_{\text{feasible }(W', P)\text{ under }\{\Psi_i\}} g_i(W', P) \quad \forall i \in [n]
+\label{eq:original_stable_condition}
+\end{equation}
+\end{definition}
+
+Stability requires that no agent can unilaterally improve their utility by changing their contract portfolio. This condition ensures that the network configuration represents a Nash equilibrium. This approach generates network configurations that are economically justified by individual optimization.
+
+\section{Example 4 from Jalan (2024): Contract Formation with Incentive Payments}
+
+Consider a case where two firms attempt to establish a trading contract. This example illustrates how payment mechanisms resolve coordination failures that arise when firms have different optimal contract sizes. The characteristics for the firms are:
+
+\begin{align}
+    \text{Mean beliefs: } M &= \begin{bmatrix} \mu_1 & \mu_2\end{bmatrix}= \begin{bmatrix} 0 & 3 \\ 1 & 4 \end{bmatrix} \\
+    \text{Covariance: } \Sigma_1 = \Sigma_2 &= \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \\
+    \text{Risk aversion: } \gamma_1 = \gamma_2 &= 1
+\end{align}
+
+The mean beliefs matrix $M$ encodes expected returns:
+\begin{itemize}
+    \item $M_{12} = 3$: Firm 2 expects return of 3 when trading with Firm 1
+    \item $M_{21} = 1$: Firm 1 expects return of 1 when trading with Firm 2
+    \item $M_{11} = 0$: Firm 1 expects no return for no trading
+    \item $M_{22} = 4$: Firm 2 expects return of 4 for no trading
+\end{itemize}
+
+The covariance structure $\Sigma$ indicates risk profiles:
+\begin{itemize}
+    \item $\Sigma_{11} = 1$: Unit variance for Firm 1's assets
+    \item $\Sigma_{22} = 2$: Higher variance for Firm 2's assets
+    \item $\Sigma_{12} = 0$: Zero correlation between firms' risks
+\end{itemize}
+
+Both firms would benefit from trading (as $M_{12} = 3 > 0$ and $M_{21} = 1 > 0$), but they face a coordination problem: each firm maximizes utility at a different contract size.
+
+\subsubsection{Case 1: Trading Without Payment Mechanisms}
+
+When no side payments are allowed ($P = 0$), each firm independently optimizes its utility function.
+
+\textbf{Firm 1's Optimization:}
+
+Starting from the general utility function $g_i(W, P) = w_i^T(\boldsymbol{\mu}_i - P\boldsymbol{e}_i) - \gamma_i \cdot w_i^T\Sigma_i w_i$, with contract size $x$ where Firm 1 sells to Firm 2:
+
+\begin{align}
+    g_1(x, 0) &= \begin{bmatrix} 0 \\ x \end{bmatrix}^T \begin{bmatrix} 0 \\ 1 \end{bmatrix} - 1 \cdot \begin{bmatrix} 0 \\ x \end{bmatrix}^T \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} 0 \\ x \end{bmatrix} \\
+    &= x - 2x^2
+\end{align}
+
+The first-order condition yields:
+\begin{equation}
+    \frac{\partial g_1}{\partial x} = 1 - 4x = 0 \quad \Rightarrow \quad x_1^* = \frac{1}{4}
 \end{equation}
 
-subject to potential constraints on the allowed set of counterparties or total exposure.
+\textbf{Firm 2's Optimization:}
 
-The equilibrium contract matrices \( W_T^* \) and \( W_B^* \), together with the corresponding equilibrium price matrices \( P_T^* \) and \( P_B^* \), must satisfy two conditions:
+Similarly, for Firm 2 buying $x$ units:
+
+\begin{align}
+    g_2(x, 0) &= \begin{bmatrix} x \\ 0 \end{bmatrix}^T \begin{bmatrix} 3 \\ 4 \end{bmatrix} - 1 \cdot \begin{bmatrix} x \\ 0 \end{bmatrix}^T \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} x \\ 0 \end{bmatrix} \\
+    &= 3x - x^2
+\end{align}
+
+Leading to the optimal contract size:
+\begin{equation}
+    \frac{\partial g_2}{\partial x} = 3 - 2x = 0 \quad \Rightarrow \quad x_2^* = \frac{3}{2}
+\end{equation}
+
+\textbf{Result:} The firms cannot agree on a contract size. As shown in figure \ref{fig:no_payments}, Firm 1 prefers $x = 0.25$ while Firm 2 prefers $x = 1.5$. Despite both firms benefiting from trade, the transaction fails to materialize.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{no_payments.png}
+    \caption{No payments allowed. Figure 1 (a) from \protect\citeA{jalan_incentive-aware_2024}}
+    \label{fig:no_payments}
+\end{figure}
+
+\subsubsection{Scenario 2: Enabling Coordination Through Payments}
+
+Now suppose Firm 2 can offer a payment to Firm 1. Through calculation (or negotiation), they discover that a payment of $P = \frac{5}{3}$ per unit of contract aligns their incentives.
+
+\textbf{Firm 1's Modified Optimization:}
+
+With the incoming payment, the effective return changes from $\boldsymbol{\mu}_1 = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$ to $\begin{bmatrix} 0 \\ 1 + \frac{5}{3} \end{bmatrix}$:
+
+\begin{align}
+    g_1\left(x, \frac{5}{3}\right) &= \begin{bmatrix} 0 \\ x \end{bmatrix}^T \begin{bmatrix} 0 \\ 1 + \frac{5}{3} \end{bmatrix} - 2x^2 \\
+    &= \frac{8}{3}x - 2x^2
+\end{align}
+
+The new optimal contract size:
+\begin{equation}
+    \frac{\partial g_1}{\partial x} = \frac{8}{3} - 4x = 0 \quad \Rightarrow \quad x_1^* = \frac{2}{3}
+\end{equation}
+
+\textbf{Firm 2's Modified Optimization:}
+
+After making the payment, Firm 2's effective return becomes $\begin{bmatrix} 3 - \frac{5}{3} \\ 4 \end{bmatrix}$:
+
+\begin{align}
+    g_2\left(x, \frac{5}{3}\right) &= \begin{bmatrix} x \\ 0 \end{bmatrix}^T \begin{bmatrix} 3 - \frac{5}{3} \\ 4 \end{bmatrix} - x^2 \\
+    &= \frac{4}{3}x - x^2
+\end{align}
+
+Which optimizes at:
+\begin{equation}
+    \frac{\partial g_2}{\partial x} = \frac{4}{3} - 2x = 0 \quad \Rightarrow \quad x_2^* = \frac{2}{3}
+\end{equation}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{payments.png}
+    \caption{Payments allowed. Figure 1 (b) from \protect\citeA{jalan_incentive-aware_2024}}
+    \label{fig:payment}
+\end{figure}
+
+\subsubsection{Economic Insights}
+
+This example reveals three critical insights:
 
 \begin{enumerate}
-    \item \textbf{Mutual Agreement:} For every contract \( (i, j) \), both agents must agree on the contract size and price in both networks:
+    \item \textbf{Market Incompleteness:} Without payment mechanisms, beneficial trades may fail even when both parties would gain from cooperation.
+    
+    \item \textbf{Price as Coordination:} The payment $P = \frac{5}{3}$ acts as a price that internalizes the externality between firms' decisions. Firm 1 is compensated for moving away from its individual optimum, while Firm 2 finds it profitable to pay for this adjustment.
+    
+    \item \textbf{Equilibrium Stability:} The resulting point $(W = \frac{2}{3}, P = \frac{5}{3})$ forms a stable equilibrium. Neither firm has incentive to deviate unilaterally, as shown graphically in Figure \ref{fig:payment} .
+\end{enumerate}
+
+\subsection{Optimization and Equilibrium Conditions}
+
+The mathematical structure of individual optimization reveals why certain network patterns emerge naturally from economic incentives. When faced with a given price system, each agent solves a constrained optimization problem that balances expected returns against portfolio risk.
+
+For given prices $P$, agent $i$'s optimal portfolio solves:
+\begin{equation}
+\max_{w_i} w_i^T(\mu_i - Pe_i) - \gamma_i w_i^T\Sigma_i w_i \quad \text{subject to regulatory constraints}
+\end{equation}
+
+This yields the optimal portfolio:
+\begin{equation}
+w_i^* = Q_i(\mu_i - Pe_i)
+\label{eq:original_optimal_portfolio}
+\end{equation}
+where the Q-matrix is defined as:
+\begin{equation}
+Q_i = \Psi_i^T(2\gamma_i\Psi_i\Sigma_i\Psi_i^T)^{-1}\Psi_i
+\label{eq:original_Q_matrix}
+\end{equation}
+
+When all edges are allowed ($\Psi_i = I_n$), this simplifies to:
+\begin{equation}
+Q_i = (2\gamma_i\Sigma_i)^{-1}
+\label{eq:original_Q_simplified}
+\end{equation}
+
+The Q-matrix plays a central role in the model, as it encapsulates how agents translate their beliefs and constraints into portfolio decisions. Intuitively, $Q_i^{-1} = 2\gamma_i\Sigma_i$ represents the `cost" of holding a portfolio, combining both risk aversion and perceived risk. Agents with lower risk aversion or better diversification opportunities (lower eigenvalues of $\Sigma_i$) will have higher elements in $Q_i$, making them more responsive to profit opportunities.
+
+\subsection{Fundamental Existence and Uniqueness Theorem}
+
+The following theorem provides the mathematical foundation for determining when stable financial networks exist and whether they are unique. Understanding these conditions is essential for both theoretical analysis and practical applications.
+
+\begin{theorem}[Existence and Uniqueness - Original Model]
+\label{thm:original_existence}
+Define $n \times n$ matrices $A$, $B_{(i,j)}$, and $C_{(i,j)}$ as follows:
+\begin{align}
+A_{ij} &= e_i^T Q_j M e_j \label{eq:original_A_matrix}\\
+B_{(i,j)} &= e_i e_j^T Q_i \label{eq:original_B_matrix}\\
+C_{(i,j)} &= (B_{(i,j)} - B_{(j,i)}) + (B_{(i,j)} - B_{(j,i)})^T \label{eq:original_C_matrix}
+\end{align}
+
+Let $F = \{(i,j) : 1 \leq i < j \leq n, \Psi_i e_j \neq 0\}$ denote the set of permissible edge pairs, and let $Z_F$ be the $|F| \times |F|$ matrix whose rows are $\{\text{uvec}(C_{(i,j)})_F \mid (i,j) \in F\}$. Then:
+
+\begin{enumerate}
+   \item A stable point $(W, P)$ exists if and only if $\text{uvec}(A - A^T)_F$ lies in the column space of $Z_F$
+   \item If a stable point exists, then $Z_F\text{uvec}(P)_F = \text{uvec}(A - A^T)_F$
+   \item A unique stable point always exists if $Z_F$ has full rank
+\end{enumerate}
+\end{theorem}
+
+This theorem reveals the deep mathematical structure underlying financial network formation. The matrix $A$ captures the fundamental asymmetries in agent beliefs and risk perceptions that drive the need for price adjustments. When $A$ is symmetric, agents have perfectly aligned preferences, and no price adjustments are needed. The asymmetric part, $A - A^T$, represents the "tension" in the system that must be resolved through appropriate pricing.
+
+The matrices $B_{(i,j)}$ and $C_{(i,j)}$ encode how price adjustments affect individual agents' optimization problems. The matrix $Z_F$ represents the "feasible directions" for price adjustments given the constraint structure. The theorem essentially states that stable networks exist when the tensions in agent preferences (captured by $A - A^T$) can be resolved through feasible price adjustments (captured by the column space of $Z_F$).
+
+The uniqueness condition is particularly important for policy analysis. When $Z_F$ has full rank, there is a unique way to resolve all preference conflicts through pricing, leading to a unique stable network. This condition typically holds when there are sufficient degrees of freedom in the pricing system relative to the number of constraints.
+
+
+
+\subsection{Network Formation Through Bilateral Negotiations}
+
+A key element of the \citeA{jalan_incentive-aware_2024} framework is that both network structure and contract prices emerge endogenously through iterative bilateral negotiations. This process captures the decentralized nature of over-the-counter financial markets where institutions negotiate directly with counterparties.
+
+The negotiation process is formalized in Algorithm \ref{alg:pairwise}.
+
+\begin{algorithm}[H] % Using [H] to place it "here"
+\caption{Pairwise Negotiations from \protect\citeA{jalan_incentive-aware_2024}}
+\label{alg:pairwise}
+\begin{algorithmic}[1] % [1] adds line numbers
+\STATE \textbf{procedure} Pairwise($\eta \in (0,1)$)
+\STATE $t \leftarrow 0$
+\STATE $P(0) \leftarrow \text{any skew-symmetric matrix}$
+\WHILE{$P(t)$ has not converged}
+    \STATE $\forall i,j \in [n]$, $P'_{ij} \leftarrow \text{pairwise-negotiated price (see Eq. \ref{eq:price_neg})}$
+    \STATE $P(t+1) \leftarrow (1 - \eta)P(t) + \eta P'$
+    \STATE $t \leftarrow t+1$
+\ENDWHILE
+\STATE \textbf{end procedure}
+\end{algorithmic}
+\end{algorithm}
+
+The core of this algorithm is the calculation of the pairwise-negotiated price matrix $P'$ in line 5, which is computed for all pairs $(i,j)$ in two stages:
+
+\begin{enumerate}
+    \item \textbf{Portfolio Optimization}: Each agent \( i \) computes their optimal contract portfolio \( w_i^* \) given current prices \( P(t) \):
     \begin{equation}
-    w_{ij}^{(T)}(P_T^*) = w_{ji}^{(T)}(P_T^*), \quad w_{ij}^{(B)}(P_B^*) = w_{ji}^{(B)}(P_B^*)
+    \label{eq:portfolio_opt}
+    w_i^* = \Psi_i^\top (2\gamma_i \Psi_i \Sigma_i \Psi_i^\top)^{-1} \Psi_i (\mu_i - P e_i),
+    \end{equation}
+    where \( \Psi_i \) encodes regulatory or institutional constraints on permissible counterparties.
+    
+    \item \textbf{Price Negotiation}: The desired contract sizes \( w_{ij}^* \) and \( w_{ji}^* \) are compared. If \( w_{ij}^* \neq w_{ji}^* \), the agents negotiate a new price \( P'_{ij} \) (referred to in the equation as \( P_{ij}^{new} \)) to clear the difference:
+    \begin{equation}
+    \label{eq:price_neg}
+    P_{ij}^{new} = P_{ij}^{old} + \eta \cdot \frac{Q_j[\mu_j - P e_j]_{ij} - Q_i[\mu_i - P e_i]_{ji}}{Q_{ii} + Q_{jj}},
+    \end{equation}
+    where \( Q_i = \Psi_i^\top (2\gamma_i \Psi_i \Sigma_i \Psi_i^\top)^{-1} \Psi_i \).
+\end{enumerate}
+
+Once all new prices $P'$ are calculated, the global price matrix $P(t+1)$ is updated using the dampening factor $\eta$ (line 6), and the process iterates until convergence.
+
+This negotiation process reflects how real financial markets operate. Banks and other financial institutions typically negotiate contract terms bilaterally, adjusting prices until both parties agree on the contract size. The algorithm captures this dynamic, showing how local negotiations between pairs of agents can lead to globally stable network configurations.
+
+The convergence properties of this algorithm are crucial for practical implementation. The dampening factor $\eta$ ensures stability by preventing overly aggressive price adjustments that could lead to oscillations.
+
+\subsection{Example 5 from Jalan: Pairwise Negotiations in a Three-Firm Loan Network} \label{sec:example5}
+This example demonstrates the mechanism of incentive-aware network formation, illustrating how bilateral negotiations converge to a stable financial network. \\
+
+
+Consider a loan market with three financial institutions, a national bank (firm 1), a local bank (firm 2) and a local firm (firm 3).
+
+Suppose the local firm cannot directly access the national bank due to regulatory constraints. This creates a natural opportunity for the local bank. \\
+
+The models parameters are:
+
+\textbf{Covariance matrices} (identical for all firms):
+\begin{equation}
+    \Sigma_1 = \Sigma_2 = \Sigma_3 = \begin{bmatrix} 
+        1 & 0.25 & 0.75 \\ 
+        0.25 & 1 & 0.6 \\ 
+        0.75 & 0.6 & 1 
+    \end{bmatrix}
+\end{equation}
+
+\textbf{Expected returns matrix:}
+\begin{equation}
+    M = \begin{bmatrix} 
+        0 & 0.9 & 0.9 \\ 
+        0.75 & 0 & 0.95 \\ 
+        0.5 & 0.8 & 0 
+    \end{bmatrix}
+\end{equation}
+
+\textbf{Risk aversion:} $\gamma_1 = \gamma_2 = \gamma_3 = 1$
+
+Note that $M_{13} = 0.9 > 0$ indicates the expected return of the Local Firm when contracting with the National Bank, but this direct link is prohibited.
+
+For this example exists a restriction between the national bank and the local firm, so the restriction (1, 3) is active. This means Agent 1 cannot contract with 3, and Agent 3 cannot contract with 1.
+
+\subsubsection*{Agent 1 (National Bank)}
+Agent 1 can only contract with itself (1) and the Local Bank (2). 
+Therefore, $J_1 = \{1, 2\}$, and the selection matrix $\Psi_1$ is $2 \times 3$:
+\begin{equation}
+    \Psi_1 = 
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0
+    \end{bmatrix}
+\end{equation}
+(This matrix selects the 1st and 2nd elements of $w_1$, enforcing $w_{13}=0$).
+
+\subsubsection*{Agent 2 (Local Bank)}
+Agent 2 is the central agent and can contract with all agents.
+Therefore, $J_2 = \{1, 2, 3\}$, and the selection matrix $\Psi_2$ is the $3 \times 3$ identity matrix:
+\begin{equation}
+    \Psi_2 = I_3 =
+    \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+\subsubsection*{Agent 3 (Local Firm)}
+Agent 3 can only contract with the Local Bank (2) and itself (3).
+Therefore, $J_3 = \{2, 3\}$, and the selection matrix $\Psi_3$ is $2 \times 3$:
+\begin{equation}
+    \Psi_3 = 
+    \begin{bmatrix}
+        0 & 1 & 0 \\
+        0 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+(This matrix selects the 2nd and 3rd elements of $w_3$, enforcing $w_{31}=0$).
+
+
+\subsubsection{Pairwise Negotiation Process}
+
+The network forms through iterative bilateral negotiations, where each pair of firms can adjust their contract terms. Now we see the convergence process over time.
+
+\textbf{Iteration Process:}
+
+At each step $t$, with $\eta = 0.5$:
+
+1. \textbf{Step 0:} For the first iteration, $W$ is the result of the optimization of each agent, their optimal $w_i$ before any iteration when $P_0=0$:
+   \begin{align}
+       W_0 &= \begin{bmatrix} 
+           -0.1 & 0.20 & - \\ 
+           0.40 & -0.31 & 0.74 \\ 
+           - & 0.44 & -0.45 
+       \end{bmatrix} &
+       P_0 &= \begin{bmatrix} 
+           0 & 0 & - \\ 
+           0 & 0 & 0 \\ 
+           - & 0 & 0 
+       \end{bmatrix}
+   \end{align}
+
+2. \textbf{Step 5:} After initial negotiations, contracts begin forming:
+   \begin{align}
+       W_5 &= \begin{bmatrix} 
+           -0.08 & 0.24 & - \\ 
+           0.30 & -0.38 & 0.61 \\ 
+           - & 0.53 & -0.37 
+       \end{bmatrix} &
+       P_5 &= \begin{bmatrix} 
+           0 & -0.19 & - \\ 
+           0.19 & 0 & 0.17 \\ 
+           - & -0.17 & 0 
+       \end{bmatrix}
+   \end{align}
+
+3. \textbf{Step 10:} Approaching equilibrium:
+   \begin{align}
+       W_{10} &= \begin{bmatrix} 
+           -0.07 & 0.25 & - \\ 
+           0.27 & -0.40 & 0.58 \\ 
+           - & 0.55 & -0.35 
+       \end{bmatrix} &
+       P_{10} &= \begin{bmatrix} 
+           0 & -0.24 & - \\ 
+           0.24 & 0 & 0.21 \\ 
+           - & -0.21 & 0 
+       \end{bmatrix}
+   \end{align}
+
+4. \textbf{Convergence:} The algorithm converges to stable values:
+   \begin{align}
+       W_\infty &= \begin{bmatrix} 
+           -0.07 & 0.26 & - \\ 
+           0.26 & -0.4 & 0.56 \\ 
+           - & 0.56 & -0.34 
+       \end{bmatrix} &
+       P_\infty &= \begin{bmatrix} 
+           0 & -0.26 & - \\ 
+           0.26 & 0 & 0.23 \\ 
+           - & -0.23 & 0 
+       \end{bmatrix}
+   \end{align}
+
+The converged network reveals some insights:
+
+\begin{enumerate}
+    \item \textbf{Central Agent Structure:} The local bank (Firm 2) connects the national bank to the local firm. This creates a chain: National Bank $\rightarrow$ Local Bank $\rightarrow$ Local Firm.
+    
+    \item \textbf{Payment Flows:}
+    \begin{itemize}
+        \item The national bank pays the local bank 0.26 per unit 
+        \item The local firm pays the local bank 0.23 per unit
+    \end{itemize}
+    
+    \item \textbf{Contract Sizes:}
+    \begin{itemize}
+        \item National-Local Bank contract: $W_{12} = 0.26$
+        \item Local Bank-Local Firm contract: $W_{23} = 0.56$
+    \end{itemize}
+    
+    \item \textbf{Stability:} The final configuration represents a pairwise stable network where no bilateral pair can profitably deviate from their agreed terms.
+\end{enumerate}
+
+
+\section{Extension of the Example}
+
+In the previous example from \citeA{jalan_incentive-aware_2024}, the local bank (Firm 2) enjoys a monopolistic position as the sole agent between the national bank and the local firm. But lets consider another case: what happens when there exists an alternative for this restriction between the local firm and the national bank?
+
+Suppose a Firm 4 emerges, another financial institution that can also serve as a central agent between the national bank and the local firm. This new agent has the same beliefs as the Local Bank and it's seen as equal by the Firm 1 and Firm 3 (National bank and Local Firm). Like Firm 2, Firm 4:
+\begin{itemize}
+    \item Has access to both national and local markets
+    \item Can establish contracts with Firms 1 and 3
+    \item Does not face the restrictions preventing direct trade between 1 and 3
+\end{itemize}
+
+However, Firm 4 has different characteristics:
+\begin{itemize}
+    \item Could be a fintech with lower costs
+    \item Or a financial cooperative with a different risk profile
+    \item Or simply another regional bank with distinct technology
+\end{itemize}
+
+\subsubsection{Limitations of Adding an Identic Agent} \label{limitations}
+
+To isolate the sole effect of competition versus the structural constraint, the new agent is designed to be a near-perfect counterpart to the existing Local Bank (Firm 2).
+
+The primary mechanism for this design choice is the correlation coefficient between their underlying profit processes. We set the correlation ($\rho$) between the Local Bank ($i=2$) and the Fintech Firm ($j=4$) to be $\rho_{24} = 0.99$.
+
+This high correlation serves a dual purpose:
+
+\begin{enumerate}
+    \item \textbf{Experimental Control (Isolating Competition):} By assigning almost identical risk and opportunity structures to Firm 2 and Firm 4, we ensure that their competitive behavior and market share split are driven only by the increase in market participants ($n=4$) and not by inherent differences in their business models. We should expect a $50/50$ market split in the $4$-firm scenario.
+    
+    \item \textbf{Addressing Mathematical Limitations (Avoiding Singularity):} Mathematically, setting the correlation to exactly $1.0$ ($\rho_{24} = 1.0$) would result in the covariance matrix ($\Sigma$) being singular (non-invertible), as the rows/columns corresponding to Firm 2 and Firm 4 would be linearly dependent. The model, which requires the inverse of the covariance matrix ($\Sigma^{-1}$) for portfolio optimization (specifically, for calculating the risk-return trade-off), would fail to converge. Therefore, the value of $\rho_{24} = 0.99$ is strategically chosen to:
+    \begin{itemize}
+        \item Achieve a competitive environment.
+        \item Ensure the matrix remains non-singular ($\det(\Sigma) \neq 0$), allowing for the necessary computation of $\Sigma^{-1}$, despite the high degree of collinearity and numerical instability.
+    \end{itemize}
+\end{enumerate}
+
+This design confirms that any change in the Local Bank's utility or market share in the 4-firm constrained scenario is predominantly due to the pressure of an identical competitor.
+
+
+\subsubsection{New Network Structure}
+
+With four agents, the possible network topology becomes bigger:
+
+\textbf{Prohibited edges} (maintained): $(1,3)$
+
+\textbf{Now the possible edges are:}
+\begin{itemize}
+    \item $(1,2)$ and $(2,1)$: National bank $\leftrightarrow$ Local bank
+    \item $(1,4)$ and $(4,1)$: National bank $\leftrightarrow$ New agent
+    \item $(2,3)$ and $(3,2)$: Local bank $\leftrightarrow$ Local firm
+    \item $(4,3)$ and $(3,4)$: New agent $\leftrightarrow$ Local firm
+    \item $(2,4)$ and $(4,2)$: Potential trade between central agents
+\end{itemize}
+
+\subsubsection{Economic Implications}
+
+This extension can have consequences such like:
+
+\begin{enumerate}
+    \item \textbf{Destruction of monopoly power}: The local bank (Firm 2) can no longer extract monopolistic rents. It must compete with Firm 4.
+        
+    \item \textbf{Multiple possible equilibria}:
+    \begin{itemize}
+        \item \textit{Segregated equilibrium}: Only one agent survives 
+        \item \textit{Coexistence equilibrium}: Both agents stay
+    \end{itemize}
+    
+    \item \textbf{New network formation dynamics}: Algorithm  \ref{alg:pairwise} must now consider more bilateral negotiations, and convergence may lead to qualitatively different network structures.
+\end{enumerate}
+
+\subsubsection{Preserving the Model's Essence}
+
+This extension maintains all elements of the Jalan model:
+\begin{itemize}
+    \item Firms still maximize mean-variance utility
+    \item Contracts are determined through bilateral negotiation (\ref{alg:pairwise})
+    \item Payments $P$ align incentives between counterparties
+    \item Stability requires that no pair can improve by renegotiating
+\end{itemize}
+
+\subsection{From Competition within Networks to Competition between Networks}
+
+The four-agent extension demonstrates how competition between central agents improves efficiency and reduces rents. 
+
+Consider the equilibrium outcomes in our four-agent model:
+\begin{itemize}
+    \item Firms 2 and 4 compete on prices $(P)$ and quantities $(W)$
+    \item The fundamental inefficiency persists: valuable direct relationships remain prohibited
+\end{itemize}
+
+This raises a critical question: \textit{What if the structural constraints themselves could be circumvented through alternative infrastructure?}
+
+\subsubsection{The Infrastructure Choice Problem}
+
+In modern financial markets, agents increasingly face a choice not just of \textit{how much} to trade, but \textit{where}—on which technological and regulatory infrastructure:
+
+\begin{enumerate}
+    \item \textbf{Traditional Infrastructure}
+    \begin{itemize}
+        \item Established regulatory framework with clear restrictions
+        \item Mature technology with low operational risk
+        \item High compliance costs and operational overhead
+        \item Barriers that prevent certain direct connections
+    \end{itemize}
+    
+    \item \textbf{Alternative Infrastructure} (e.g., blockchain/DeFi)
+    \begin{itemize}
+        \item Different regulatory treatment, potentially fewer restrictions
+        \item New technology enabling previously impossible connections
+        \item Lower costs but higher technological friction
+        \item Transparency that could reduce information asymmetries
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Motivating the Two-Network Extension}
+
+The four-agent model shows us that competition within a network could improve outcomes, but agents remain bound by that network's structural limitations. This motivates examining competition between networks.
+
+
+\textbf{Natural Next Questions:}
+\begin{itemize}
+    \item What if Firm 4 could negotiate on an alternative infrastructure?
+    \item Could another technology enable the prohibited direct connection between 1 and 3?
+    \item How would traditional central agents respond to infrastructure competition?
+\end{itemize}
+
+\subsubsection{Bridging the Models}
+
+The progression from our four-agent model to the two-network model follows naturally:
+
+\begin{enumerate}
+    \item \textbf{Stage 1} (Three agents): Negotiations on the traditional infrastructure
+    
+    \item \textbf{Stage 2} (Four agents): Competition, but still within the same infrastructure
+    \begin{itemize}
+        \item Possible efficiency gains from competition
+        \item But structural inefficiencies persist
+        \item All agents bound by same constraints
+    \end{itemize}
+    
+    \item \textbf{Stage 3} (Two networks): Infrastructure competition
+    \begin{itemize}
+        \item Agents choose not just partners but also networks
+        \item Different infrastructures offer different trade-offs
+        \item Possibility of circumventing traditional constraints
+    \end{itemize}
+\end{enumerate}
+
+This evolution mirrors the actual development of financial markets:
+\begin{itemize}
+    \item Pre-2000s: Dominated by traditional intstitutions (banks)
+    \item 2000s-2010s: Fintech competition within traditional rails (PayPal, Square)
+    \item 2020s: Infrastructure competition (DeFi protocols offering alternative rails)
+\end{itemize}
+
+
+\section{The Dual-Network Framework}
+
+This section introduces an extension of the \citeA{jalan_incentive-aware_2024} framework to model competition between financial network infrastructures, such as traditional networks and alternative ones (e.g., blockchain-based).
+
+\subsection{Motivation: Limitations of the Single-Network Model}
+\label{sec:motivation}
+
+The original Jalan-Chakrabarti framework, while powerful, assumes a single, homogeneous network infrastructure. This assumption cannot address several realities of modern financial markets:
+
+\begin{itemize}
+    \item \textbf{No Technology Choice}: Agents optimize their portfolio composition but cannot choose their execution technology, eliminating a crucial dimension of modern decision-making.
+    \item \textbf{Uniform Constraints}: All agents face identical constraints, overlooking the heterogeneous impact of new technologies across different types of institutions.
+    \item \textbf{Static Friction Structure}: Transaction costs are not modeled as choice variables, precluding analysis of how technological innovation affects market structure.
+\end{itemize}
+
+\subsection{The Innovation: A Portfolio Constraint Approach}
+\label{sec:core_innovation}
+
+The model takes competition as a portfolio reallocation problem rather than a scaling problem.
+
+We introduce an exogenous total portfolio constraint $w_i^*$. This $w_i^*$ is derived from the unconstrained single-network optimum, and must now be allocated between the traditional ($w_i^T$) and alternative ($w_i^A$) networks.
+
+This approach offers several advantages:
+
+\begin{enumerate}
+    \item \textbf{Direct Comparability}: It fixes total exposure, enabling a clean comparison with the single-network baseline. This isolates the effects of technology choice.
+    \item \textbf{Realistic Constraint}: It reflects that institutions reallocate rather than expand total risk exposure when adopting new technologies, due to capital constraints.
+    \item \textbf{Computational Tractability}: It reduces the problem to a single-variable optimization over $w_i^T$, making the dual-network problem as tractable as the original single-network case.
+    \item \textbf{Economic Intuition}: It captures the compositional nature of technology adoption.
+\end{enumerate}
+
+\subsection{Formal Model Specification}
+\label{sec:formal_spec}
+
+The transition from optimization to portfolio allocation requires a new set of formal definitions.
+
+\begin{definition}[Dual-Network Setting]
+\label{def:dual_network_setting}
+A \textit{dual-network setting} extends Definition~\ref{def:original_network_setting} and is characterized by:
+$$(\mu_i, \gamma_i, \Sigma_i, \Psi_i^T, \Psi_i^A, \tau, \lambda_A, w_i^*)_{i \in [n]}$$
+
+where the additional components are:
+\begin{itemize}
+    \item $\Psi_i^T \in \{0,1\}^{|J_i^T| \times n}$: Permissible counterparties on the traditional network.
+    \item $\Psi_i^A \in \{0,1\}^{|J_i^A| \times n}$: Permissible counterparties on the alternative network.
+    \item $\tau \geq 0$: Alternative network transparency or trust benefits (scalar).
+    \item $\lambda_A \geq 0$: Alternative network friction costs (scalar).
+    \item $w_i^* \in \mathbb{R}^n$: Agent $i$'s optimal portfolio from the unconstrained single-network case.
+\end{itemize}
+\end{definition}
+
+The core of this model is the allocation constraint, where the total portfolio $w_i^*$ must be strategically divided:
+\begin{equation}
+w_i^* = w_i^T + w_i^A.
+\label{eq:portfolio_constraint}
+\end{equation}
+
+The following two sets of parameters define the key economic differences between the networks.
+
+\subsubsection{Technological Differentiation}
+
+Technological differences are captured by two parameters:
+
+\begin{itemize}
+    \item \textbf{Benefits ($\tau \geq 0$)}: The parameter $\tau$ captures the potential transparency or trust benefits of the alternative technology, modeled as additive to expected returns.
+    \item \textbf{Friction Costs ($\lambda_A \geq 0$)}: The parameter $\lambda_A$ represents alternative-specific frictions (fees, congestion). It is modeled as a quadratic cost ($\lambda_A\|w_i^A\|^2$) because higher volumes can lead to disproportionately higher costs, as based on Example 6 in \citeA{jalan_incentive-aware_2024}.
+\end{itemize}
+
+The $\tau/\lambda_A$ trade-off determines the economic attractiveness of adoption.
+
+\subsubsection{Regulatory Constraints and Network Accessibility}
+
+A crucial feature is the differential regulatory treatment, which creates opportunities for arbitrage.
+
+\begin{itemize}
+    \item The traditional network faces constraints $\Psi_i^T$.
+    \item The alternative network operates under a different framework, $\Psi_i^A$.
+\end{itemize}
+
+When $\Psi_i^T \neq \Psi_i^A$, agents can engage in regulatory arbitrage by accessing previously prohibited counterparties through the alternative network.
+
+\subsubsection{Dual-Network Utility Function}
+
+Agent $i$'s utility is the sum of the network-specific utilities, subject to the portfolio constraint.
+
+\begin{definition}[Dual-Network Utility Function]
+\label{def:dual_utility}
+Agent $i$'s dual-network utility is:
+\begin{align}
+g_i(w_i^T, w_i^A, P) &= g_i^T(w_i^T, P) + g_i^A(w_i^A, P) \label{eq:dual_utility_total}
+\end{align}
+where:
+\begin{align}
+g_i^T(w_i^T, P) &= (w_i^T)^T(\mu_i - Pe_i) - \gamma_i(w_i^T)^T\Sigma_i w_i^T \label{eq:utility_traditional} \\
+g_i^A(w_i^A, P) &= (w_i^A)^T(\mu_i + \tau \mathbf{1} - Pe_i) - \gamma_i(w_i^A)^T\Sigma_i w_i^A - \lambda_A\|w_i^A\|^2 \label{eq:utility_alternative}
+\end{align}
+and subject to the portfolio constraint: $w_i^T + w_i^A = w_i^*$.
+\end{definition}
+
+
+\subsection{Equilibrium Definitions}
+\label{sec:equilibrium_defs}
+
+Having defined the environment, we now define the conditions for a stable equilibrium.
+
+\begin{definition}[Dual-Network Feasible Point]
+\label{def:dual_feasible}
+A tuple $(W^T, W^A, P)$ is \textit{dual-network feasible} if:
+\begin{enumerate}
+    \item Network symmetry: $W^T = (W^T)^T$, $W^A = (W^A)^T$, and $P = -P^T$.
+    \item Regulatory compliance: $W^T$ satisfies $\{\Psi_i^T\}$ and $W^A$ satisfies $\{\Psi_i^A\}$.
+    \item Portfolio constraint: $w_i^T + w_i^A = w_i^*$ for all $i \in [n]$.
+    \item Price consistency: A single price matrix $P$ applies to both networks.
+\end{enumerate}
+where $w_i^T$ and $w_i^A$ are the $i$-th columns of  $W^T$ and  $W^A$ respectively.
+\end{definition}
+
+\begin{definition}[Dual-Network Stable Point]
+\label{def:dual_stable}
+A dual-network feasible point $(W^T, W^A, P)$ is \textit{dual-network stable} if each agent achieves maximum utility by optimally choosing $w_i^T$, with $w_i^A$ determined residually:
+
+\begin{equation}
+g_i(W^T, P) = \max_{\substack{w_i^T \text{ such that } (W^T, W^A, P) \\ \text{is dual-network feasible}}} g_i(w_i^T, w_i^* - w_i^T, P) \quad \forall i \in [n]
+\label{eq:dual_stable_condition}
+\end{equation}
+\end{definition}
+The stability condition ensures that the configuration represents a Nash equilibrium where no agent can improve their utility by reallocating their portfolio.
+
+
+\subsection{Optimal Allocation and Analysis}
+\label{sec:optimal_allocation}
+
+
+By substituting the portfolio constraint $w_i^A = w_i^* - w_i^T$ into the utility function (Definition \ref{def:dual_utility}) and taking first-order conditions, we can derive the optimal allocation. The detailed, step-by-step mathematical derivation is provided in \ref{app:derivacion_matematica}.
+
+
+
+\begin{proposition}[Dual-Network Optimal Allocation]
+\label{prop:dual_optimal}
+The optimal traditional network allocation for agent $i$ is:
+\begin{equation}
+w_i^{T*} = Q_i^{\text{dual}} \cdot a_i
+\label{eq:dual_optimal_allocation}
+\end{equation}
+where:
+\begin{align}
+Q_i^{\text{dual}} &= (\Psi_i^T)^T(\Psi_i^T H_i^{-1} (\Psi_i^T)^T)^{-1}\Psi_i^T H_i^{-1} \label{eq:Q_dual_general}\\
+H_i &= 2\gamma_i\Sigma_i + \lambda_A I \label{eq:H_dual_matrix}\\
+a_i &= -\tau \mathbf{1} + 2\gamma_i\Sigma_i w_i^* + 2\lambda_A w_i^* \label{eq:dual_offset_vector}
+\end{align}
+When all edges are allowed ($\Psi_i^T = I_n$), this simplifies to:
+\begin{equation}
+Q_i^{\text{dual}} = (2\gamma_i\Sigma_i + \lambda_A I)^{-1}
+\label{eq:Q_dual_simplified}
+\end{equation}
+\end{proposition}
+
+\paragraph{Economic Interpretation.}
+Proposition \ref{prop:dual_optimal} reveals how the technological parameters fundamentally alter the problem. The $H_i$ matrix incorporates the alternative network frictions ($\lambda_A I$), making agents less responsive to profit opportunities as friction costs increase. The offset vector $a_i$ captures the net effect of the alternative network benefits ($-\tau \mathbf{1}$) and the portfolio constraint terms. Note that friction $\lambda_A$ in equation \ref{eq:H_dual_matrix} is mathematically equal to an increase in risk aversion.
+
+\subsection{The Dual Q-Matrix}
+\label{sec:dual_q}
+
+The crucial technical innovation of this model is revealed by comparing the simplified Q-matrices (assuming $\Psi_i^T = I_n$) across frameworks:
+
+\begin{align}
+Q_i^{\text{original}} &= (2\gamma_i\Sigma_i)^{-1} && \text{(Single-network)} \label{eq:Q_comparison_original} \\
+Q_i^{\text{dual}} &= (2\gamma_i\Sigma_i + \lambda_A I)^{-1} && \text{(Dual-network)} \label{eq:Q_comparison_dual}
+\end{align}
+
+This modification, the addition of the friction term $\lambda_A I$, has profound implications:
+
+\begin{enumerate}
+    \item \textbf{Reduced Responsiveness}: The $\lambda_A I$ term uniformly reduces the agent's responsiveness to profit opportunities.
+    \item \textbf{Altered Risk Perception}: The friction effectively increases the perceived "cost" of portfolio allocation, leading to more conservative decisions.
+    \item \textbf{Cross-Network Spillovers}: Alternative network characteristics ($\lambda_A$) directly affect decisions about traditional network allocation ($w_i^T$), creating indirect externalities.
+\end{enumerate}
+
+\subsection{Extended Existence and Uniqueness Theorem}
+\label{sec:existence}
+
+Finally, we extend the fundamental existence and uniqueness results to account for the new model mechanisms.
+
+\begin{theorem}[Existence and Uniqueness - Dual-Network Model]
+\label{thm:dual_existence_uniqueness}
+Define the dual-network matrices analogous to Theorem~\ref{thm:original_existence}:
+\begin{align}
+A^{\text{dual}}_{ij} &= e_i^T Q_j^{\text{dual}} (M e_j + \text{offset terms from } a_j) \label{eq:dual_A_matrix}\\
+B^{\text{dual}}_{(i,j)} &= e_i e_j^T Q_i^{\text{dual}} \label{eq:dual_B_matrix}\\
+C^{\text{dual}}_{(i,j)} &= (B^{\text{dual}}_{(i,j)} - B^{\text{dual}}_{(j,i)}) + (B^{\text{dual}}_{(i,j)} - B^{\text{dual}}_{(j,i)})^T \label{eq:dual_C_matrix}
+\end{align}
+
+where $Q_i^{\text{dual}}$ and $a_j$ are defined in Proposition~\ref{prop:dual_optimal}.
+
+Let $Z_F^{\text{dual}}$ be the $|F| \times |F|$ matrix whose rows are $\{\text{uvec}(C^{\text{dual}}_{(i,j)})_F \mid (i,j) \in F\}$. Then:
+
+\begin{enumerate}
+    \item A dual-network stable point $(W^T, W^A, P)$ exists if and only if $\text{uvec}(A^{\text{dual}} - (A^{\text{dual}})^T)_F$ lies in the column space of $Z_F^{\text{dual}}$.
+    \item If a stable point exists, then $Z_F^{\text{dual}} \text{uvec}(P)_F = \text{uvec}(A^{\text{dual}} - (A^{\text{dual}})^T)_F$.
+    \item A unique stable point always exists if $Z_F^{\text{dual}}$ has full rank.
+\end{enumerate}
+\end{theorem}
+
+\paragraph{Proof Sketch.}
+The proof follows the structure of the original theorem. The key insight is that the constraint $w_i^T + w_i^A = w_i^*$ transforms the problem into a constrained single-variable optimization, where the offset vector $a_i$ captures how the constraint affects the equilibrium conditions.
+
+
+\subsection{Relationship Between Original and Dual Theorems}
+
+The relationship between the original and dual-network frameworks provides important validation of our extension approach.
+
+\begin{proposition}[Consistency with Original Framework]
+\label{prop:consistency}
+The dual-network model reduces to the original framework under the following limiting conditions:
+\begin{enumerate}
+   \item \textbf{No frictions on the alternative network}: As $\lambda_A \to 0$, we have $Q_i^{\text{dual}} \to Q_i^{\text{original}}$ and $H_i \to 2\gamma_i\Sigma_i$
+   
+   \item \textbf{No benefits on the alternative network}: When $\tau = 0$, the offset terms in $a_i$ become independent of the possible technological advantages, reducing to $a_i = 2\gamma_i\Sigma_i w_i^* + 2\lambda_A w_i^*$
+   
+   \item \textbf{Symmetric constraints}: When $\Psi_i^T = \Psi_i^A = \Psi_i$, regulatory arbitrage opportunities disappear and the model reduces to pure technology competition
+   
+   \item \textbf{Prohibitive alternative network costs}: As $\lambda_A \to \infty$, the optimal allocation approaches $w_i^T \to w_i^*$ and $w_i^A \to 0$, recovering the single-network solution
+   
+   \item \textbf{Perfect substitutes}: When $\tau = \lambda_A = 0$ and $\Psi_i^T = \Psi_i^A$, the model predicts exactly 50\% allocation to each network, confirming technological neutrality
+\end{enumerate}
+\end{proposition}
+
+\paragraph{Proof.} Each limiting case can be verified by direct substitution into the optimization conditions of Proposition~\ref{prop:dual_optimal}. The key insight is that the portfolio constraint $w_i^T + w_i^A = w_i^*$ naturally accommodates these limiting behaviors while maintaining mathematical consistency with the original framework.
+
+This consistency provides strong validation that our dual-network extension captures the original model's economic mechanisms while successfully incorporating technology choice decisions.
+
+\subsection{Economic Interpretation of the Extended Model}
+
+The dual-network framework captures several novel economic mechanisms absent from the original model:
+
+\paragraph{Technology Choice Trade-offs.} The ratio $\tau/\lambda_A$ emerges as the fundamental determinant of adoption rates across the network. This ratio represents the net technological advantage of the alternative infrastructure, combining both benefits (transparency, automation, settlement certainty) and costs (fees, congestion, complexity) into a single metric that drives adoption decisions.
+
+\paragraph{Cross-Network Spillovers.} The modified Q-matrix structure means that the characteristics of the alternative network affect all agents' decisions, not just those actively using the other network. This creates network-wide technology adoption externalities where the introduction of alternative infrastructure influences traditional network relationships even when agents don't directly adopt the new technology.
+
+\paragraph{Regulatory Arbitrage Mechanisms.} Asymmetric constraints ($\Psi_i^T \neq \Psi_i^A$) enable agents to circumvent traditional restrictions through alternative channels, creating a powerful driver of technology adoption that can dominate pure economic considerations. This mechanism captures how regulatory uncertainty and jurisdictional arbitrage opportunities shape financial technology adoption in practice.
+
+\paragraph{Portfolio Reallocation Effects.} The constraint $w_i^* = w_i^T + w_i^A$ focuses analysis on compositional rather than scale effects, isolating technology adoption from changes in risk appetite or capital availability. This approach reflects the empirical reality that financial institutions typically face binding capital constraints that limit total exposure regardless of available technologies.
+
+\paragraph{Competitive Infrastructure Dynamics.} The framework naturally captures how competing technologies influence each other through agent portfolio decisions, market pricing effects, and regulatory responses. This creates rich dynamics where the success of one technology platform depends not only on its intrinsic characteristics but also on the evolution of competing alternatives.
+
+\paragraph{Volume-Dependent Adoption Patterns.} The quadratic friction cost structure ($\lambda_A\|w_i^A\|^2$) creates realistic adoption patterns where large investors face disproportionately higher costs. This generates heterogeneous adoption across agent types and creates natural limits to the alternative technology market share even when the technology offers clear advantages.
+
+
+
+\section{Implementation and Computational Considerations}
+
+The dual-network model maintains the iterative bilateral negotiation structure of the original framework while incorporating the portfolio constraint through a modified optimization procedure.
+
+\paragraph{Modified Negotiation Algorithm.} The dual-network negotiation process operates as follows:
+
+\begin{enumerate}
+    \item \textbf{Portfolio Allocation}: Each agent $i$ computes their optimal traditional network allocation $w_i^{T*}$ using Proposition~\ref{prop:dual_optimal}, with the alternative network allocation determined residually as $w_i^{A*} = w_i^* - w_i^{T*}$
+    
+    \item \textbf{Contract Matching}: For each agent pair $(i,j)$, compare desired contract sizes $w_{ij}^{T*}$ and $w_{ji}^{T*}$ on the traditional network, and $w_{ij}^{A*}$ and $w_{ji}^{A*}$ on the alternative network
+    
+    \item \textbf{Price Negotiation}: Adjust price $P_{ij}$ to reconcile disagreements across both networks simultaneously:
+    \begin{equation}
+    P_{ij}^{\text{new}} = P_{ij}^{\text{old}} + \eta \cdot \frac{[Q_j^{\text{dual}} a_j]_{ij} - [Q_i^{\text{dual}} a_i]_{ji}}{Q_{ii}^{\text{dual}} + Q_{jj}^{\text{dual}}}
     \end{equation}
     
-    \item \textbf{Individual Optimality:} Each agent maximizes their utility given current prices and the observed network state.
+    \item \textbf{Convergence}: Iterate until mutual agreement is achieved across both networks: $w_{ij}^T = w_{ji}^T$ and $w_{ij}^A = w_{ji}^A$ for all feasible pairs
 \end{enumerate}
 
-The system is iteratively updated via bilateral negotiations, where price updates follow:
+\paragraph{Computational Complexity.} The dual-network algorithm maintains $O(n^2)$ complexity per iteration, identical to the original framework. The portfolio constraint actually simplifies computation by reducing each agent's decision to a single optimization variable, offsetting the complexity introduced by dual network structures.
 
+\section{Metrics for Performance and Welfare Evaluation}
+\label{sec:metrics}
+
+To evaluate the impact of the constraints and competition, we define key metrics that allow us to compare changes in network activity (measured by volume) with changes in agent and social welfare (measured by utility). 
+
+\subsection{Network Activity Metrics}
+
+We use two complementary measures to quantify the activity in the network:
+
+\subsubsection{Bilateral Volume ($V_B$)}
+
+The primary measure of network efficiency is the Bilateral Volume ($V_B$), which captures the total value of financial relationships between agents.
+
+\begin{itemize}
+    \item \textbf{Definition:} The sum of absolute values of all bilateral contracts between different agents, excluding self-investments (diagonal elements of $W$).
+    
+    \item \textbf{Formula:}
+    $$V_B = \frac{1}{2} \sum_{i=1}^N \sum_{j \neq i}^N |W_{ij}| = \frac{1}{2} \left( \sum_{i=1}^N \sum_{j=1}^N |W_{ij}| - \sum_{i=1}^N |W_{ii}| \right)$$
+    
+    \item \textbf{Interpretation:} $V_B$ measures the aggregate exposure actively managed through network relationships. The factor $\frac{1}{2}$ accounts for the symmetry of bilateral contracts: since $W_{ij}$ and $W_{ji}$ represent the same contract viewed from different perspectives ($W_{ij}=W_{ji}$), we divide by 2 to avoid double-counting.
+    
+    \item \textbf{Purpose:} Bilateral Volume serves as the benchmark for calculating activity losses from regulatory constraints. A decrease in $V_B$ directly quantifies the deadweight loss imposed by restrictions on network formation, as it measures the reduction in mutually beneficial financial relationships.
+\end{itemize}
+
+\subsubsection{Total Positions ($V_T$)}
+
+As a complementary metric, we also report Total Positions ($V_T$), which includes both bilateral contracts and self-investments.
+
+\begin{itemize}
+    \item \textbf{Definition:} The sum of absolute values of all elements in the contract matrix $W$, including diagonal elements.
+    
+    \item \textbf{Formula:}
+    $$V_T =  V_B + \sum_{i=1}^N |W_{ii}|$$
+    
+    \item \textbf{Interpretation:} $V_T$ captures the total scale of portfolio activity in the system, including agents' self-investments (diagonal elements $W_{ii}$). While useful for understanding overall financial activity, $V_T$ includes components that do not create network interdependencies or systemic risk.
+    
+    \item \textbf{Relationship:} The difference $V_T - V_B = \sum_{i=1}^N |W_{ii}|$ isolates self-investment activity, which represents portfolio positions that do not contribute to network structure.
+\end{itemize}
+
+\subsection{Welfare Metrics}
+We use agent and social welfare as metrics.
+\subsubsection{Agent Welfare: Utility ($U_i$)}
+
+Agent individual utility is the foundation for our welfare analysis.
+
+\begin{itemize}
+    \item \textbf{Metric:} \textbf{Agent Utility} ($U_i$).
+    \item \textbf{Definition:} The equilibrium utility achieved by agent $i$. This metric is precisely the agent's objective function which they seek to maximize, incorporating the benefit derived from their risk-return portfolio composition and the net cash flow from negotiated payments ($P$).
+    \item \textbf{Formula:} The calculation of $U_i$ is based on the agent's core objective function, as previously defined in Equation \ref{eq:original_utility}.
+    \item \textbf{Purpose:} This metric is crucial for evaluating the distributive impact of the regulation. It allows us to test the hypothesis that a constraint creates monopolistic rents, which would be evidenced by an increase in the central agents utility ($U_{Local Bank}$) even as total system welfare declines.
+\end{itemize}
+
+\subsubsection{Social Welfare: Total System Utility ($U_{\text{Total}}$)}
+
+Total System Utility serves as our formal measure of social welfare in the network economy.
+
+\begin{itemize}
+    \item \textbf{Metric:} \textbf{Total System Utility} ($U_{\text{Total}}$).
+    
+    \item \textbf{Definition:} The sum of equilibrium utilities across all $N$ agents in the system. This aggregate measure quantifies the total net welfare generated by the network under a given regulatory regime.
+    
+    \item \textbf{Formula:}
+    \begin{equation}
+    U_{\text{Total}} = \sum_{i=1}^N U_i
+    \label{eq:total_utility}
+    \end{equation}
+    
+    \item \textbf{Interpretation:} $U_{\text{Total}}$ incorporates both the volume of economic activity (through the number and size of contracts) and the efficiency of that activity (through risk-sharing gains and negotiated prices). Unlike simple volume measures, it accounts for agents' risk preferences and the quality of risk allocation across the network.
+    
+    \item \textbf{Purpose:} $U_{\text{Total}}$ quantifies the systemic welfare loss caused by structural constraints. By comparing $U_{\text{Total}}$ across scenarios (e.g., with vs. without regulatory constraint), we measure the deadweight loss in utility terms---the amount of welfare destroyed rather than redistributed. 
+\end{itemize}
+
+\paragraph{Welfare Loss Calculation}
+
+The efficiency loss from a constraint is measured as:
 \begin{equation}
-p_{ij}^{(T,new)} = \eta \cdot \hat{p}_{ij}^{(T)} + (1 - \eta) \cdot p_{ij}^{(T)},
+\text{Welfare Loss} = \frac{U_{\text{Total}}^{\text{Unconstrained}} - U_{\text{Total}}^{\text{Constrained}}}{U_{\text{Total}}^{\text{Unconstrained}}} \times 100\%
 \end{equation}
 
-where \( \hat{p}_{ij}^{(T)} \) is the price that would equalize the demands from both agents, and \( \eta \in (0, 1] \) controls the speed of adjustment. A symmetric equation applies for the blockchain layer.
+This metric captures the percentage of potential welfare that is destroyed by the regulatory restriction.
 
-A stable network configuration is reached when price updates converge and no agent wishes to change their portfolio in either network. Formally, convergence is achieved when the norm of the price update becomes negligible for all agent pairs.
+\subsection{Rent Decomposition: Net Payment Flows}
 
-This structure enables us to explore how parameters such as \( \lambda \) (transparency incentive), \( \gamma \) (risk aversion), or \( \mu \) (expected returns) influence the allocation of contracts across layers and the emergent topology of the financial network.
+To understand the mechanisms through which constraints affect welfare, we decompose utility gains into components arising from payments versus risk-sharing.
 
-\subsection{Economic Interpretation of the Transparency Parameter}
+\begin{itemize}
+    \item \textbf{Metric:} \textbf{Net Payment Flows (Rents)}.
+    
+    \item \textbf{Definition:} The net cash flow accruing to agent $i$ from all bilateral contracts, calculated as the sum of payment-weighted contract volumes. This isolates the pure transfer component of welfare from the risk-sharing component.
+    
+    \item \textbf{Formula:} For agent $i$, net payment flows (rents) are:
+    \begin{equation}
+    \text{Rents}_i = \sum_{j=1}^N W_{ij} \cdot P_{ij}
+    \label{eq:rents}
+    \end{equation}
+    
+    Equivalently, this can be computed as:
+    \begin{equation}
+    \text{Rents}_i = \sum_{j=1}^N T_{ji}
+    \end{equation}
+    where $T = W \odot P$ is the element-wise product of the contract and price matrices, and $T_{ji}$ represents the payment from agent $j$ to agent $i$.
+    
+    \item \textbf{Interpretation:} Positive $\text{Rents}_i$ indicates that agent $i$ is a net recipient of payments (e.g., a lender or service provider), while negative $\text{Rents}_i$ indicates a net payer (e.g., a borrower or service consumer). Importantly, rents are pure transfers: one agent's gain is another's loss.
+    
+    \item \textbf{Zero-Sum Property:} By construction, the sum of all rents must equal zero:
+    \begin{equation}
+    \sum_{i=1}^N \text{Rents}_i = 0
+    \end{equation}
+    
+    This property serves as an internal consistency check for our calculations. Any deviation from zero indicates a computational error, as payments represent transfers within the system, not value creation or destruction.
+    
+    \item \textbf{Purpose:} The rent decomposition serves two purposes:
+    \begin{enumerate}
+        \item \textbf{Consistency Check:} Verifying that $\sum_i \text{Rents}_i = 0$ confirms that our equilibrium calculations are internally consistent and that zero-sum condition for payments is satisfied.
+        
+        \item \textbf{Mechanism Identification:} By comparing rent flows across scenarios, we can distinguish between welfare gains and the nature of the agents.
+      
+    \end{enumerate}
+\end{itemize}
 
-The parameter \( \lambda \) introduced in the utility function represents an agent's valuation of transparency within the blockchain network. It plays a critical role in determining the incentive to adopt or expand participation in that network. Economically, transparency can be interpreted as the ability to observe, verify, and audit transactions, which can reduce counterparty risk, improve reputation effects, and enhance regulatory compliance.
+\subsection{Summary: Metric Relationships}
 
-A higher value of \( \lambda \) implies that agents derive more utility from being part of a visible and auditable system. As \( \lambda \) increases, the marginal benefit of transacting on the blockchain becomes more significant, leading agents to reallocate a greater portion of their portfolio to that network. Conversely, when \( \lambda = 0 \), the model collapses to a purely risk-return framework with no added value from transparency.
+Table \ref{tab:metric_summary} summarizes the key metrics and their interpretations.
 
-This parameter thus serves as a lever to explore under what conditions the blockchain layer becomes dominant or complementary. It allows for comparative statics that analyze how institutional incentives (e.g., legal recognition, auditing standards, regulatory endorsements) might shift the structure of financial linkages away from traditional opaque systems and toward transparent architectures.
+\begin{table}[h]
+\centering
+\caption{Summary of Key Metrics for Network Evaluation}
+\label{tab:metric_summary}
+\begin{tabular}{llp{7cm}}
+\hline
+\textbf{Metric} & \textbf{Symbol} & \textbf{Interpretation} \\ \hline
+Bilateral Volume & $V_B$ & Total value of financial relationships (excludes self-investment) \\
+Total Positions & $V_T$ & Total portfolio activity (includes self-investment) \\
+Agent Utility & $U_i$ & Individual welfare incorporating risk-return tradeoff and payments \\
+Total System Utility & $U_{\text{Total}}$ & Social welfare (sum of individual utilities) \\
+Net Payment Flows & $\text{Rents}_i$ & Cash transfers to/from agent $i$  \\ \hline
+\end{tabular}
+\end{table}
 
-Furthermore, the inclusion of \( \lambda \) introduces a form of endogenous adoption dynamics: agents who initially do not value transparency may still increase their participation as others do, due to network externalities. In this sense, \( \lambda \) captures both a private preference and a systemic force shaping the evolution of multilayer financial networks.
-
+These metrics provide a framework for evaluating both the efficiency (through $V_B$ and $U_{\text{Total}}$) and distributional (through $U_i$ and $\text{Rents}_i$) consequences of regulatory constraints and competitive entry.

@@ -1,122 +1,195 @@
-\chapter{Results}
-\label{c5} % la etiqueta para referencias
+\chapter{Conclusion}
+\label{chap:conclusion}
 
-Assuming the same prohibited edges in the traditional network and no prohibitions on blockchain, and with $\lambda = 0.3$ we get
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_Blockchain_Restr.png}
-    \caption{Contracts matrix in traditional and blockchain network ($\lambda = 0$).}
-    \label{fig:etiqueta}
-\end{figure}
+This thesis demonstrates that alternative network infrastructure achieves complete welfare recovery from regulatory restrictions in financial markets, restoring aggregate utility from 0.706 (restricted baseline) to 1.434 (unrestricted benchmark)—a 103.1\% improvement that competition alone cannot replicate.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/W_Blockchain_Restr_0.png}
-    \caption{Contracts matrix in traditional and blockchain network $W_t$ ($\lambda = 0$)}
-    \label{fig:etiqueta}
-\end{figure}
+The analysis establishes that alternative network adoption transforms market structure through direct circumvention of prohibited contracts, intensified competition among agents, and portfolio diversification across networks. These mechanisms operate complementarily rather than independently.
 
+\section{Principal Findings}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/vis_netw_0.png}
-    \caption{Network with $\lambda = 0$}
-    \label{fig:etiqueta}
-\end{figure}
+Five results emerge from the investigation:
 
+\subsection{Complete Welfare Recovery Through Alternative Infrastructure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/vis_netw_03.png}
-    \caption{Network with $\lambda = 0.3$}
-    \label{fig:etiqueta}
-\end{figure}
+Alternative network infrastructure achieves complete welfare recovery, restoring aggregate utility to 1.434—matching the unrestricted benchmark exactly. This represents a 103.1\% improvement over the restricted baseline (0.706) and eliminates the 27.9\% welfare gap that persists under competition alone (1.034).
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/efectos_transparencia.png}
-    \caption{Effects of transparency}
-    \label{fig:etiqueta}
-\end{figure}
+The mechanism operates through direct circumvention: the previously prohibited National Bank–Local Firm link migrates entirely to the Alternative Network ($W_{13}^A = 1.035$), accounting for 71.8\% of Alternative Network bilateral volume. Agents allocate 72.4\% of total bilateral volume to the Alternative Network while maintaining 27.6\% in Traditional channels, demonstrating strategic complementarity between infrastructures.
 
+Welfare restoration extends across all agents, with the Local Firm capturing the majority of aggregate gains. This contrasts with the restricted baseline, where aggregate welfare falls 50.8\% below the benchmark and the Local Firm loses 66.1\% of its utility due to severed access to the National Bank.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{docs/Memoria/chapters/centralidad.png}
-    \caption{Effects of transparency in centrality}
-    \label{fig:etiqueta}
-\end{figure}
+\subsection{Competition Provides Only Partial Welfare Recovery}
 
+Promoting competition within constrained networks recovers 46.5\% of lost welfare, improving aggregate utility from 0.706 (baseline) to 1.034. However, a 27.9\% welfare gap remains relative to the unrestricted benchmark (1.434).
 
-\begin{table}[H]
-\centering
-\caption{Network Descriptive Metrics with $\lambda = 0$}
-\label{tab:network_metrics}
-\begin{tabular}{|c|c|}
-\toprule
-Metric & Value \\
-\midrule
-Total volume t & 2.4478 \\  
-Total volume b & 6.3938 \\
-Avg degree t & 2.3333 \\
-Avg degree b & 3.0000 \\
-Std volume t & 0.3714 \\
-Std volume b & 0.6632 \\
-Cv t & 0.4552 \\
-Cv b & 0.3112 \\
-Blockchain adoption & 0.7232 \\
-Symmetry t & 0.0000 \\
-Symmetry b & 0.1998 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Competition benefits endpoint agents—the National Bank experiences 159.6\% utility increase and the Local Firm experiences 93.6\% increase—while eliminating the Local Bank's position. Both Local Bank and Fintech achieve identical equilibrium utilities (0.239), confirming symmetric competitive equilibrium and equal market share (50.0\% each).
 
+This finding establishes that competition represents a second-best solution: beneficial when constraints cannot be removed, but fundamentally unable to overcome structural limitations imposed by the regulatory restriction itself.
 
-\begin{table}[H]
-\centering
-\caption{Network Descriptive Metrics with $\lambda = 0.3$}
-\label{tab:network_metrics}
-\begin{tabular}{|c|c|}
-\toprule
-Metric & Value \\
-\midrule
-Total volume t & 2.4478 \\
-Total volume b & 4.1188 \\
-Avg degree t & 2.3333 \\
-Avg degree b & 3.0000 \\
-Std volume t & 0.3714 \\
-Std volume b & 0.3233 \\
-Cv t & 0.4552 \\
-Cv b & 0.2355 \\
-Blockchain adoption & 0.6272 \\
-Symmetry t & 0.0000 \\
-Symmetry b & 0.1998 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection{Competition and Alternative Infrastructure Are Partially Substitutable}
 
-\begin{table}[H]
-\centering
-\caption{Network Descriptive Metrics with $\lambda = 3$}
-\label{tab:network_metrics}
-\begin{tabular}{|c|c|}
-\toprule
-Metric & Value \\
-\midrule
-Total volume t & 2.4478 \\
-Total volume b & 21.5040 \\
-Avg degree t & 2.3333 \\
-Avg degree b & 3.0000 \\
-Std volume t & 0.3714 \\
-Std volume b & 1.6265 \\
-Cv t & 0.4552 \\
-Cv b & 0.2269 \\
-Blockchain adoption & 0.8978 \\
-Symmetry t & 0.0000 \\
-Symmetry b & 0.1998 \\
-\bottomrule
-\end{tabular}
-\end{table}
+Competition and alternative infrastructure function as partially substitutable mechanisms for mitigating regulatory inefficiency. Under the baseline case, the dual-network equilibrium achieves complete welfare recovery (utility = 1.434) with 72.4\% Alternative Network adoption. This baseline solution provides a benchmark: alternative infrastructure alone—without requiring competition—is sufficient to eliminate all welfare losses from regulatory restrictions.
 
+The introduction of competition reduces Alternative Network adoption from 72.4\% to 47.9\%—a 24.5 percentage point decline—while maintaining complete welfare recovery (utility remains at 1.434). This reduction occurs because competition improves Traditional Network efficiency even under constraint, reducing the relative advantage of alternative infrastructure.
 
+Supporting evidence includes:
+\begin{itemize}
+    \item Traditional Network bilateral volume: 0.568 (baseline) $\rightarrow$ 1.567 (competition), representing 176\% increase
+    \item Price differential: 0.059 (baseline) $\rightarrow$ 0.032 (competition), representing 46\% reduction
+\end{itemize}
 
+Substitutability remains incomplete: competition alone leaves 27.9\% of welfare unrecovered, while the dual-network solution achieves 100\% recovery under both baseline (72.4\% adoption) and competitive (47.9\% adoption) cases. Both mechanisms remain valuable when implemented simultaneously, as the structural solution achieves complete efficiency recovery with lower infrastructure adoption when competition is present.
+
+\subsection{Network Coexistence as Equilibrium Outcome}
+
+Dual-network equilibria generate endogenous network coexistence rather than complete migration to either platform. Under the baseline case, Alternative Network captures 72.4\% of bilateral volume while Traditional Network maintains 27.6\%. Under competitive case, this distribution shifts to 47.9\% Alternative and 52.1\% Traditional, demonstrating how market structure affects network allocation.
+
+This coexistence pattern is driven by strategic complementarity: agents use Alternative Network for circumventing specific restrictions while maintaining Traditional Network relationships for established connections and operational efficiency. The persistence of Traditional Network volume—even when Alternative Network enables complete welfare recovery—indicates that alternative infrastructure complements rather than displaces traditional systems.
+
+This finding has implications for regulatory policy toward parallel financial infrastructures: complete migration is not necessary for efficiency restoration, and coexistence represents a stable equilibrium outcome rather than a transitional phase.
+
+\subsection{Distributional Transformation of Payment Structures}
+
+Alternative network adoption restructures market power, transforming agents from rent extractors to competitive price-takers. Under baseline dual-network equilibrium, the Local Bank maintains positive net rent (+0.315), while under competitive dual-network equilibrium, both Local Bank and Fintech achieve near-zero positions (Local Bank: +0.001; Fintech: -0.005), representing complete rent dissipation.
+
+This rent dissipation concentrates welfare gains asymmetrically. The Local Firm (the blocked party) captures the majority of welfare improvement, while Local Bank and Fintech experience compression of rent extraction. This concentration reflects that alternative infrastructure directly addresses the constraint binding the Local Firm, enabling access to the National Bank that was previously prohibited.
+
+The competitive dual-network equilibrium generates a comparative statics result: the Local Firm achieves higher utility (0.988) despite receiving lower net transfers (+0.206) compared to baseline dual-network (0.851 utility, +0.315 transfers). This divergence reveals that welfare depends on risk-sharing quality rather than transfer quantity—competitive markets provide portfolio diversification benefits that exceed the value of baseline rent extraction.
+
+\subsection{Robustness Across Market Configurations}
+
+The structural solution demonstrates consistent performance across specifications. Welfare recovery is complete in both baseline (72.4\% adoption) and competitive (47.9\% adoption) cases, with the 3-agent network achieving utility of 1.434 in dual-network equilibrium regardless of market structure. This consistency indicates the mechanism operates independently of competitive conditions, though competition affects the distribution between Traditional and Alternative networks.
+
+\section{Policy Implications}
+
+Three policy conclusions emerge for regulatory design:
+
+\subsection{Structural Solutions Dominate Competition-Only Approaches}
+
+The welfare decomposition establishes a clear hierarchy: alternative infrastructure achieves 100\% welfare recovery (0\% gap remaining), competition alone recovers 46.5\% of lost welfare (27.9\% gap remaining), while inaction leaves 50.8\% welfare losses. This ranking has direct policy implications.
+
+First-best policy: Where regulatory constraints no longer serve their original objectives, simply removing them captures all welfare gains (103.1\% improvement) without requiring new infrastructure investment.
+
+Second-best policy: Where constraints serve objectives—systemic risk mitigation, consumer protection, market integrity—enabling alternative infrastructure achieves complete welfare restoration while maintaining Traditional Network restrictions. This recovery occurs under both baseline and competitive cases, indicating that alternative infrastructure alone—without requiring antitrust intervention—is sufficient to eliminate regulatory inefficiency.
+
+Third-best policy: If alternative infrastructure is unavailable or prohibited, promoting competition recovers 46.5\% of lost welfare. While valuable, competition cannot overcome structural constraints, leaving 27.9\% welfare gap.
+
+Worst outcome: Maintaining restrictions without enabling either competition or alternative infrastructure imposes 50.8\% welfare losses. As circumvention technologies develop, this cost grows increasingly difficult to justify.
+
+\subsection{Independence of Welfare Recovery from Market Structure}
+
+A finding emerges: complete welfare recovery (utility = 1.434) occurs under both baseline and competitive cases when alternative infrastructure is available. This independence has policy implications:
+
+\begin{itemize}
+    \item Alternative infrastructure adoption does not require competition to achieve efficiency
+    \item Regulators need not wait for competitive entry before enabling alternative networks
+    \item Market structure affects \emph{how} welfare is achieved (network allocation, rent distribution) but not \emph{whether} full recovery occurs
+\end{itemize}
+
+Competition does provide distributional benefits: rent dissipation from Local Bank and Fintech (+0.315 baseline to +0.001 competitive for Local Bank) transfers surplus to end-clients. However, welfare recovery itself is independent of this competitive discipline.
+
+Policy should therefore distinguish between two objectives:
+\begin{enumerate}
+    \item \textbf{Efficiency restoration:} Enabling alternative infrastructure (achieves 100\% recovery)
+    \item \textbf{Rent distribution:} Promoting competition (transfers gains from Local Bank and Fintech to clients)
+\end{enumerate}
+
+Both are valuable, but only the first is necessary for complete welfare recovery.
+
+\subsection{Complementarity Despite Substitutability}
+
+Competition reduces Alternative Network adoption from 72.4\% to 47.9\%, indicating partial substitutability between mechanisms. However, both mechanisms remain valuable when implemented simultaneously: the structural solution achieves 100\% efficiency recovery with lower infrastructure adoption (and thus lower friction costs $\lambda_A$) when competition is present.
+
+Policy should:
+\begin{itemize}
+    \item Enable alternative infrastructure access (primary mechanism for welfare recovery)
+    \item Reduce barriers to entry (secondary mechanism for rent distribution)
+    \item Mandate interoperability between Traditional and Alternative networks
+    \item Avoid consolidating agents through excessive licensing requirements
+\end{itemize}
+
+The near-zero rent positions achieved by both Local Bank and Fintech in competitive dual-network equilibrium demonstrate that alternative infrastructure disciplines pricing even when adoption falls from 72.4\% to 47.9\%. This competitive discipline transfers surplus to end-clients, suggesting that infrastructure policy can be more effective than traditional anti-trust measures for reducing costs.
+
+\subsection{Account for Distributional Consequences}
+
+The concentration of welfare gains in the Local Firm indicates alternative network adoption generates differential impacts across participants. Policies should anticipate:
+
+\begin{itemize}
+    \item \textbf{Agent adjustment:} Local Bank's utility declines when moving from baseline dual-network (0.345) to competitive dual-network (0.256), indicating potential resistance to infrastructure adoption if it facilitates competitive entry
+    \item \textbf{Asymmetric benefits:} Local Firm (the constrained party) captures majority of welfare gains, creating political economy challenges
+    \item \textbf{Network reallocation:} Competition shifts volume from 72.4\% Alternative to 47.9\% Alternative, affecting platform revenues
+\end{itemize}
+
+Transition policies—such as gradual implementation, adjustment mechanisms, or risk-sharing arrangements—may facilitate adoption by addressing distributional impacts.
+
+\section{Limitations and Extensions}
+
+Five limitations qualify the findings and suggest research directions:
+
+\subsection{Three-Agent Network Structure}
+
+The analysis employs a minimal 3-agent network (National Bank, Local Bank, Local Firm) with a single regulatory restriction. This parsimony enables analytical tractability and clear mechanism identification but abstracts from:
+
+\begin{itemize}
+    \item \textbf{Network size effects:} Whether welfare recovery scales with $n$ agents
+    \item \textbf{Multiple restrictions:} How overlapping constraints interact
+    \item \textbf{Network topology:} Whether results generalize beyond star structures
+\end{itemize}
+
+Extensions to larger networks ($n > 3$) could examine whether:
+\begin{enumerate}
+    \item Complete welfare recovery persists (likely yes, as mechanism is structural)
+    \item Alternative Network adoption rates change (ambiguous—more restrictions may increase value, but coordination costs also rise)
+    \item Distributional patterns hold (constrained parties should still capture majority of gains)
+\end{enumerate}
+
+The 3-agent specification should be interpreted as establishing \emph{sufficiency}: alternative infrastructure is sufficient for complete welfare recovery in this canonical case. Whether it remains sufficient in all larger networks is an empirical question.
+
+\subsection{Static Framework}
+
+The analysis abstracts from dynamic considerations including learning effects, network externalities, and path-dependent adoption. Alternative network adoption likely exhibits increasing returns—early adopters create liquidity attracting subsequent entrants, potentially amplifying welfare gains beyond static estimates or creating multiple equilibria.
+
+Extensions incorporating dynamic games with strategic timing could examine whether first-mover advantages or coordination failures dominate adoption trajectories. Future research could examine whether temporary subsidies (reducing effective $\lambda_A$) during adoption phases help alternative networks achieve critical mass, after which organic growth becomes self-sustaining.
+
+\subsection{Homogeneous Beliefs and Risk Aversion}
+
+Agents share identical risk aversion ($\gamma = 1.0$), abstracting from heterogeneity driving real-world trading. Introducing dispersion—where agents hold different views about Alternative Network risk—would create additional gains from trade. Similarly, heterogeneous risk aversion could generate sorting, with risk-tolerant agents concentrating in Alternative Networks while risk-averse agents remain in Traditional channels.
+
+This homogeneity implies the welfare recovery estimates are conservative: heterogeneity would create additional trading opportunities beyond those captured in the current framework.
+
+\subsection{Specific Regulatory Restriction}
+
+The analysis focuses on a single prohibited link (National Bank-Local Firm), leaving open how results generalize to alternative restriction types. Extensions could examine:
+
+\begin{itemize}
+    \item \textbf{Volume caps:} Restrictions on quantities rather than relationships
+    \item \textbf{Price controls:} Regulated spreads or interest rate ceilings  
+    \item \textbf{Entry barriers:} Licensing requirements prohibiting certain agent types
+    \item \textbf{Multiple restrictions:} Overlapping constraints on different links simultaneously
+\end{itemize}
+
+The circumvention value likely increases non-linearly with restriction severity. Total bans ($W_{13}^T = 0$) may generate substantially higher option value than partial constraints (e.g., $W_{13}^T \leq$ threshold), as agents have strong incentives to restore previously feasible relationships. This suggests regulatory arbitrage opportunities are most valuable—and alternative network adoption highest—under stringent rather than moderate restrictions.
+
+\subsection{Exogenous Parameters}
+
+The model treats friction ($\lambda_A$), transparency ($\tau$), and network structure as exogenous, whereas these emerge endogenously from technology adoption, platform competition, and regulatory choices. Extensions could endogenize:
+
+\begin{itemize}
+    \item Platform investment decisions trading off fixed costs against friction reduction
+    \item Regulatory stringency as response to adoption levels
+\end{itemize}
+
+Such extensions would examine which friction-transparency combinations emerge when agents optimize over infrastructure design, and whether equilibrium frictions are socially optimal or reflect platform market power.
+
+\section{Concluding Remarks}
+
+This thesis demonstrates that alternative network infrastructure restores complete welfare in regulatory-restricted financial markets, achieving a 103.1\% improvement over the baseline through direct circumvention of prohibited contracts. This recovery operates through three complementary mechanisms: direct circumvention enabling previously blocked relationships, competitive intensification among agents (though not required for efficiency), and portfolio diversification across networks.
+
+Two findings carry policy significance. First, complete welfare recovery occurs independently of market structure—both baseline and competitive equilibria achieve the unrestricted benchmark (utility = 1.434) when alternative infrastructure is available. This implies that enabling alternative networks is both necessary and sufficient for efficiency restoration; competition, while valuable for rent distribution, is not required for welfare recovery itself.
+
+Second, network coexistence emerges as a stable equilibrium rather than a transitional phase toward complete migration. Alternative Network adoption ranges from 47.9\% (competitive) to 72.4\% (baseline), with Traditional Network maintaining volume in both cases. This coexistence indicates that alternative infrastructure complements rather than displaces traditional systems, suggesting regulatory frameworks should accommodate parallel networks rather than forcing consolidation.
+
+The findings reframe policy debates about financial technology regulation. Rather than evaluating ``should we allow alternative networks?'', regulators should examine whether restrictions justify the welfare losses they create. When restrictions no longer serve their intended objectives, removing them captures gains without requiring new infrastructure. Where restrictions address concerns—systemic risk mitigation, consumer protection—the results indicate strategic accommodation dominates prohibition: allowing alternative network adoption while maintaining Traditional Network constraints achieves regulatory intent preservation alongside complete efficiency restoration.
+
+The independence of welfare recovery from market structure provides a policy prescription: enable alternative infrastructure first (achieving 100\% welfare recovery), then promote competition if distributional objectives warrant transferring rents from Local Bank and Fintech to clients. This sequencing avoids the mistake of pursuing competition alone, which recovers only 46.5\% of lost welfare while leaving a 27.9\% gap.
+
+As financial systems grow increasingly digital and interconnected, regulators face tension between maintaining localized constraints and preventing global circumvention. This thesis demonstrates that technological development has tilted this balance: prohibition imposes welfare costs (50.8\% losses) that alternative infrastructure can eliminate entirely. The optimal regulatory response involves redesigning constraints to remain effective in multi-network equilibria where agents optimize across parallel infrastructures with differential regulatory treatment—or, where possible, removing constraints that no longer serve their original purposes.

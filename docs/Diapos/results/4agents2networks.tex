@@ -1,0 +1,469 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{subcaption}
+\geometry{margin=2.5cm}
+
+\title{Modelo de Redes Duales con 4 Agentes}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+A partir del modelo de Jalan de 3 agentes en una red, agregamos un cuarto agente (una fintech) y luego una segunda red (blockchain). Se estudian los casos en los que la nueva fintech está totalmente restringida y luego se agrega la restricción original entre el banco nacional y la firma local. 
+
+
+Los escenarios se realizaron con parámetros neutrales en la segunda red($\tau = 0$, $\lambda_B = 0$).
+
+\section{Configuración Original}
+
+\subsection{Agentes}
+\begin{itemize}
+\item Agente 0: Banco Nacional
+\item Agente 1: Banco Local  
+\item Agente 2: Firma Local
+\item Agente 3: Fintech (solo en modelos de 4 agentes)
+\end{itemize}
+
+\subsection{Parámetros del Modelo}
+
+Matriz de covarianza compartida (4×4):
+\begin{equation}
+\Sigma = \begin{pmatrix}
+1.0  & 0.25 & 0.75 & 0.75 \\
+0.25 & 1.0  & 0.6  & 0.75 \\
+0.75 & 0.6  & 1.0  & 0.75 \\
+0.75 & 0.75 & 0.75 & 1.0
+\end{pmatrix}
+\end{equation}
+
+Matriz de retornos esperados (4×4):
+\begin{equation}
+M = \begin{pmatrix}
+0    & 0.9  & 0.9  & 0.9  \\
+0.75 & 0    & 0.95 & 0.75 \\
+0.9  & 0.8  & 0    & 0.8  \\
+0.9  & 0.75 & 0.8  & 0
+\end{pmatrix}
+\end{equation}
+
+\section{Resultados: Modelo de Red Única (3 Agentes)}
+
+\subsection{Escenario Base: Sin Restricciones}
+
+\textbf{Volumen Total:} 6.52
+
+Matriz de contratos final:
+\begin{equation}
+W_{3,\text{base}} = \begin{pmatrix}
+-0.76 & -0.07 &  1.03 \\
+-0.07 & -0.51 &  0.88 \\
+ 1.03 &  0.88 & -1.30
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario con Restricción (0,2)}
+
+\textbf{Restricciones aplicadas:} Banco Nacional - Empresa Local\\
+\textbf{Volumen Total:} 2.45
+
+Matriz de contratos final:
+\begin{equation}
+W_{3,\text{rest}} = \begin{pmatrix}
+-0.07 &  0.26 &  0.00 \\
+ 0.26 & -0.40 &  0.56 \\
+ 0.00 &  0.56 & -0.34
+\end{pmatrix}
+\end{equation}
+
+\subsection{Análisis - Modelo 3 Agentes}
+
+\begin{table}[H]
+\centering
+\caption{Comparación de Escenarios - Modelo 3 Agentes}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Escenario} & \textbf{Volumen Total} & \textbf{Reducción (\%)} \\
+\midrule
+Sin restricciones & 6.52 & -- \\
+Con restricción (0,2) & 2.45 & -62.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Modelo Original de Una Red (4 Agentes)}
+
+\subsection{Escenario Base: Sin Restricciones}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/1red_sin.png}
+\label{fig:1redsin}
+\end{figure}
+\textbf{Volumen Total:} 23.65
+
+Matriz de contratos final:
+\begin{equation}
+W_{4,\text{base}} = \begin{pmatrix}
+-3.83 & -2.82 &  2.19 &  3.87 \\
+-2.82 & -2.99 &  1.80 &  3.48 \\
+ 2.19 &  1.80 & -1.86 & -1.15 \\
+ 3.87 &  3.48 & -1.15 & -4.65
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario con Restricción (0,2)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/1red_02.png}
+\label{fig:1red02}
+\end{figure}
+\textbf{Restricciones aplicadas:} Banco Nacional - Empresa Local \\
+\textbf{Volumen Total:} 23.42
+
+Matriz de contratos final:
+\begin{equation}
+W_{4,\text{rest}} = \begin{pmatrix}
+-1.80 & -1.44 &  0.00 &  2.87 \\
+-1.43 & -2.01 &  0.78 &  2.54 \\
+ 0.00 &  0.78 & -0.41 & -0.08 \\
+ 2.88 &  2.54 & -0.08 & -4.01
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario: Fintech Restringida}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/1red_fintech.png}
+\label{fig:1redfintech}
+\end{figure}
+\textbf{Restricciones aplicadas:} Fintech prohibida de conectar con todos los agentes\\
+\textbf{Volumen Total:} 5.71
+
+Matriz de contratos final:
+\begin{equation}
+W_{4,\text{fintech-rest}} = \begin{pmatrix}
+-0.95 & -0.16 &  1.32 &  0.00 \\
+-0.16 & -0.54 &  0.97 &  0.00 \\
+ 1.33 &  0.97 & -1.57 &  0.00 \\
+ 0.00 &  0.00 &  0.00 &  0.00
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario: Fintech Restringida + Restricción (0,2)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/1red_fintech02.png}
+\label{fig:1redfin02}
+\end{figure}
+\textbf{Restricciones aplicadas:} Fintech prohibida + Banco Nacional - Empresa Local \\
+\textbf{Volumen Total:} 2.45
+
+Matriz de contratos final:
+\begin{equation}
+W_{4,\text{ambas-rest}} = \begin{pmatrix}
+-0.07 &  0.26 &  0.00 &  0.00 \\
+ 0.26 & -0.40 &  0.56 &  0.00 \\
+ 0.00 &  0.56 & -0.34 &  0.00 \\
+ 0.00 &  0.00 &  0.00 &  0.00
+\end{pmatrix}
+\end{equation}
+
+\subsection{Análisis de Impacto - Modelo 4 Agentes Red Única}
+
+\begin{table}[H]
+\centering
+\caption{Comparación de Escenarios - Modelo 4 Agentes Red Única}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Escenario} & \textbf{Volumen Total} & \textbf{Cambio vs Base (\%)} \\
+\midrule
+Sin restricciones & 23.65 & -- \\
+Con restricción (0,2) & 23.42 & -1.0\% \\
+Fintech restringida & 5.71 & -75.9\% \\
+Fintech restringida + (0,2) & 2.45 & -89.6\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Resultados: Modelo de Redes Duales (4 Agentes)}
+
+Todos los experimentos con redes duales utilizan parámetros neutrales: $\tau = 0$, $\lambda_B = 0$.\\
+Se utiliza como benchmark la matriz W resultante del escenario en una red en el que no hay restricciones.
+
+\subsection{Escenario Base: Sin Restricciones}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/sin.png}
+\label{fig:sin}
+\end{figure}
+\textbf{Restricciones aplicadas:} Ninguna\\
+\textbf{Convergencia:} 33 iteraciones\\
+\textbf{Volumen Total:} 43.94\\
+\textbf{Volumen Red Tradicional:} 21.97\\
+\textbf{Volumen Red Blockchain:} 21.97\\
+\textbf{Adopción Blockchain:} 50.00\%
+
+Matriz de contratos combinada (W\textsuperscript{T} + W\textsuperscript{B}):
+\begin{equation}
+W_{\text{total,base}} = \begin{pmatrix}
+-3.83 & -2.82 &  2.19 &  3.87 \\
+-2.82 & -2.99 &  1.80 &  3.48 \\
+ 2.19 &  1.80 & -1.86 & -1.15 \\
+ 3.87 &  3.48 & -1.15 & -4.65
+\end{pmatrix}
+\end{equation}
+
+Distribución por red:
+
+Red Tradicional (W\textsuperscript{T}):
+\begin{equation}
+W^T_{\text{base}} = \begin{pmatrix}
+-1.915 & -1.410 &  1.095 &  1.932 \\
+-1.410 & -1.495 &  0.900 &  1.740 \\
+ 1.095 &  0.900 & -0.930 & -0.575 \\
+ 1.932 &  1.740 & -0.575 & -2.325
+\end{pmatrix}
+\end{equation}
+
+Red Blockchain (W\textsuperscript{B}):
+\begin{equation}
+W^B_{\text{base}} = \begin{pmatrix}
+-1.915 & -1.410 &  1.095 &  1.933 \\
+-1.410 & -1.495 &  0.900 &  1.740 \\
+ 1.095 &  0.900 & -0.930 & -0.575 \\
+ 1.933 &  1.740 & -0.575 & -2.325
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario: Solo Restricción (0,2)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/solo_02.png}
+\label{fig:solo02}
+\end{figure}
+\textbf{Restricciones aplicadas:} Banco Nacional - Empresa Local en red tradicional\\
+\textbf{Convergencia:} 33 iteraciones\\
+\textbf{Volumen Total:} 43.94\\
+\textbf{Volumen Red Tradicional:} 13.70\\
+\textbf{Volumen Red Blockchain:} 30.24\\
+\textbf{Adopción Blockchain:} 68.81\%
+
+Matriz de contratos combinada:
+\begin{equation}
+W_{\text{total,(0,2)}} = \begin{pmatrix}
+-3.83 & -2.82 &  2.19 &  3.87 \\
+-2.82 & -2.99 &  1.80 &  3.48 \\
+ 2.19 &  1.80 & -1.86 & -1.15 \\
+ 3.87 &  3.48 & -1.15 & -4.65
+\end{pmatrix}
+\end{equation}
+
+Red Tradicional (W\textsuperscript{T}):
+\begin{equation}
+W^T_{(0,2)} = \begin{pmatrix}
+-0.774 & -0.584 &  0.000 &  1.093 \\
+-0.584 & -1.495 &  0.723 &  1.740 \\
+ 0.000 &  0.723 & -0.574 & -0.127 \\
+ 1.093 &  1.740 & -0.127 & -2.325
+\end{pmatrix}
+\end{equation}
+
+Red Blockchain (W\textsuperscript{B}):
+\begin{equation}
+W^B_{(0,2)} = \begin{pmatrix}
+-3.056 & -2.236 &  2.190 &  2.772 \\
+-2.236 & -1.495 &  1.077 &  1.740 \\
+ 2.190 &  1.077 & -1.286 & -1.023 \\
+ 2.772 &  1.740 & -1.023 & -2.325
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario: Solo Fintech Restringida}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/fintech.png}
+\label{fig:fintech}
+\end{figure}
+
+\textbf{Restricciones aplicadas:} Fintech prohibida en red tradicional\\
+\textbf{Convergencia:} 11 iteraciones\\
+\textbf{Volumen Total:} 44.27\\
+\textbf{Volumen Red Tradicional:} 3.85\\
+\textbf{Volumen Red Blockchain:} 40.43\\
+\textbf{Adopción Blockchain:} 91.31\%
+
+Matriz de contratos combinada:
+\begin{equation}
+W_{\text{total,fintech-rest}} = \begin{pmatrix}
+-3.83 & -2.82 &  2.19 &  3.87 \\
+-2.82 & -2.99 &  1.80 &  3.48 \\
+ 2.19 &  1.80 & -1.86 & -1.15 \\
+ 3.87 &  3.48 & -1.15 & -4.65
+\end{pmatrix}
+\end{equation}
+
+Red Tradicional (W\textsuperscript{T}):
+\begin{equation}
+W^T_{\text{fintech-rest}} = \begin{pmatrix}
+-0.767 &  0.083 &  0.181 &  0.000 \\
+ 0.083 & -0.719 &  0.160 &  0.000 \\
+ 0.181 &  0.160 & -0.671 &  0.000 \\
+ 0.000 &  0.000 &  0.000 & -0.799
+\end{pmatrix}
+\end{equation}
+
+Red Blockchain (W\textsuperscript{B}):
+\begin{equation}
+W^B_{\text{fintech-rest}} = \begin{pmatrix}
+-3.063 & -2.903 &  2.009 &  3.865 \\
+-2.903 & -2.271 &  1.640 &  3.480 \\
+ 2.009 &  1.640 & -1.189 & -1.150 \\
+ 3.865 &  3.480 & -1.150 & -3.851
+\end{pmatrix}
+\end{equation}
+
+\subsection{Escenario: Fintech Restringida + Restricción (0,2)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{docs/Diapos/results/fintech_02.png}
+\label{fig:fintech02}
+\end{figure}
+\textbf{Restricciones aplicadas:} Fintech prohibida + Banco Nacional - Empresa Local en red tradicional\\
+\textbf{Convergencia:} 11 iteraciones\\
+\textbf{Volumen Total:} 44.23\\
+\textbf{Volumen Red Tradicional:} 3.68\\
+\textbf{Volumen Red Blockchain:} 40.54\\
+\textbf{Adopción Blockchain:} 91.67\%
+
+Matriz de contratos combinada:
+\begin{equation}
+W_{\text{total,ambas}} = \begin{pmatrix}
+-3.83 & -2.82 &  2.19 &  3.87 \\
+-2.82 & -2.99 &  1.80 &  3.48 \\
+ 2.19 &  1.80 & -1.86 & -1.15 \\
+ 3.87 &  3.48 & -1.15 & -4.65
+\end{pmatrix}
+\end{equation}
+
+Red Tradicional (W\textsuperscript{T}):
+\begin{equation}
+W^T_{\text{ambas}} = \begin{pmatrix}
+-0.883 &  0.072 &  0.000 &  0.000 \\
+ 0.072 & -0.719 &  0.213 &  0.000 \\
+ 0.000 &  0.213 & -0.711 &  0.000 \\
+ 0.000 &  0.000 &  0.000 & -0.799
+\end{pmatrix}
+\end{equation}
+
+Red Blockchain (W\textsuperscript{B}):
+\begin{equation}
+W^B_{\text{ambas}} = \begin{pmatrix}
+-2.947 & -2.892 &  2.190 &  3.865 \\
+-2.892 & -2.271 &  1.587 &  3.480 \\
+ 2.190 &  1.587 & -1.149 & -1.150 \\
+ 3.865 &  3.480 & -1.150 & -3.851
+\end{pmatrix}
+\end{equation}
+
+\section{Análisis Comparativo}
+
+\subsection{Evolución del Volumen Total}
+
+\begin{table}[H]
+\centering
+\caption{Evolución del Volumen Total por Configuración}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Configuración} & \textbf{3 Ag. Red Única} & \textbf{4 Ag. Red Única} & \textbf{4 Ag. Dual} & \textbf{Factor Expansión} \\
+\midrule
+Sin restricciones & 6.52 & 23.65 & 43.94 & 6.74× \\
+Restricción (0,2) & 2.45 & 23.42 & 43.94 & 17.94× \\
+Fintech restringida & -- & 5.71 & 44.27 & 7.75× \\
+Ambas restricciones & -- & 2.45 & 44.23 & 18.05× \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Adopción de Blockchain por Escenario}
+
+\begin{table}[H]
+\centering
+\caption{Tasas de Adopción Blockchain - Modelo Redes Duales}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Escenario} & \textbf{Vol. Tradicional} & \textbf{Vol. Blockchain} & \textbf{Vol. Total} & \textbf{Adopción (\%)} \\
+\midrule
+Sin restricciones & 21.97 & 21.97 & 43.94 & 50.00 \\
+Restricción (0,2) & 13.70 & 30.24 & 43.94 & 68.81 \\
+Fintech restringida & 3.85 & 40.43 & 44.27 & 91.31 \\
+Fintech rest. + (0,2) & 3.68 & 40.54 & 44.23 & 91.67 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Velocidad de Convergencia}
+
+\begin{table}[H]
+\centering
+\caption{Iteraciones Requeridas para Convergencia}
+\begin{tabular}{lc}
+\toprule
+\textbf{Escenario} & \textbf{Iteraciones} \\
+\midrule
+Sin restricciones & 33 \\
+Restricción (0,2) & 33 \\
+Fintech restringida & 11 \\
+Fintech restringida + (0,2) & 11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Efectos Marginales de las Restricciones}
+
+\begin{table}[H]
+\centering
+\caption{Impacto Marginal en Adopción Blockchain}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Transición} & \textbf{Cambio Absoluto} & \textbf{Cambio Relativo} \\
+\midrule
+Base → Restricción (0,2) & +18.81 pp & +37.6\% \\
+Base → Fintech restringida & +41.31 pp & +82.6\% \\
+Fintech rest. → Fintech rest. + (0,2) & +0.36 pp & +0.4\% \\
+\bottomrule
+\end{tabular}
+\label{tab:efectos-marginales}
+\end{table}
+
+\section{Conservación de Volumen}
+
+En todos los escenarios analizados, la suma de volúmenes entre ambas redes permanece prácticamente constante (~44), confirmando que las restricciones regulatorias no destruyen volumen económico, sino que se redistribuyen los flujos a través de blockchain.
+
+\begin{table}[H]
+\centering
+\caption{Variación de Volumen Total por Escenario}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Escenario} & \textbf{Vol. Total} & \textbf{Variación vs Base} \\
+\midrule
+Sin restricciones & 43.94 & -- \\
+Restricción (0,2) & 43.94 & 0.00 \\
+Fintech restringida & 44.27 & +0.33 \\
+Fintech rest. + (0,2) & 44.23 & +0.29 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

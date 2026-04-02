@@ -1,8 +1,242 @@
 % anexo_a.tex
+\chapter{Anexos} 
+\label{app:anexo_principal} % Etiqueta para el anexo completo (opcional)
 
-\chapter{Anexos}
-\label{}
+% --- ANEXO A.1: DERIVACIÓN ---
+\section{Proof of Proposition \ref{prop:dual_optimal}}
+\label{app:derivacion_matematica} % <-- ¡LA ETIQUETA CRÍTICA!
+
+This appendix provides the detailed step-by-step derivation for the dual-network optimization problem, as summarized in Proposition \ref{prop:dual_optimal}.
+
+\subsection{Problem Setup}
+The total portfolio $w_i^* = w_i^T + w_i^A$ is exogenous and given. The problem is reformulated as maximizing the agent's utility by choosing the traditional portfolio $w_i^T$, which residually determines the alternative portfolio $w_i^A = w_i^* - w_i^T$.
+
+\subsection{Utility Function}
+The total utility function for firm $i$ is the sum of utilities from both networks:
+\begin{equation}
+g_i(w_i^T, w_i^A, P^T, P^A) = g_i^T(w_i^T, P^T) + g_i^A(w_i^A, P^A)
+\end{equation}
+
+Where the utilities in each network are defined as:
+
+\textbf{Traditional Network:}
+\begin{equation}
+g_i^T(w_i^T, P^T) = (w_i^T)^\top(m_i - P^T e_i) - \gamma_i(w_i^T)^\top\Sigma_i w_i^T
+\end{equation}
+
+\textbf{Alternative Network:} (Includes benefit $\tau$ and friction $\lambda_A$)
+\begin{equation}
+g_i^A(w_i^A, P^A) = (w_i^A)^\top(m_i + \tau - P^A e_i) - \gamma_i(w_i^A)^\top\Sigma_i w_i^A - \lambda_A\|w_i^A\|^2
+\end{equation}
+
+\subsection{Optimization Problem}
+We substitute $w_i^A = (w_i^* - w_i^T)$ into the total utility function to get a function of $w_i^T$ only:
+
+\begin{align}\label{eq:app_ut_tot}
+g_i(w_i^T)
+&= (w_i^T)^\top (m_i - P^T e_i)
+  - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T \notag\\
+&\quad+ (w_i^* - w_i^T)^\top (m_i + \tau - P^A e_i) \notag\\
+&\quad- \gamma_i\,(w_i^* - w_i^T)^\top \Sigma_i\,(w_i^* - w_i^T) \\
+&\quad - \lambda_A\,\|(w_i^* - w_i^T)\|^2 \notag
+\end{align}
+
+This maximization is subject to the traditional network's regulatory constraints:
+\begin{equation}
+\Psi_i^T w_i^T = w_i^T
+\end{equation}
+
+\subsection{Grouping of Terms}
+To find the maximum, we first rewrite the objective function $g_i(w_i^T)$ in the standard quadratic form:
+\[
+g_i(w_i^T)
+= \underbrace{\text{constants}}_{C_i}
+\;+\;(w_i^T)^\top a_i
+\;-\;(w_i^T)^\top H_i\,w_i^T
+\]
+where \(w := w_i^T\) and \(w^* := w_i^*\).
+
+\subsubsection{1. Expansion of Terms}
+We expand the quadratic terms related to $w_i^A = (w_i^* - w_i^T)$:
+\begin{align*}
+(w^* - w)^\top \Sigma_i\,(w^* - w)
+&= (w^*)^\top \Sigma_i\,w^*
+  - 2\,(w^*)^\top \Sigma_i\,w
+  + w^\top \Sigma_i\,w \\
+\|w^* - w\|^2
+&= (w^*)^\top w^*
+  - 2\,(w^*)^\top w
+  + w^\top w
+\end{align*}
+
+\subsubsection{2. Identification of Coefficients}
+Substituting these expansions into $g_i(w_i^T)$ and grouping terms by $w_i^T$ (as $w$), we identify the constant, linear, and quadratic coefficients.
+
+\begin{itemize}
+  \item \textbf{Constant Term ($C_i$):} (All terms not containing $w_i^T$)
+    \[
+      C_i = (w^*)^\top (m_i + \tau - P^A e_i) 
+            - \gamma_i\,(w^*)^\top \Sigma_i\,w^*
+            - \lambda_A\,(w^*)^\top w^*.
+    \]
+  
+  \item \textbf{Linear Term ($a_i$):} (All terms linear in $w_i^T$)
+    \begin{align*}
+      (w_i^T)^\top a_i &= (w_i^T)^\top (m_i - P^T e_i) - (w_i^T)^\top (m_i + \tau - P^A e_i) \\
+                      &\quad + 2\gamma_i (w_i^T)^\top \Sigma_i w_i^* + 2\lambda_B (w_i^T)^\top w_i^* \\
+      \Rightarrow a_i &= (P^A - P^T)e_i - \tau
+                      + 2\,\gamma_i\,\Sigma_i\,w_i^*
+                      + 2\,\lambda_A\,w_i^*
+    \end{align*}
+    
+  \item \textbf{Quadratic Term ($H_i$):} (All terms quadratic in $w_i^T$)
+    \begin{align*}
+      -(w_i^T)^\top H_i w_i^T &= - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T - \lambda_A\,(w_i^T)^\top w_i^T \\
+      \Rightarrow H_i &= 2\,\gamma_i\,\Sigma_i + \lambda_A\,I
+    \end{align*}
+\end{itemize}
+
+\subsubsection{3. Final Quadratic Form}
+The objective function is now:
+\[
+g_i(w_i^T)
+= C_i
+\;+\;(w_i^T)^\top\,a_i
+\;-\;(w_i^T)^\top\,H_i\,w_i^T,
+\]
+with $a_i$ and $H_i$ defined as in Proposition \ref{prop:dual_optimal} (with $P$ differentiated).
+
+\subsection{Solution with Constraints}
+We now solve the constrained problem of maximizing $g_i(w_i^T)$ subject to $\Psi_i^T w_i^T = w_i^T$. This is a standard quadratic optimization problem.
+
+\subsubsection{First-Order Condition}
+For the unconstrained maximum, the first-order condition is:
+\begin{equation}
+\frac{\partial g_i}{\partial w_i^T} = a_i - 2H_i w_i^T = 0 \implies w_i^T = \frac{1}{2}H_i^{-1} a_i
+\end{equation}
+
+\subsubsection{Incorporation of Constraints (Lagrangian)}
+To incorporate $\Psi_i^T w_i^T = w_i^T$, we use the Lagrangian method:
+\begin{equation}
+\mathcal{L} = (w_i^T)^\top a_i - (w_i^T)^\top H_i w_i^T - \mu_i^\top(\Psi_i^T w_i^T - w_i^T)
+\end{equation}
+The first-order conditions are:
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial w_i^T} &= a_i - 2H_i w_i^T - \Psi_i^{T\top}\mu_i + \mu_i = 0 \\
+\frac{\partial \mathcal{L}}{\partial \mu_i} &= \Psi_i^T w_i^T - w_i^T = 0
+\end{align}
+Solving this system for $w_i^T$ yields the optimal constrained solution.
+
+\subsection{Final Solution}
+The solution to the constrained optimization problem is:
+\begin{equation}
+\boxed{w_i^{T*} = \Psi_i^{T\top}(\Psi_i^T H_i^{-1} \Psi_i^{T\top})^{-1} \Psi_i^T H_i^{-1} a_i}
+\end{equation}
+where:
+\begin{align}
+a_i &= (P^A - P^T)e_i - \tau + 2\gamma_i \Sigma_i w_i^* + 2\lambda_A w_i^* \\
+H_i &= 2\gamma_i \Sigma_i + \lambda_A I
+\end{align}
+This expression for $w_i^{T*}$ is exactly what is defined as $Q_i^{\text{dual}} \cdot a_i$ in Proposition \ref{prop:dual_optimal}, completing the proof.
+
+\subsection{Second-Order Condition}
+The matrix $H_i = 2\gamma_i \Sigma_i + \lambda_B I$ is positive definite (assuming $\gamma_i > 0$, $\Sigma_i \succ 0$, and $\lambda_B \geq 0$), guaranteeing that the solution found is a unique global maximum.
+
+
+\section{Example Case with no constraints}
+\label{app:3agnoconstraints}
+Lets see how changes the network structure when the local firm can access the national bank.
+
+This example presents the baseline scenario where all firms can contract freely without restrictions, allowing us to observe the natural equilibrium structure of the network.
+
+We keep all identical except for the constraint, which now is $\Psi_i=I_n$.
+
+\subsubsection{Pairwise Negotiation Process \label{ex:convergence_nc}}
+
+At the initial state, contracts begin with the optimal values for each firm based on their beliefs, but no payments have been negotiated yet.
+
+\textbf{Initial State ($t = 0$):}
+
+\begin{align}
+    W_0 &= \begin{bmatrix} 
+        -0.31 & 0.20 & 1.60 \\ 
+        0.25 & -0.31 & 1.24 \\ 
+        0.33 & 0.44 & -1.94 
+    \end{bmatrix} &
+    P_0 &= \begin{bmatrix} 
+        0 & 0 & 0 \\ 
+        0 & 0 & 0 \\ 
+        0 & 0 & 0 
+    \end{bmatrix}
+\end{align}
+
+\textbf{Iteration Process:}
+
+\textbf{Step 5:} After initial negotiations, the network structure begins to stabilize:
+
+\begin{align}
+    W_5 &= \begin{bmatrix} 
+        -0.75 & -0.06 & 1.04 \\ 
+        -0.06 & -0.51 & 0.88 \\ 
+        1.02 & 0.87 & -1.31 
+    \end{bmatrix} &
+    P_5 &= \begin{bmatrix} 
+        0.00 & -0.03 & 0.34 \\ 
+        0.03 & 0.00 & 0.24 \\ 
+        -0.34 & -0.24 & 0.00 
+    \end{bmatrix}
+\end{align}
+
+The National Bank-Local Firm contract ($W_{13} = 1.04$) emerges as the dominant link. Payment flows have been negotiated with the Local Firm paying both the National Bank ($P_{31} = -0.34$) and the Local Bank ($P_{32} = -0.24$).
+
+\textbf{Step 10:} Approaching equilibrium:
+
+\begin{align}
+    W_{10} &= \begin{bmatrix} 
+        -0.76 & -0.07 & 1.03 \\ 
+        -0.07 & -0.51 & 0.88 \\ 
+        1.03 & 0.88 & -1.30 
+    \end{bmatrix} &
+    P_{10} &= \begin{bmatrix} 
+        0.00 & -0.03 & 0.35 \\ 
+        0.03 & 0.00 & 0.24 \\ 
+        -0.35 & -0.24 & 0.00 
+    \end{bmatrix}
+\end{align}
+
+Contract sizes have converged to near-final values. The direct connection between National Bank and Local Firm ($W_{13} = 1.03$) remains the largest contract in the network.
+
+\textbf{Convergence:} The algorithm converges to stable values:
+
+\begin{align}
+    W_\infty &= \begin{bmatrix} 
+        -0.76 & -0.07 & 1.03 \\ 
+        -0.07 & -0.51 & 0.88 \\ 
+        1.03 & 0.88 & -1.30 
+    \end{bmatrix} &
+    P_\infty &= \begin{bmatrix} 
+        0.00 & -0.03 & 0.35 \\ 
+        0.03 & 0.00 & 0.24 \\ 
+        -0.35 & -0.24 & 0.00 
+    \end{bmatrix}
+\end{align}
 
 
 
 
+\subsubsection{No Constraint and 4 agents (input for dual)}
+\label{app:optimalw}
+\begin{align} 
+    W_\infty &= \begin{bmatrix} 
+        -0.79 & 0.02 & 1.04 & 0.02 \\ 
+        0.02 & -0.17 & 0.56 & -0.17\\ 
+        1.03 & 0.56 & -1.45 & 0.56\\
+        0.02 & -0.17 & 0.56 & -0.17
+    \end{bmatrix} & 
+    P_\infty &= \begin{bmatrix} 
+        0.00 & 0.19 & 0.44 & 0.19 \\ 
+        -0.19 & 0.00 & -0.06 & 0.00 \\ 
+        -0.44 & -0.06 & 0.00 & 0.06\\
+        -0.19 & 0.00 & -0.06 & 0.00
+    \end{bmatrix}
+\end{align}

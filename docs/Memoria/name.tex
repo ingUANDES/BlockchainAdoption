@@ -1,0 +1,828 @@
+% ===================================================================
+% DUAL-NETWORK FINANCIAL INFRASTRUCTURE PAPER
+% Author: Hernan
+% Date: December 2024
+% ===================================================================
+
+\documentclass[12pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{enumitem}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+% Custom commands
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\argmax}{\operatorname{argmax}}
+
+% Line spacing
+\doublespacing
+
+% Title and authors
+\title{Financial Networks \& Technological Innovation: \\
+A Dual-Network Model}
+
+\author{
+    Sebastián Cea \and Hernán Venegas
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent Regulatory restrictions in financial networks create welfare losses by prohibiting efficient contracting relationships. This paper investigates whether alternative network infrastructures can restore welfare by enabling agents to circumvent such restrictions while traditional constraints remain in force. Extending the framework of \citet{jalan_incentive-aware_2024} to dual-network equilibria, we model agents who optimize portfolios across traditional and alternative infrastructures. Using a three-agent network where a regulatory restriction prohibits one link, we demonstrate that alternative network adoption achieves complete welfare recovery, restoring aggregate utility. In contrast, promoting competition within the restricted network recovers only a part of lost welfare, leaving a persistent efficiency gap. The findings suggest that regulatory arbitrage, not inherent efficiency, drives adoption in restricted markets. Where restrictions serve legitimate objectives, regulators face a trilemma among maintaining constraints, preventing circumvention, and accepting welfare losses. The dual-network framework provides analytical tools for evaluating parallel infrastructure competition.
+
+\vspace{0.3cm}
+\noindent \textbf{JEL Codes:} G10, G28, D85, L14 \\
+\noindent \textbf{Keywords:} Financial networks, Regulatory arbitrage, Network competition, Welfare analysis
+\end{abstract}
+
+\newpage
+
+% ===================================================================
+% SECTION 1: INTRODUCTION
+% ===================================================================
+\section{Introduction}
+\label{sec:introduction}
+
+Regulatory restrictions in financial markets serve important policy objectives---managing systemic risk, protecting consumers, ensuring market integrity. Yet these restrictions often prevent mutually beneficial transactions, creating deadweight losses that reduce overall welfare. An example is the restriction on certain direct lending relationships: when regulations prohibit a bank from contracting directly with particular borrowers, both parties must rely on intermediaries, increasing costs and reducing efficiency.
+
+This paper addresses a fundamental question: \textit{Can alternative network infrastructures restore welfare by enabling agents to circumvent regulatory restrictions, even when those restrictions remain in force in traditional networks?}
+
+The question has become increasingly relevant with the emergence of alternative networks. These alternative infrastructures operate under different regulatory frameworks and technological constraints than traditional financial networks. When a restriction applies only to traditional infrastructure, agents face a strategic choice: comply with restrictions and accept reduced welfare, or migrate to alternative platforms that enable previously prohibited transactions.
+
+\subsection{Motivating Example}
+
+% TO COMPLETE: Add network diagram showing 3-firm restricted case
+% Figure: network3_with_con.png from your results
+
+Consider a financial network with three agents: a National Bank, a Local Bank, and a Local Firm. Suppose regulations prohibit direct lending between the National Bank and the Local Firm. The Local Bank is a central agent. Using the model developed in this paper, we show that the regulatory restriction reduces bilateral contract volume by 58.4\% and aggregate welfare by 50.8\% compared to an unconstrained benchmark. The Local Bank is the only one who benefits, from its structural position, while the National Bank and Local Firm both experience significant welfare losses.
+
+\textit{Can competition solve this problem?} A natural policy response is to promote competitive entry. Using a four-agent model with a new central agent, we find that competition improves outcomes: aggregate welfare increases by 46.5\% relative to the monopolistic baseline. However, a persistent 27.9\% welfare gap remains compared to the unconstrained benchmark. Competition mitigates but cannot eliminate the inefficiency created by the structural restriction itself.
+
+\textit{Can alternative infrastructure solve this problem?} Now suppose an alternative network becomes available---a platform that operates under different regulatory treatment. If this alternative network does not face the restriction on direct National Bank-Local Firm contracting, it creates a circumvention opportunity. Agents can strategically allocate their portfolios across both networks, using traditional infrastructure when convenient and alternative infrastructure when necessary to access otherwise prohibited relationships.
+
+We demonstrate that this structural solution achieves complete welfare recovery, while competition alone cannot.
+
+\subsection{Main Results}
+
+We develop a dual-network extension of the incentive-aware financial network model of \citet{jalan_incentive-aware_2024}. The main innovation is modeling agents' strategic allocation decisions across two competing infrastructures: a Traditional Network (subject to regulatory constraints) and an Alternative Network (operating under different rules). Agents face a portfolio constraint $w_i^* = w_i^T + w_i^A$, where total exposure is fixed but allocation between networks is optimized based on network-specific characteristics. The model incorporates two technological differentials, operational friction $\lambda_A$ (transaction costs, fees, or congestion in the alternative network) and transparency benefits $\tau$ (reduced information asymmetries or improved contract enforcement). Using this framework, we establish four main results:
+
+\paragraph{Result 1: Complete Welfare Recovery Through Alternative Infrastructure}
+
+Alternative network adoption restores aggregate welfare. This represents complete closure of the welfare gap created by regulatory restrictions. In contrast, promoting competition within the restricted network achieves only partial welfare recovery, leaving a persistent efficiency shortfall. The previously prohibited direct contract migrates entirely to the alternative network, while other relationships distribute across both platforms. Network coexistence emerges endogenously, with 72.4\% of bilateral volume flowing through alternative infrastructure and 27.6\% remaining in traditional networks despite both networks offering identical characteristics ($\lambda_A = \tau = 0$).
+
+\paragraph{Result 2: Distributional Effects and Concentration}
+
+Welfare gains distribute asymmetrically with concentration: the restricted agent (Local Firm) captures 89.1\% of total improvement, while the National Bank receives 23.9\%. The Local Bank experiences lower rents, representing elimination of its structural position. This concentration reflects that alternative infrastructure directly addresses the constraint binding the Local Firm.
+
+Remarkably, the Local Firm achieves utility that exceeds its unrestricted benchmark by 42.8\%. This recovery occurs because dual-network structure enables direct access to the National Bank via alternative infrastructure.
+
+\paragraph{Result 3: Asymmetric Adoption Despite Symmetric Infrastructure}
+
+Alternative network adoption reaches 72.4\% despite both networks offering identical characteristics ($\lambda_A = \tau = 0$). This asymmetry emerges endogenously from the strategic value of circumvention: agents concentrate activity on the alternative network to restore the blocked contract, even when both platforms provide equivalent functionality. The traditional network retains 27.6\% of volume, reflecting continued use for relationships unaffected by the regulatory constraint.
+
+This finding demonstrates that adoption patterns reflect regulatory differentials rather than technological advantages. High alternative network usage under zero benefits ($\tau = 0$) indicates that regulatory arbitrage, rather than efficiency improvements, drives infrastructure choice in restricted markets. This contrasts with technology-centric narratives that attribute adoption primarily to reduced costs or enhanced transparency.
+
+\paragraph{Result 4: Friction Sensitivity and Viability Conditions}
+
+Sensitivity analysis across friction-transparency parameter space reveals that operational friction ($\lambda_A$) exerts 3.3 times more influence on adoption than transparency benefits ($\tau$). Alternative network viability requires $\lambda_A < 0.35$ even with maximal transparency ($\tau = 0.5$). Beyond this threshold, adoption falls below 40\% and welfare gains diminish substantially. Circumvention dynamics exhibit non-monotonicity: as friction increases from 0.30 to 0.50, adoption rebounds from 37\% to 40\%. This occurs because high friction reduces alternative network attractiveness for general usage, but the option value of circumventing specific restrictions dominates when regulatory constraints are active.
+
+\subsection{Roadmap}
+
+The remainder of the paper proceeds as follows. Section \ref{sec:literature} reviews related literature on financial networks, regulatory arbitrage, and technology adoption. Section \ref{sec:model} presents the dual-network model, extending \citet{jalan_incentive-aware_2024} to incorporate infrastructure choice. Section \ref{sec:results} analyzes equilibrium outcomes across scenarios, demonstrating welfare recovery through alternative networks. Section \ref{sec:sensitivity} examines robustness to friction and transparency parameters. Section \ref{sec:conclusion} concludes with policy implications and future extensions.
+
+
+% ===================================================================
+% SECTION 2: LITERATURE REVIEW
+% ===================================================================
+\section{Related Literature}
+\label{sec:literature}
+
+This paper contributes to three interconnected literatures: financial network formation, platform competition and technology adoption, and alternative networks. We position our contribution by examining how alternative infrastructure can circumvent regulatory restrictions through mechanisms not captured by existing frameworks.
+
+\subsection{Financial Networks and Systemic Risk}
+
+The study of financial networks has established how the structure of interbank connections affects stability and contagion. \citet{eisenberg_systemic_2001} pioneered the analysis of cascading defaults through network linkages, while \citet{elliott_financial_2014} demonstrate how network topology can amplify or mitigate systemic shocks. \citet{acemoglu_systemic_2015} show that diversification in connections initially increases stability but beyond a threshold creates systemic vulnerability through interdependence.
+
+Most closely related to our approach, \citet{jalan_incentive-aware_2024} develop an incentive-aware framework where financial networks emerge endogenously through bilateral negotiations among heterogeneous agents with mean-variance preferences. Their model incorporates regulatory constraints through prohibition matrices, demonstrating how restrictions affect network structure and contract formation. Our dual-network extension builds directly on this foundation by introducing infrastructure choice: agents optimize portfolios across two competing network platforms subject to different regulatory treatments and technological characteristics.
+
+The innovation relative to this literature is modeling infrastructure as a strategic choice variable rather than an exogenous constraint. While \citet{jalan_incentive-aware_2024} examine how single-network equilibria respond to regulatory restrictions, we analyze how alternative infrastructure enables circumvention while maintaining those restrictions in traditional networks. This captures regulatory arbitrage dynamics absent from single-network frameworks.
+
+\subsection{Platform Competition and Network Effects}
+
+The theoretical foundations for analyzing competing infrastructures come from the literature on two-sided markets and platform competition. \citet{rochet_platform_2003} establish that platforms must balance participation across both sides through strategic pricing, while \citet{armstrong_competition_2006} analyzes competitive dynamics when users can multihome—simultaneously participating on multiple platforms. Armstrong's framework generates testable predictions about equilibrium configurations. When multihoming costs are high, markets tip toward single-platform dominance due to network effects. When multihoming costs are moderate, platforms can coexist by offering differentiated services. Our model's friction parameter $\lambda_A$ captures these multihoming costs, with the portfolio constraint $w_i^T + w_i^A = w_i^*$ formalizing agents' strategic allocation across traditional and alternative networks.
+
+The technology adoption literature provides complementary insights. \citet{katz_network_1985} demonstrate that network externalities create coordination problems where superior technologies may fail due to excess inertia—agents rationally wait for others to adopt first. \citet{farrell_installed_1986} show that established technologies with large installed bases resist competition from objectively better alternatives, requiring new technologies to offer substantial advantages to overcome coordination benefits of incumbency. \citet{arthur_competing_1989} introduces path dependence and lock-in: small historical accidents during early adoption can lead to permanent dominance of one technology even if another is superior. This framework explains why if one network is superior doesn't get total adoption.
+
+Our contribution relative to this literature is applying these insights specifically to financial infrastructure competition, where the differentiating factors are regulatory treatment ($\Psi_i^T \neq \Psi_i^A$), benefits ($\tau$), and frictions ($\lambda_A$). The portfolio constraint approach provides tractable modeling of strategic multihoming decisions in financial contexts.
+
+\subsection{Regulatory Arbitrage and Structural Change}
+
+Regulatory restrictions, while serving policy objectives, often generate unintended structural inefficiencies. \citet{kane_good_1977} conceptualizes the ´´Regulatory Dialectic": regulation induces agents to innovate technologically to bypass costly constraints. \citet{buchak_fintech_2018} provide causal evidence that 60\% of shadow banking expansion stems from regulations and 30\% from technology, validating that volume migration to alternative infrastructures reflects rational responses to regulation. Our analysis extends this literature by providing a formal general equilibrium framework for studying regulatory arbitrage through alternative infrastructure. While empirical work documents migration patterns, the dual-network model enables welfare analysis comparing arbitrage-based versus competition-based solutions to regulatory inefficiency. The finding that structural reform dominates competition policy contributes new insights for regulatory design.
+
+\subsection{Alternative Financial Infrastructure: Technology and Characteristics}
+
+Alternative financial infrastructure takes various forms: non-bank financial insititutions (NBFI), offshore financial centers, peer-to-peer lending platforms, decentralized finance and cryptocurrency. These systems share common characteristics relevant for modeling alternative infrastructure. For instance, for blockchain-based systems, \citet{cong_blockchain_2019} identify key mechanisms: transaction transparency creates unprecedented auditability but may reveal strategic information; smart contract automation reduces counterparty risk but introduces code vulnerability; disintermediation potentially lowers costs but creates new governance challenges. \citet{makarov_blockchain_2021} provide comprehensive empirical analysis of cryptocurrency markets, documenting that transparency reduces information asymmetries but creates new advantages for sophisticated data analysts. Transaction costs exhibit extreme volatility, with fees spiking from dollars to hundreds during congestion. \citet{huberman_monopoly_2021} characterize Bitcoin as a "monopoly without a monopolist"—protocol constraints create monopoly pricing but no single entity captures rents. \citet{harvey_defi_2021} emphasize that DeFi represents market design innovation beyond pure technology. Automated market makers, over-collateralization requirements, and composability create distinct economic properties. However, smart contract vulnerabilities, oracle manipulation, and governance failures have resulted in billions in losses.
+
+This literature provides empirical grounding for calibrating the model's key parameters. The transparency parameter $\tau$ captures documented benefits from observable transaction histories and verifiable execution. The quadratic friction term $\lambda_A \|w_i^A\|^2$ reflects empirical evidence that costs increase more than proportionally with usage intensity due to congestion externalities and liquidity fragmentation.
+
+Our contribution is providing the first formal model integrating these characteristics into a general equilibrium network formation framework. The dual-network approach captures strategic interaction between traditional and alternative infrastructures, enabling comparative welfare analysis.
+
+\subsection{Market Liquidity and Fragmentation}
+
+\citet{pagano_trading_1989} formalizes how market depth emerges endogenously through trader participation decisions. Network externalities create coordination problems where multiple rational expectations equilibria emerge depending on initial expectations. Markets naturally concentrate on single venues absent differential transaction costs, but fragmentation can persist when costs vary across venues.
+
+This framework illuminates adoption dynamics in our model. The alternative network faces the same coordination challenge—agents must expect sufficient participation to justify adoption costs. However, regulatory differentiation ($\Psi_i^T \neq \Psi_i^A$) creates a form of differentiation that supports coexistence: each network serves transactions for which it has comparative advantage.
+
+\subsection{Positioning and Contribution}
+
+This paper makes three primary contributions bridging these literatures:
+
+First, we extend financial network formation theory to incorporate infrastructure choice. Second, we provide the first formal welfare comparison between competition-based and infrastructure-based solutions to regulatory inefficiency. Third, we contribute to emerging DeFi literature by providing foundations for regulatory arbitrage as an adoption driver. 
+
+The dual-network framework developed here provides tools for evaluating parallel infrastructure competition in any setting where regulatory or institutional constraints create structural inefficiency. While the application focuses on financial networks, the approach generalizes to other contexts where established infrastructure faces restrictions that alternative systems can circumvents.
+
+
+% ===================================================================
+% SECTION 3: MODEL
+% ===================================================================
+\section{Model}
+\label{sec:model}
+
+Building on \citet{jalan_incentive-aware_2024}, we model financial networks where $n$ agents form bilateral contracts to share risks and optimize mean-variance portfolios. Each agent $i$ is characterized by expected return beliefs ($\mu_i \in \mathbb{R}^n$), risk aversion ($\gamma_i > 0$), and a covariance matrix of return beliefs ($\Sigma_i \succ 0$). Agents negotiate contract sizes forming a network $W \in \mathbb{R}^{n \times n}$ and prices $P \in \mathbb{R}^{n \times n}$ through bilateral bargaining to achieve mutually agreeable terms.
+
+We extend this framework to model competition between two parallel infrastructures: a Traditional Network (superscript $T$) subject to regulatory constraints, and an Alternative Network (superscript $A$) operating under different regulatory treatment. Agents strategically allocate portfolios across both networks subject to a constraint that total exposure remains fixed. The model doesn't consider fund raising.
+
+
+
+\begin{definition}[Dual-Network Setting]
+\label{def:dual_network}
+A dual-network setting is characterized by \\ $(\mu_i, \gamma_i, \Sigma_i, \Psi_i^T, \Psi_i^A, \tau, \lambda_A, w_i^*)_{i \in [n]}$ where:
+\begin{itemize}[noitemsep]
+    \item $\Psi_i^T, \Psi_i^A$: regulatory constraints on Traditional and Alternative Networks
+    \item $\tau \geq 0$: additive return benefits from Alternative Network transparency
+    \item $\lambda_A \geq 0$: quadratic operational costs for Alternative Network usage
+    \item $w_i^* \in \mathbb{R}^n$: agent $i$'s fixed total portfolio exposure
+\end{itemize}
+\end{definition}
+
+\subsection{The Portfolio Constraint}
+
+We model infrastructure competition as a portfolio reallocation problem. Each agent has fixed total exposure $w_i^*$ that must be allocated between networks:
+\begin{equation}
+w_i^* = w_i^T + w_i^A
+\label{eq:portfolio_constraint}
+\end{equation}
+
+This constraint reflects that financial institutions when adopting alternative infrastructure, they reallocate existing positions rather than expanding total exposure. The constraint transforms the dual-network problem into a tractable optimization: agents choose $w_i^T$, with $w_i^A$ determined residually as $w_i^A = w_i^* - w_i^T$.
+
+\subsection{Network Differentiation}
+
+The two networks differ in three dimensions:
+
+\paragraph{Regulatory Treatment ($\Psi_i^T$, $\Psi_i^A$).} Traditional and Alternative Networks face potentially different constraints, $\Psi_i^T$ and $\Psi_i^A$. When $\Psi_i^T \neq \Psi_i^A$, agents can engage in regulatory arbitrage by accessing prohibited counterparties through the Alternative Network. 
+
+\paragraph{Friction ($\lambda_A$).} The Alternative Network incurs quadratic costs $\lambda_A \|w_i^A\|^2$, capturing what could be: transaction fees (e.g., blockchain gas costs, platform fees), settlement delays relative to traditional systems, integration costs for connecting to alternative infrastructure, or liquidity fragmentation from operating on multiple platforms.
+
+The quadratic functional form reflects that costs increase more than proportionally with usage intensity, consistent with empirical evidence on congestion effects and price impact in alternative venues.
+
+\paragraph{Benefits ($\tau$).} The Alternative Network provides additive return enhancement $\tau \mathbf{1}$, representing for example, reduced information asymmetries from observable transaction histories, improved contract enforcement through transparent execution or enhanced monitoring capabilities for counterparty risk assessment.
+
+The parameter $\tau$ captures value of operating on transparent infrastructure, such as blockchain's public ledger or specialized credit assessment platforms.
+
+\subsection{Agent Utility and Optimization}
+
+Agent $i$'s utility decomposes across networks:
+\begin{align}
+g_i(w_i^T, w_i^A, P) &= g_i^T(w_i^T, P) + g_i^A(w_i^A, P) \label{eq:dual_utility} \\
+\text{where} \quad g_i^T(w_i^T, P) &= (w_i^T)^T(\mu_i - Pe_i) - \gamma_i (w_i^T)^T\Sigma_i w_i^T \label{eq:utility_T} \\
+g_i^A(w_i^A, P) &= (w_i^A)^T(\mu_i + \tau \mathbf{1} - Pe_i) - \gamma_i (w_i^A)^T\Sigma_i w_i^A - \lambda_A\|w_i^A\|^2 \label{eq:utility_A}
+\end{align}
+
+The first term in each utility function captures expected returns net of price payments. The second term penalizes portfolio risk weighted by risk aversion. Alternative Network utility additionally incorporates benefits ($+\tau \mathbf{1}$) in the expected return term and friction ($-\lambda_A\|w_i^A\|^2$) as a quadratic penalty.
+
+\subsection{Optimal Portfolio Allocation}
+
+Substituting the portfolio constraint $w_i^A = w_i^* - w_i^T$ into equation (\ref{eq:dual_utility}) and taking first-order conditions with respect to $w_i^T$ yields:
+
+\begin{proposition}[Dual-Network Optimal Allocation]
+\label{prop:dual_optimal}
+Agent $i$'s optimal Traditional Network allocation is:
+\begin{equation}
+w_i^{T*} = Q_i^{\text{dual}} \cdot a_i
+\label{eq:optimal_allocation}
+\end{equation}
+where:
+\begin{align}
+Q_i^{\text{dual}} &= (\Psi_i^T)^T(\Psi_i^T H_i^{-1} (\Psi_i^T)^T)^{-1}\Psi_i^T H_i^{-1} \label{eq:Q_dual} \\
+H_i &= 2\gamma_i\Sigma_i + \lambda_A I \label{eq:H_matrix} \\
+a_i &= -\tau \mathbf{1} + (2\gamma_i\Sigma_i + 2\lambda_A I) w_i^* \label{eq:offset_vector}
+\end{align}
+When all edges are permitted ($\Psi_i^T = I_n$), this simplifies to $Q_i^{\text{dual}} = (2\gamma_i\Sigma_i + \lambda_A I)^{-1}$.
+\end{proposition}
+
+\textit{Proof.} See Appendix \ref{app:proofs}.
+
+\paragraph{Economic Interpretation.} The dual $Q$-matrix (\ref{eq:Q_dual}) reveals how alternative network characteristics affect traditional network allocation. The friction term $\lambda_A I$ in $H_i$ uniformly reduces responsiveness to profit opportunities, acting mathematically as an increase in effective risk aversion. This creates cross-network spillovers: Alternative Network costs ($\lambda_A$) directly affect Traditional Network allocation ($w_i^T$), even for agents who never use the alternative platform.
+
+The vector $a_i$ captures net effects of benefits ($-\tau \mathbf{1}$) and portfolio constraint terms. Agents allocate more to the Traditional Network when Alternative Network offers low transparency ($\tau \to 0$), operational friction is high ($\lambda_A$ large), or initial portfolio $w_i^*$ is large.
+
+\subsection{Stable Points}
+
+\begin{definition}[Dual-Network Nash Stability]
+\label{def:equilibrium}
+A tuple $(W^T, W^A, P)$ is a dual-network equilibrium if:
+\begin{enumerate}[noitemsep]
+    \item Network symmetry: $W^T = (W^T)^T$, $W^A = (W^A)^T$, $P = -P^T$
+    \item Regulatory compliance: $W^T$ satisfies $\{\Psi_i^T\}$, $W^A$ satisfies $\{\Psi_i^A\}$
+    \item Portfolio constraint: $w_i^T + w_i^A = w_i^*$ for all $i$
+    \item Stability: Each agent maximizes utility given prices $P$:
+    \[
+    g_i(W^T, W^A, P) = \max_{\text{feasible}} g_i(w_i^T, w_i^* - w_i^T, P) \quad \forall i
+    \]
+\end{enumerate}
+\end{definition}
+
+The stability condition ensures the configuration represents a Nash equilibrium where no agent can improve utility by unilaterally changing their portfolio allocation across networks.
+
+\subsection{Welfare Measurement}
+
+We measure welfare using three metrics:
+
+\begin{enumerate}[noitemsep]
+    \item \textbf{Bilateral Volume}: $V_B = \frac{1}{2}\sum_{i \neq j} |W_{ij}|$, quantifying network activity
+    \item \textbf{Total System Utility}: $U_{\text{Total}} = \sum_{i=1}^n g_i(W, P)$, measuring aggregate welfare
+    \item \textbf{Net Rent Flows}: $\text{Rents}_i = \sum_j W_{ij} P_{ij}$, decomposing transfers
+\end{enumerate}
+
+Bilateral volume captures the extent of risk-sharing relationships. Total utility incorporates both activity levels and portfolio quality. Net rents reveal distributional consequences: negative rents indicate an agent receives net transfers, while positive rents indicate net payments.
+
+\subsection{Finding the Stable Point Through Pairwise Negotiations}
+
+The stable point is computed through iterative bilateral negotiations following \citet{jalan_incentive-aware_2024}. At each iteration $t$, agents solve (\ref{eq:optimal_allocation}) given current prices $P(t)$, then negotiate price adjustments for pairs where desired contract sizes differ. Prices update as $P(t+1) = (1-\eta)P(t) + \eta P'$, where $P'$ reflects bilateral negotiations and $\eta \in (0,1)$ is a dampening factor. The algorithm converges when $\|P(t+1) - P(t)\| < \epsilon$ for small $\epsilon > 0$.
+
+For the dual-network case, the algorithm extends naturally: agents simultaneously optimize allocation across both networks given prices, then prices adjust through the same bilateral negotiation process. The portfolio constraint $w_i^T + w_i^A = w_i^*$ is enforced at each iteration.
+
+% ===================================================================
+% SECTION 4: RESULTS
+% ===================================================================
+\section{Results}
+\label{sec:results}
+
+This section presents the main findings in three stages. First, we establish the baseline inefficiency created by regulatory restrictions (Section \ref{sec:baseline_problem}). Second, we demonstrate that competition within constrained networks provides only partial welfare recovery (Section \ref{sec:competition_results}). Third, we show that alternative infrastructure achieves complete welfare restoration (Section \ref{sec:dual_network_results}).
+
+\subsection{The Baseline Problem: Regulations affecting Welfare}
+\label{sec:baseline_problem}
+
+Based on the Example 5 of \citet{jalan_incentive-aware_2024} consider a three-agent financial network consisting of a National Bank (Firm 1), a Local Bank (Firm 2), and a Local Firm (Firm 3). All agents share identical risk aversion ($\gamma_i = 1$) and face correlated return processes captured by covariance matrix and expected returns matrix:
+\begin{align}
+\Sigma &= \begin{bmatrix} 
+    1.0 & 0.25 & 0.75 \\ 
+    0.25 & 1.0 & 0.6 \\ 
+    0.75 & 0.6 & 1.0 
+\end{bmatrix} &
+M &= \begin{bmatrix} 
+    0.0 & 0.9 & 0.9 \\ 
+    0.75 & 0.0 & 0.95 \\ 
+    0.5 & 0.8 & 0.0 
+\end{bmatrix}
+\end{align}
+
+The regulatory environment prohibits direct contracting between the National Bank and Local Firm.
+
+\subsubsection{Quantifying the Inefficiency}
+
+Table \ref{tab:baseline_comparison} presents equilibrium outcomes under restricted and unrestricted scenarios.
+
+% TO COMPLETE: Insert your Table 2 (tab:baselinecomparison)
+\begin{table}[h]
+\centering
+\caption{Baseline Comparison: Impact of Regulatory Constraint}
+\label{tab:baseline_comparison}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Restricted (3F-WITH)} & \textbf{Unrestricted (3F-WITHOUT)} & \textbf{Loss (\%)} \\
+\midrule
+\textit{Network Activity} & & & \\
+\quad Bilateral Volume & 0.822 & 1.976 & -58.4\% \\
+\quad Total Positions & 1.626 & 4.543 & -64.2\% \\
+\midrule
+\textit{Aggregate Welfare} & & & \\
+\quad Total System Utility & \textbf{0.706} & \textbf{1.434} & \textbf{-50.8\%} \\
+\midrule
+\textit{Agent-Level Utilities} & & & \\
+\quad National Bank & 0.064 & 0.413 & -84.6\% \\
+\quad Local Bank & 0.441 & 0.425 & +3.8\% \\
+\quad Local Firm & 0.202 & 0.596 & -66.1\% \\
+\midrule
+\textit{Net Rent Flows} & & & \\
+\quad National Bank & +0.068 & -0.360 & -- \\
+\quad Local Bank & -0.198 & -0.210 & -- \\
+\quad Local Firm & +0.130 & +0.570 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The restriction generates significant inefficiency: bilateral volume falls 58.4\% and aggregate welfare declines 50.8\%. Approximately half of potential welfare is erased by the regulatory constraint. The Local Bank is the only beneficiary, experiencing a 3.8\% utility increase due to its structural position. In contrast, the National Bank and Local Firm---the parties who would transact directly absent the restriction---suffer losses of 84.6\% and 66.1\%, respectively.
+
+Rent flows reverse direction for the National Bank: from receiving payments (-0.360 in the unrestricted case) to making payments (+0.068 when restricted). 
+
+\subsection{Competition Provides Partial Recovery}
+\label{sec:competition_results}
+
+A natural policy response is promoting competitive entry. We introduce a fourth agent (``Fintech'') designed to be nearly identical to the Local Bank from the perspective of the other agents (correlation $\rho_{24} = 0.99$).
+
+\subsubsection{Competitive Equilibrium Under Constraint}
+
+With four agents, the initial regulatory restriction remains. Both the Local Bank and Fintech can negotiate with the National Bank and Local Firm.
+
+Table \ref{tab:competition_results} compares the outcomes of the baseline and the new agent case.
+
+
+\begin{table}[h]
+\centering
+\caption{Impact of Competitive Entry on Constrained Network}
+\label{tab:competition_results}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Monopoly (3F-WITH)} & \textbf{Competition (4F-WITH)} & \textbf{Change (\%)} \\
+\midrule
+\textit{Network Activity} & & & \\
+\quad Bilateral Volume & 0.822 & 1.351 & \textbf{+64.3\%} \\
+\quad Total Positions & 1.626 & 2.216 & +36.3\% \\
+\midrule
+\textit{Aggregate Welfare} & & & \\
+\quad Total System Utility & 0.706 & \textbf{1.034} & \textbf{+46.5\%} \\
+\midrule
+\textit{Agent-Level Utilities} & & & \\
+\quad National Bank & 0.064 & 0.165 & +159.6\% \\
+\quad Local Bank & 0.441 & 0.239 & -45.7\% \\
+\quad Local Firm & 0.202 & 0.391 & +93.6\% \\
+\quad Fintech & -- & 0.239 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Competition generates welfare gains: total utility increases 46.5\%, recovering approximately half of the loss created by the baseline. Bilateral volume increases 64.3\%, indicating more active financial relationships.
+
+The beneficiaries are the endpoints: National Bank utility rises 159.6\% and Local Firm utility rises 93.6\%. The Local Bank loses the benefit position, experiencing a 45.7\% utility decline. Both central agents achieve identical equilibrium utilities (0.239), confirming symmetric competitive equilibrium. The utility splits exactly 50-50, as expected given the near-identical parameterization ($\rho_{24} = 0.99$). This validates that observed welfare changes are from competition rather than inherent efficiency differences between the central agents.
+
+\subsubsection{The Persistent Efficiency Gap}
+
+Despite these gains, competition cannot replicate the efficiency of removing the constraint. Table \ref{tab:competition_vs_unconstrained} compares the competitive equilibrium to the unrestricted three-agent benchmark.
+
+% TO COMPLETE: Insert your Table 4 (tab:4firm_comparison)
+\begin{table}[h]
+\centering
+\caption{The Limits of Competition: Persistent Welfare Gap}
+\label{tab:competition_vs_unconstrained}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{Competition (4F-WITH)} & \textbf{Unconstrained (3F-WITHOUT)} & \textbf{Gap} \\
+\midrule
+Bilateral Volume & 1.351 & 1.976 & -31.6\% \\
+Total System Utility & 1.034 & 1.434 & \textbf{-27.9\%} \\
+\midrule
+\textit{Agent-Level Utilities} & & & \\
+\quad National Bank & 0.165 & 0.413 & -60.1\% \\
+\quad Local Bank & 0.239 & 0.425 & -43.8\% \\
+\quad Local Firm & 0.391 & 0.596 & -34.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A persistent 27.9\% welfare gap remains compared to the unconstrained benchmark. Competition improves outcomes but cannot overcome the structural limitation imposed by the regulatory restriction itself.
+
+This finding has important policy implications: promoting competition represents a \textit{second-best} solution. While beneficial when constraints cannot be removed, competition policy cannot substitute for structural reform that addresses the constraint directly.
+
+\subsection{Alternative Infrastructure Achieves Total Welfare Recovery}
+\label{sec:dual_network_results}
+
+We now examine whether alternative network infrastructure can close the remaining efficiency gap, allowing agents to access a second network---the Alternative Network---that operates without the restriction on direct National Bank-Local Firm contracting.
+
+\subsubsection{Dual-Network: Three Agents with Alternative Infrastructure}
+
+Under dual-network equilibrium, agents strategically allocate portfolios across Traditional ($T$) and Alternative ($A$) networks subject to the constraint $w_i^T + w_i^A = w_i^*$. The Traditional Network maintains the initial restriction, while the Alternative Network permits all connections ($\Psi_i^A = I_3$).
+
+For the baseline analysis, we set friction and benefits to zero ($\lambda_A = \tau = 0$), isolating the pure effect of circumventing regulatory restrictions.
+
+Table \ref{tab:dual_network_main} presents the equilibrium allocation across networks.
+
+\begin{table}[h]
+\centering
+\caption{Dual-Network Equilibrium: Complete Welfare Recovery}
+\label{tab:dual_network_main}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Traditional (T)} & \textbf{Alternative (A)} \\
+\midrule
+Bilateral Volume & 0.568 & 1.486 \\
+Total Positions (incl. self) & 1.220 & 2.128 \\
+Market Share & 27.6\% & 72.4\% \\
+\midrule
+\multicolumn{3}{c}{\textit{System-Level Outcomes}} \\
+\midrule
+Total System Utility & \multicolumn{2}{c}{\textbf{1.434}} \\
+\midrule
+\multicolumn{3}{c}{\textit{Agent-Level Utilities}} \\
+\midrule
+National Bank & \multicolumn{2}{c}{0.238} \\
+Local Bank & \multicolumn{2}{c}{0.345} \\
+Local Firm & \multicolumn{2}{c}{0.851} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The dual-network equilibrium achieves Total System Utility = 1.434, matching the unrestricted three-agent benchmark exactly. This represents:
+\begin{itemize}[noitemsep]
+    \item A 103.0\% welfare increase over the restricted monopoly baseline (0.706 $\rightarrow$ 1.434)
+    \item A 38.7\% welfare increase over the competitive constrained case (1.034 $\rightarrow$ 1.434)
+    \item Complete closure (100\%) of the welfare gap created by the regulatory restriction
+\end{itemize}
+
+Network adoption exhibits strong asymmetry: the Alternative Network captures 72.4\% of bilateral volume despite both networks operating with identical characteristics and zero friction ($\lambda_A = 0$). This allocation reflects strategic circumvention behavior: agents migrate the previously blocked contract ($W_{13}$) to the Alternative Network while maintaining some Traditional relationships.
+
+The previously prohibited contract between National Bank and Local Firm migrates entirely to the Alternative Network, restoring direct bilateral access. This circumvention mechanism eliminates the welfare-destroying regulatory constraint, achieving first-best utility without requiring the constraint to be formally lifted.
+
+\subsection{Comparison of All Scenarios}
+
+Table \ref{tab:master_comparison} synthesizes outcomes across all modeled scenarios, enabling direct comparison of policy interventions relative to the unrestricted three-agent benchmark (3F-WITHOUT).
+
+\begin{table}[h]
+\centering
+\caption{Comprehensive Comparison: Welfare Across All Scenarios}
+\label{tab:master_comparison}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Metric} & \textbf{Monopoly} & \textbf{Benchmark} & \textbf{Competition} & \textbf{Dual-Network} \\
+ & (3F-WITH) & (3F-WITHOUT) & (4F-WITH) & (3F-DUAL) \\
+\midrule
+\textit{System Welfare} & & & & \\
+\quad Total Utility & 0.706 & \textbf{1.434} & 1.034 & \textbf{1.434} \\
+\quad Gap vs. Benchmark & -50.8\% & \textbf{0\%} & -27.9\% & \textbf{0\%} \\
+\quad Improvement vs. 3F-WITH & -- & +103.0\% & +46.5\% & \textbf{+103.0\%} \\
+\midrule
+\textit{Network Activity} & & & & \\
+\quad Bilateral Volume & 0.822 & 1.976 & 1.351 & 2.054 \\
+\quad Direct Link $W_{13}$ & 0.000 & 1.033 & 0.000 & 1.033 \\
+\midrule
+\textit{Agent Utilities} & & & & \\
+\quad National Bank & 0.064 & 0.413 & 0.165 & 0.238 \\
+\quad Local Bank & 0.441 & 0.425 & 0.239 & 0.345 \\
+\quad Local Firm & 0.202 & 0.596 & 0.391 & \textbf{0.851} \\
+\quad Fintech & -- & -- & 0.239 & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Four findings emerge:
+
+\textbf{Finding 1: Only Structural Reform Achieves Complete Welfare Recovery.} The regulatory constraint erases 50.8\% of welfare (0.706 vs 1.434 benchmark). Competition recovers 46.5\% of this loss but leaves a persistent 27.9\% gap (1.034 vs 1.434). The dual-network solution achieves complete recovery, matching the benchmark utility of 1.434 through strategic circumvention of the regulatory restriction across parallel infrastructures.
+
+\textbf{Finding 2: Competition Alone Cannot Close the Gap.} Despite introducing a fourth agent (Fintech) and enabling competitive intermediation, the single-network constrained equilibrium (4F-WITH) recovers less than half the welfare loss. The persistent 27.9\% gap demonstrates that competition policy is insufficient when structural constraints remain binding. Only infrastructure-level solutions that circumvent the restriction achieve full recovery.
+
+\textbf{Finding 3: Asymmetric Network Adoption Despite Symmetric Parameters.} Alternative Network adoption reaches 72.4\%, exceeding the 50\% that would occur under pure indifference. This asymmetry emerges endogenously from the value of circumvention: agents concentrate activity on the Alternative Network to restore the blocked contract, even when both networks offer identical operational characteristics ($\lambda_A = \tau = 0$).
+
+\textbf{Finding 4: Volume Expansion Reflects Restored Bilateral Access.} Bilateral volume in the dual-network equilibrium (2.054) exceeds the single-network constrained case (1.351) by 52.0\% and surpasses the three-agent benchmark (1.976) by 3.9\%. This pattern demonstrates that dual-network infrastructure enables restoration of the blocked contract.
+
+\subsection{Distributional Effects and Rent Dissipation}
+
+While aggregate welfare recovers completely to match the three-agent benchmark, the distribution of gains exhibits asymmetry. Table \ref{tab:distributional_analysis} decomposes welfare changes relative to the monopolistic baseline.
+
+\begin{table}[h]
+\centering
+\caption{Distributional Analysis: Winner-Loser Decomposition}
+\label{tab:distributional_analysis}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Agent} & \textbf{Monopoly} & \textbf{Dual-Network} & \textbf{Gain} & \textbf{Share of Total} \\
+ & (3F-WITH) & (3F-DUAL) & & \textbf{Improvement} \\
+\midrule
+National Bank & 0.064 & 0.238 & +0.174 & 23.9\% \\
+Local Bank & 0.441 & 0.345 & -0.096 & -- \\
+Local Firm & 0.202 & 0.851 & \textbf{+0.649} & \textbf{89.1\%} \\
+\midrule
+\textbf{TOTAL} & 0.706 & 1.434 & +0.728 & 100\% \\
+\bottomrule
+\end{tabular}
+
+\medskip
+
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Agent} & \multicolumn{2}{c}{\textbf{Utility vs. Benchmark}} & \textbf{Gap} & \textbf{Recovery Rate} \\
+ & 3F-WITHOUT & 3F-DUAL & & \\
+\midrule
+National Bank & 0.413 & 0.238 & -0.175 & 57.6\% \\
+Local Bank & 0.425 & 0.345 & -0.080 & 81.2\% \\
+Local Firm & 0.596 & 0.851 & \textbf{+0.255} & \textbf{142.8\%} \\
+\midrule
+\textbf{TOTAL} & 1.434 & 1.434 & 0.000 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Concentration of Gains.} The Local Firm---the agent directly affected by the restriction---captures 89.1\% of total welfare improvement (+0.649 out of +0.728). This concentration reflects that alternative infrastructure directly addresses the constraint binding this party. The National Bank receives 23.9\% of gains (+0.174), while the Local Bank experiences a utility \textit{decline} (-0.096, or 21.8\% of baseline utility), representing significant rent dissipation from elimination of its structural position.
+
+\textbf{Heterogeneous Recovery Rates Across Agents.} Comparing dual-network outcomes to the unrestricted benchmark (3F-WITHOUT) reveals heterogeneity. The Local Firm \textit{exceeds} its benchmark utility by 42.8\% (0.851 vs 0.596), indicating that strategic allocation across dual networks generates efficiency gains beyond simple constraint removal. Conversely, the National Bank recovers only 57.6\% of its benchmark utility (0.238 vs 0.413), and the Local Bank achieves 81.2\% recovery (0.345 vs 0.425). 
+
+\textbf{Implications for Distributional Equity.} The extreme concentration of gains (89.1\% to Local Firm) combined with the Local Bank's substantial loss (-21.8\%) creates potential political economy challenges. While aggregate welfare improves (+103.0\%), the distributional consequences may generate resistance from displaced intermediaries. However, the Local Bank's loss (-0.096) remains modest relative to aggregate gains (+0.728), implying a Kaldor-Hicks efficiency improvement: winners could compensate losers while remaining better off.
+
+\section{Sensitivity Analysis}
+\label{sec:sensitivity}
+
+The baseline results assume zero operational friction ($\lambda_A = 0$) and zero transparency benefits ($\tau = 0$), isolating the pure effect of regulatory arbitrage. This section examines robustness to these technological parameters.
+
+\subsection{Friction Sensitivity}
+
+Figure \ref{fig:friction_sensitivity} presents alternative network adoption and welfare outcomes across friction levels $\lambda_A \in [0, 0.5]$ with $\tau = 0$.
+
+% TO COMPLETE: Insert your Figure 8 (friction_sensitivity.png)
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{docs/Memoria/chapters/friction_sensitivity.png}
+\caption{Sensitivity to Friction ($\lambda_A$)}
+\label{fig:friction_sensitivity}
+\end{figure}
+
+\textbf{Key Findings:}
+\begin{enumerate}[noitemsep]
+    \item Alternative network utility declines monotonically from 1.43 to 1.05 as friction increases (Panel A)
+    \item Adoption falls nearly linearly from 50\% to 25\% (Panel B)
+    \item Critical threshold occurs at $\lambda_A \approx 0.15$, where adoption drops below 40\%
+    \item Local Firm utility counterintuitively \textit{increases} from 0.64 to 0.77 with rising friction (Panel D), reflecting improved bargaining power as alternative infrastructure becomes less attractive to competitors
+\end{enumerate}
+
+The monotonic decline in adoption validates that operational costs represent a first-order constraint on alternative network viability. Beyond $\lambda_A \approx 0.35$, adoption remains below 40\% even with maximal regulatory advantages, suggesting fundamental viability limits.
+
+\subsection{Transparency Benefits Sensitivity}
+
+Figure \ref{fig:transparency_sensitivity} examines adoption across transparency levels $\tau \in [0, 0.5]$ with moderate friction ($\lambda_A = 0.15$).
+
+% TO COMPLETE: Insert your Figure 9 (transparency_sensitivity_lambda0.15.png)
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{docs/Memoria/chapters/transparency_sensitivity_lambda0.15.png}
+\caption{Sensitivity to Transparency Benefits ($\tau$)}
+\label{fig:transparency_sensitivity}
+\end{figure}
+
+\textbf{Findings:}
+\begin{enumerate}[noitemsep]
+    \item Alternative utility increases linearly from 1.39 to 1.87 with transparency (Panel A)
+    \item Adoption rises modestly from 37\% to 45\%, indicating limited elasticity (Panel B)
+    \item Price differential grows from 0.02 to 0.45, closely tracking theoretical prediction (Panel C)
+    \item Alternative volume expands from 1.39 to 3.03 units (Panel D)
+\end{enumerate}
+
+The modest adoption response ($\varepsilon_{\text{adopt},\tau} \approx 0.16$) despite strong utility effects suggests that transparency alone cannot overcome substantial operational friction. Achieving high adoption requires \textit{combined} improvements in both dimensions.
+
+\subsection{Robustness Summary}
+
+The sensitivity analysis yields four primary conclusions:
+
+\begin{enumerate}[noitemsep]
+    \item \textbf{Friction Dominance:} Operational costs ($\lambda_A$) exert 3.3 times more influence on adoption than benefits ($\tau$)
+    
+    \item \textbf{Limited Compensation:} Transparency cannot fully offset high friction. Beyond $\lambda_A \approx 0.35$, adoption remains below 40\% even with maximal benefits ($\tau = 0.5$)
+    
+    \item \textbf{Viability Region:} Alternative networks achieve meaningful adoption (>40\%) across approximately 44\% of tested parameter space, suggesting coexistence is plausible under relatively broad conditions
+    
+    \item \textbf{Welfare Invariance:} Under the portfolio constraint $w_i^T + w_i^A = w_i^*$, total system welfare remains constant at 1.434 across all friction-transparency combinations. This validates that welfare recovery stems from regulatory arbitrage rather than technological efficiency.
+\end{enumerate}
+
+These findings collectively demonstrate that the structural welfare recovery documented in Section \ref{sec:results} is robust to moderate parameter variations ($\lambda_A \leq 0.20$, $\tau \geq 0.10$) but fragile under high friction ($\lambda_A > 0.35$).
+
+
+% ===================================================================
+% SECTION 6: CONCLUSION
+% ===================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper demonstrates that alternative network infrastructure achieves complete welfare recovery from regulatory restrictions through strategic circumvention, while competition within constrained networks provides only partial relief. Using a dual-network extension of \citet{jalan_incentive-aware_2024}, we show that infrastructure-level solutions dominate competition policy as a mechanism for mitigating regulatory inefficiency.
+
+\subsection{Main Findings}
+
+Three primary results emerge from the analysis:
+
+First, regulatory restrictions create substantial welfare losses (50.8\% in the baseline three-agent case), which cannot be eliminated through competition alone. Introducing competition improves outcomes by 46.5\%, but a persistent 27.9\% efficiency gap remains. This finding establishes that \textit{competition represents a second-best solution}---beneficial when constraints cannot be removed, but fundamentally incapable of replicating first-best efficiency.
+
+Second, alternative network infrastructure enables complete welfare recovery through regulatory arbitrage. The dual-network solution achieves aggregate utility of 1.434, matching the unrestricted three-agent benchmark exactly---a 103.0\% improvement over the restricted baseline (0.706). Agents strategically allocate portfolios across traditional and alternative networks, migrating the prohibited contract entirely to alternative infrastructure while maintaining 27.6\% of bilateral volume in traditional channels. Network coexistence emerges endogenously, with 72.4\% alternative adoption despite zero operational advantages ($\lambda_A = \tau = 0$), reflecting the strategic value of circumvention.
+
+Third, welfare gains distribute asymmetrically with concentration effects. The Local Firm---the agent directly blocked by the restriction---captures 89.1\% of total welfare improvement (+0.649 out of +0.728), while the National Bank receives 23.9\% (+0.174). The Local Bank experiences substantial rent dissipation (-0.096, or 21.8\% of baseline utility), representing elimination of its structural central agent position. 
+
+Remarkably, the Local Firm achieves utility (0.851) that \textit{exceeds} its unrestricted benchmark (0.596) by 42.8\%. This recovery occurs because dual-network structure enables exploitation of complementarities: direct access to the National Bank via alternative infrastructure combined with favorable intermediation terms via traditional networks. This mechanism yields outcomes superior to symmetric single-network configurations, demonstrating that infrastructure competition can generate efficiency gains beyond simple constraint removal.
+
+\subsection{Policy Implications}
+
+The findings challenge both technology-centric and competition-focused policy narratives:
+
+\textbf{For Financial Regulation.} When restrictions serve legitimate policy objectives (systemic risk management, consumer protection, market integrity), regulators face a trilemma: maintain constraints, prevent circumvention, or accept welfare losses. The results suggest \textit{strategic accommodation} may dominate outright prohibition. Alternative infrastructure enables welfare recovery while preserving restrictions where socially valuable.
+
+However, accommodation requires careful calibration. Sensitivity analysis reveals that alternative network viability depends critically on operational friction remaining below $\lambda_A \approx 0.35$. Regulators can influence this threshold through technology standards, interoperability requirements, and supervisory approaches that reduce friction rather than imposing blanket prohibitions. The observed 72.4\% adoption rate with zero inherent advantages indicates that even small friction reductions can substantially affect infrastructure choice.
+
+\textbf{For Competition Policy.} Promoting competitive intermediation generates meaningful welfare gains (+46.5\%) and should remain part of the policy toolkit. However, policymakers should recognize that competition cannot substitute for structural reform. Where regulatory restrictions bind, \textit{infrastructure policy should take precedence over competition policy}.
+
+This insight reframes debates about fintech and blockchain regulation. Rather than viewing alternative infrastructure primarily as a competitive threat to incumbent intermediaries, regulators should evaluate its role as a circumvention mechanism that can restore welfare while maintaining socially beneficial restrictions. The 27.9\% persistent gap under competition alone demonstrates that market structure reforms cannot overcome binding structural constraints.
+
+\textbf{For Welfare Distribution.} The extreme concentration of gains (89.1\% to the restricted party) combined with substantial intermediary losses (-21.8\%) creates political economy challenges. While aggregate welfare improves dramatically (+103.0\%), displaced intermediaries may resist adoption. The Local Bank's loss (-0.096) remains modest relative to aggregate gains (+0.728), implying an improvement where winners could compensate losers. However, the heterogeneous recovery rates across agents---Local Firm achieves 142.8\% of benchmark while National Bank recovers only 57.6\%---suggest that infrastructure adoption operates as a \textit{targeted structural remedy} rather than a broad redistribution mechanism.
+
+\textbf{For Technology Assessment.} The finding that regulatory arbitrage, not inherent efficiency, drives adoption in restricted markets has important implications for technology evaluation. Alternative infrastructure achieves 72.4\% adoption even with zero intrinsic advantages ($\tau = \lambda_A = 0$). Policymakers should therefore distinguish between adoption driven by regulatory gaps versus adoption driven by genuine efficiency improvements. High adoption rates do not necessarily indicate superior technology---they may simply reflect circumvention value.
+
+\subsection{Limitations and Extensions}
+
+Several limitations suggest directions for future research:
+
+\textbf{Fixed Total Exposure.} The portfolio constraint $w_i^T + w_i^A = w_i^*$ assumes agents maintain constant total exposure. Relaxing this constraint to allow expansion or contraction of aggregate positions would capture additional welfare effects from technology-enabled risk-taking or deleveraging. The complete welfare recovery result depends partially on this assumption, which prevents agents from leveraging alternative networks to expand total risk exposure.
+
+\textbf{Three-Agent Baseline.} The analysis focuses on three-agent configurations to isolate infrastructure effects from competitive dynamics. Extending to richer network structures with heterogeneous intermediaries---varying in efficiency, regulatory treatment, or technological capabilities---would generate more realistic market structure predictions. The observed recovery effect (Local Firm exceeding benchmark) suggests that network topology significantly affects welfare distribution in ways that merit deeper investigation.
+
+\textbf{Static Framework.} The model analyzes long-run equilibria but abstracts from transition dynamics. How quickly do agents migrate between networks? What frictions slow or accelerate adoption? The observed 72.4\% adoption rate emerges instantaneously in equilibrium; incorporating dynamic adjustment costs and learning effects would inform policy design during infrastructure transitions. Extensions could examine whether temporary subsidies (reducing effective $\lambda_A$) during adoption phases help alternative networks achieve critical mass, analogous to sponsored adoption mechanisms identified by \citet{katz_network_1985}.
+
+\textbf{Network Effects and Liquidity.} The analysis treats each bilateral contract independently, abstracting from network effects that make platforms more valuable as adoption increases. Incorporating positive feedback loops would generate multiple equilibria and path-dependence, potentially explaining persistent coexistence of heterogeneous platforms or rapid tipping toward dominant standards. The 72.4\% adoption rate might represent a tipping point beyond which further migration accelerates endogenously.
+
+\subsection{Concluding Remarks}
+
+Financial markets increasingly feature competing infrastructures---traditional banking networks versus blockchain protocols, centralized exchanges versus DeFi platforms, domestic payment systems versus international alternatives. This paper provides analytical tools for understanding how infrastructure competition interacts with regulatory design.
+
+The insight is that infrastructure choice represents a fundamentally different margin of adjustment than competition within a single network. Competition reduces intermediation rents, but cannot overcome structural constraints. Alternative infrastructure, by contrast, enables circumvention of specific restrictions while preserving their application in traditional networks.
+
+The welfare gains from infrastructure choice are substantial---103.0\% improvement over the restricted baseline, achieving complete recovery to the unrestricted benchmark. Yet these gains distribute asymmetrically: the restricted party captures 89.1\% of improvement while incumbent intermediaries experience 21.8\% utility losses. This distributional pattern generates political economy challenges from displaced incumbents.
+
+The normative challenge is designing institutional arrangements that balance these objectives. When do welfare gains from circumvention justify tolerance of regulatory arbitrage? How should policymakers weigh aggregate efficiency against distributional equity? The 72.4\% adoption rate achieved with zero inherent technological advantages demonstrates that regulatory differentials alone can drive substantial infrastructure migration, suggesting that \textit{regulatory design, not just technology choice, determines market structure}.
+
+As financial technology continues to evolve, the dual-network framework developed here offers a foundation for rigorous analysis of these trade-offs. Infrastructure policy deserves greater attention alongside traditional focus on competition and conduct regulation. The finding that structural solutions achieve complete welfare recovery while competition alone leaves 27.9\% gaps unresolved suggests a reorientation of regulatory priorities: where binding constraints exist, enabling infrastructure alternatives may dominate promoting within-network competition.
+\bibliographystyle{newapa}
+\bibliography{docs/Memoria/referencias}
+
+% ===================================================================
+% APPENDICES
+% ===================================================================
+\newpage
+\appendix
+
+\section{Mathematical Derivations}
+\label{app:derivation}
+\subsection{Proof of Proposition 1}
+
+This appendix provides the detailed step-by-step derivation for the dual-network optimization problem, as summarized in Proposition \ref{prop:dual_optimal}.
+
+\subsubsection{Problem Setup}
+The total portfolio $w_i^* = w_i^T + w_i^A$ is exogenous and given. The problem is reformulated as maximizing the agent's utility by choosing the traditional portfolio $w_i^T$, which residually determines the alternative portfolio $w_i^A = w_i^* - w_i^T$.
+
+\subsubsection{Utility Function}
+The total utility function for firm $i$ is the sum of utilities from both networks:
+\begin{equation}
+g_i(w_i^T, w_i^A, P^T, P^A) = g_i^T(w_i^T, P^T) + g_i^A(w_i^A, P^A)
+\end{equation}
+
+Where the utilities in each network are defined as:
+
+\textbf{Traditional Network:}
+\begin{equation}
+g_i^T(w_i^T, P^T) = (w_i^T)^\top(m_i - P^T e_i) - \gamma_i(w_i^T)^\top\Sigma_i w_i^T
+\end{equation}
+
+\textbf{Alternative Network:} (Includes benefit $\tau$ and friction $\lambda_A$)
+\begin{equation}
+g_i^A(w_i^A, P^A) = (w_i^A)^\top(m_i + \tau - P^A e_i) - \gamma_i(w_i^A)^\top\Sigma_i w_i^A - \lambda_A\|w_i^A\|^2
+\end{equation}
+
+\subsubsection{Optimization Problem}
+We substitute $w_i^A = (w_i^* - w_i^T)$ into the total utility function to get a function of $w_i^T$ only:
+
+\begin{align}\label{eq:app_ut_tot}
+g_i(w_i^T)
+&= (w_i^T)^\top (m_i - P^T e_i)
+  - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T \notag\\
+&\quad+ (w_i^* - w_i^T)^\top (m_i + \tau - P^A e_i) \notag\\
+&\quad- \gamma_i\,(w_i^* - w_i^T)^\top \Sigma_i\,(w_i^* - w_i^T) \\
+&\quad - \lambda_A\,\|(w_i^* - w_i^T)\|^2 \notag
+\end{align}
+
+This maximization is subject to the traditional network's regulatory constraints:
+\begin{equation}
+\Psi_i^T w_i^T = w_i^T
+\end{equation}
+
+\subsubsection{Grouping of Terms}
+To find the maximum, we first rewrite the objective function $g_i(w_i^T)$ in the standard quadratic form:
+\[
+g_i(w_i^T)
+= \underbrace{\text{constants}}_{C_i}
+\;+\;(w_i^T)^\top a_i
+\;-\;(w_i^T)^\top H_i\,w_i^T
+\]
+where \(w := w_i^T\) and \(w^* := w_i^*\).
+
+\subsubsection{1. Expansion of Terms}
+We expand the quadratic terms related to $w_i^A = (w_i^* - w_i^T)$:
+\begin{align*}
+(w^* - w)^\top \Sigma_i\,(w^* - w)
+&= (w^*)^\top \Sigma_i\,w^*
+  - 2\,(w^*)^\top \Sigma_i\,w
+  + w^\top \Sigma_i\,w \\
+\|w^* - w\|^2
+&= (w^*)^\top w^*
+  - 2\,(w^*)^\top w
+  + w^\top w
+\end{align*}
+
+\subsubsection{2. Identification of Coefficients}
+Substituting these expansions into $g_i(w_i^T)$ and grouping terms by $w_i^T$ (as $w$), we identify the constant, linear, and quadratic coefficients.
+
+\begin{itemize}
+  \item \textbf{Constant Term ($C_i$):} (All terms not containing $w_i^T$)
+    \[
+      C_i = (w^*)^\top (m_i + \tau - P^A e_i) 
+            - \gamma_i\,(w^*)^\top \Sigma_i\,w^*
+            - \lambda_A\,(w^*)^\top w^*.
+    \]
+  
+  \item \textbf{Linear Term ($a_i$):} (All terms linear in $w_i^T$)
+    \begin{align*}
+      (w_i^T)^\top a_i &= (w_i^T)^\top (m_i - P^T e_i) - (w_i^T)^\top (m_i + \tau - P^A e_i) \\
+                      &\quad + 2\gamma_i (w_i^T)^\top \Sigma_i w_i^* + 2\lambda_B (w_i^T)^\top w_i^* \\
+      \Rightarrow a_i &= (P^A - P^T)e_i - \tau
+                      + 2\,\gamma_i\,\Sigma_i\,w_i^*
+                      + 2\,\lambda_A\,w_i^*
+    \end{align*}
+    
+  \item \textbf{Quadratic Term ($H_i$):} (All terms quadratic in $w_i^T$)
+    \begin{align*}
+      -(w_i^T)^\top H_i w_i^T &= - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T - \gamma_i\,(w_i^T)^\top \Sigma_i\,w_i^T - \lambda_A\,(w_i^T)^\top w_i^T \\
+      \Rightarrow H_i &= 2\,\gamma_i\,\Sigma_i + \lambda_A\,I
+    \end{align*}
+\end{itemize}
+
+\subsubsection{3. Final Quadratic Form}
+The objective function is now:
+\[
+g_i(w_i^T)
+= C_i
+\;+\;(w_i^T)^\top\,a_i
+\;-\;(w_i^T)^\top\,H_i\,w_i^T,
+\]
+with $a_i$ and $H_i$ defined as in Proposition \ref{prop:dual_optimal} (with $P$ differentiated).
+
+\subsection{Solution with Constraints}
+We now solve the constrained problem of maximizing $g_i(w_i^T)$ subject to $\Psi_i^T w_i^T = w_i^T$. This is a standard quadratic optimization problem.
+
+\subsubsection{First-Order Condition}
+For the unconstrained maximum, the first-order condition is:
+\begin{equation}
+\frac{\partial g_i}{\partial w_i^T} = a_i - 2H_i w_i^T = 0 \implies w_i^T = \frac{1}{2}H_i^{-1} a_i
+\end{equation}
+
+\subsubsection{Incorporation of Constraints (Lagrangian)}
+To incorporate $\Psi_i^T w_i^T = w_i^T$, we use the Lagrangian method:
+\begin{equation}
+\mathcal{L} = (w_i^T)^\top a_i - (w_i^T)^\top H_i w_i^T - \mu_i^\top(\Psi_i^T w_i^T - w_i^T)
+\end{equation}
+The first-order conditions are:
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial w_i^T} &= a_i - 2H_i w_i^T - \Psi_i^{T\top}\mu_i + \mu_i = 0 \\
+\frac{\partial \mathcal{L}}{\partial \mu_i} &= \Psi_i^T w_i^T - w_i^T = 0
+\end{align}
+Solving this system for $w_i^T$ yields the optimal constrained solution.
+
+\subsection{Final Solution}
+The solution to the constrained optimization problem is:
+\begin{equation}
+\boxed{w_i^{T*} = \Psi_i^{T\top}(\Psi_i^T H_i^{-1} \Psi_i^{T\top})^{-1} \Psi_i^T H_i^{-1} a_i}
+\end{equation}
+where:
+\begin{align}
+a_i &= (P^A - P^T)e_i - \tau + 2\gamma_i \Sigma_i w_i^* + 2\lambda_A w_i^* \\
+H_i &= 2\gamma_i \Sigma_i + \lambda_A I
+\end{align}
+This expression for $w_i^{T*}$ is exactly what is defined as $Q_i^{\text{dual}} \cdot a_i$ in Proposition \ref{prop:dual_optimal}, completing the proof.
+
+\subsection{Second-Order Condition}
+The matrix $H_i = 2\gamma_i \Sigma_i + \lambda_B I$ is positive definite (assuming $\gamma_i > 0$, $\Sigma_i \succ 0$, and $\lambda_B \geq 0$), guaranteeing that the solution found is a unique global maximum.
+
+\end{document}

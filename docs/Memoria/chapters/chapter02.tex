@@ -1,6 +1,5 @@
-% cap2.tex
-
 \chapter{Bibliographic review}
+\label{capreview}
 \section{Traditional Financial Networks}
 A network is a collection of nodes (which can represent individuals, firms, or other entities) connected by links (which represent relationships or interactions between the nodes). Networks can be used to model a wide range of systems, including social, economic, financial and technological structures. Social networks describe the relationships between individuals or organizations, while economic networks focus on the interactions between economic agents. Technological networks, like the internet, represent physical or digital infrastructures that facilitate these interactions. \cite{bich_existence_2020}
 
@@ -21,6 +20,8 @@ Traditional financial networks are conceptualized as structures connecting nodes
     \item \textbf{\citeA{elliott_financial_2014}:} Proposed a network-based approach to study financial contagion, demonstrating how the structure of connections can amplify or mitigate systemic risks.
     \item \textbf{\citeA{jalan_incentive-aware_2024}:} Use a square matrix to represent origin-destination transactions and another matrix for associated prices, introducing a mean-variance utility function to model financial agents' decisions.
 \end{itemize}
+
+
 
 \paragraph{Risk Propagation}
 Traditional networks are highly vulnerable to financial contagion, especially when a critical node (such as a systemic bank) fails. \citeA{glasserman_contagion_2016} emphasize that dense networks can be resilient to small shocks but fragile under systemic crises.
@@ -43,7 +44,7 @@ Financial intermediaries, like banks and clearinghouses, impose substantial fees
 High costs are also a barrier to financial inclusion, especially in emerging markets.
 
 \paragraph{Opacity and Information Asymmetries}
-In traditional networks, transaction information is typically restricted to the involved parties, making it difficult to assess risks and encouraging opportunistic behavior. \citeA{elliott_financial_2014} emphasize that a lack of transparency exacerbates financial contagion under uncertainty.
+In traditional networks, transaction information is typically restricted to the involved parties, making it difficult to assess risks and encouraging opportunistic behavior. 
 
 \paragraph{Systemic Risk}
 Centralization in key institutions, such as large banks or centralized markets, creates single points of failure. \citeA{elliott_financial_2014} note that this concentration of risk makes traditional networks more susceptible to propagate macroeconomic shocks or liquidity events.
@@ -67,11 +68,379 @@ Network effects are central to understanding the dynamics and behavior of tradit
 \end{itemize}
 
 \paragraph{Centralized Structures}
-Traditional financial networks often rely on centralized structures, such as central banks. While this facilitates management and regulation, it also concentrates risks in a few key nodes. \citeA{gofman_eciency_nodate} argue that large interconnected banks improve efficiency mainly because
+Traditional financial networks often rely on centralized structures, such as central banks. While this facilitates management and regulation, it also concentrates risks in a few key nodes. \citeA{gofman_efficiency_2017} argue that large interconnected banks improve efficiency mainly because
 they decrease the length of intermediation chains in the market.  
 
 
-\section{Blockchain}
+\section{Competition Between Financial Infrastructures}
+
+Financial networks can be conceptualized as two-sided platforms that facilitate interactions between multiple types of agents. In this framework, the network infrastructure itself acts as a platform that must attract and retain participants on both ``sides" of transactions. The dual-network model developed in this thesis extends this logic by examining competition between two distinct platform infrastructures: traditional and alternative networks. Understanding platform competition theory is essential for analyzing how agents make adoption decisions and how equilibrium network configurations emerge.
+
+While network theory focuses on stability, \citeA{economides_economics_1996} establishes that financial networks function economically as platforms due to network externalities: the utility of a financial connection increases with the liquidity and depth of the network. Thus, the competition between the Traditional and Alternative networks can be modeled not just as graph formation, but as platform competition where agents 'multi-home' to maximize utility.
+
+\subsection{Two-Sided Markets and Platform Competition}
+
+The theoretical foundation for analyzing competition between financial infrastructures draws heavily from the literature on two-sided markets and platform competition. This provides crucial insights into how networks compete for users, how pricing structures emerge, and under what conditions multiple platforms can coexist.
+
+\paragraph{Foundational Framework}
+
+\citeA{rochet_platform_2003} provide the foundational framework for analyzing two-sided markets, defining them as markets where platforms enable interactions between two distinct groups of users, and where the value to users on one side depends on participation by users on the other side. They introduce the concept of \textit{indirect network externalities}, where the utility of joining a platform depends not only on the number of users on one's own side but critically on participation by the other side.
+
+In the context of financial networks, these two sides can be conceptualized as liquidity providers (those with capital to lend or invest) and liquidity demanders (those seeking financing or hedging). A key insight from Rochet and Tirole is that platforms must carefully structure their pricing to balance participation across both sides. This is captured in their concept of \textit{cross-subsidization}, where platforms may charge below-cost prices to one side to attract participants while recovering costs from the other side.
+
+\citeA{rochet_two-sided_2006} further develop this framework by examining the conditions under which a market can be characterized as two-sided. They establish that a market is two-sided if the platform can affect the volume of transactions by charging more to one side while reducing the price to the other by an equal amount, keeping the total price constant. This non-neutrality of the price structure distinguishes two-sided markets from traditional markets and has profound implications for optimal pricing and platform competition.
+
+\paragraph{Platform Competition with Multihoming}
+
+\citeA{armstrong_competition_2006} extends the two-sided markets framework to analyze competition between multiple platforms. He identifies three key competitive scenarios based on agents' participation patterns:
+
+\begin{enumerate}
+    \item \textbf{Single-homing:} Users join only one platform, leading to winner-take-all outcomes driven by network effects
+    \item \textbf{Multi-homing:} Users join multiple platforms simultaneously, which can soften competition and enable coexistence
+    \item \textbf{Competitive bottlenecks:} One side single-homes while the other multi-homes, creating asymmetric competitive pressures
+\end{enumerate}
+
+\citeA{armstrong_competition_2006} demonstrates that the competitive equilibrium depends critically on whether users can multi-home at low cost. When multi-homing is costly, markets tend toward concentration on a single platform due to network effects. The intuition is straightforward: if most users on one side choose a particular platform, users on the other side will concentrate there as well to access more potential counterparties. This creates a positive feedback loop favoring the dominant platform.
+
+However, when multi-homing costs are moderate, multiple platforms can coexist by differentiating their services. Differentiation reduces direct competition by creating distinct value propositions that appeal to different user segments or serve different transaction types. In equilibrium, users may multi-home, allocating their activity across platforms based on which offers the best match for each specific transaction.
+
+\paragraph{Application to the Dual-Network Model}
+
+The dual-network framework explicitly models multi-homing through the portfolio allocation decision. Each agent $i$ chooses $(w_i^T, w_i^A)$ subject to $w_i^T + w_i^A = w_i^*$, representing simultaneous participation in both networks. The friction parameter $\lambda_A$ captures the cost of multi-homing on the alternative platform, encompassing both direct transaction costs and indirect costs such as operational complexity and learning requirements.
+
+Armstrong's theory provides testable predictions about equilibrium configurations in our model:
+
+\begin{itemize}
+    \item \textbf{If $\lambda_A$ is very high:} Multi-homing becomes prohibitively costly, leading agents to single-home on the traditional network ($w_i^A \approx 0$). The alternative network fails to achieve meaningful adoption despite potential benefits.
+    
+    \item \textbf{If $\lambda_A$ is moderate and $\tau > 0$:} Coexistence through differentiation becomes feasible. The alternative network's transparency benefits ($\tau$) provide sufficient value to justify the friction costs for certain types of transactions or certain agent types.
+    
+    \item \textbf{If $\lambda_A \to 0$ and $\tau$ is large:} The alternative network offers a strictly superior value proposition, potentially leading to migration away from the traditional system.
+\end{itemize}
+
+This theoretical grounding enables us to interpret the simulation results in Chapter 4 through the lens of established platform competition theory, connecting our specific model to broader patterns observed in markets with network effects.
+
+\subsection{Regulatory Arbitrage and Structural Inefficiency}
+
+Regulatory constraints, while intended to mitigate risk, often generate unintended structural inefficiencies. \citeA{kane_good_1977} conceptualizes this dynamic as the ``Regulatory Dialectic", a cyclical process where regulation induces economic agents to innovate technologically solely to bypass costly constraints. Unlike static models where agents passively accept restrictions, Kane argues that the "excluded" volume seeks new channels, creating a ``shadow" system.
+
+In the context of our model, the Alternative Network represents precisely this technological response: a mechanism to restore connectivity when the Traditional Network ($\Psi^T$) is blocked.
+
+Empirically, this phenomenon is well-documented. \citeA{buchak_fintech_2018} provide causal evidence that regulatory arbitrage is a primary driver of Fintech growth. They find that nearly 50\% of the expansion in shadow banking lending is driven by regulatory burdens on traditional banks (such as higher capital requirements). This validates our model's central mechanism: that volume migration to alternative infrastructures ($w_i^A$) is not merely a preference for technology, but a rational economic response to regulatory friction in the incumbent sector.
+
+However, the literature presents a debate on the welfare implications of this arbitrage. While some view shadow banking as a source of systemic instability \cite{gorton_regulating_2010}, our framework explores the possibility that transparent alternative infrastructures (characterized by $\tau > 0$) can provide the efficiency benefits of arbitrage while mitigating the risks typically associated with shadow banking.
+
+\subsection{Technology Adoption with Network Effects}
+
+The adoption of alternative financial infrastructure faces coordination challenges characteristic of markets with network externalities. The theoretical literature on technology adoption provides insights into why superior technologies may fail to displace inferior incumbents and under what conditions transitions between technological standards occur.
+
+\paragraph{Network Externalities and Coordination Problems}
+
+\citeA{katz_network_1985} provide the seminal analysis of how network externalities affect technology adoption decisions. They demonstrate that technologies with positive network externalities, where the value to each user increases with the number of other users, face a fundamental coordination problem. Potential adopters may prefer not to adopt if they expect few others to adopt, even when universal adoption would make everyone better off.
+
+This coordination failure creates several important phenomena:
+
+\begin{enumerate}
+    \item \textbf{Excess Inertia:} Markets may remain ``locked in'' to inferior technologies because users rationally expect others to continue using the established standard. Even if all agents would prefer to coordinate on a new technology, the risk of unilateral adoption prevents the transition.
+    
+    \item \textbf{Multiple Equilibria:} Both high-adoption and low-adoption outcomes can be self-fulfilling equilibria for identical underlying parameters. Which equilibrium obtains depends on agents' expectations about others' behavior, introducing path dependence and history dependence into adoption dynamics.
+    
+    \item \textbf{Sponsored vs Unsponsored Standards:} A sponsor (such as a firm or consortium) can subsidize early adoption to overcome coordination failures, increasing the likelihood of successful technology transitions. Without sponsorship, superior technologies may fail due purely to coordination problems.
+\end{enumerate}
+
+\citeA{katz_network_1985} further show that the presence of network effects can lead to ``excess momentum'' as well as excess inertia. Once a new technology begins gaining adoption, bandwagon effects may cause overly rapid transitions, potentially displacing the incumbent before the new technology is fully mature.
+
+\paragraph{Relevance for the Dual-Network Model}
+
+The traditional network has an advantage analogous to an established standard with a large installed base. Even if the alternative network offers superior technology (positive $\tau$), it may fail to achieve adoption if agents coordinate their expectations on continued dominance of the traditional system.
+
+Our model's potential for equilibrium multiplicity (when $Z_F^{\text{dual}}$ does not have full rank) can be interpreted through this lens. Different initial expectations about adoption patterns ($w_i^A$ versus $w_i^T$) can lead to different stable equilibria, even for identical fundamental parameters $(\tau, \lambda_A, \Sigma_i, \mu_i)$. This multiplicity reflects the coordination problem inherent in network technology adoption.
+
+The bilateral negotiation algorithm (\ref{alg:pairwise}) can be viewed as a decentralized coordination mechanism. The algorithm's convergence properties determine whether the system can successfully coordinate on equilibria featuring positive adoption of the alternative network, or whether coordination failures trap the system in traditional-network-only configurations.
+
+\paragraph{Installed Base and Technology Transitions}
+
+\citeA{farrell_standardization_1985} analyze how coordination on technology standards occurs when adoption decisions are sequential rather than simultaneous. They show that early movers can create ``bandwagon effects'' where later adopters rationally follow the choices of pioneers due to network externalities. This sequential structure introduces additional complexity: early adopters bear greater risk because they cannot observe others' choices, but their decisions influence the incentives facing subsequent adopters.
+
+\citeA{farrell_installed_1986} extend this analysis to examine the role of installed base in preventing superior technologies from displacing inferior incumbents. They formalize the concept of \textit{excess inertia}, showing that an established technology with a large installed base can resist competition from objectively better alternatives. The key insight is that even when all agents agree the new technology is superior, the transition may not occur because each agent rationally waits for others to move first.
+
+Their analysis reveals that for a new technology to displace an incumbent, it typically requires not merely marginal superiority but substantial advantages to overcome the coordination benefits of the established standard. The magnitude of required superiority depends on the strength of network effects and the costs of coordinating a transition.
+
+\paragraph{Application to Financial Network Competition}
+
+The traditional financial network possesses an enormous ``installed base'' of existing relationships, infrastructure, regulatory frameworks, and operational procedures. For the alternative network to achieve meaningful adoption, the transparency benefits ($\tau$) must be large enough to overcome both the direct friction costs ($\lambda_A$) and the coordination advantages of the traditional system.
+
+This framework could help explain why blockchain adoption in finance has progressed more slowly than some early predictions suggested. The coordination barriers are substantial even when the technology offers clear benefits in transparency, settlement speed, costs, or operational efficiency. Financial institutions must not only adopt the technology themselves but also coordinate with counterparties, regulators, and infrastructure providers.
+
+Our model captures these dynamics through several mechanisms:
+
+\begin{itemize}
+    \item The portfolio constraint $w_i^* = w_i^T + w_i^A$ reflects that adoption requires reallocating away from established relationships
+    \item The regulatory constraints $\Psi_i^T$ and $\Psi_i^A$ can differ, capturing how legal frameworks may not immediately accommodate new technologies
+    \item The negotiated prices $P$ must adjust to reflect the value of accessing either network, with the alternative network potentially requiring price concessions to compensate for lower liquidity
+\end{itemize}
+
+\paragraph{Path Dependence and Lock-In}
+
+\citeA{arthur_competing_1989} introduces the concepts of path dependence and lock-in in markets with increasing returns to adoption. His model demonstrates that when technologies exhibit positive feedbacks (becoming more valuable as more users adopt), small historical accidents or early advantages can lead to permanent dominance of one technology, even if another is objectively superior.
+
+This framework yields several key insights:
+
+\begin{enumerate}
+    \item \textbf{Irreversibility:} Once a technology achieves sufficient adoption, switching becomes prohibitively costly even if a better alternative emerges. The installed base creates switching costs that grow with adoption, making transitions increasingly difficult over time.
+    
+    \item \textbf{Unpredictability:} Which technology wins may depend on random early events rather than deterministic technological superiority. Historical accidents during the early phases of competition can have permanent consequences.
+    
+    \item \textbf{Potential Inefficiency:} Markets may ``lock in'' to inferior technologies. Social welfare could be improved by coordinating a transition to the better alternative, but such coordination may be impossible without external intervention.
+    
+    \item \textbf{Timing Matters:} The sequence of adoption decisions affects outcomes. Technologies that gain early leads through luck or aggressive subsidization can translate temporary advantages into permanent dominance.
+\end{enumerate}
+
+The analysis emphasizes that in markets with increasing returns, ex-post outcomes may be highly inefficient from a social welfare perspective, even though each individual decision is rational given the prevailing circumstances. The invisible hand of the market does not necessarily guide toward optimal technological choices when network effects are present.
+
+\paragraph{Connection to Dual-Network Dynamics}
+
+Our model captures path dependence through the initial portfolio allocation $w_i^*$, which is derived from the unconstrained single-network equilibrium. If the traditional network has established this initial configuration through historical development, agents face costs (captured by $\lambda_A$ and the portfolio constraint) to reallocate toward the alternative.
+
+This creates \textit{hysteresis}: the equilibrium allocation $(w_i^{T*}, w_i^{A*})$ depends on the history of how the system arrived at its current state. Had the alternative network been established first, a different configuration might have emerged and persisted, even with identical technological parameters $(\tau, \lambda_A)$.
+
+The model enables us to analyze whether lock-in to traditional networks represents efficient specialization (justified by genuine technological limitations of alternatives) or inefficient persistence (continuing despite superior alternatives due to coordination failures). This distinction has important policy implications:
+
+\begin{itemize}
+    \item \textbf{Efficient lock-in:} If $\tau$ is small or $\lambda_A$ is large relative to the benefits of transparency, concentration on traditional networks may be welfare-maximizing. Policy interventions to promote alternatives would reduce efficiency.
+    
+    \item \textbf{Inefficient lock-in:} If $\tau$ is large but coordination failures prevent adoption, welfare could be improved through policies that facilitate coordination, such as regulatory sandboxes, interoperability standards, or sponsored pilot programs.
+\end{itemize}
+
+The welfare metrics defined in Chapter 3 allow us to empirically assess whether observed configurations represent efficient outcomes or inefficient lock-in.
+
+\subsection{Multihoming and Switching Costs}
+
+The decision to adopt alternative financial infrastructure involves not only network effects but also direct costs of transitioning between systems. The literature on switching costs provides insights into how these costs shape competitive dynamics and affect both the incentives of incumbent platforms and the strategies of entrants.
+
+\paragraph{Types and Effects of Switching Costs}
+
+\citeA{farrell_coordination_2007} study how switching costs and network effects interact to shape competitive dynamics in technology markets. They distinguish between several conceptually distinct types of costs:
+
+\begin{enumerate}
+    \item \textbf{Transaction costs of switching:} Direct expenditures required to move from one technology to another, such as fees for transferring assets between networks or costs of establishing new connections.
+    
+    \item \textbf{Learning costs:} Time and effort required to master a new system, including understanding new interfaces, operational procedures, and risk management practices.
+    
+    \item \textbf{Artificial switching costs:} Deliberate incompatibilities created by incumbent platforms to lock in users, such as proprietary standards or exclusive contractual arrangements.
+    
+    \item \textbf{Coordination costs:} Costs arising from the need to coordinate with counterparties, particularly in network industries where bilateral compatibility is essential.
+\end{enumerate}
+
+Farrell and Klemperer show that switching costs can lead to ``fat-cat effects'' where incumbents become complacent and inefficient, confident that switching costs protect them from competition. However, switching costs can also intensify competition for new users, leading to aggressive introductory pricing or subsidization as firms recognize that gaining early users creates lock-in advantages for future periods.
+
+The welfare effects of switching costs are ambiguous. On one hand, they reduce static efficiency by preventing users from selecting the best current option. On the other hand, they can enhance dynamic efficiency by increasing the incentive for innovation: firms know that successful innovations will be protected by switching costs, making R\&D investments more profitable.
+
+\paragraph{Application to the Dual-Network Framework}
+
+The friction parameter $\lambda_A$ in our model captures multiple dimensions of switching costs:
+
+\begin{itemize}
+    \item \textbf{Direct costs:} Transaction fees, gas fees on blockchain networks, bridging costs between traditional and alternative systems
+    \item \textbf{Learning costs:} Time required to understand smart contract interfaces, wallet management, and security practices for alternative networks
+    \item \textbf{Operational complexity:} Additional infrastructure required to support operations on multiple networks simultaneously
+    \item \textbf{Liquidity costs:} Reduced market depth on alternative networks may lead to worse execution prices, particularly for large transactions
+\end{itemize}
+
+The quadratic functional form $\lambda_A \|w_i^A\|^2$ captures the idea that switching costs increase more than proportionally with the scale of adoption. Moving a small portion of one's portfolio to the alternative network is relatively straightforward and can be accomplished with existing infrastructure. However, moving the entire portfolio faces substantial operational challenges, requiring comprehensive system changes and potentially creating significant liquidity risk during the transition.
+
+This nonlinearity has important implications for adoption patterns. It suggests that we should expect to observe:
+
+\begin{itemize}
+    \item \textbf{Partial adoption by many agents} rather than complete adoption by a few
+    \item \textbf{Heterogeneous adoption rates} across agent types, with smaller or more risk-tolerant agents adopting more aggressively
+    \item \textbf{Gradual transitions} rather than rapid tipping, as each agent faces increasing marginal costs of further adoption
+\end{itemize}
+
+The portfolio constraint $w_i^T + w_i^A = w_i^*$ makes the trade-off explicit: adopting the alternative network requires reducing exposure on the traditional network. This creates an opportunity cost for adoption that goes beyond the direct friction costs, as agents must forgo the benefits of established traditional relationships to experiment with alternatives.
+
+\paragraph{Dynamic Pricing Competition with Switching Costs}
+
+\citeA{doganoglu_switching_2010} analyzes dynamic price competition when consumers face switching costs, extending static models to examine how firms adjust strategies over time. Unlike static frameworks, this approach captures the intertemporal trade-offs firms face between harvesting profits from locked-in customers and attracting new customers.
+
+Key results from this dynamic analysis include:
+
+\begin{enumerate}
+    \item \textbf{Introductory pricing:} Firms may offer below-cost prices initially to build installed base, then raise prices once customers are locked in. This creates a two-tier pricing structure where new customers receive better terms than existing customers.
+    
+    \item \textbf{Equilibrium switching:} Even with switching costs, equilibrium typically involves some customers switching over time as firms compete for market share. The rate of switching depends on the magnitude of switching costs relative to the intensity of competition.
+    
+    \item \textbf{Consumer welfare:} Switching costs can paradoxically benefit consumers if they intensify competition for new customers. Firms may compete more aggressively to win customers whose future business will be protected by switching costs, leading to lower prices than in the absence of lock-in.
+\end{enumerate}
+
+Doganoglu's analysis reveals that the welfare effects of switching costs depend critically on the time horizon considered. In the short run, switching costs reduce welfare by preventing customers from selecting the best current option. However, in the long run, if switching costs intensify competition sufficiently, they may increase welfare by driving down prices and encouraging investment in quality improvements.
+
+\paragraph{Relevance for Dual-Network Adoption}
+
+This dynamic perspective suggests that even with substantial friction costs ($\lambda_A$), the alternative network could gradually gain market share if it can offer sufficient incentives ($\tau$) to early adopters. The key question is whether $\tau$ is large enough to compensate not just for current friction costs but also for the risk that the alternative network fails to achieve critical mass.
+
+Our static model captures a snapshot of this dynamic process, representing the equilibrium configuration once expectations have stabilized. However, the comparative statics with respect to $\tau$ and $\lambda_A$ can be interpreted as describing the long-run evolution of the system:
+
+\begin{itemize}
+    \item \textbf{Decreasing $\lambda_A$ over time:} As the alternative network infrastructure matures, friction costs decline through improved tooling, better documentation, and accumulated experience. This corresponds to a gradual shift in equilibrium allocations toward $w_i^A$.
+    
+    \item \textbf{Increasing $\tau$ over time:} As more agents adopt the alternative network, transparency benefits compound due to network effects. Observing counterparty behavior becomes more informative when more transactions occur on transparent infrastructure.
+    
+    \item \textbf{Policy implications:} Temporary subsidies that reduce effective $\lambda_A$ during the adoption phase could help the alternative network achieve critical mass, after which organic growth becomes self-sustaining. This corresponds to the ``sponsorship'' mechanism identified by \citeA{katz_network_1985}.
+\end{itemize}
+
+Future extensions of the model could explicitly incorporate these dynamic considerations, examining optimal subsidy policies or the conditions under which the alternative network achieves sustainable growth.
+
+\subsection{Coexistence versus Winner-Take-All Dynamics}
+
+The theoretical literature on platform competition reveals that markets with network effects do not always tip toward single-platform dominance. Under certain conditions, multiple platforms can coexist in stable equilibrium, each serving distinct market segments or offering differentiated services. Understanding these conditions is crucial for predicting long-run outcomes in financial network competition.
+
+\paragraph{Determinants of Market Structure}
+
+The factors determining whether multiple platforms coexist or markets tip toward dominance include:
+
+\begin{itemize}
+    \item Factors favoring winner-take-all outcomes:
+    \begin{itemize}
+        \item Strong direct network effects where value increases sharply with same-side adoption
+        \item Low multihoming costs enabling users to easily concentrate on a single platform
+        \item Homogeneous user preferences providing little scope for differentiation
+        \item Lack of meaningful quality differences between platforms
+        \item High economies of scale that advantage large platforms
+    \end{itemize}
+    
+    \item Factors favoring coexistence:
+    \begin{itemize}
+        \item Weak or localized network effects that don't create strong tipping forces
+        \item High multihoming costs creating insulation between platforms
+        \item Heterogeneous user preferences enabling segmentation
+        \item Significant platform differentiation along quality dimensions
+        \item Capacity constraints limiting the ability of any single platform to serve the entire market
+    \end{itemize}
+\end{itemize}
+
+\citeA{caillaud_chicken_2003} analyze ``chicken and egg'' markets where platforms must simultaneously attract both sides to achieve critical mass. They demonstrate that coexistence is possible when platforms differentiate along dimensions valued differently by heterogeneous users. For instance, one platform might optimize for transaction speed while another emphasizes security and auditability. Users with different priorities self-select into the platform that best matches their preferences.
+
+Their model reveals that differentiation serves as a commitment device that softens competition and enables coexistence. By deliberately choosing different quality vectors, platforms avoid head-to-head competition for identical users, reducing the winner-take-all pressure created by network effects.
+
+\paragraph{Application to Traditional versus Alternative Financial Networks}
+
+Our dual-network model suggests that coexistence between traditional and alternative financial infrastructures is likely under the following conditions:
+
+\begin{enumerate}
+    \item \textbf{Regulatory differentiation is significant:} When $\Psi_i^T \neq \Psi_i^A$, the networks offer distinct value propositions based on which connections they enable. The alternative network may permit previously prohibited connections, effectively serving a different market segment. This regulatory differentiation creates a form of horizontal product differentiation that supports coexistence.
+    
+    \item \textbf{Benefits and costs are balanced:} When transparency benefits $\tau$ are positive but friction costs $\lambda_A$ are substantial, neither network dominates across all transaction types. This creates a stable interior solution where $w_i^T > 0$ and $w_i^A > 0$ simultaneously, with each network serving the transactions for which it has comparative advantage.
+    
+    \item \textbf{Heterogeneous agent characteristics:} Agents with different beliefs ($\mu_i$), risk aversion ($\gamma_i$), and risk perceptions ($\Sigma_i$) will have heterogeneous optimal allocations between networks. Some agents may heavily favor the alternative network (high $w_i^A / w_i^*$) due to their specific transaction needs or risk profiles, while others remain primarily on the traditional network (high $w_i^T / w_i^*$). This heterogeneity prevents any single configuration from dominating for all agents.
+    
+    \item \textbf{Portfolio constraints are binding:} The constraint $w_i^T + w_i^A = w_i^*$ creates natural limits to adoption. Even if the alternative network is superior for some transactions, agents cannot expand total exposure beyond their risk capacity. This binding constraint forces coexistence: agents use the traditional network for some transactions and the alternative for others, based on relative advantages.
+    
+    \item \textbf{Complementarities exist:} If certain transaction types are better suited to the traditional network (e.g., high-frequency, low-value transactions requiring instant finality) while others favor the alternative (e.g., large, infrequent transactions where transparency justifies higher costs), complementarity emerges. Agents optimally maintain presence on both networks to access each for its comparative advantage.
+\end{enumerate}
+
+\paragraph{Conditions for Winner-Take-All Outcomes}
+
+Conversely, winner-take-all dynamics would emerge under the following scenarios:
+
+\begin{itemize}
+    \item \textbf{Dominant alternative network:} If $\lambda_A \to 0$ (frictions vanish) and $\tau$ is large (substantial transparency benefits), the alternative network offers a strictly superior value proposition. Rational agents would fully migrate: $w_i^A \to w_i^*$ and $w_i^T \to 0$.
+    
+    \item \textbf{Persistent traditional network dominance:} If $\lambda_A$ is prohibitively high or $\tau \to 0$ (no meaningful benefits), the alternative network cannot compete effectively. The traditional network retains its monopoly position: $w_i^T \to w_i^*$ and $w_i^A \to 0$.
+    
+    \item \textbf{No regulatory differentiation:} If $\Psi_i^T = \Psi_i^A$ (identical regulatory treatment), platforms become closer substitutes. Competition intensifies, potentially leading to marginal cost pricing and dominance by the lower-cost platform. In this case, the network with lower effective costs (considering both direct costs and indirect network benefits) would capture the entire market.
+    
+    \item \textbf{Strong endogenous network effects:} If liquidity or transparency benefits compound strongly with adoption (effects not explicitly modeled in our current framework), tipping forces could overwhelm differentiation. Early advantages could become self-reinforcing, leading to dominance by whichever network achieves initial critical mass.
+\end{itemize}
+
+\paragraph{Empirical Implications}
+
+The coexistence-versus-dominance framework generates testable empirical predictions:
+
+\begin{itemize}    
+    \item \textbf{Cross-sectional heterogeneity:} Coexistence equilibria should exhibit substantial variation in $w_i^A / w_i^*$ across agents, while winner-take-all outcomes should show high homogeneity.
+    
+    \item \textbf{Sensitivity to parameters:} Near the boundaries between coexistence and dominance, small changes in $\tau$ or $\lambda_A$ should produce large changes in aggregate adoption levels, suggesting potential instability and tipping behavior.
+    
+    \item \textbf{Welfare comparisons:} Coexistence may be welfare-superior to dominance by either network alone if it enables agents to exploit the comparative advantages of each infrastructure for different transaction types.
+\end{itemize}
+
+
+The theoretical framework of platform competition provides essential grounding for understanding the dual-network model developed in this thesis. The traditional and alternative financial networks compete as two-sided platforms, with agents making multihoming decisions subject to switching costs and network effects.
+
+The key parameters in our model—$\tau$ (transparency benefits), $\lambda_A$ (friction costs), and $\Psi_i^T \neq \Psi_i^A$ (regulatory differentiation)—map directly to the determinants of platform competition outcomes identified in the literature. This theoretical foundation enables us to derive testable predictions about when coexistence is stable versus when markets tip toward a single dominant infrastructure.
+
+Importantly, this literature reveals that our model's equilibrium outcomes are not merely technical results but reflect fundamental economic forces governing technology adoption in networked markets. The concepts of network externalities, switching costs, path dependence, and platform differentiation provide the economic intuition for interpreting the mathematical results of Theorem \ref{thm:dual_existence_uniqueness} and Proposition \ref{prop:dual_optimal}.
+
+The insights from platform competition theory will guide our interpretation of the simulation results in Chapter 4, particularly in understanding the mechanisms driving observed adoption patterns, welfare distributions, and market concentration measures. By grounding our analysis in established theoretical frameworks, we ensure that our findings contribute to broader debates about competition, innovation, and efficiency in markets with network effects.
+
+\subsection{Law of One Price and Arbitrage in Dual Infrastructure Markets}
+
+When multiple trading venues or infrastructures offer economically equivalent financial products, arbitrage forces tend to equalize prices across platforms, adjusted for platform-specific characteristics. This mechanism, known as the law of one price, has profound implications for understanding equilibrium outcomes when traditional and alternative financial infrastructures compete.
+
+\paragraph{Theoretical Foundation}
+
+The law of one price states that identical assets should trade at the same price across different markets, adjusted for transaction costs and risks. \citeA{lamont_anomalies_2003} demonstrate that violations of this principle create arbitrage opportunities that rational traders exploit until price differentials are eliminated. However, they also document persistent deviations from the law of one price in financial markets, attributable to institutional frictions, trading costs, and limits to arbitrage.
+
+\citeA{froot_how_1999} examine price differentials for identical securities trading in multiple locations, finding that geography-specific transaction costs, regulatory differences, and investor clienteles can sustain price gaps even when arbitrage is theoretically feasible. Their analysis reveals that the law of one price holds only approximately, with equilibrium differentials reflecting the marginal arbitrageur's cost of exploiting price discrepancies.
+
+In the context of competing financial infrastructures, these findings suggest that even when traditional and alternative networks offer similar contracting opportunities, equilibrium prices may differ systematically. The magnitude of these differentials depends on the relative costs and benefits of each infrastructure, as well as the ease with which agents can arbitrage between them.
+
+\paragraph{Arbitrage Constraints and Market Segmentation}
+
+\citeA{gromb_limits_2010} analyze how arbitrage constraints affect price formation across related markets. They demonstrate that when arbitrageurs face capital constraints, risk limits, or operational frictions, price differentials can persist even when arbitrage opportunities are common knowledge. The severity of these constraints determines whether markets remain integrated (prices move together) or segmented (prices diverge).
+
+Their framework identifies several mechanisms that limit arbitrage between competing platforms:
+
+\begin{itemize}
+    \item \textbf{Capital requirements:} Arbitrage strategies often require substantial capital to post collateral on both platforms simultaneously, particularly when position sizes are large or leverage is limited.
+    
+    \item \textbf{Execution risk:} Prices may move unfavorably between the time an arbitrageur identifies an opportunity and when positions are established, creating fundamental uncertainty about profitability.
+    
+    \item \textbf{Operational complexity:} Managing positions across multiple infrastructures requires specialized expertise, monitoring systems, and operational procedures that impose fixed costs independent of trade size.
+    
+    \item \textbf{Regulatory constraints:} Different platforms may operate under distinct regulatory regimes, creating legal uncertainty or explicit prohibitions on certain arbitrage strategies.
+\end{itemize}
+
+These arbitrage limits have direct implications for our dual-network framework. Even when agents recognize that price differentials exist between traditional and alternative networks, they may rationally choose not to exploit them if arbitrage costs exceed potential gains.
+
+\paragraph{Price Convergence Through Competitive Pressure}
+
+\citeA{glosten_bid_1985} examine how competition among trading venues affects price discovery and execution quality. They show that even without direct arbitrage, competitive pressure can drive price convergence across venues. When traders can freely choose where to execute, they gravitate toward venues offering the best effective prices (accounting for both quoted prices and execution costs). This competitive mechanism disciplines prices even when direct arbitrage is limited.
+
+In financial networks, this competitive pressure manifests through agents' portfolio allocation decisions. If one infrastructure offers systematically better risk-adjusted returns, rational agents will gradually shift volume toward that platform. This reallocation continues until marginal returns equalize across infrastructures, adjusted for platform-specific characteristics.
+
+The bilateral negotiation process in our model operationalizes this competitive mechanism. As agents negotiate contract prices, they consider the alternative of contracting on the other network. This outside option disciplines prices on both networks, preventing excessive divergence even when direct arbitrage is absent.
+
+\paragraph{Welfare Implications of Price Differentials}
+
+The law of one price has important welfare implications for our analysis. If price differentials precisely reflect genuine infrastructure differences ($\tau$ and $\lambda_A$), they represent efficient pricing that correctly allocates transactions to the most suitable platform. However, if differentials also reflect market power, information asymmetries, or coordination failures, they may indicate inefficiencies that reduce total welfare.
+
+
+The comparative statics in Chapter \ref{cap:Results} will examine how equilibrium price differentials vary with $\tau$ and $\lambda_A$, testing whether the model generates differentials consistent with efficient arbitrage or whether coordination failures lead to persistent mispricing.
+
+\paragraph{Dynamic Considerations}
+
+While our model analyzes static equilibrium, the law of one price has dynamic implications worth noting. If technological improvements reduce friction costs ($\lambda_A$ declining over time) or if network effects amplify transparency benefits ($\tau$ increasing with adoption), equilibrium price differentials should adjust gradually. The speed of this adjustment depends on how quickly agents update their beliefs and reallocate portfolios.
+
+Historical episodes of infrastructure competition in financial markets—such as the transition from floor trading to electronic exchanges, or the rise of dark pools competing with lit markets—suggest that price adjustments can be slow. Incumbent platforms retain volume even after new entrants offer better terms, due to coordination benefits, switching costs, and uncertainty about whether competitors will achieve critical mass. Our model's multiple equilibria reflect this path dependence, where current price differentials depend partly on historical adoption patterns rather than purely on current technological parameters.
+
+\paragraph{Synthesis}
+
+The law of one price provides crucial discipline on equilibrium outcomes in our dual-network model. While institutional frictions and arbitrage limits prevent perfect price equalization, competitive forces ensure that price differentials cannot deviate arbitrarily from the net value difference between infrastructures. The parameters $\tau$ and $\lambda_A$ thus have direct, measurable implications for observable price spreads between traditional and alternative networks, enabling empirical validation of the model's predictions.
+
+The theoretical framework of platform competition and arbitrage establishes that competing financial infrastructures can coexist in equilibrium when they offer differentiated value propositions. The traditional network benefits from established relationships, regulatory clarity, and operational maturity. The alternative network offers transparency, potential cost savings, and access to previously unavailable connections. Equilibrium prices on each network adjust to reflect these differential characteristics, with the law of one price ensuring that spreads do not exceed the net benefit differences.
+
+Having established the theoretical conditions under which dual infrastructures compete and coexist, we now turn to examining the specific technological characteristics of blockchain-based alternative networks. Understanding the empirical evidence on transparency benefits, transaction costs, and operational frictions will enable us to calibrate the key parameters $\tau$ and $\lambda_A$ that differentiate alternative from traditional infrastructure in our model.
+
+
+\section{Decentralized Finance and Alternative Financial Infrastructures}
+
+The emergence of blockchain-based financial systems represents a fundamental technological shift in how financial transactions can be structured, recorded, and settled. Understanding the economic characteristics of these decentralized systems is essential for calibrating the parameters in our dual-network model, particularly the transparency benefits ($\tau$) and friction costs ($\lambda_A$) that differentiate alternative networks from traditional infrastructure.
+
+This section reviews the empirical and theoretical literature on decentralized finance (DeFi) and blockchain-based financial systems, focusing on the trade-offs they present relative to traditional centralized infrastructure. We examine both the potential advantages—such as transparency, reduced intermediation, and censorship resistance—and the costs—including transaction fees, congestion, and operational complexity—that characterize these systems. First, we define what blockchain is.
+
+\subsection{Blockchain}
 Blockchain technology was first introduced in 2008 by the pseudonymous Satoshi Nakamoto as the underlying structure for Bitcoin, the first cryptocurrency. At its core, blockchain is a decentralized and distributed ledger system that enables secure, transparent, and immutable recording of transactions across a network of computers (nodes). Unlike traditional centralized systems where a single entity controls the ledger, blockchain distributes this control across all participants in the network, thereby eliminating the need for intermediaries and enhancing trust among users. \cite{nakamoto_bitcoin_2008} \\ 
 
 Today the blockchain technology is challenging the traditional financial networks by offering decentralized, transparent, and secure alternatives. Its unique features address several limitations of traditional systems, such as intermediation costs, eficiency, traceability and security. This section explores the core characteristics of blockchain, its applications in finance, adoption barriers, and the competitive advantage of transparency.
@@ -93,136 +462,7 @@ Transactions are secured through cryptographic mechanisms and consensus protocol
 Smart contracts enable automated execution of predefined rules, facilitating complex financial transactions without intermediaries. This feature has expanded blockchain's applications in areas such as derivatives, lending, and supply chain finance. \cite{morhaim_blockchain_2019} \\ 
 
 
-\subsection{Blockchain types}
-
-Blockchain technology encompasses a variety of implementations that differ in their accessibility, governance, and application. Understanding the types of blockchain systems is critical to evaluating their suitability for financial networks and their potential to complement or disrupt traditional systems. Broadly, blockchains can be classified into three main categories: public blockchains, private blockchains, and consortium blockchains.
-
-\subsubsection{Public Blockchains}
-
-Public blockchains are open and decentralized networks where anyone can participate as a user, miner, or validator. These blockchains are permissionless, meaning that no central authority controls access or governance. Key examples include Bitcoin and Ethereum, which are widely used for cryptocurrency transactions and decentralized applications (dApps). \cite{cachin_blockchain_2017}
-
-\paragraph{Characteristics of Public Blockchains:}
-\begin{itemize}
-    \item \textbf{Decentralization:} Public blockchains operate through a peer-to-peer network, ensuring that no single entity has control over the ledger.
-    \item \textbf{Transparency:} All transactions are recorded on a public ledger, accessible to anyone. This transparency fosters trust among participants but may raise privacy concerns.
-    \item \textbf{Security:} Transactions are validated through consensus mechanisms such as Proof of Work (PoW) or Proof of Stake (PoS), which ensure the integrity of the ledger. However, these mechanisms can be energy-intensive.
-\end{itemize}
-
-Public blockchains offer several advantages, including high transparency and trust due to their open and decentralized nature. Their robust security is ensured by consensus mechanisms such as Proof of Work (PoW) or Proof of Stake (PoS), which make them resistant to tampering. These networks are particularly well-suited for applications requiring openness and inclusivity, such as cryptocurrency systems and decentralized finance (DeFi). However, they face significant challenges, such as scalability issues, where high transaction volumes can lead to congestion and increased fees. Additionally, PoW-based blockchains are criticized for their energy consumption, and the public nature of the ledger can raise privacy concerns for participants. 
-
-\subsubsection{Private Blockchains}
-
-Private blockchains are permissioned networks where access is restricted to a predefined group of participants. These blockchains are typically governed by a single organization or a consortium, making them more centralized than public blockchains. Examples include Hyperledger Fabric, used in supply chain management and enterprise applications. 
-
-
-\paragraph{Characteristics of Private Blockchains:}
-\begin{itemize}
-    \item \textbf{Restricted Access:} Only authorized participants can join and validate transactions.
-    \item \textbf{Centralized Governance:} A central authority or consortium determines the rules and manages the network.
-    \item \textbf{Customizability:} Private blockchains can be tailored to meet specific organizational needs, such as higher transaction throughput or stricter privacy requirements.
-\end{itemize}
-
-Private blockchains excel in efficiency and privacy, as their restricted access and centralized governance allow for faster transaction processing and greater control over data. These characteristics make them ideal for enterprise applications, where customization and confidentiality are crucial. 
-However, their centralized nature can introduce vulnerabilities, such as single points of failure, and limit transparency compared to public blockchains. Moreover, external stakeholders may question the integrity of privately managed ledgers, potentially reducing trust in the system. \cite{androulaki_hyperledger_2018}
-
-\subsubsection{Consortium Blockchains}
-
-Consortium blockchains, also known as federated blockchains, blend elements of public and private blockchains. They are governed by a group of organizations rather than a single entity, making them semi-decentralized. These blockchains are often used in industries that require collaboration among multiple parties, such as banking and supply chain management. \cite{cachin_blockchain_2017}
-
-\paragraph{Characteristics of Consortium Blockchains:}
-\begin{itemize}
-    \item \textbf{Shared Governance:} Decisions are made collectively by the participating organizations.
-    \item \textbf{Permissioned Access:} Only authorized entities can participate in the network.
-    \item \textbf{Inter-Organizational Collaboration:} Consortium blockchains facilitate data sharing and transaction processing across multiple stakeholders.
-\end{itemize}
-
-Consortium blockchains balance the benefits of public and private blockchains by enabling shared governance and permissioned access. They are particularly advantageous for applications requiring collaboration among multiple organizations, such as cross-border payments and trade finance, as they reduce the risk of single points of failure and provide moderate transparency. However, these systems can be complex to govern due to the involvement of multiple stakeholders, leading to potential inefficiencies in decision-making. Furthermore, their limited accessibility compared to public blockchains restricts their openness and inclusivity.
-
-\subsubsection{Comparison of Blockchain Types}
-
-Table \ref{table:BlockchainComparison} summarizes the key features, advantages, and challenges of public, private, and consortium blockchains. \cite{cachin_blockchain_2017}
-
-\begin{table}[h!]
-    \centering
-    \caption{Comparison of Blockchain Types}
-    \label{table:BlockchainComparison}
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        \textbf{Feature} & \textbf{Public} & \textbf{Private} & \textbf{Consortium} \\ \hline
-        Access & Permissionless & Permissioned & Permissioned \\ \hline
-        Governance & Decentralized & Centralized & Semi-Decentralized \\ \hline
-        Transparency & High & Low & Medium \\ \hline
-        Security & High (PoW/PoS) & Medium & Medium \\ \hline
-        Scalability & Limited & High & Moderate \\ \hline
-        Use Cases & Cryptocurrencies, DeFi & Enterprise Applications & Industry Collaboration \\ \hline
-    \end{tabular}
-\end{table}
-
-Understanding the differences among blockchain types is essential for evaluating their potential roles in the financial ecosystem. Public blockchains prioritize decentralization and transparency, making them ideal for open financial systems. Private blockchains, with their efficiency and privacy, are better suited for enterprise applications. Consortium blockchains provide a middle ground, enabling collaboration across organizations. These distinctions are key to analyzing how blockchain technologies can complement or compete with traditional financial networks.
-
-\subsection{Consensus Models}
-
-Consensus models are the backbone of blockchain technology, ensuring that all participants in the network agree on the state of the ledger without the need for a central authority. These models play a crucial role in maintaining security, consistency, and trust in decentralized systems. This section explores the primary consensus mechanisms used in blockchain networks, including Proof of Work (PoW), Proof of Stake (PoS), and alternative models, highlighting their principles, advantages, and challenges.
-
-\subsubsection{Proof of Work (PoW)}
-
-Proof of Work, introduced by \citeA{nakamoto_bitcoin_2008} in Bitcoin, is one of the earliest and most widely used consensus mechanisms. In PoW, network participants (miners) compete to solve complex mathematical puzzles, and the first to solve the puzzle adds a new block to the blockchain and earn a reward. This process requires significant computational resources, ensuring the integrity and security of the ledger.
-
-PoW provides robust security against attacks, such as double-spending, due to the high computational cost required to alter the blockchain. Its decentralization ensures that no single entity controls the network. Additionally, PoW is well-tested and forms the foundation of Bitcoin and other major cryptocurrencies.
-
-PoW is highly energy-intensive, with networks like Bitcoin consuming as much energy as some small countries. The computational cost also creates barriers for smaller participants, potentially leading to a natural oligopoly. \cite{arnosti_bitcoin_2022} \\
-The transaction throughput is limited, making scalability a challenge for large-scale applications. Furthermore, PoW is vulnerable to a "51\% attack", where an entity controlling more than half of the network’s computational power can manipulate the blockchain. This includes reversing transactions, double-spending, and excluding other participants from adding new blocks.  
-
-
-\subsubsection{Proof of Stake (PoS)}
-
-Proof of Stake was introduced as an energy-efficient alternative to PoW. In PoS, validators are chosen to create new blocks based on the amount of cryptocurrency they hold and are willing to "stake" as collateral. Ethereum’s transition from PoW to PoS with Ethereum 2.0 represents a significant shift towards more sustainable blockchain operations.
-
-PoS significantly reduces energy consumption compared to PoW, as it does not rely on intensive computations. The model is more inclusive, allowing a wider range of participants to validate transactions without the need for expensive hardware. Additionally, PoS offers faster transaction confirmation times, improving scalability. \cite{nguyen_proof--stake_2019}
-
-PoS faces concerns about centralization, as participants with larger stakes have more influence over the network. This "rich-get-richer" dynamic can create governance issues. Furthermore, security mechanisms like "slashing", which penalize malicious validators, are complex to implement effectively.
-
-\subsubsection{Alternative Consensus Models}
-
-Blockchain technology has evolved beyond PoW and PoS, with several alternative consensus mechanisms emerging to address specific use cases and limitations.
-
-\paragraph{Delegated Proof of Stake (DPoS)}
-DPoS involves a smaller number of elected delegates who validate transactions and produce blocks. This mechanism, used in networks like EOS and TRON, improves scalability and transaction throughput but relies on a semi-decentralized structure.
-
-\paragraph{Proof of Authority (PoA)}
-PoA assigns validation rights to a small group of trusted participants, making it suitable for private or consortium blockchains. While efficient and fast, PoA sacrifices decentralization and is less suitable for open public networks.
-
-\subsubsection{Byzantine Fault Tolerance (BFT) Algorithms}
-BFT-based consensus, such as Tendermint, ensures agreement among participants even when some act maliciously or fail. This model is common in permissioned blockchains and is valued for its high throughput and fault tolerance.
-
-
-Alternative models often prioritize scalability, efficiency, and customization. However, they may trade off decentralization, making them more appropriate for specific contexts, such as enterprise or consortium networks.
-
-\subsubsection{Comparison of Consensus Models}
-
-Table \ref{table:ConsensusComparison} summarizes the key features, advantages, and challenges of the primary consensus models. \cite{cachin_blockchain_2017}
-
-\begin{table}[h!]
-    \centering
-    \caption{Comparison of Consensus Models}
-    \label{table:ConsensusComparison}
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        \textbf{Feature} & \textbf{PoW} & \textbf{PoS} & \textbf{Alternative Models} \\ \hline
-        Energy Efficiency & Low & High & Varies \\ \hline
-        Decentralization & High & Medium & Medium to Low \\ \hline
-        Scalability & Low & Medium & High \\ \hline
-        Security & Very High & High & Varies \\ \hline
-        Example Networks & Bitcoin, Ethereum (pre-2.0) & Ethereum 2.0, Cardano & EOS, Tendermint \\ \hline
-    \end{tabular}
-\end{table}
-
-Consensus models are critical to the operation of blockchain networks, balancing the trade-offs between security, scalability, decentralization, and efficiency. While PoW has set the standard for robust security in public blockchains, PoS and alternative models offer promising paths towards more scalable and sustainable blockchain systems. 
-
-
-
 \subsection{Applications in Finance}
-
 Blockchain's versatility has led to its adoption in various financial sectors, often addressing inefficiencies in traditional systems.
 
 \paragraph{Cross-Border Payments}
@@ -290,6 +530,270 @@ Morhaim’s research highlights how blockchain can fundamentally alter market st
 Blockchain offers a promising alternative to traditional financial networks by addressing their limitations in cost, transparency, and security. However, adoption barriers such as scalability, regulatory uncertainty, and trust issues must be resolved for blockchain to achieve its full potential. Its ability to provide transparency and reduce information asymmetries positions blockchain as a disruptive force in the financial ecosystem, with implications for both participants and non-participants alike.
 
 
+\subsection{Economic Foundations of Blockchain-Based Finance}
+
+Blockchain technology introduces several novel features to financial infrastructure that have important economic implications. Understanding these features provides the foundation for modeling how alternative networks compete with traditional systems.
+
+\paragraph{Fundamental Characteristics}
+
+\citeA{cong_blockchain_2019} provide an economic analysis of blockchain disruption and smart contracts. They identify several key mechanisms through which blockchain technology affects market outcomes:
+
+\begin{enumerate}
+    \item \textbf{Transparency and Auditability:} All transactions on public blockchains are recorded on an immutable, publicly accessible ledger. This creates unprecedented transparency about transaction histories, contract terms, and counterparty behavior. Unlike traditional financial systems where transaction information is private and asymmetrically distributed, blockchain systems enable any participant to verify the complete history of any asset or address.
+    
+    \item \textbf{Smart Contract Automation:} Financial contracts can be encoded as self-executing programs that automatically enforce agreed-upon terms without relying on trusted intermediaries. This reduces counterparty risk and enforcement costs, particularly for standardized financial operations like collateral management or payment settlement.
+    
+    \item \textbf{Disintermediation:} Blockchain systems can enable direct peer-to-peer transactions without traditional intermediaries such as banks or clearinghouses. This potentially reduces intermediation costs and eliminates single points of failure associated with centralized institutions.
+    
+    \item \textbf{Composability:} Smart contracts can interact with each other programmatically, enabling complex financial products to be constructed by combining simpler building blocks. This "money lego" property facilitates innovation and could reduce development costs for new financial services.
+\end{enumerate}
+
+Cong and He demonstrate that these features create new trade-offs between efficiency and other objectives such as privacy or flexibility. While automation and transparency can reduce certain transaction costs, they may also reveal strategic information or reduce the ability to adapt contracts to unforeseen circumstances.
+
+\paragraph{Information Asymmetries and Market Quality}
+
+\citeA{makarov_blockchain_2021} conduct an extensive empirical analysis of the Bitcoin market, providing detailed evidence about how blockchain characteristics affect market quality and participant behavior. Their findings reveal several important patterns:
+
+\begin{itemize}
+    \item \textbf{Transaction transparency reduces information asymmetries:} The public nature of blockchain transactions allows sophisticated participants to observe flow patterns, whale movements, and exchange behavior in real time. This transparency partially mitigates adverse selection problems that plague traditional over-the-counter markets.
+    
+    \item \textbf{But creates new information advantages:} Participants with superior ability to analyze on-chain data can identify profitable trading opportunities or predict market movements. This creates a different type of information asymmetry based on analytical capabilities rather than privileged access to private information.
+    
+    \item \textbf{Market fragmentation is substantial:} Trading occurs across dozens of centralized and decentralized exchanges with significant price dispersion. This fragmentation arises from heterogeneous preferences regarding regulatory compliance, anonymity, and feature sets.
+    
+    \item \textbf{Transaction costs are highly variable:} During periods of network congestion, transaction fees can spike dramatically, sometimes reaching hundreds of dollars per transaction. This volatility in costs creates uncertainty and may deter certain use cases.
+\end{itemize}
+
+Makarov and Schoar's empirical work provides crucial evidence for calibrating the $\tau$ parameter in our model. The transparency benefits of blockchain systems are real and measurable—participants can observe counterparty behavior, verify claims, and detect anomalies more easily than in traditional systems. However, these benefits come with costs, both in terms of reduced privacy and increased exposure to sophisticated data analysis by competitors.
+
+\paragraph{Decentralized Market Design}
+
+\citeA{harvey_defi_2021} provide a comprehensive overview of decentralized finance applications and their economic properties. They emphasize that DeFi systems represent not just technological innovation but fundamental innovations in market design:
+
+\begin{itemize}
+    \item \textbf{Automated market makers (AMMs):} Replace traditional order books with algorithmic pricing based on liquidity pools. These mechanisms provide constant liquidity but at the cost of higher slippage for large trades and exposure to impermanent loss for liquidity providers.
+    
+    \item \textbf{Over-collateralization:} Most DeFi lending requires borrowers to post collateral exceeding the loan value, eliminating credit risk but reducing capital efficiency. This design choice reflects the difficulty of establishing creditworthiness in pseudonymous systems.
+    
+    \item \textbf{Governance tokens:} Many DeFi protocols distribute governance rights through tradable tokens, creating new mechanisms for collective decision-making but also introducing plutocratic tendencies where wealthy participants dominate.
+    
+    \item \textbf{Composability risks:} While composability enables innovation, it also creates systemic risk through complex interdependencies. Failures in foundational protocols can cascade through multiple layers of dependent applications.
+\end{itemize}
+
+\citeA{harvey_defi_2021} argue that DeFi represents a substantial improvement in financial inclusion, particularly for participants in jurisdictions with underdeveloped traditional financial infrastructure. However, they also document significant risks including smart contract vulnerabilities, oracle manipulation, and governance failures that have resulted in billions of dollars in losses.
+
+\paragraph{Connection to the Dual-Network Model}
+
+These foundational insights inform the specification of our dual-network model in several ways:
+
+The transparency parameter $\tau > 0$ captures the informational advantages that blockchain-based systems provide. This includes:
+\begin{itemize}
+    \item Reduced information asymmetry through transaction transparency
+    \item Enhanced ability to monitor counterparty behavior and enforce contracts
+    \item Lower screening costs due to verifiable transaction histories
+    \item Improved price discovery through observable market activity
+\end{itemize}
+
+However, the model also incorporates that these benefits are not costless, as represented by the friction parameter $\lambda_A > 0$, which we examine in detail in the following subsections. The portfolio constraint $w_i^T + w_i^A = w_i^*$ reflects that adopting blockchain-based systems requires reallocating resources away from traditional infrastructure, given limited capital and operational capacity.
+
+The regulatory differentiation captured by $\Psi_i^T \neq \Psi_i^A$ acknowledges that blockchain systems often operate under different legal frameworks than traditional finance, sometimes enabling connections that would be prohibited in conventional systems (though at the cost of regulatory uncertainty).
+
+\subsection{Transaction Costs and Network Congestion}
+
+While blockchain systems offer transparency benefits, they also impose costs that vary with network conditions and transaction characteristics. Understanding these costs is crucial for calibrating the friction parameter $\lambda_A$ and for predicting when agents will prefer traditional versus alternative infrastructure.
+
+\paragraph{Empirical Evidence on Transaction Costs}
+
+\citeA{huberman_monopoly_2021} provide an economic analysis of the Bitcoin payment system, examining how transaction fees emerge and how they affect system usage. Their empirical analysis reveals:
+
+\begin{itemize}
+    \item \textbf{Average fees mask extreme variation:} While median transaction fees might be low during normal conditions, fees during congestion periods can reach \$50-\$100 per transaction, making small-value transfers economically infeasible.
+    
+    \item \textbf{Fee sensitivity varies by user type:} Large institutional users are relatively fee-insensitive, viewing even high fees as acceptable costs for transactions worth millions. Retail users, by contrast, are highly fee-sensitive and may delay or abandon transactions when fees spike.
+    
+    \item \textbf{Congestion is persistent:} Bitcoin's fixed block size creates chronic congestion during periods of high activity. Users learn to time transactions to avoid peak periods, but this introduces delays and reduces system responsiveness.
+    
+    \item \textbf{Layer-2 solutions remain limited:} While technologies like Lightning Network promise lower fees, adoption has been slower than anticipated due to complexity, liquidity requirements, and limited merchant acceptance.
+\end{itemize}
+
+\citeA{huberman_monopoly_2021} characterize the Bitcoin system as a "monopoly without a monopolist"—the protocol constrains supply, creating monopoly pricing, but no single entity captures the rents (which instead go to miners). This creates inefficiency relative to a competitive market.
+
+
+\paragraph{Justification for the Quadratic Friction Cost}
+
+The empirical evidence strongly supports a convex cost structure where friction costs increase more than proportionally with transaction size or volume. The quadratic functional form $\lambda_A \|w_i^A\|^2$ in our model captures several mechanisms:
+
+\begin{enumerate}
+    \item \textbf{Congestion externalities:} Larger transactions require more block space (especially for complex smart contracts), contributing disproportionately to network congestion. During high demand, this leads to exponentially higher fees.
+    
+    \item \textbf{Price impact in thin markets:} Decentralized exchange (DEX) liquidity is substantially lower than centralized venues. Large transactions face increasing slippage as they exhaust liquidity pools, creating approximately quadratic costs.
+    
+    \item \textbf{Operational complexity:} Managing a portfolio split across traditional and blockchain systems requires duplicate infrastructure, monitoring, and risk management systems. These fixed costs become more burdensome as the proportion allocated to the alternative network increases, as integration challenges compound.
+    
+    \item \textbf{Liquidity fragmentation:} When agents split portfolios between networks, they may forego liquidity benefits and netting opportunities available within a single network. These coordination costs grow as portfolios become more fragmented.
+\end{enumerate}
+
+The parameter $\lambda_A$ can be interpreted as capturing the marginal increase in these friction costs per unit of portfolio allocated to the alternative network. The quadratic form ensures that small experimental allocations face relatively low costs, while large-scale adoption faces substantially higher marginal costs—consistent with empirical observations in cryptocurrency markets.
+
+\paragraph{Application to the Dual-Network Framework}
+
+The transaction cost literature provides empirical grounding for the friction parameter $\lambda_A$ in our model. The costs of using blockchain-based financial infrastructure are real, substantial, and vary predictably with network conditions and transaction characteristics.
+
+Our model's prediction that agents will adopt the alternative network only partially ($0 < w_i^A < w_i^*$ for many agents) aligns with observed patterns where institutions experiment with blockchain systems for specific use cases while maintaining traditional infrastructure for most operations. This partial adoption reflects the high marginal costs of complete migration.
+
+The volatility and uncertainty in transaction costs documented by the empirical literature also suggest that agents may maintain traditional infrastructure as a fallback option. The portfolio constraint $w_i^T + w_i^A = w_i^*$ can be reinterpreted as a risk management strategy: diversifying across infrastructures protects against extreme events on either network.
+
+Future empirical work could estimate $\lambda_A$ directly by examining the revealed preferences of institutions that have adopted blockchain systems. The proportion of assets or transactions allocated to blockchain versus traditional rails, combined with data on cost differences and transparency benefits, would enable calibration of the model to real-world conditions.
+
+\subsection{Transparency, Trust, and Information Asymmetries}
+
+The transparency of blockchain systems represents their most distinctive feature relative to traditional financial infrastructure. Understanding how this transparency affects economic outcomes is crucial for interpreting the benefits parameter $\tau$ in our model.
+
+\paragraph{Transparency as a Solution to Information Asymmetries}
+
+\citeA{schar_decentralized_2021} provides a comprehensive analysis of how blockchain transparency affects financial market quality. He identifies several channels through which transparency creates value:
+
+\begin{enumerate}
+    \item \textbf{Reduced adverse selection:} In traditional over-the-counter markets, information asymmetries lead to adverse selection where informed traders exploit uninformed counterparties. Blockchain transparency partially mitigates this by making transaction histories and positions observable, reducing the information advantage of insiders.
+    
+    \item \textbf{Enhanced monitoring:} Counterparty risk can be assessed more accurately when transaction histories are publicly observable. This reduces screening costs and enables more efficient credit allocation, particularly in markets where traditional credit scoring is unavailable or unreliable.
+    
+    \item \textbf{Trustless execution:} Smart contracts enable complex financial operations without requiring trust in human intermediaries. This is particularly valuable in cross-border transactions where legal enforcement is costly or uncertain, or when dealing with counterparties in jurisdictions with weak institutions.
+    
+    \item \textbf{Auditability and compliance:} Regulators and auditors can verify compliance with financial regulations more efficiently when all transactions are recorded on transparent ledgers. This could reduce compliance costs and improve detection of fraud or market manipulation.
+    
+    \item \textbf{Market microstructure improvements:} Transparent order flow and execution reduces the ability of intermediaries to engage in predatory practices like front-running.
+\end{enumerate}
+
+Schär emphasizes that these benefits are particularly pronounced in markets that are currently opaque or dominated by powerful intermediaries. Traditional financial markets suffer from information fragmentation where each institution sees only its own transactions, making systemic risk assessment difficult. Blockchain systems, by contrast, provide a comprehensive view of all market activity.
+
+However, Schär also documents important limitations:
+
+\begin{itemize}
+    \item \textbf{Transparency is not equivalent to interpretability:} While transactions are observable, understanding their economic significance requires sophisticated analysis. Most users lack the tools or expertise to extract valuable insights from on-chain data.
+    
+    \item \textbf{Privacy concerns:} Complete transparency creates privacy risks for both individuals and institutions. Large traders may be unwilling to use transparent systems if doing so reveals proprietary strategies or negotiating positions.
+    
+    \item \textbf{Coordination may be harder:} When all actions are observable, participants may find it difficult to coordinate on mutually beneficial but strategically complex arrangements. Transparency can prevent the kinds of flexible, relationship-based contracting that characterize traditional financial markets.
+\end{itemize}
+
+\paragraph{Empirical Evidence on Transparency Benefits}
+
+\citeA{griffin_is_2020} examine whether transparency in cryptocurrency markets deters manipulation. Their analysis yields mixed findings:
+
+On one hand, they document substantial price manipulation through practices like wash trading, spoofing, and pump-and-dump schemes. The transparency of blockchain systems did not prevent these manipulative practices—indeed, some manipulators may have exploited transparency by observing liquidation levels or stop-loss positions.
+
+On the other hand, the transparency enabled researchers to detect and document these manipulative activities with unprecedented precision. While manipulation occurred, it was visible to anyone with analytical capabilities, potentially limiting the scale or persistence of manipulation compared to opaque markets.
+
+This suggests that transparency's benefits depend critically on whether there exist market participants with both the incentive and capability to monitor for misconduct and respond appropriately. In markets dominated by unsophisticated participants, transparency alone may be insufficient to ensure integrity.
+
+\paragraph{Trust in Code versus Trust in Institutions}
+
+\citeA{werbach_trust_2018} examines the claim that blockchain systems can replace trust in institutions with ``trust in code." His analysis reveals important nuances:
+
+\begin{itemize}
+    \item \textbf{Code is not infallible:} Smart contract vulnerabilities have resulted in hundreds of millions of dollars in losses. The DAO hack (2016), Parity wallet freeze (2017), and numerous DeFi exploits demonstrate that "trustless" systems still require trust in developers' competence.
+    
+    \item \textbf{Governance challenges remain:} When smart contracts contain bugs or when circumstances change, some human governance mechanism is typically needed to resolve disputes or coordinate upgrades. This reintroduces many of the trust issues that blockchain systems aimed to eliminate.
+    
+    \item \textbf{Oracle problem:} Smart contracts often require external information (prices, event outcomes, etc.) to function. Providing this information requires trusted oracles, recreating centralization and information asymmetry problems.
+    
+    \item \textbf{Legal ambiguity:} The legal status of smart contracts and blockchain-based agreements remains uncertain in many jurisdictions. This regulatory ambiguity creates risks that may offset transparency benefits.
+\end{itemize}
+
+Werbach argues that blockchain systems do not eliminate trust but rather redistribute it—from trust in human institutions to trust in code, cryptography, and consensus mechanisms. Whether this redistribution improves outcomes depends on context-specific factors, including legal infrastructure, institutional quality, and the specific application.
+
+\paragraph{Calibrating the Transparency Parameter $\tau$}
+
+The literature suggests that the transparency parameter $\tau$ should be interpreted as capturing the net informational benefits of blockchain systems, incorporating several distinct mechanisms:
+
+\begin{itemize}
+    \item \textbf{Reduced information asymmetry:} The ability to observe counterparty behavior and transaction histories reduces adverse selection and screening costs. This benefit is likely to be larger in markets that are currently opaque or dominated by powerful intermediaries.
+    
+    \item \textbf{Enhanced contract enforcement:} Smart contract automation reduces counterparty risk and enforcement costs, particularly for standardized financial operations. This benefit increases with the complexity and frequency of interactions.
+    
+    \item \textbf{Improved monitoring and compliance:} Transparent ledgers facilitate auditing and regulatory oversight, potentially reducing compliance costs. However, this benefit depends on regulatory frameworks adapting to accommodate blockchain-based systems.
+    
+    \item \textbf{Network effects in transparency:} The value of transparency increases with the number of participants using the system. When more counterparties are observable, the informational benefits compound. This suggests that $\tau$ might increase endogenously with adoption, though our static model treats it as a parameter.
+\end{itemize}
+
+The literature suggests substantial heterogeneity in who benefits from transparency. Sophisticated institutions with analytical capabilities may extract more value from on-chain data than retail participants. Similarly, participants in jurisdictions with weak traditional institutions may value trustless execution more highly than those in well-governed economies.
+
+This heterogeneity implies that different agents may perceive different values of $\tau$. While our baseline model treats $\tau$ as a common parameter, extensions could allow for agent-specific transparency valuations $\tau_i$ that reflect differential ability to exploit on-chain information or differential trust in traditional institutions.
+
+\paragraph{Connection to the Dual-Network Model}
+
+The transparency benefits captured by $\tau$ in our model represent the economic value created by observable transaction histories, verifiable contract execution, and reduced information asymmetries. The literature reviewed above provides both theoretical justification and empirical evidence that these benefits are real and economically significant, particularly in contexts characterized by:
+
+\begin{itemize}
+    \item High information asymmetries between counterparties
+    \item Weak institutional frameworks for contract enforcement
+    \item Complex financial relationships requiring intensive monitoring
+    \item Cross-border transactions where legal enforcement is costly
+    \item Markets dominated by powerful intermediaries with informational advantages
+\end{itemize}
+
+However, the literature also clarifies that transparency benefits are not universal or costless. Privacy concerns, the oracle problem, smart contract risks, and regulatory uncertainty all limit the value of blockchain transparency. The net benefit $\tau$ should be interpreted as the transparency advantages minus these offsetting concerns.
+
+Our model's prediction that adoption of the alternative network is partial and heterogeneous ($0 < w_i^A < w_i^*$ with variation across agents) aligns with the nuanced picture painted by the empirical literature. Blockchain systems offer genuine advantages for certain applications and participants, but these advantages are insufficient to justify complete migration given the substantial friction costs $\lambda_A$ and the benefits of established traditional infrastructure.
+
+\subsection{Regulatory Arbitrage and Institutional Adoption}
+
+The different regulatory treatment of traditional and blockchain-based financial systems creates opportunities for regulatory arbitrage that affect adoption patterns. Understanding these institutional factors is essential for interpreting the differential constraint structures $\Psi_i^T \neq \Psi_i^A$ in our model.
+
+\paragraph{Regulatory Fragmentation}
+
+\citeA{zetzsche_decentralized_2020} analyze the regulatory challenges posed by decentralized finance, emphasizing how DeFi systems often operate in regulatory gray areas. They identify several dimensions of regulatory uncertainty:
+
+\begin{enumerate}
+    \item \textbf{Jurisdictional arbitrage:} Blockchain systems are inherently global, making it difficult to determine which jurisdiction's laws apply. Projects can strategically locate legal entities or deploy contracts on networks hosted in favorable jurisdictions.
+    
+    \item \textbf{Regulatory fragmentation:} Different jurisdictions take vastly different approaches to cryptocurrency and DeFi regulation. Some (like Switzerland or Singapore) have developed comprehensive frameworks, while others maintain ambiguous or hostile positions.
+    
+    \item \textbf{Classification uncertainty:} Whether cryptocurrency tokens are securities, commodities, currencies, or some new category remains legally uncertain in many jurisdictions. This classification determines which regulatory framework applies.
+    
+    \item \textbf{Enforcement challenges:} Even when regulations clearly apply, enforcing them against pseudonymous participants using decentralized protocols is technically and legally challenging.
+\end{enumerate}
+
+This regulatory fragmentation creates both opportunities and risks. Institutions may be able to access connections or activities prohibited under traditional regulatory frameworks by using blockchain systems ($\Psi_i^A$ allows edges forbidden by $\Psi_i^T$). However, this regulatory arbitrage comes with substantial legal risk if authorities subsequently assert jurisdiction or if regulations change.
+
+\paragraph{Institutional Adoption Patterns}
+
+\citeA{auer_rise_2023}, writing for the Bank for International Settlements, document patterns of institutional adoption of blockchain technology in financial services. They find:
+
+\begin{itemize}
+    \item \textbf{Bifurcated adoption:} Large, regulated financial institutions primarily experiment with permissioned blockchains that maintain many features of traditional systems (including privacy and regulatory compliance), while smaller or less regulated entities more readily adopt public, permissionless systems.
+    
+    \item \textbf{Use case specialization:} Institutional adoption focuses on specific applications where blockchain offers clear advantages—cross-border payments, trade finance, securities settlement—rather than wholesale replacement of existing systems.
+    
+    \item \textbf{Interoperability concerns:} Many institutions hesitate to commit significant resources to blockchain systems due to uncertainty about which platforms will achieve critical mass and whether interoperability between systems will be feasible.
+    
+    \item \textbf{Regulatory compliance as barrier:} Know-Your-Customer (KYC), Anti-Money-Laundering (AML), and other compliance requirements are easier to satisfy within traditional systems that maintain private transaction data. Public blockchains create compliance challenges that many institutions find prohibitive.
+\end{itemize}
+
+Auer and Böhme emphasize that institutional adoption will likely follow a gradual path where blockchain systems are used for specific functions while institutions maintain traditional infrastructure for most operations—precisely the kind of partial adoption ($0 < w_i^A < w_i^*$) predicted by our model.
+
+\paragraph{Application to the Dual-Network Model}
+
+The regulatory considerations reviewed above provide justification for modeling traditional and alternative networks as having different constraint structures: $\Psi_i^T \neq \Psi_i^A$. These differences reflect:
+
+\begin{itemize}
+    \item Traditional networks operate under established regulatory frameworks with clear prohibitions on certain connections or activities
+    \item Alternative networks may enable previously prohibited connections due to jurisdictional arbitrage, regulatory uncertainty, or genuinely different legal treatment
+    \item The regulatory treatment itself becomes part of the value proposition—some agents adopt blockchain systems specifically to circumvent restrictions they face in traditional systems
+\end{itemize}
+
+However, this regulatory arbitrage opportunity comes with costs beyond the technical friction $\lambda_A$. Legal uncertainty, compliance challenges, and the risk of future regulatory crackdowns all reduce the effective benefit $\tau$ of using alternative networks.
+
+Our model's framework enables analysis of how regulatory convergence (moving toward $\Psi_i^T = \Psi_i^A$) would affect adoption. If regulators eliminate the arbitrage opportunities that currently differentiate blockchain and traditional systems, adoption might decline substantially unless the pure technological benefits ($\tau$ from transparency) are sufficient to justify the friction costs ($\lambda_A$).
+
+
+The literature on decentralized finance establishes several crucial empirical regularities that inform our model specification. Blockchain systems provide measurable transparency benefits through observable transaction histories, auditable smart contracts, and reduced information asymmetries. These benefits justify the positive parameter $\tau$ representing the value agents derive from operating on transparent infrastructure.
+
+However, these benefits come with significant costs. Transaction fees vary with network congestion, operational complexity requires specialized expertise, regulatory uncertainty creates legal risk, and liquidity fragmentation reduces market depth. The quadratic friction term $\lambda_A \|w_i^A\|^2$ captures how these costs increase more than proportionally with usage intensity, consistent with empirical evidence from cryptocurrency markets.
+
+Understanding how networks with these characteristics emerge from decentralized negotiations requires examining the microfoundations of network formation. The next section reviews the theoretical literature on endogenous network formation through bilateral bargaining, which provides the foundation for the negotiation algorithm central to our dual-network extension.
+
 \section{General Equilibrium}\label{cTGE}
 %Agregar desde segundo párrafo de la Revision bibliográfica del hito 1
 General equilibrium theory provides a comprehensive framework for analyzing how supply and demand across different markets interact to achieve a state of balance within an economy. It examines the conditions under which all markets simultaneously clear, meaning that the quantities supplied equal the quantities demanded across all markets. This state of balance is crucial for understanding how prices are determined in an economy and how resources are allocated efficiently. The theory has been foundational in the study of economic systems and has been applied to various fields, including welfare economics, public finance, international trade, and environmental economics.
@@ -311,3 +815,76 @@ Cryptocurrency markets are known for their extreme volatility, which can disrupt
     \end{itemize}
 
 General equilibrium theory, when applied to cryptocurrencies as done by \citeA{crettez_general_2022}, provides a robust framework for understanding the complex interactions between digital and traditional currencies in an economy. By incorporating real-world factors like transaction costs and hack risks into an OLG model, the authors offer valuable insights into how cryptocurrencies can achieve equilibrium in the market and affect the stability of central bank currencies. 
+
+\section{Market Liquidity and Network Externalities}
+The relationship between trading volume and market liquidity represents a fundamental aspect of financial network dynamics that bridges traditional and blockchain-based systems. \citeA{pagano_trading_1989} provides a seminal theoretical framework for understanding how market depth emerges endogenously through trader participation decisions, offering crucial insights for analyzing both the limitations of traditional financial networks and the potential advantages of decentralized alternatives.
+\subsection{Liquidity as Absorptive Capacity}
+\citeA{pagano_trading_1989} formalizes Keynes definition of liquidity, focusing specifically on a market's capacity to absorb large orders without adverse price movements. This conceptualization moves beyond risk-based definitions to examine liquidity as an emergent property of market structure. The model demonstrates that market depth depends critically on the entry decisions of all potential participants, creating powerful network externalities where each trader's utility depends on the participation of others.
+The author's framework reveals two distinct components of trader utility: speculative value, which increases with price volatility and benefits from market diversity, and liquidity value, which decreases with the trader's market impact and improves with greater market participation. This decomposition helps explain why large traders often seek alternative trading venues or methods when centralized markets cannot adequately absorb their transactions without significant price impact.
+\subsection{Network Externalities and Market Concentration}
+The analysis reveals a fundamental coordination problem in market formation. Since each trader's expected utility depends on conjectures about others' participation, multiple rational expectations equilibria can emerge depending on initial expectations. This mechanism explains why financial markets tend toward concentration: if traders expect others to participate in a particular venue, they will rationally choose the same venue to maximize liquidity benefits, creating a self-reinforcing cycle.
+\citeA{pagano_trading_1989} demonstrates that in the absence of differential transaction costs, markets will naturally concentrate on a single venue. This finding provides theoretical foundation for understanding the dominance of major financial centers and exchanges in traditional systems. However, when transaction costs vary across venues, equilibrium may support market fragmentation, with different trader types self-selecting into different markets based on their liquidity needs and cost tolerance.
+\subsection{Fragmentation and Efficiency Implications}
+The model's analysis of market fragmentation offers particular relevance for understanding the coexistence of traditional and blockchain-based financial systems. \citeA{pagano_trading_1989} shows that fragmentation between centralized markets generally reduces welfare, as it prevents traders from achieving optimal liquidity concentration. However, when the alternative involves decentralized search mechanisms (analogous to peer-to-peer blockchain transactions), the welfare implications become ambiguous.
+The author demonstrates that large traders may rationally prefer search-based mechanisms when centralized markets cannot provide adequate liquidity for their transaction sizes. This finding resonates with current trends where institutional traders increasingly utilize blockchain-based systems for large transactions, seeking to avoid the market impact associated with traditional centralized venues.
+\subsection{Implications for Blockchain Financial Networks}
+\citeA{pagano_trading_1989} theoretical framework provides several insights relevant to blockchain adoption in financial markets:
+\paragraph{Endogenous Liquidity Creation} Blockchain networks face the same coordination challenges identified by Pagano, where early adoption requires overcoming network effects. However, once critical mass is achieved, decentralized networks may provide superior liquidity for certain transaction types, particularly those requiring high transparency or reduced intermediation costs.
+\paragraph{Market Fragmentation Dynamics} The model's prediction that markets fragment when transaction costs differ helps explain the current coexistence of traditional and blockchain systems. Each system may serve different trader types optimally: traditional systems for small, frequent transactions requiring immediate settlement, and blockchain systems for large, less time-sensitive transactions where transparency and reduced intermediation are valued.
+\paragraph{Multiple Equilibria and Adoption Barriers} The existence of multiple conjectural equilibria in Pagano's model illuminates why blockchain adoption may face coordination failures despite potential welfare improvements. If traders expect low participation in blockchain networks, this becomes self-fulfilling, maintaining concentration in traditional systems even when decentralized alternatives might be superior.
+ 
+The insights from \citeA{pagano_trading_1989} complement the network theory concepts discussed earlier by providing a micro-founded explanation for how network effects emerge in financial markets. While traditional network models often assume exogenous network structures, Pagano's approach endogenizes network formation through individual participation decisions, offering a more realistic foundation for analyzing the transition between traditional and blockchain-based financial systems.
+The model also clarifies why transparency—a key advantage of blockchain systems—may have ambiguous welfare effects. While transparency reduces information asymmetries and enables better risk assessment, it may also reduce the speculative value that some traders derive from market participation. This trade-off helps explain heterogeneous preferences for traditional versus blockchain systems among different market participants.
+This theoretical foundation sets the stage for understanding how blockchain technology addresses some limitations of traditional financial networks while potentially creating new challenges related to network coordination and liquidity fragmentation.
+
+ \section{Economic Motivation and Model Overview}
+
+The original framework developed by \cite{jalan_incentive-aware_2024} addresses a fundamental question in financial network theory: how do financial networks emerge endogenously from the strategic interactions of heterogeneous, utility-maximizing agents? 
+
+The model operates on several key principles:
+
+\begin{itemize}
+   \item \textbf{Endogenous Network Formation}: Network structure and contract prices emerge through decentralized bilateral negotiations rather than being imposed exogenously
+   \item \textbf{Heterogeneous Agents}: Each agent has distinct beliefs about expected returns ($\mu_i$) and risk perceptions ($\Sigma_i$)
+   \item \textbf{Mean-Variance Optimization}: Agents maximize utility balancing expected returns against portfolio risk
+   \item \textbf{Bilateral Price Discovery}: Contract prices are determined through pairwise negotiations to achieve mutual agreement
+\end{itemize}
+
+\subsection{What the Original Model Accomplishes}
+
+The Jalan-Chakrabarti framework solves several important problems in financial network modeling:
+
+\begin{enumerate}
+   \item \textbf{Realistic Network Formation}: Unlike models that assume fixed network structures, it explains how financial connections arise naturally from economic incentives
+   
+   \item \textbf{Price Endogeneity}: Rather than taking prices as given, the model shows how contract prices emerge from strategic negotiations
+   
+   \item \textbf{Regulatory Integration}: The framework naturally incorporates regulatory constraints through prohibition matrices
+   
+   \item \textbf{Equilibrium Characterization}: It provides conditions for existence and uniqueness of stable network configurations
+   
+   \item \textbf{Policy Analysis}: The model enables analysis of how regulatory interventions affect network structure and stability
+\end{enumerate}
+
+\subsection{Economic Interpretation of the Original Model}
+
+The original framework captures several important economic mechanisms:
+
+\begin{itemize}
+   \item \textbf{Belief Heterogeneity}: Agents with different return expectations ($\mu_i$) and risk perceptions ($\Sigma_i$) naturally form different contract portfolios. This heterogeneity is the primary driver of network formation, as agents seek counterparties whose beliefs complement their own.
+   
+   \item \textbf{Risk Sharing}: The covariance structure enables agents to hedge risks through diversified contract portfolios. Agents naturally seek counterparties whose risks are negatively correlated with their own, leading to efficient risk distribution across the network.
+   
+   \item \textbf{Price Discovery}: The bilateral negotiation process ensures that contract prices reflect the marginal value to both parties. This creates an efficient pricing mechanism that aggregates dispersed information about risk and return expectations.
+   
+   \item \textbf{Regulatory Constraints}: Prohibition matrices ($\Psi_i$) naturally incorporate institutional or legal restrictions on contracting. The model shows how these constraints affect both network structure and price formation, providing insights for regulatory policy.
+\end{itemize}
+
+\section{The Gap in the Literature}
+\label{sec:lit_review_gap}
+
+The review of the state of the art reveals a clear gap. On one hand, the literature on financial networks, exemplified by \citeA{jalan_incentive-aware_2024}, provides a framework for understanding how agents form risk-sharing contracts under constraints, but it implicitly assumes a single, monopolistic infrastructure. On the other hand, the empirical literature on blockchain economics \cite{huberman_monopoly_2021} \cite{makarov_blockchain_2021} identifies the trade-offs of decentralized systems—specifically the benefits of transparency ($\tau$) versus the costs of operational friction ($\lambda_A$)—but often lacks a general equilibrium framework to analyze network formation.
+
+Consequently, there is a gap in understanding how these two mechanisms interact. Current models do not address how agents dynamically allocate capital between a restricted, low-cost traditional network and a transparent, high-friction alternative network.
+
+This thesis bridges this gap. By integrating the incentive-aware network formation mechanisms with the structural properties of alternative networks, the following chapter develops a \textit{dual-network model}. This approach allows us to model the choice of infrastructure.
