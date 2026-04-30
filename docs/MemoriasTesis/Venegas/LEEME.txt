@@ -1,0 +1,188 @@
+Plantilla para memorias de Ingenier�a de la Universidad de los Andes
+--------------------------------------------------------------------
+
+Esta plantilla (formada por una serie de archivos) fue desarrollada
+para ser compilada con pdfLaTeX, que es una versi�n mejorada de
+LaTeX, la cual a su vez es una adaptaci�n del sistema de edici�n TeX.
+Esta plantilla cumple con todas las exigencias de la Facultad de
+Ingenier�a y Ciencias Aplicadas de la Universidad de los Andes
+para sus memorias de t�tulo.
+
+La idea fundamental detr�s de LaTeX es permitir al usuario concentrarse
+en el contenido del documento y su estructura, y olvidarse de la forma.
+Por eso no hay que preocuparse si por ejemplo una figura o un p�rrafo
+aparecen en otra p�gina de la esperada. De esos detalles se encarga LaTeX,
+que fue creado por editores expertos. Si es que conviene hacer cambios
+en la forma, estos se pueden dejar para el final.
+
+�Por qu� usar LaTeX o pdfLaTeX?
+
+El sistema LaTeX presenta infinitas ventajas sobre Microsoft Word,
+entre las que se destacan su tipograf�a profesional, manejo de
+ecuaciones, tablas y figuras, formato, bibliograf�a, referencias
+cruzadas,... LaTeX es el est�ndar en edici�n de textos cient�ficos,
+y es el �nico programa usado por editoriales como Springer-Verlag,
+Kluwer, Wiley, Cambridge University Press, etc.
+
+Un documento desarrollado en LaTeX puede ser abierto y modificado
+en cualquier computador corriendo cualquier sistema operativo.
+A diferencia de Word, la apariencia del documento no cambia al
+ser abierto en otro computador o ser enviado por email.
+LaTeX se presta naturalmente para trabajo en equipo.
+
+LaTeX es la mejor herramienta y es gratis. Libera a los autores
+de la esclavitud a Microsoft o del uso de copias piratas.
+
+Otra ventaja del sistema (sic) es que no tiene corrección ortogr�fica
+autom�tica, lo que le da la oportunidad al autor de perfeccionar su
+conocimiento de la lengua castellana, evitando las arbitrarias
+decisiones de Word en palabras que aceptan m�s de una ortograf�a
+y significado (por ejemplo calculo y c�lculo).
+
+La versi�n LaTeX/PdfLaTeX con que fue probado este proyecto
+es MikTeX, de dominio p�blico. LaTeX es a MikTeX como C++ es a VisualStudio.
+
+�Cu�l es la diferencia entre LaTeX y pdfLaTeX?
+
+PdfLaTeX es una versi�n de LaTeX que genera archivos pdf a partir
+de la fuente tex. Los archivos pdf pueden ser abiertos por Acrobat
+Reader en toda clase de computadores, y permiten el uso de conexiones
+a otros documentos almacenados localmente o en Internet.
+
+Tambi�n permite generar presentaciones y documentos para la WWW
+de gran calidad, incluyendo figuras en formatos pdf, jpg y png.
+
+(LaTeX en su versi�n est�ndar genera archivos Postscript y s�lo
+permite usar figuras en formato eps.)
+
+La sint�xis de LaTeX y de pdfLaTeX son id�nticas, salvo peque�as
+diferencias en el pre�mbulo del c�digo tex (primeras l�neas de
+memoria.tex), que el usuario no tiene porque conocer.
+
+�Qu� significa compilar?
+
+La forma de compilar el proyecto es usar el comando
+'pdflatex memoria' desde la L�nea de Comando o
+Command Prompt.
+
+Este comando se debe utilizar al menos dos veces para
+actualizar todas las referencias, a�n no habiendo errores.
+Se debe hacer lo mismo al actualizar la bibliograf�a,
+a trav�s del comando 'bibtex memoria' seguido de
+'pdflatex memoria' (dos veces).
+
+Ahora se recomienda trabajar desde el Command Prompt, para
+as� poder acceder a toda la informaci�n relativa a errores
+y advertencias de la compilaci�n.
+
+�Existe versiones 'amigables' de LaTeX?
+
+Existen versiones 'integradas' de LaTeX, como Scientific Workplace,
+que permiten ver la apariencia del documento al mismo tiempo que
+se edita. Este software es bastante caro, y reproduce a menor
+escala los mismos problemas de Word: dependencia en un producto,
+poca compatibilidad, escaso control sobre los detalles,...
+
+Otra posibilidad de dominio p�blico es LyX.
+
+Se recomienda el uso de LaTeX y la edici�n directa del archivo tex,
+s�lo as� se es capaz de aprovechar al m�ximo las posibilidades
+de esta herramienta. La dificultad inicial al 'programar' el
+c�digo tex se ve ampliamente recompensada por la calidad del
+resultado y por la seguridad de saber exactamente cual va a ser
+el resultado final, sin la incertidumbre generada por la
+'inteligencia' de Word.
+
+Una herramienta fundamental es un editor de texto
+profesional como XEmacs, Emacs, Notepad++, Geany, Eclipse, etc.
+
+En Windows existe WinEdt que facilita considerablemente el
+trabajar en el sistema LaTeX. Ahora conviene tener en cuenta
+que WinEdt es solo una cara bonita y que por detr�s funciona
+el compilador LaTeX.
+
+�D�nde puedo encontrar m�s informaci�n?
+
+Algunos libros �tiles existentes en biblioteca:
+
+Latex : a document preparation system
+Leslie Lamport
+Boston : Addison-Wesley, 1994.
+
+The LaTeX companion
+Frank Mittelbach y otros
+Boston : Addison-Wesley, 2004.
+
+The LaTex graphics companion : illustrating documents with TeX and PostScript
+Michel Goossens, Sebastian Rahtz, Frank Mittelbach.
+Boston : Addison-Wesley, 1997.
+
+El libro de Leslie Lamport (autora de LaTeX) es una excelente
+introducci�n. Tutoriales de LaTeX se encuentran disponibles en
+Internet.
+
+�Por qu� tantos archivos?
+
+Si bien un documento LaTeX se compone de varios archivos 'fuentes'
+que contienen el texto de los cap�tulos, la bibliograf�a, las figuras, etc.
+despu�s de la compilaci�n es el resultado es un �nico archivo pdf.
+Otros archivos de extensi�n toc, aux, bbl, blg,... son auxiliares
+y los utiliza LaTeX internamente.
+
+La plantilla de la memoria est� organizada en los siguientes
+archivos:
+
+memoria.tex :  archivo principal del proyecto
+memoria.pdf :  archivo de salida, para ser mostrado en pantalla, imprimido,...
+
+preambulo.tex :                 definiciones de formato 
+primeras_pag.tex :              primeras paginas de la memoria
+
+cap1.tex , cap2.tex ,... :      texto de cada uno de los cap�tulos
+anexo_a.tex, anexo_b.tex,... :  anexos
+buc.bib :                       bibliograf�a
+
+*.pdf, *.png, *.jpg : figuras, preferentemente en directorio separado
+(ojo: los nombres de las figuras no deben tener espacios)
+
+Otros:
+setspace.sty   : Permite regular espacio entre l�neas
+newapa.sty     : Estilo bibliogr�fico APA
+newapa.bst     : Archivo auxiliar
+
+�C�mo debo hacer las figuras para poder insertarlas?
+
+Se recomienda usar formato pdf para figuras de curvas y l�neas,
+png para figuras de pixeles "sint�ticas", y jpg para figuras
+"naturales" (fotos).
+
+Se recomienda tambien el uso de los programas Adobe Illustrator o
+Inkscape (versi�n libre), para editar figuras en formato pdf.
+
+Otros consejos
+
+Conviene comentar mediante el signo porcentual % algunas l�neas
+en memoria.tex para compilar el proyecto por partes.
+
+El cortado de las palabras al final de una l�nea se realiza
+siguiendo ciertos principios tomados del Ingl�s, por lo que
+es probable observar errores como "temper-atura". Para forzar
+el corte en los lugares correctos se recomienda usar la
+declaraci�n \hyphenation{tem-pe-ra-tu-ra} al principio del
+texto, o donde aparece la palabra "tempe\-ratura".
+
+Y una �ltima recomendaci�n...
+
+Antes de empezar a trabajar en la propia memoria o hacer
+cualquier cambio en la plantilla, conviene compilar la fuente
+con su bibliograf�a y asegurarse que todo funciona como debiera:
+
+1. pdflatex memoria
+2. bibtex memoria
+3. pdflatex memoria
+4. pdflatex memoria
+
+El archivo memoria.pdf debiera lucir id�ntico a memoria_000.pdf
+
+(Jaime Cisternas <jcisternas@uandes.cl>, Santiago, Agosto 2010)
+

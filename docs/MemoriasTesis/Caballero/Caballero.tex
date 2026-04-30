@@ -1,0 +1,85 @@
+\documentclass[12pt]{report}
+\input{core/preambulo.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nombreautor}{ALUMNO}
+\newcommand{\mes}{Julio}
+\newcommand{\anio}{2023}
+\newcommand{\titulo}{Definir el título}
+\newcommand{\nombreprofuno}{PROFESOR}
+\newcommand{\nombreprofdos}{Nombre Profe 2}
+\newcommand{\nombreproftres}{Nombre Profesor Invitado}
+\newcommand{\codigo}{ING-IN-001/11}
+
+%%%%%%%%%%Aqui se escribe el resumen%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\resumen}{
+Hacer resumen al terminar la tesis. Máximo 1 página
+}
+
+\newcommand{\agradecimientos}{
+Muchas gracias a todos}
+
+\newcommand{\dedicatoria}{\it
+ok..
+}
+\renewcommand{\baselinestretch}{1.5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Por favor coloque todas las definiciones de simbolos a continuacion
+% y no en los archivos de capitulos. Esto evitara la  existencia de
+% multiples definiciones para las mismas palabras.
+
+\newcommand{\mydef}
+	{\stackrel{\mathrm{def}}{=}}
+\newcommand{\e}
+	{\hbox{\large{e}}}
+\newcommand{\mi}
+	{\hbox{\large{i}}}
+\newcommand{\RR}{\mathbb{R}}
+
+\geometry{margin=2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\label{start}
+
+% Genera las paginas de titulo, copyright, resumen,
+% agradecimientos, dedicatoria, indices,...
+
+% No es necesario modificar
+
+\input{core/primeras_paginas.tex}
+
+%%%%%%%%%%%%%%%%Ingreso de capitulos%%%%%%%%%%%%%%%%%%%%%%
+
+\input{chapters/chapter01.tex}
+\input{chapters/chapter02.tex}
+\input{chapters/chapter03.tex}
+\input{chapters/chapter04.tex}
+\input{chapters/chapter05.tex}
+% Ingenieros prefieren la bibliografia antes que los anexos
+
+\cleardoublepage
+
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\bibliographystyle{newapa}
+\bibliography{referencias}
+
+\appendix % seguido de archivos de apendices
+
+\cleardoublepage
+
+% Escribe 'Anexos' en el Indice General
+\addcontentsline{toc}{chapter}{Anexos}
+
+\input{attachments/anexo_a.tex}    % archivo de apendice
+
+%\input{apendice_b}    % otro archivo de apendice
+
+\label{end}
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

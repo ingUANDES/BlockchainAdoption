@@ -1,0 +1,162 @@
+\begin{titlepage}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,869); %set diagram left start at 0, and has height of 869
+
+%Straight Lines [id:da23590902694809812] 
+\draw     (130,0) -- (130,900) ;
+%Straight Lines [id:da6870198378646561] 
+\draw  [line width=3]   (125,0) -- (125,900) ;
+%Straight Lines [id:da620103730055265] 
+\draw    (120,0) -- (120,900) ;
+%Straight Lines [id:da9595418699780931] 
+\draw [line width=3]    (0,150) -- (660,150) ;
+%Straight Lines [id:da038904426968975336] 
+\draw    (0,155) -- (660,155) ;
+%Straight Lines [id:da3582574940086456] 
+\draw    (0,145) -- (660,145) ;
+%Image [id:dp2636455806851956] 
+\draw (62,71.84) node  {\includegraphics[width=60pt,height=80.96pt]{logos/Logo-UANDES.png}};
+
+% Text Node
+\draw (260,37) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize] [align=left] {\begin{minipage}[lt]{179.57pt}\setlength\topsep{0pt}
+\begin{center}
+UNIVERSIDAD DE LOS ANDES\\FACULTAD DE INGENIERÍA Y\\CIENCIAS APLICADAS
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (260,241.86) node [anchor=north west][inner sep=0.75pt]  [font=\LARGE] [align=left] {\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+\titulo
+\end{center}
+
+\end{minipage}};
+
+% Text Node
+\draw (260,431) node [anchor=north west][inner sep=0.75pt] [font=\large]  [align=left] {\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+\nombreautor
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (260,495) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+TRABAJO PARA OPTAR AL TITULO\\ DE INGENIERO CIVIL INDUSTRIAL
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (260,598) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+PROFESOR GUÍA: {\sc \nombreprofuno}
+\end{center}
+
+\end{minipage}};
+% Text Node
+\draw (260,681) node [anchor=north west][inner sep=0.75pt]   [align=left] {
+\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+{\small SANTIAGO, NOVIEMBRE DE AGOSTO DE \the\year{}}
+\end{center}
+\end{minipage}};
+
+% Text Node
+\draw (260,755) node [anchor=north west][inner sep=0.75pt]  [font=\normalsize] [align=left] {\begin{minipage}[lt]{206.76pt}\setlength\topsep{0pt}
+\begin{center}
+UNIVERSIDAD DE LOS ANDES\\FACULTAD DE INGENIERÍA Y\\CIENCIAS APLICADAS
+\end{center}
+
+\end{minipage}};
+
+\end{tikzpicture}
+
+\end{titlepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Escribe la segunda pagina de titulo para ser firmada por la comision
+
+\cleardoublepage
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{2cm}
+\parbox{10cm}{
+\noindent
+Certifico que he leído esta memoria y que en mi opinión
+su alcance y calidad son completamente adecuados como para ser considerada
+una memoria conducente al título de Ingeniero.
+\vspace{1cm}
+
+\hfill
+\begin{tabular}{c}
+\hspace{8cm} \\
+\hline
+\nombreprofuno \\
+(Profesor Guía)
+\end{tabular}
+
+\vspace*{1.5cm}
+
+}
+
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Espaciado entre lineas
+  \onehalfspacing
+  %\doublespacing
+
+% Hace pagina de derechos de autor
+
+  \cleardoublepage
+  \thispagestyle{empty}
+  %\vspace*{0in}
+  \begin{center}
+    \copyright\ \nombreautor\ \the\year{} \\
+    Todos los derechos reservados.
+  \end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Genera agradecimientos leyendo definicion de agradecimientos
+\pagenumbering{roman}
+  \cleardoublepage \addcontentsline{toc}{section}{Agradecimientos}
+  \begin{center} \Large \textbf{Agradecimientos} \end{center}
+
+
+% Genera resumen leyendo definicion de resumen
+
+
+  \cleardoublepage
+  \refstepcounter{dummy} \addcontentsline{toc}{section}{Resumen}
+  \begin{center} \Large \textbf{Resumen} \end{center}
+describir resumen del trabajo
+
+
+
+% Genera dedicatoria
+
+ % \cleardoublepage \vspace*{1.5in}
+  %\begin{flushright} \dedicatoria %\end{flushright}
+
+% Produce indice general, listas de figuras y de tablas
+
+  \cleardoublepage
+  \tableofcontents
+  \cleardoublepage
+  \listoffigures
+  \cleardoublepage
+  \listoftables
+  \cleardoublepage
+
+  \normalsize
+  \pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

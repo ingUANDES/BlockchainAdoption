@@ -1,7 +1,7 @@
 \documentclass[aspectratio=169]{beamer}
-
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\setsansfont{TeX Gyre Heros}
+\setlength{\marginparwidth}{2cm}
 \usepackage{amsmath}
 \usepackage[
 backend=biber,
@@ -208,7 +208,7 @@ sorting=ynt
 \begin{frame}{Complete Utility Function for agent A}
     \begin{block}{Maximizing agent A’s Utility for Data Storage}
     \[
-    \textbf{Utility function:} \quad g_i(W_T, W_B, P_T, P_B) := w_{Ti}' (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}' \Sigma_{Ti} w_{Ti} + \\
+    \mathbf{Utility\ function:}\quad g_i(W_T, W_B, P_T, P_B) := w_{Ti}' (\mu_{Ti} - P_T e_i) - \gamma_{Ti} \cdot w_{Ti}' \Sigma_{Ti} w_{Ti} + 
     w_{Bi}' (\mu_{Bi} - P_B e_i) - \gamma_{Bi} \cdot w_{Bi}' \Sigma_{Bi} w_{Bi} + \lambda(\tilde w - \hat w)
     \]
     \end{block}
