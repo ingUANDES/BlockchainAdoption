@@ -1,0 +1,193 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\title{\textbf{Hito 2}}
+\author{
+    \textbf{Nombre Alumno:} Eduardo Caballero \\
+    \textbf{Nombre Profesor guía:} Sebastián Cea
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+\section*{Enfoque Metodológico}
+% ============================================================
+
+El presente Hito describe el enfoque metodológico propuesto para la memoria y especifica los
+componentes preliminares del modelo a desarrollar. La estrategia consiste en partir del marco
+de red dual desarrollado por Venegas (2024), quien a su vez se basa en el modelo de Jalan \&
+Chakrabarti (2024) y lo extiende a un entorno con infraestructura tradicional y alternativa.
+Sobre ese marco, la presente propuesta de memoria introduce heterogeneidad en aversión al
+riesgo y en creencias sobre retornos como mecanismo para incorporar información asimétrica
+entre los agentes. Esta extensión se conecta directamente con las oportunidades de mejora
+identificadas en el Hito~1 y con las limitaciones que Venegas (2024) reconoce en la sección
+5.3.3 de su tesis.
+
+% ============================================================
+\section{El marco de red dual}
+% ============================================================
+
+El modelo base sobre el cual se construye la memoria es el marco de red dual desarrollado por
+Venegas (2024). Este marco extiende a Jalan \& Chakrabarti (2024) introduciendo dos
+infraestructuras paralelas —una red Tradicional ($T$) y una red Alternativa ($A$)— sobre las
+cuales tres agentes (Banco Nacional, Banco Local y Empresa Local) deciden simultáneamente
+cómo asignar su exposición total $w_i^*$ entre ambas redes, sujetos a la restricción de
+asignación:
+\begin{equation}
+    w_i^* = w_i^T + w_i^A.
+\end{equation}
+
+El marco se caracteriza formalmente por la tupla $(\mu_i,\, \gamma_i,\, \Sigma_i,\, \Psi_i^T,\,
+\Psi_i^A,\, \tau,\, \lambda_A,\, w_i^*)$, donde $\mu_i$ es el vector de retornos esperados,
+$\gamma_i$ el coeficiente de aversión al riesgo, $\Sigma_i$ la matriz de covarianzas, $\Psi_i^T$
+y $\Psi_i^A$ las matrices de contrapartes permitidas en cada red, $\tau \geq 0$ los beneficios
+de transparencia de la red alternativa, y $\lambda_A \geq 0$ los costos friccionales asociados a
+su uso. La utilidad de cada agente toma la forma cuadrática estándar:
+\begin{equation}
+    g_i(W, P) = w_i^\top(\mu_i + \tau \cdot e_i^A - P \cdot e_i)
+    - \gamma_i \cdot w_i^\top \Sigma_i\, w_i
+    - \lambda_A \cdot \|w_i^A\|^2.
+    \label{eq:utilidad}
+\end{equation}
+
+El resultado central de Venegas (2024) es que, bajo su calibración, la red dual recupera el
+$100\%$ del bienestar perdido por la restricción regulatoria (mejora del $103{,}0\%$ sobre el
+escenario restringido en el caso de tres agentes), mientras que la introducción de competencia
+dentro de una única red cierra solo aproximadamente el $59\%$ de la brecha de bienestar
+respecto al benchmark sin restricción. Este hallazgo establece la red alternativa como
+mecanismo estructural de eficiencia y constituye el punto de partida sobre el cual se
+construyen las preguntas de la presente memoria.
+
+% ============================================================
+\section{Limitación identificada y oportunidad de extensión}
+% ============================================================
+
+El resultado de Venegas (2024) se obtiene bajo dos supuestos simplificadores que el propio
+autor reconoce como limitaciones en la sección 5.3.3 de su tesis. El primero, todos los agentes
+comparten una aversión al riesgo idéntica ($\gamma_i = 1{,}0$ para todo $i$). El segundo, todos
+los agentes mantienen creencias homogéneas sobre los retornos esperados ($\mu_i = \mu_j$).
+Estos dos supuestos abstraen del marco precisamente las dos fuentes de heterogeneidad que,
+en mercados reales, generan la mayor parte de las ganancias del comercio: la diferencia en
+tolerancia al riesgo entre instituciones y la dispersión de creencias sobre la rentabilidad y
+riesgo de la infraestructura alternativa.
+
+Venegas (2024) explícitamente observa que la introducción de dispersión en creencias generaría
+ganancias adicionales del comercio no capturadas por su marco, y que la heterogeneidad en
+aversión al riesgo podría producir que agentes tolerantes al riesgo se concentren en la red
+alternativa mientras que aquellos aversos al riesgo permanezcan en la red tradicional. El autor
+concluye que sus estimaciones de recuperación del bienestar son, en consecuencia,
+conservadoras. Esta observación abre directamente la oportunidad de extensión que motiva al
+presente proyecto de memoria.
+
+Esta oportunidad se alinea con las tres direcciones de mejora identificadas en el Hito~1. La
+heterogeneidad en $(\gamma_i, \mu_i)$ es la palanca natural para incorporar información
+asimétrica al modelo, porque permite que cada agente actúe sobre creencias y preferencias
+propias, generando comportamiento estratégico diferenciado entre Banco Nacional, Banco
+Local y Empresa Local.
+
+% ============================================================
+\section{Extensión propuesta y preguntas de investigación}
+% ============================================================
+
+La extensión propuesta consiste en relajar simultáneamente los dos supuestos de
+homogeneidad identificados, permitiendo que cada agente (Banco Nacional, Banco Local,
+Empresa Local) se caracterice por un coeficiente de aversión al riesgo $\gamma_i$ y un vector
+de creencias sobre retornos $\mu_i$ propios, con $\gamma_i \neq \gamma_j$ y $\mu_i \neq \mu_j$
+en general. El resto de la estructura del modelo de Venegas (2024) —como $\Psi_i^T$ y
+$\Psi_i^A$, la transparencia $\tau$, los costos friccionales $\lambda_A$ y la restricción de
+asignación total— se mantendría intacta. Se trata, en consecuencia, de una extensión
+incremental que aísla el efecto de la heterogeneidad sobre los resultados de bienestar y
+comportamiento estratégico, sin alterar el resto del andamiaje del marco base.
+
+La asignación de perfiles a cada agente se propone con base en la lógica económica de sus
+roles institucionales. El Banco Nacional, por su escala, se modelaría como un agente con
+aversión al riesgo baja y creencias precisas sobre los retornos. El Banco Local opera con
+aversión al riesgo intermedia y un grado parcial de información, reflejando su posición
+intermedia entre el Banco Nacional y el sector real. Por su parte, la Empresa Local se
+caracteriza por aversión al riesgo elevada y creencias ruidosas sobre los retornos de la
+infraestructura alternativa, capturando la posición de un agente no-financiero con acceso
+limitado a información especializada.
+
+Esta extensión habilita tres preguntas de investigación que el marco homogéneo de Venegas
+(2024) no puede formular:
+
+\begin{enumerate}
+    \item ?`Persiste la recuperación completa de bienestar cuando los agentes son heterogéneos,
+    o la dispersión en $(\gamma_i, \mu_i)$ reduce la magnitud de la recuperación?
+
+    \item ?`Se produce \textit{sorting} endógeno entre las dos redes? Es decir, ?`los agentes
+    tolerantes al riesgo y bien informados (Banco Nacional) concentran su exposición en la red
+    alternativa mientras los aversos al riesgo y peor informados (Empresa Local) permanecen
+    en la red tradicional?
+
+    \item ?`Cómo se distribuyen las ganancias de bienestar entre los tres agentes bajo
+    heterogeneidad? ?`Obtiene el Banco Nacional un mayor porcentaje debido a su ventaja de
+    acceso a información más profunda de los mercados?
+\end{enumerate}
+
+% ============================================================
+\section*{Componentes Preliminares del Modelo}
+% ============================================================
+
+La especificación preserva la estructura del marco de Venegas (2024) y modifica únicamente
+aquellos componentes directamente afectados por la heterogeneidad propuesta.
+
+% ============================================================
+\subsection{Agentes y parámetros heterogéneos}
+% ============================================================
+
+El modelo considera el conjunto de agentes $\mathcal{N} = \{1, 2, 3\}$, correspondientes al
+Banco Nacional ($i = 1$), Banco Local ($i = 2$) y Empresa Local ($i = 3$). Cada agente se
+caracteriza por dos parámetros individuales: un coeficiente de aversión al riesgo $\gamma_i > 0$
+y un vector de creencias sobre retornos esperados $\mu_i \in \mathbb{R}^n$.
+
+A diferencia de Venegas (2024), donde $\gamma_i = 1$ y $\mu_i = \mu$ para todo $i$, la
+extensión propuesta requiere especificar una relación de orden cualitativa entre los parámetros
+de los tres agentes. En términos de aversión al riesgo, se propone:
+\begin{equation}
+    \gamma_1 < \gamma_2 < \gamma_3,
+\end{equation}
+lo que refleja la jerarquía institucional descrita anteriormente. En términos de creencias, la
+heterogeneidad se modela como dispersión alrededor de un valor de referencia $\bar{\mu}$
+común, donde $\mu_1$ se aproxima a $\bar{\mu}$ con error pequeño, $\mu_2$ con error
+intermedio, y $\mu_3$ con error grande. El resto de los parámetros individuales del marco base
+—la matriz de covarianzas $\Sigma_i$ y la exposición total $w_i^*$— se conservan inicialmente
+como en Venegas (2024).
+
+% ============================================================
+\subsection{Estructura de redes y restricciones}
+% ============================================================
+
+La estructura de redes se hereda íntegramente del marco de Venegas (2024). Cada agente $i$
+opera simultáneamente sobre dos redes: la red Tradicional, caracterizada por la matriz
+$\Psi_i^T$, y la red Alternativa, caracterizada por la matriz $\Psi_i^A$. Las matrices $\Psi$
+señalan qué pares de agentes pueden mantener exposiciones entre sí en cada infraestructura.
+Sobre esta estructura actúan dos parámetros globales que regulan qué tan ``atractiva'' es la
+red alternativa: el premio de transparencia $\tau \geq 0$, que aumenta el retorno esperado de
+las exposiciones tomadas en la red alternativa, y el costo friccional $\lambda_A \geq 0$, que
+penaliza el tamaño de la posición tomada en dicha red.
+
+Cada agente está sujeto a la restricción de asignación:
+\begin{equation}
+    w_i^* = w_i^T + w_i^A,
+\end{equation}
+que establece que la suma de las exposiciones tomadas en ambas redes debe igualar la
+exposición total exógena del agente. Esta restricción captura la decisión central del modelo
+—la asignación entre infraestructuras— y se mantiene sin modificación respecto al marco base.
+
+\end{document}

@@ -1,0 +1,430 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\title{\textbf{Hito 1 (draft)}}
+\author{
+    \textbf{Nombre Alumno:} Eduardo Caballero \\
+    \textbf{Nombre Profesor guía:} Sebastián Cea
+}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% ============================================================
+\section*{Introducción}
+% ============================================================
+
+El presente documento revisa la tesis sobre \textit{Financial Networks \& Technological
+Innovation: A Dual-Network Model} (Venegas, 2024), que aborda cómo las restricciones
+regulatorias en redes financieras impiden relaciones bilaterales eficientes y generan
+pérdidas de bienestar. La relevancia del problema es significativa: las infraestructuras
+financieras alternativas (NBFI o \textit{shadow banking}) representan hoy USD~238 billones a
+nivel global, equivalentes al 49,1\% de los activos financieros mundiales (Financial
+Stability Board, 2024).
+
+Con base en la lectura de \textit{``Financial Networks \& Technological Innovation: A Dual-Network
+Model''} (Venegas, 2024) se destacarán los puntos base sobre los que la tesis se sostiene, los
+elementos centrales del problema, el contexto en el que se enmarca y la extensión que realiza
+la tesis sobre el modelo de \textit{``Strategic Negotiations in Endogenous Network Formation''}
+(Jalan y Chakrabarti, 2024). Además, se expondrán algunas oportunidades de mejora al modelo.
+El documento se dividirá en tres grandes capítulos siguiendo el orden establecido en la tesis:
+Marco teórico, modelo y resultados.
+
+La tesis estudia la alternativa de una infraestructura paralela a la estructura financiera que
+opera con regulaciones diferentes a las instituciones tradicionales. Luego se introducen
+distintos modelos estudiados y referenciados en el marco teórico donde se demarcan sus
+limitaciones. Finalmente se introduce un modelo \textit{dual-network infrastructure} y se
+demuestra que la coexistencia de ambos sistemas con diferentes regulaciones mejora el
+bienestar y no elimina al sistema tradicional. El resultado central es que la sola competencia
+entre intermediarios dentro de la red restringida recupera el bienestar parcialmente (deja un
+gap de 27,9\% respecto del benchmark sin restricción), mientras que habilitar una
+infraestructura alternativa logra una recuperación completa del bienestar. Se modelan a los
+agentes en redes paralelas, donde cada uno adjudica sus propios contratos para maximizar el
+bienestar:
+
+\begin{itemize}
+    \item $T$: Banca tradicional con sus debidas restricciones.
+    \item $A$: Sistema alternativo que opera bajo distintos tratamientos.
+\end{itemize}
+
+
+% ============================================================
+\section*{Marco Teórico}
+% ============================================================
+
+El capítulo presenta el marco teórico que sustenta el análisis de redes financieras y la
+competencia entre infraestructuras tradicionales y alternativas. Se definen las redes como
+conexión entre nodos y links de acuerdo con la siguiente forma: los agentes (nodos) toman
+decisiones estratégicas sobre con quiénes formar links considerando los beneficios esperados
+y sus costos. Con base en estas redes se pueden modelar fenómenos como el contagio
+financiero, la propagación del riesgo sistémico y la estabilidad del sistema económico.
+
+Se hace referencia a 3 modelos de redes financieras:
+
+\begin{itemize}
+    \item \textbf{Eisenberg y Noe (2001):} Redes financieras a través de matriz de obligaciones
+    que representa de buena forma el efecto cascada en la red cuando ocurre un \textit{default}.
+
+    \item \textbf{Elliott, Golub y Jackson (2014):} Modelo de red para contagio y cómo puede
+    amplificar o mitigar riesgo sistemático.
+
+    \item \textbf{Jalan y Chakrabarti (2024):} Introduce una matriz $Q$ simétrica y semidefinida
+    positiva que captura la estructura de costos y beneficios entre pares de agentes, junto con
+    una función de utilidad media-varianza que permite modelar decisiones óptimas de
+    contratación bilateral en equilibrio \textit{pairwise stable}. Es el modelo base que la tesis
+    extiende.
+\end{itemize}
+
+Sin embargo, las redes tradicionales presentan limitaciones relevantes, tales como altos costos
+de intermediación, la opacidad en la información, el riesgo sistémico derivado de la
+centralización y la baja inclusión financiera. Además, los efectos de red pueden generar tanto
+beneficios, como mayor acceso a financiamiento, como costos, asociados a congestión y
+fricciones operacionales.
+
+Posteriormente, el capítulo analiza la competencia entre infraestructuras financieras desde la
+perspectiva de mercados de dos lados y teoría de plataformas. De esta forma, las redes
+funcionan como plataformas que conectan a tanto oferentes y demandantes de liquidez, donde
+los efectos de red y las decisiones de \textit{multi-homing} determinan el equilibrio competitivo.
+Las referencias en la literatura muestran que la coexistencia de múltiples plataformas depende
+de factores tales como: costos de cambio, la diferenciación entre servicios y la presencia de
+externalidades de red.
+
+Un elemento central es el concepto de arbitraje regulatorio, donde las restricciones impuestas
+a las redes tradicionales incentivan la aparición de otras infraestructuras alternativas que
+permiten evadir las limitaciones impuestas. Por ejemplo, se ha demostrado que una parte
+importante del crecimiento del Fintech y del \textit{shadow banking} responde justamente a
+estas restricciones más que a sus ventajas tecnológicas intrínsecas.
+
+Asimismo, el capítulo conecta el análisis de redes con el equilibrio general y la provisión de
+liquidez. Para lograr el equilibrio general, las redes financieras determinan cómo se asigna el
+riesgo entre los distintos agentes y cómo los precios de los activos reflejan la estructura de
+las relaciones bilaterales. Respecto a la liquidez, las redes operan como canales que la proveen
+y la redistribuyen entre los agentes. Esto se traduce en que en redes más densas la liquidez
+fluye con menor fricción, pero también se amplifica la transmisión de \textit{shocks}.
+
+El capítulo también aborda la adopción tecnológica en presencia de efectos de red; aquí se
+destacan problemas de coordinación y posibles situaciones de \textit{lock-in}, donde
+tecnologías inferiores pueden persistir debido a su ventaja histórica y a que el mercado ya las
+adoptó. Asimismo, se analizan los costos de cambio, que incluyen costos de transacción,
+aprendizaje y coordinación, los cuales influyen en la velocidad y magnitud de adopción de
+nuevas infraestructuras.
+
+También se discuten las condiciones bajo las cuales pueden coexistir múltiples redes o surgir
+dinámicas de tipo \textit{winner-takes-all}. La evidencia teórica sugiere que la coexistencia
+es posible cuando existen diferencias regulatorias, beneficios y costos balanceados,
+heterogeneidad entre agentes y complementariedades entre plataformas. En contraste, la
+dominancia de una sola red ocurre cuando una infraestructura presenta ventajas claras o
+cuando los costos de adopción de alternativas son prohibitivos.
+
+Por su parte, la tecnología \textit{blockchain} como base de las finanzas descentralizadas, se
+presenta como una infraestructura alternativa, ya que permite realizar transacciones sin
+intermediarios mediante un registro distribuido y transparente. Sus principales beneficios son
+la reducción de asimetrías de información, menores costos de transacción y mayor inclusión
+financiera, además de la automatización de contratos a través de \textit{smart contracts}. No
+obstante, su adopción enfrenta limitaciones relevantes, como costos operacionales asociados
+a tarifas y congestión, problemas de escalabilidad, riesgos de privacidad y barreras
+regulatorias y de adopción tecnológica que dificultan su implementación en el mercado masivo.
+
+
+% ============================================================
+\section*{Modelo}
+% ============================================================
+
+\subsection*{1. Modelo base de Jalan y Chakrabarti (2024)}
+
+El modelo base que la tesis extiende considera una red de $N$ agentes que negocian contratos
+bilaterales bajo una función de utilidad media-varianza. Cada agente $i$ posee un vector de
+creencias $\mu_i$ sobre los retornos esperados de los contratos, una matriz de covarianzas
+$\Sigma_i$ que captura el riesgo de su portafolio, y un coeficiente de aversión al riesgo
+$\gamma_i$. La asignación que cada agente realiza a sus contratos se denota como un vector
+$w_i$, y los pagos asociados se recogen en una matriz antisimétrica $P$ (lo que $i$ paga a $j$
+es lo opuesto a lo que $j$ paga a $i$).
+
+La utilidad de un agente $i$ toma la forma:
+\begin{equation}
+    g_i(W, P) = w_i^\top (\mu_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i,
+\end{equation}
+donde el primer término representa el retorno esperado neto de pagos y el segundo el costo
+cuadrático asociado al riesgo. Cada agente elige $w_i$ para maximizar esta utilidad sujeta a
+una restricción regulatoria capturada por una matriz de proyección $\Psi_i$, que determina qué
+contratos puede o no puede tomar. La solución óptima admite la forma cerrada:
+\begin{equation}
+    w_i^* = Q_i (\mu_i - P e_i),
+\end{equation}
+donde la matriz $Q_i$ agrega aversión al riesgo, covarianza y restricciones regulatorias en un
+único objeto.
+
+\paragraph{Ejemplo 1: contrato de préstamo (Punto 3.1 en tesis).}
+Considerando un contrato de préstamo entre dos agentes donde el prestatario $i$ recibe el
+principal hoy y promete devolver capital más intereses en el futuro, su retorno esperado
+$\mu_{ij}$ asociado al contrato podría ser, por ejemplo, 7\%. El prestamista $j$ entrega el
+principal hoy y espera recibir el repago, por lo que su retorno esperado $\mu_{ji}$ desde su
+perspectiva podría ser 3\%. Es importante notar que las creencias de $i$ y $j$ sobre el mismo
+contrato no necesitan sumar cero: cada agente evalúa el contrato desde su propio punto de
+vista, considerando su costo de oportunidad y la correlación con el resto de su portafolio. Esta
+heterogeneidad es lo que abre espacio para que ambos agentes encuentren beneficio mutuo en
+un contrato y negocien un pago $P_{ij}$ que reparta el excedente.
+
+\paragraph{Ejemplo 4: pagos de incentivo entre dos firmas (Punto 3.3 en tesis).}
+Un segundo ejemplo permite ilustrar por qué los pagos bilaterales son esenciales para alcanzar
+un equilibrio. En este ejemplo se consideran dos firmas con distintas esperanzas sobre el
+retorno conjunto, capturadas en una matriz:
+\begin{equation}
+    M = \begin{pmatrix} 0 & 3 \\ 1 & 4 \end{pmatrix},
+\end{equation}
+con matrices de covarianza $\Sigma_1 = \Sigma_2 = \mathrm{diag}(1, 2)$ y aversión al riesgo
+$\gamma = 1$.
+
+Sin pagos entre firmas, cada una resuelve su problema por separado: la firma~1 quiere asignar
+$x^* = 1/4$ al contrato bilateral, mientras que la firma~2 quiere asignar $x^* = 3/2$. Como ambos
+valores deben coincidir para que el contrato exista, no hay acuerdo posible y la red queda vacía.
+Al permitir un pago $P$ entre firmas, las funciones objetivo se desplazan. Con $P = 5/3$, ambas
+firmas convergen al mismo óptimo $x^* = 2/3$, y el contrato bilateral se vuelve estable. La
+matriz $\mu_1$ pasa de $\begin{pmatrix}0\\1\end{pmatrix}$ a $\begin{pmatrix}0\\1+5/3\end{pmatrix}$.
+Este ejemplo muestra que el rol de los pagos no es solo redistributivo, sino que es lo que
+permite que firmas con creencias heterogéneas alineen sus asignaciones óptimas y que por lo
+tanto exista un equilibrio bilateral.
+
+\subsubsection*{Estabilidad y negociación \textit{pairwise}}
+
+El modelo define una asignación $(W, P)$ como factible si $W$ es simétrica (lo que $i$
+adjudica al contrato con $j$ coincide con lo que $j$ adjudica al mismo contrato), $P$ es
+antisimétrica y ambos respetan las restricciones regulatorias $\Psi_i$. Una asignación es
+estable si ningún par de agentes puede mejorar simultáneamente desviándose
+unilateralmente, lo que corresponde a un equilibrio de Nash en negociaciones \textit{pairwise}.
+Jalan y Chakrabarti (2024) muestran (Teorema 3.3.1) que un punto estable existe si y solo si
+una condición de proyección sobre el espacio columna de las restricciones se satisface, y
+proponen un algoritmo iterativo de negociaciones \textit{pairwise} que converge al equilibrio
+bajo un parámetro de amortiguamiento $\eta$.
+
+\subsection*{2. Restricción regulatoria y competencia dentro de la red}
+
+El modelo base permite incorporar de forma natural restricciones regulatorias sobre los
+contratos que cada agente puede tomar, a través de la matriz de proyección $\Psi_i$. Cuando
+$\Psi_i$ prohíbe el contrato directo entre dos agentes, la única forma en que ambos pueden
+vincularse es mediante un intermediario habilitado en ambos extremos. Esta estructura genera
+rentas de intermediación que dependen del poder de mercado del intermediario y del grado de
+competencia que enfrenta dentro de la red.
+
+\paragraph{Ejemplo 5: red de tres firmas con prohibición regulatoria (Punto 3.3.4 en tesis).}
+El siguiente ejemplo considera 3 agentes: un banco nacional ($N$), un banco local ($L$) y una
+firma local ($F$). La regulación prohíbe el contrato directo entre el banco nacional y la firma
+local (esto es, $\Psi$ desactiva la posición $(N, F)$ en la matriz de contratos), por lo que el
+único canal disponible para que el banco nacional financie a la firma local es a través del banco
+local. Como $L$ es el único intermediario habilitado, captura una renta monopólica: en el
+equilibrio del modelo la firma local termina pagando aproximadamente $0{,}23$ al banco local,
+mientras que el banco nacional paga aproximadamente $0{,}26$ al banco local por intermediar
+la operación. La cadena de intermediación $N \to L \to F$ transfiere recursos, pero $L$ se queda
+con el diferencial.
+
+El equilibrio \textit{pairwise stable} converge a una asignación $W_\infty$ con aproximadamente
+$[0{,}26,\, 0{,}56]$, donde el banco local concentra una posición desproporcionada relativa a
+su rol funcional. Este ejemplo demuestra cómo una restricción regulatoria, en ausencia de
+competencia, no solo impide la relación bilateral más eficiente, sino que además genera rentas
+para el intermediario habilitado, deteriorando el bienestar agregado.
+
+\paragraph{Extensión: incorporar competencia mediante una cuarta firma.}
+Para aislar el efecto de la competencia entre intermediarios, la tesis introduce una cuarta firma
+—que puede ser un intermediario de tipo Fintech— con un costo y un perfil de riesgo similares
+al banco local. En este escenario el banco nacional puede ahora intermediar a través de $L$ o
+de la Fintech, y ambos intermediarios compiten por el flujo.
+
+El equilibrio resultante reparte el flujo aproximadamente en partes iguales entre los dos
+intermediarios, lo que destruye la renta monopólica que $L$ capturaba en el caso de tres
+firmas. Sin embargo, la ineficiencia estructural persiste ya que la firma local sigue sin poder
+contratar directamente con el banco nacional porque la restricción regulatoria ($\Psi$ desactiva
+$(N, F)$) no se ha removido, sino que se ha duplicado el número de intermediarios. La
+competencia entre intermediarios elimina las rentas, pero no recupera el bienestar perdido por
+la prohibición original. Este resultado motiva el salto al modelo de redes duales: si la
+competencia dentro de la red restringida no basta, la pregunta natural es qué ocurre cuando se
+permite competencia entre infraestructuras con regulaciones distintas.
+
+\subsection*{3. Modelo \textit{dual-network}}
+
+Cada agente $i$ conserva sus primitivos del modelo base pero ahora enfrenta dos matrices de
+proyección regulatoria: $\Psi^T_i$ para la red tradicional y $\Psi^A_i$ para la red alternativa. La
+asignación total que cada agente realiza al contrato con $j$ se descompone como:
+\begin{equation}
+    w_i^* = w^T_i + w^A_i,
+\end{equation}
+donde $w^T_i$ es la posición tomada en la red tradicional y $w^A_i$ la posición tomada en la red
+alternativa. Cuando $\Psi^T_i \neq \Psi^A_i$ existe arbitraje regulatorio: contratos imposibles en
+$T$ pueden ejecutarse en $A$.
+
+La utilidad incorpora dos elementos nuevos asociados al uso de la red alternativa. Primero, un
+beneficio de transparencia $\tau \geq 0$ que captura las ganancias de utilizar una
+infraestructura como \textit{blockchain} (registro distribuido, menores asimetrías de
+información, automatización vía \textit{smart contracts}). Segundo, un costo cuadrático de
+fricción $\lambda_A \geq 0$ sobre la posición $w^A_i$, que captura los costos operacionales, de
+adopción y de escalabilidad propios de la red alternativa. La utilidad extendida toma la forma:
+\begin{equation}
+    g_i(W, P) = w_i^\top (\mu_i + \tau e^A_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i
+    - \lambda_A \|w^A_i\|^2,
+\end{equation}
+donde el término $\tau e^A_i$ premia el uso de $A$ y el término $\lambda_A \|w^A_i\|^2$ lo
+penaliza, generando un \textit{trade-off} interno entre transparencia y fricción.
+
+\subsubsection*{Existencia y consistencia con el modelo base}
+
+El Teorema 3.5.6 extiende el resultado de existencia del modelo base al \textit{setting} dual:
+bajo condiciones análogas sobre las restricciones combinadas $(\Psi^T, \Psi^A)$, existe un
+punto estable en el equilibrio \textit{dual-network} y el algoritmo iterativo de negociaciones
+\textit{pairwise} converge a él. La Proposición 3.5.7 establece la consistencia con el modelo
+original. El modelo dual se reduce al modelo base de Jalan y Chakrabarti en tres casos límite:
+\begin{itemize}
+    \item Cuando $\lambda_A \to 0$ y $\tau = 0$ (la red alternativa no aporta ni cobra).
+    \item Cuando $\Psi^A$ desactiva todos los contratos (la red alternativa no existe
+    operativamente).
+    \item Cuando $\Psi^T = \Psi^A$ (ambas redes son regulatoriamente idénticas y no hay
+    arbitraje).
+\end{itemize}
+En estos casos $w^A_i = 0$ en el equilibrio y la asignación coincide con la del modelo de una
+sola red.
+
+
+% ============================================================
+\section*{Resultados}
+% ============================================================
+
+El capítulo de resultados cuantifica numéricamente los efectos del modelo a través de cuatro
+escenarios construidos sobre la red de tres firmas (banco nacional $N$, banco local $L$, firma
+local $F$) introducida en el capítulo anterior. Los escenarios se diseñan para aislar
+progresivamente cada mecanismo:
+
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{3F-WITH:} red única tradicional con la prohibición regulatoria activa ($\Psi$
+    desactiva el contrato $N$--$F$).
+    \item \textbf{3F-WITHOUT:} red única sin la restricción, que sirve como benchmark de
+    bienestar potencial.
+    \item \textbf{4F-WITH:} se incorpora la firma Fintech (4 agentes) bajo la misma restricción,
+    para aislar el efecto de la competencia entre intermediarios.
+    \item \textbf{4F-WITHOUT:} la red de 4 firmas sin restricción, que actualiza el benchmark de
+    bienestar potencial con un agente adicional.
+\end{enumerate}
+
+La métrica central es la utilidad agregada del sistema, que combina los retornos esperados
+netos de pagos y el costo cuadrático del riesgo. Como métricas complementarias se reportan
+el volumen bilateral total, las utilidades por agente, las cuotas de mercado y los precios de
+equilibrio.
+
+\subsection*{1. Base: Referencia al Ejemplo 1}
+
+El primer experimento compara 3F-WITH y 3F-WITHOUT para medir el costo de la restricción
+regulatoria en ausencia de competencia. Cuando se desactiva el contrato $N$--$F$, el volumen
+bilateral total cae de $1{,}976$ a $0{,}822$ (una contracción de la actividad de $58{,}4\%$), y la
+utilidad agregada del sistema baja de $1{,}434$ a $0{,}706$, lo que equivale a una pérdida de
+bienestar de $50{,}8\%$.
+
+La distribución del impacto entre agentes es marcadamente asimétrica. El banco nacional
+pierde $84{,}6\%$ de su utilidad (de $0{,}4125$ a $0{,}0636$) y la firma local pierde $66{,}1\%$
+(de $0{,}5959$ a $0{,}2020$), porque ambos son los extremos del contrato prohibido. El banco
+local, en cambio, es el único que mejora su posición bajo la restricción: su utilidad se mantiene
+prácticamente intacta (de $0{,}4254$ a $0{,}4405$, $+3{,}6\%$), porque la prohibición lo
+convierte en el único intermediario habilitado entre $N$ y $F$. Las rentas del banco nacional
+incluso cambian de signo (de $0{,}0681$ a $-0{,}3598$), reflejando que en lugar de capturar
+valor pasa a pagarlo. La cadena de intermediación $N \to L \to F$ transfiere recursos, pero $L$
+se queda con el diferencial.
+
+\subsection*{2. Competencia}
+
+El segundo experimento incorpora la firma Fintech (escenario 4F-WITH) manteniendo la
+restricción regulatoria. La presencia de un segundo intermediario alternativo al banco local
+rompe el monopolio de intermediación: el volumen bilateral sube a $1{,}351$ ($+64{,}3\%$
+respecto de la base 3F-WITH) y la utilidad agregada llega a $1{,}034$ ($+46{,}5\%$ sobre la base).
+
+La redistribución entre agentes confirma el mecanismo: el banco nacional gana $159{,}6\%$ de
+utilidad y la firma local gana $93{,}6\%$, mientras que el banco local pierde $45{,}7\%$ al perder
+su privilegio estructural. Sin embargo, el bienestar agregado de $1{,}034$ sigue $27{,}9\%$ por
+debajo del benchmark sin restricción de tres firmas ($1{,}434$). La competencia entre
+intermediarios captura parte del bienestar perdido, pero no puede sustituir a la
+desregulación. La prohibición sigue activa y el contrato directo $N$--$F$ sigue sin existir.
+
+\subsection*{3. \textit{Dual-network}}
+
+El tercer experimento permite que los agentes asignen contratos en una red alternativa $A$ (con
+restricción $\Psi^A$ que sí habilita el contrato $N$--$F$) además de la red tradicional $T$. Antes
+de aplicar la prohibición, se verifica el caso simétrico: cuando ambas redes son
+regulatoriamente idénticas, el flujo se reparte 50/50 entre $T$ y $A$ y la utilidad agregada
+coincide con la del benchmark sin restricción ($1{,}434$ en 3 firmas y $1{,}741$ en 4 firmas).
+Esto confirma la Proposición 3.5.7 del modelo: en ausencia de arbitraje regulatorio, el modelo
+dual reproduce el modelo base.
+
+Cuando se reintroduce la restricción solo en $T$ (escenario 3F-DUAL-WITH), la red alternativa
+absorbe los contratos que $T$ no puede ejecutar. El equilibrio reparte la actividad como
+$27{,}6\%$ en $T$ y $72{,}4\%$ en $A$, con el contrato directo $N$--$F$ viajando casi enteramente
+por la red alternativa ($W_{13}^A = 1{,}030$). La utilidad agregada del sistema es $1{,}434$,
+idéntica al benchmark sin restricción. La red dual recupera el $100\%$ del bienestar perdido por
+la prohibición, frente al $27{,}9\%$ de gap que dejaba la sola competencia entre intermediarios.
+
+La distribución por agentes muestra cómo se reparte la ganancia: el banco nacional ve su
+utilidad pasar de $0{,}064$ a $0{,}238$ ($+272{,}5\%$), la firma local de $0{,}202$ a $0{,}851$
+($+321{,}3\%$), y el banco local cae de $0{,}441$ a $0{,}345$ ($-21{,}7\%$). Es importante notar
+que, aun con esta caída, el banco local queda mejor que en el escenario de competencia
+4F-WITH ($0{,}239$), porque aquí no compite por flujo dentro de su propia red, sino que conserva
+los contratos que $T$ sí permite ejecutar. La diferencia promedio de precios entre redes es
+$0{,}059$, lo que puede interpretarse como el \textit{shadow price} de la restricción
+regulatoria: cuánto está dispuesto a pagar el sistema por mover un contrato de $T$ a $A$.
+
+El experimento se replica con cuatro firmas (4F-DUAL-WITH): el reparto se vuelve más
+equilibrado ($52{,}1\%$ en $T$ y $47{,}9\%$ en $A$) y la utilidad agregada llega a $1{,}741$,
+igualando al benchmark ideal de cuatro firmas sin restricción. Frente a la base 3F-WITH la
+mejora es de $+146{,}6\%$, y frente al escenario de pura competencia 4F-WITH la mejora es de
+$+68{,}4\%$.
+
+
+% ============================================================
+\section*{Oportunidades de Mejora}
+% ============================================================
+
+El modelo de Venegas (2024) constituye un avance relevante respecto del marco original de Jalan
+y Chakrabarti, principalmente porque introduce de forma tratable la coexistencia de dos
+infraestructuras con regulaciones distintas y obtiene un resultado de bienestar limpio. Sin
+embargo, esto mismo abre espacio para extensiones futuras.
+
+\subsection*{1. Calibración empírica de los primitivos del modelo}
+
+Las creencias de retorno $\mu_i$, las matrices de covarianza $\Sigma_i$ y los coeficientes de
+aversión al riesgo $\gamma_i$ se eligen de manera ilustrativa para sostener los experimentos
+numéricos. Esto basta para mostrar mecanismos, pero limita la interpretación cuantitativa de
+los resultados: una pérdida de bienestar de $50{,}8\%$ o un gap de $27{,}9\%$ son cifras propias
+del modelo, no estimaciones del costo regulatorio en una jurisdicción concreta. Calibrar el
+modelo con datos reales permitiría comparar sus resultados con la evidencia empírica, por
+ejemplo, contrastando las cuotas $T/A$ que predice con las observadas en jurisdicciones donde
+ya coexisten ambas infraestructuras.
+
+\subsection*{2. Incorporar dinámica y dependencia de trayectoria}
+
+En el modelo se caracteriza un equilibrio \textit{pairwise stable} pero no se modela cómo se
+llega a él ni cómo evoluciona en el tiempo. El marco teórico discute extensamente situaciones
+de \textit{lock-in} y costos de cambio, pero estos elementos no entran al modelo formal. Una
+extensión natural sería plantear el problema en tiempo discreto con costos de migración entre
+redes, donde la decisión de un agente de moverse a $A$ en $t$ depende de cuántos otros
+agentes ya estén en $A$ en $t-1$. Esto permitiría estudiar formalmente en qué condiciones una
+red alternativa eficiente en equilibrio puede no ser adoptada por razones de coordinación, y
+qué tipo de intervención podría acelerar esta transición.
+
+\subsection*{3. Ausencia de riesgo sistémico y contagio}
+
+El riesgo en el modelo es individual y se captura mediante la covarianza $\Sigma_i$ del portafolio
+de cada agente. Eisenberg y Noe (2001) y Elliott, Golub y Jackson (2014), en cambio, ponen el
+foco en el contagio entre agentes a través de la red de obligaciones, que es justamente lo que
+el modelo no incorpora. Una extensión al presente modelo sería introducir una estructura de
+obligaciones mutuas entre los agentes de la red, lo que permitiría comparar la red tradicional
+y la alternativa no solo en términos de bienestar agregado sino también de estabilidad
+sistémica.
+
+\end{document}
