@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries Propuesta de hitos para Proyecto de T\'itulo II}
+\end{center}
+
+\vspace{0.3cm}
+\noindent\textbf{Nombre Alumno:} Eduardo Caballero\\
+\textbf{Nombre Profesor gu\'ia:} Sebasti\'an Cea\\
+\textbf{Tema Memoria:} Modelaci\'on de redes de cr\'edito bajo informaci\'on asim\'etrica.
+
+\section*{HITO I}
+
+\subsection*{Objetivo:}
+
+El objetivo de este hito es formalizar y resolver anal\'iticamente el modelo heterog\'eneo
+propuesto en el Hito~2, relajando los dos supuestos de homogeneidad del marco de Venegas
+(2024) ($\gamma_i = 1$ para todo agente y $\mu_i = \mu_j$) y caracterizando el equilibrio
+\emph{pairwise-stable} del sistema de negociaci\'on bilateral bajo un coeficiente de
+aversi\'on al riesgo heterog\'eneo $\Gamma$. Se busca demostrar consistencia del modelo
+extendido con los resultados de Venegas (2024) en los casos l\'imite correspondientes, e
+implementar y validar num\'ericamente el modelo extendido contra los benchmarks ya
+publicados, sentando la base cuantitativa sobre la cual se apoyan las simulaciones del
+Hito~II.
+
+\subsection*{Evaluaci\'on:}
+
+El cumplimiento de este hito ser\'a evaluado a trav\'es de la entrega de un documento que
+incluya:
+\begin{itemize}
+    \item Formalizaci\'on matem\'atica del modelo con agentes heterog\'eneos en aversi\'on al
+    riesgo ($\gamma_i$) y creencias sobre retornos ($\mu_i$).
+    \item Caracterizaci\'on anal\'itica del equilibrio \emph{pairwise-stable} bajo $\Gamma$
+    heterog\'eneo, con verificaci\'on de consistencia en los casos l\'imite del modelo de
+    Venegas (2024) ($\lambda_A \to 0$, $\tau = 0$, $\Psi^A$ inactiva, $\Psi^T = \Psi^A$).
+    \item Implementaci\'on computacional del modelo extendido y validaci\'on num\'erica contra
+    los benchmarks ya publicados de Venegas (2024) (3F-WITH/WITHOUT, 4F-WITH/WITHOUT).
+\end{itemize}
+
+\section*{HITO II}
+
+\subsection*{Objetivo:}
+
+El objetivo de este hito es responder, mediante simulaci\'on, las tres preguntas de
+investigaci\'on formuladas en el Hito~2 sobre el modelo heterog\'eneo validado en el Hito~I, y
+dar inicio a la aplicaci\'on emp\'irica del modelo. Esto incluye evaluar la sensibilidad de los
+resultados de bienestar y comportamiento estrat\'egico ante variaciones en los par\'ametros del
+modelo, as\'i como seleccionar y preparar un caso de datos reales sobre el cual calibrar
+preliminarmente el modelo extendido, siguiendo el precedente metodol\'ogico de Jalan \&
+Chakrabarti (2024) en su validaci\'on emp\'irica con datos de comercio internacional.
+
+\subsection*{Evaluaci\'on:}
+
+El cumplimiento de este hito ser\'a evaluado a trav\'es de la entrega de un documento que
+incluya:
+\begin{itemize}
+    \item Resultados de simulaci\'on para las tres preguntas de investigaci\'on: persistencia de
+    la recuperaci\'on de bienestar, \emph{sorting} end\'ogeno entre redes, y distribuci\'on de
+    las ganancias de bienestar entre agentes.
+    \item An\'alisis de sensibilidad de los resultados ante variaciones en
+    $(\gamma_i, \mu_i, \tau, \lambda_A)$.
+    \item Selecci\'on del caso de datos reales para la aplicaci\'on emp\'irica, con el dataset
+    identificado y una primera calibraci\'on preliminar del modelo sobre ese caso.
+\end{itemize}
+
+\end{document}
