@@ -1,0 +1,354 @@
+% !TEX program = xelatex
+% La línea de arriba es una "magic comment" para que algunos editores usen XeLaTeX automáticamente.
+
+\documentclass[xcolor=dvipsnames]{beamer}
+\usepackage[spanish]{babel} % si la presentación es en español
+% --- Paquetes Requeridos ---
+\usepackage{graphicx}
+\usepackage{fontspec} % Paquete clave para usar fuentes del sistema con XeLaTeX
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% --- Configuración de Tipografía (DM Sans) ---
+\setsansfont{DMSans}[
+    Path = font/,         % Ruta a la carpeta de fuentes
+    Extension = .ttf,      % Extensión de los archivos
+    UprightFont = *-Medium, % Fuente normal
+    BoldFont = *-Bold,        % Fuente para \bfseries
+    % ItalicFont = *-MediumItalic, % Fuente para \itshape (si la tienes)
+    % BoldItalicFont = *-BoldItalic % Fuente para \bfseries\itshape (si la tienes)
+]
+% \setsansfont{font/DMSans-Medium.ttf}[
+%     BoldFont = font/DMSans-Bold.ttf,
+%     % Si tienes las versiones itálicas, descomenta estas líneas:
+%     % ItalicFont = DMSans-MediumItalic.ttf,
+%     % BoldItalicFont = DMSans-BoldItalic.ttf
+% ]
+
+\newfontfamily\DMSansMedium[Path=font/,BoldFont=DMSans-Medium.ttf]{DMSans-Medium}
+\newfontfamily\DMSansBold[Path=font/,BoldFont=DMSans-Bold.ttf]{DMSans-Bold}
+\newfontfamily\DMSansSemiBold[Path=font/,BoldFont=DMSans-SemiBold.ttf]{DMSans-SemiBold}
+
+% Se crean comandos para acceder a los otros pesos de la fuente fácilmente.
+% \newfontfamily\DMSansBold{DMSans-BoldFont}
+% \newfontfamily\DMSansSemiBold{DMSans-SemiBold}
+
+% --- Definición de Colores ---
+\definecolor{Pantone3546C}{HTML}{CE0019}
+\definecolor{Pantone187C}{HTML}{BA001A}
+\definecolor{Pantone188C}{HTML}{A30D12}
+\definecolor{Pantone7626C}{HTML}{CA3025}
+\definecolor{Pantone7547C}{HTML}{131E29}
+\definecolor{Pantone7546}{HTML}{25384A}
+\definecolor{Pantone7545C}{HTML}{415569}
+\definecolor{Pantone7544C}{HTML}{76879C}
+\definecolor{WarmGray1C}{HTML}{D6D1CA}
+\definecolor{White}{HTML}{FFFFFF}
+
+% --- Configuración del Tema y Colores Beamer ---
+\usetheme{Madrid}
+\usefonttheme[onlymath]{serif}
+% Bloques redondeados SIN sombra: la sombra se renderiza como un recuadro
+% negro en el visor PDF de Overleaf. Con shadow=false se evita ese problema.
+\setbeamertemplate{blocks}[rounded][shadow=false]
+% Oculta los símbolos de navegación (las flechitas de la esquina).
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamercolor{palette primary}{bg=Pantone3546C,fg=White}
+\setbeamercolor{palette secondary}{bg=Pantone187C,fg=White}
+\setbeamercolor{palette tertiary}{bg=Pantone7547C,fg=White}
+\setbeamercolor{palette quaternary}{bg=Pantone7546,fg=White}
+
+\setbeamercolor{structure}{fg=Pantone3546C}
+\setbeamercolor{section in head/foot}{bg=Pantone3546C,fg=White}
+\setbeamercolor{subsection in head/foot}{bg=Pantone187C,fg=White}
+\setbeamercolor{title}{bg=Pantone3546C,fg=White}
+\setbeamercolor{frametitle}{bg=Pantone3546C,fg=White}
+\setbeamercolor{normal text}{fg=Pantone7547C}
+\setbeamercolor{item}{fg=Pantone3546C}
+\setbeamercolor{block title}{bg=Pantone3546C,fg=White}
+\setbeamercolor{block body}{bg=WarmGray1C,fg=Pantone7547C}
+
+% --- Aplicar la tipografía DM Sans a los elementos de Beamer ---
+% https://i.sstatic.net/ZkK18.png
+\setbeamerfont{title}{family=\DMSansBold} % Título principal en Bold
+\setbeamerfont{frametitle}{family=\DMSansSemiBold,size={\fontsize{12}{18}}} % Títulos de diapositivas en Semibold
+\setbeamerfont{frametitle continuation}{family=\DMSansMedium} % Títulos de diapositivas en Semibold
+\setbeamerfont{block title}{family=\DMSansSemiBold} % Títulos de bloques en Semibold
+\setbeamerfont{block body}{family=\DMSansMedium}
+\setbeamerfont{itemize/enumerate body}{family=\DMSansMedium}
+\setbeamerfont{itemize/enumerate subbody}{family=\DMSansMedium}
+\setbeamerfont{normal text}{family=\DMSansMedium}
+\setbeamerfont{footline}{family=\DMSansMedium}
+\setbeamerfont{author}{family=\DMSansMedium}
+\setbeamerfont{date}{family=\DMSansMedium}
+\setbeamerfont{structure}{family=\DMSansMedium}
+
+% --- Configuración del logo ---
+%\logo{\includegraphics[trim=2.5cm 6.1cm 2.6cm 6.1cm, clip=true, height=0.7cm]{presentations/logoFICA.png}}
+
+% --- Información de la Presentación ---
+\title[Redes de crédito e información asimétrica]{Modelación de redes de crédito\\ bajo información asimétrica}
+\author[E. Caballero]{Eduardo Caballero \\[2pt] {\small Profesor guía: Sebastián Cea} \\ {\small Avance de proyecto de título. Hitos 1 y 2}}
+\institute{\includegraphics[trim=0cm 2.3cm 0cm 0cm, clip=true,height=0.3cm]{Flecha-Uandes-Blanco.png}}
+\date{\today}
+
+% --- Plantilla de la Página de Título ---
+\setbeamertemplate{title page}{
+  \begin{centering}
+   \includegraphics[trim=2.5cm 6.1cm 2.6cm 6.1cm, clip=true, width=0.4\textwidth]{logoFICA.png}
+    \vfill
+    \begin{beamercolorbox}[sep=8pt,center]{title}
+      \usebeamerfont{title}\inserttitle\par
+    \end{beamercolorbox}
+    \vfill
+    \begin{beamercolorbox}[sep=8pt,center]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}
+    \vfill
+  \end{centering}
+}
+\usepackage[round]{natbib}
+\usepackage{academicons}
+
+
+\begin{document}
+
+% ============================ Portada ============================
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% =========================== Contenidos =========================
+\begin{frame}{Contenidos}
+    \tableofcontents
+\end{frame}
+
+
+% ============================================================
+\section{Motivación}
+% ============================================================
+\begin{frame}{Restricciones regulatorias y pérdida de bienestar}
+\begin{columns}[T]
+  \begin{column}{0.55\textwidth}
+    \begin{itemize}
+      \item Las restricciones regulatorias impiden relaciones bilaterales
+            eficientes entre instituciones, generando
+            \textbf{pérdidas de bienestar}.
+      \item Frente a ello surgen infraestructuras alternativas
+            (NBFI / \emph{shadow banking}) que operan con reglas distintas.
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.42\textwidth}
+    \begin{block}{Escala del fenómeno}
+      \begin{center}
+        {\DMSansBold\large USD 238 billones}\\[3pt]
+        {\small en activos de infraestructura financiera alternativa}\\[5pt]
+        \textbf{49,1\%} de los activos financieros mundiales
+      \end{center}
+      {\scriptsize \citep{fsb_2024}}
+    \end{block}
+  \end{column}
+\end{columns}
+\vfill
+\begin{center}
+  {\large\itshape\color{Pantone3546C}
+   ¿Puede una infraestructura paralela recuperar el bienestar que la
+   regulación destruye, sin eliminar al sistema tradicional?}
+\end{center}
+\end{frame}
+
+
+% ============================================================
+\section{Marco base}
+% ============================================================
+\begin{frame}{De Jalan \& Chakrabarti a la red dual de Venegas (2024)}
+\begin{columns}[T]
+  \begin{column}{0.48\textwidth}
+    \begin{block}{Modelo base \citep{jalan_chakrabarti_2024}}
+      Red de $N$ agentes que negocian contratos bilaterales con utilidad
+      media–varianza. Cada agente se describe por:
+      \begin{itemize}
+        \item $\mu_i$  Creencias sobre retornos esperados
+        \item $\Sigma_i$  Matriz de covarianzas (riesgo)
+        \item $\gamma_i$  Aversión al riesgo
+      \end{itemize}
+    \end{block}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \begin{block}{La extensión \citep{venegas_2024}}
+      Introduce dos infraestructuras paralelas, la red Tradicional ($T$) y
+      la Alternativa ($A$), sobre las que tres agentes (Banco Nacional,
+      Banco Local, Empresa Local) asignan su exposición total.
+    \end{block}
+  \end{column}
+\end{columns}
+\vfill
+\begin{center}
+  Decisión central: Restricción de asignación entre redes:
+  \[ w_i^{*} \;=\; w_i^{T} + w_i^{A}. \]
+\end{center}
+\end{frame}
+
+
+% ============================================================
+\section{Hito 1: Análisis crítico}
+% ============================================================
+\begin{frame}{Hito 1 · La red alternativa recupera el 100\% del bienestar}
+\begin{itemize}
+  \item La sola competencia entre intermediarios deja una brecha de
+        \textbf{27,9\%} frente al benchmark sin restricción.
+  \item Al habilitar la red alternativa, existe una recuperación completa (100\%) el 72,4\% de la actividad migra a la red $A$.
+\end{itemize}
+\vfill
+\begin{block}{El reparto de la ganancia es tal que:}
+  \begin{columns}[c]
+    \begin{column}{0.33\textwidth}\centering
+      Empresa Local\\ {\DMSansBold\large +321,3\%}
+    \end{column}
+    \begin{column}{0.33\textwidth}\centering
+      Banco Nacional\\ {\DMSansBold\large +272,5\%}
+    \end{column}
+    \begin{column}{0.33\textwidth}\centering
+      Banco Local\\ {\DMSansBold\large $-21,7\%$}
+    \end{column}
+  \end{columns}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Hito 1 · Tres oportunidades de mejora}
+\begin{enumerate}
+  \item \textbf{Calibración empírica} de $\mu$, $\Sigma$ y $\gamma$.
+  \item \textbf{Dinámica y dependencia de trayectoria} ya que, el equilibrio es
+        estático, faltan lock-in y considerar costos de migración entre redes.
+  \item El riesgo que se evalua es individual (
+        $\Sigma_i$). Es decir, no se incorporan obligaciones mutuas en la red.
+\end{enumerate}
+\vfill
+\begin{block}{El enfoque elegido}
+  Si se aplica la heterogeneidad entre agentes entonces se podrá incorporar información asimétrica al modelo.
+\end{block}
+\end{frame}
+
+
+% ============================================================
+\section{Hito 2: Enfoque metodológico}
+% ============================================================
+\begin{frame}{Hito 2 · La limitación elegida}
+\begin{itemize}
+  \item El 100\% descansa en dos supuestos que el propio autor reconoce
+        (Venegas, sección 5.3.3):
+  \begin{itemize}
+    \item $\gamma_i = 1{,}0 \;\; \forall i$   Aversión al riesgo idéntica.
+    \item $\mu_i = \mu_j$  Creencias homogéneas sobre los retornos.
+  \end{itemize}
+  \item Abstraen las dos fuentes de heterogeneidad que, en mercados reales,
+        generan la mayor parte de las ganancias del comercio.
+\end{itemize}
+\vfill
+\begin{block}{Venegas (2024)}
+  ``Las estimaciones de recuperación del bienestar son, en consecuencia,
+  \textbf{conservadoras}.'' Introducir dispersión en creencias y aversión
+  generaría ganancias del comercio que el marco homogéneo no captura.
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Hito 2 · Extensión propuesta: agentes heterogéneos}
+Cada agente con su propio $\gamma_i$ y su propio vector $\mu_i$. El resto del marco se mantiene intacto.
+\vfill
+\begin{columns}[T]
+  \begin{column}{0.32\textwidth}
+    \begin{block}{Banco Nacional ($i=1$)}
+      $\gamma$ baja\\ $\mu$ precisas\\[2pt]
+      {\footnotesize Mayor escala e información del mercado.}
+    \end{block}
+  \end{column}
+  \begin{column}{0.32\textwidth}
+    \begin{block}{Banco Local ($i=2$)}
+      $\gamma$ intermedia\\ información parcial\\[2pt]
+      {\footnotesize Posición entre el banco y el sector real.}
+    \end{block}
+  \end{column}
+  \begin{column}{0.32\textwidth}
+    \begin{block}{Empresa Local ($i=3$)}
+      $\gamma$ alta\\ $\mu$ ruidosas\\[2pt]
+      {\footnotesize Agente no financiero, info. limitada.}
+    \end{block}
+  \end{column}
+\end{columns}
+\vfill
+\begin{center}
+  \[ \gamma_1 < \gamma_2 < \gamma_3, \qquad
+     \mu_i \text{: dispersión alrededor de } \bar{\mu} \text{ con error creciente.} \]
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Hito 2 · Componentes del modelo}
+\begin{block}{Utilidad cuadrática de cada agente}
+  \[ g_i(W,P) = w_i^{\top}\!\big(\mu_i + \tau\, e_i^{A} - P\, e_i\big)
+     \;-\; \gamma_i\, w_i^{\top}\Sigma_i w_i
+     \;-\; \lambda^{A}\,\lVert w_i^{A}\rVert^{2}. \]
+\end{block}
+\vfill
+\begin{columns}[T]
+  \begin{column}{0.48\textwidth}
+    \textbf{Se modifica}
+    \begin{itemize}
+      \item $\gamma_i$  Aversión individual y ordenada
+      \item $\mu_i$  Creencias propias, con error creciente
+    \end{itemize}
+    {\footnotesize Solo estos dos, para aislar el efecto de la heterogeneidad.}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \textbf{Se conserva de Venegas (2024)}
+    \begin{itemize}
+      \item $\Psi_i^{T},\ \Psi_i^{A}$  Contrapartes por red
+      \item $\tau,\ \lambda^{A}$  Transparencia y fricción
+      \item $\Sigma_i,\ w_i^{*}$  Riesgo y exposición total
+      \item $w_i^{*} = w_i^{T} + w_i^{A}$  Restricción
+    \end{itemize}
+  \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Preguntas de investigación}
+\begin{center}
+    \textbf{Algunas preguntas propuestas a estudiar:}
+\end{center}
+\begin{enumerate}
+  \item ¿\textbf{Persiste la recuperación completa} del bienestar bajo
+        heterogeneidad, o la dispersión en $(\gamma_i,\mu_i)$ la reduce?
+  \item ¿Se produce \textbf{sorting endógeno} entre redes? (los tolerantes al
+        riesgo y bien informados hacia $A$; los aversos hacia $T$)
+  \item ¿Cómo se \textbf{distribuyen las ganancias} entre los tres agentes?
+        ¿Captura el Banco Nacional un mayor porcentaje por su ventaja de
+        información?
+\end{enumerate}
+
+\end{frame}
+
+
+% =========================== Referencias ========================
+\begin{frame}[allowframebreaks]{Referencias}
+    \bibliographystyle{apalike}
+    \bibliography{references}
+\end{frame}
+
+% =========================== Cierre =============================
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+
+\end{document}
