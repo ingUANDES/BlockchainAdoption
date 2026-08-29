@@ -12,6 +12,25 @@ repositorio.
   calendario de hitos para el segundo semestre (agosto–diciembre 2026).
 - README.md del repositorio enriquecido con la línea de trabajo Venegas → Caballero
   y el objetivo de publicación.
+- `docs/MemoriasTesis/Caballero/chapters/chapter01.tex` (Introducción):
+  contexto de mercado (shadow banking / NBFI, FSB 2024), objetivo general y
+  las tres preguntas de investigación heredadas de `Hito_2.tex`, reformuladas
+  en su versión homogénea (sin extensión a agentes heterogéneos) y con foco
+  en la validación empírica de PT2.
+- `docs/MemoriasTesis/Caballero/chapters/chapter02.tex` (Marco Teórico):
+  consolidación de la revisión de modelos de redes financieras
+  (Eisenberg-Noe 2001, Elliott et al. 2014, Jalan & Chakrabarti 2024) y del
+  modelo dual de Venegas (2024), incluyendo el resultado de recuperación de
+  bienestar y las oportunidades de mejora identificadas en `Hito_1.tex`.
+- `docs/MemoriasTesis/Caballero/chapters/chapter03.tex` (Desarrollo
+  Metodológico): cruce de `ESTRATEGIA_Semestre2.md` con
+  `Propuesta_de_Hitos_PT2.tex`, documentando el nuevo orden de hitos
+  acordado con el profesor guía (Hito I = prueba de factibilidad empírica el
+  27/09; Hito II = calibración y aplicación el 08/11) — pendiente de
+  confirmación por escrito, ver PR #2.
+- `docs/MemoriasTesis/Caballero/referencias.bib`: 6 entradas nuevas
+  (Jalan & Chakrabarti ×2, Eisenberg y Noe, Elliott et al., Venegas, FSB
+  2024), reutilizadas desde `docs/MemoriasTesis/Venegas/referencias.bib`.
 
 ## 2026-08-18 — `9831636` fin PT1 pre planificación PT2
 
