@@ -1,12 +1,131 @@
 % cap2.tex
 
 \chapter{Marco Teórico}
-\label{c2} 
+\label{c2}
 
+% ============================================================
+% Contenido retomado de Proyecto de Título I (PT1), Hito 1 (Hito_1.tex)
+% ============================================================
 
-\section{titulo de sección}\label{c22}
-%Agregar desde segundo párrafo de la Revision bibliográfica del hito 1
+Este capítulo presenta el marco teórico que sustenta el análisis de redes
+financieras y de la competencia entre infraestructuras tradicionales y
+alternativas, retomando y ampliando la revisión desarrollada durante
+\textit{Proyecto de Título I} (\texttt{Hito\_1.tex}).
 
+\section{Modelos de redes financieras}\label{c22}
 
+Se definen las redes como conexiones entre nodos y \textit{links}: los agentes
+(nodos) toman decisiones estratégicas sobre con quiénes formar vínculos,
+considerando los beneficios esperados y sus costos. Con base en estas redes se
+pueden modelar fenómenos como el contagio financiero, la propagación del riesgo
+sistémico y la estabilidad del sistema económico. La literatura distingue tres
+modelos de referencia:
 
+\begin{itemize}
+    \item \textbf{\citeA{eisenberg_systemic_2001}:} representan las redes
+    financieras a través de una matriz de obligaciones que captura el efecto
+    cascada en la red cuando ocurre un \textit{default}, mostrando la existencia
+    y unicidad de un vector de pagos que liquida el sistema.
 
+    \item \textbf{\citeA{elliott_financial_2014}:} modelan el contagio financiero
+    a través de integración (dependencia de contrapartes) y diversificación
+    (número de contrapartes por agente), mostrando que ambas dimensiones tienen
+    efectos no monótonos sobre la amplificación o mitigación del riesgo
+    sistemático.
+
+    \item \textbf{\citeA{jalan_incentive-aware_2024}:} introducen una matriz $Q$
+    simétrica y semidefinida positiva que captura la estructura de costos y
+    beneficios entre pares de agentes, junto con una función de utilidad
+    media-varianza que permite modelar decisiones óptimas de contratación
+    bilateral en un equilibrio \textit{pairwise stable}. Es el modelo base sobre
+    el cual se construye la tesis de \citeA{venegas_estabilidad_nodate}, que este
+    trabajo extiende.
+\end{itemize}
+
+Las redes financieras tradicionales presentan limitaciones relevantes: altos
+costos de intermediación, opacidad en la información, riesgo sistémico derivado
+de la centralización y baja inclusión financiera. Además, los efectos de red
+pueden generar tanto beneficios —mayor acceso a financiamiento— como costos,
+asociados a congestión y fricciones operacionales.
+
+\section{Competencia entre infraestructuras y arbitraje regulatorio}
+
+Desde la perspectiva de mercados de dos lados y teoría de plataformas, las redes
+funcionan como plataformas que conectan a oferentes y demandantes de liquidez,
+donde los efectos de red y las decisiones de \textit{multi-homing} determinan el
+equilibrio competitivo. La coexistencia de múltiples plataformas depende de
+factores como los costos de cambio, la diferenciación entre servicios y la
+presencia de externalidades de red.
+
+Un elemento central es el concepto de \textbf{arbitraje regulatorio}: las
+restricciones impuestas a las redes tradicionales incentivan la aparición de
+infraestructuras alternativas que permiten evadir esas limitaciones. Una parte
+importante del crecimiento del \textit{Fintech} y del \textit{shadow banking}
+responde justamente a estas restricciones, más que a sus ventajas tecnológicas
+intrínsecas. La tecnología \textit{blockchain}, como base de las finanzas
+descentralizadas, se presenta como una infraestructura alternativa que permite
+realizar transacciones sin intermediarios mediante un registro distribuido y
+transparente, con beneficios asociados a la reducción de asimetrías de
+información, menores costos de transacción y automatización de contratos vía
+\textit{smart contracts}; y con limitaciones asociadas a costos operacionales,
+problemas de escalabilidad y barreras regulatorias.
+
+\section{El modelo de redes duales de \citeA{venegas_estabilidad_nodate}}
+
+El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $N$
+agentes que negocian contratos bilaterales bajo una función de utilidad
+media-varianza. Cada agente $i$ posee un vector de creencias $\mu_i$ sobre los
+retornos esperados, una matriz de covarianzas $\Sigma_i$ y un coeficiente de
+aversión al riesgo $\gamma_i$. La utilidad de un agente $i$ toma la forma
+\begin{equation}
+    g_i(W, P) = w_i^\top (\mu_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i,
+\end{equation}
+sujeta a una restricción regulatoria capturada por una matriz de proyección
+$\Psi_i$. La solución óptima admite la forma cerrada $w_i^* = Q_i(\mu_i - Pe_i)$,
+y una asignación $(W,P)$ es \textit{pairwise stable} si ningún par de agentes
+puede mejorar simultáneamente desviándose unilateralmente de ella.
+
+\citeA{venegas_estabilidad_nodate} extiende este marco introduciendo dos
+infraestructuras paralelas: una red Tradicional ($T$), con restricción
+regulatoria $\Psi_i^T$, y una red Alternativa ($A$), con restricción $\Psi_i^A$.
+Cada agente reparte su exposición total entre ambas, $w_i^* = w_i^T + w_i^A$, y
+la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red
+alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$:
+\begin{equation}
+    g_i(W, P) = w_i^\top (\mu_i + \tau e^A_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i
+    - \lambda_A \|w^A_i\|^2.
+\end{equation}
+El modelo dual es consistente con el modelo base de Jalan y Chakrabarti en tres
+casos límite: cuando $\lambda_A \to 0$ y $\tau = 0$; cuando $\Psi^A$ desactiva
+todos los contratos; y cuando $\Psi^T = \Psi^A$.
+
+\subsection{Resultado central: recuperación de bienestar}
+
+Sobre una red de tres agentes —Banco Nacional ($N$), Banco Local ($L$) y Empresa
+Local ($F$)— donde la regulación prohíbe el contrato directo $N$--$F$,
+\citeA{venegas_estabilidad_nodate} muestra que la sola competencia entre
+intermediarios habilitados (incorporando una cuarta firma que compite con $L$)
+recupera solo parcialmente el bienestar perdido por la restricción, dejando un
+\textit{gap} de $27{,}9\%$ respecto del benchmark sin restricción. En cambio,
+habilitar una red alternativa $A$ que sí permite el contrato $N$--$F$ logra una
+recuperación completa del bienestar: la utilidad agregada del sistema iguala
+exactamente al benchmark sin restricción, con el contrato $N$--$F$ transando casi
+enteramente a través de $A$. Este resultado establece la red alternativa —y no
+solo la competencia dentro de la red restringida— como el mecanismo estructural
+que recupera eficiencia.
+
+\subsection{Oportunidades de mejora identificadas}
+
+El modelo de \citeA{venegas_estabilidad_nodate} obtiene su resultado de bienestar
+bajo parámetros ilustrativos ($\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para
+sostener los experimentos numéricos, no estimados de datos reales), y bajo dos
+supuestos de homogeneidad entre agentes ($\gamma_i = 1$ para todo agente y
+$\mu_i = \mu_j$) que el propio autor reconoce como limitaciones. De las
+oportunidades de mejora identificadas durante PT1 —calibración empírica de los
+primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e
+incorporación de riesgo sistémico y contagio— este trabajo retoma la primera:
+\textbf{calibrar el modelo con datos reales}, como se detalla en el
+Capítulo~\ref{MCP:subastador}. La extensión a agentes heterogéneos en
+$(\gamma_i, \mu_i)$, explorada como propuesta metodológica en \texttt{Hito\_2.tex}
+durante PT1, queda como línea de trabajo futura y no se aborda activamente en el
+presente semestre.
