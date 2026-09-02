@@ -2,7 +2,86 @@
 
 \chapter{Desarrollo Metodológico} \label{MCP:subastador} % la etiqueta para referencias
 
+Este capítulo describe el plan de trabajo de \textit{Proyecto de Título II}
+(PT2, segundo semestre de 2026), acordado con el profesor guía Sebastián Cea.
+Cruza la guía de trabajo del semestre (\texttt{ESTRATEGIA\_Semestre2.md}) con la
+propuesta de hitos entregada el 21 de agosto de 2026
+(\texttt{Propuesta\_de\_Hitos\_PT2.tex}), e incorpora la actualización acordada
+con el profesor guía en una reunión posterior a ambos documentos, que redefine
+el orden de los dos hitos de avance del semestre.
 
-\section{Modelos econométricos XXX}
+\section{Objetivo general de PT2}
 
-describir modelos y fuentes de datos
+El resultado central del modelo de \citeA{venegas_estabilidad_nodate}
+—recuperación completa del bienestar mediante una infraestructura alternativa,
+frente a un \textit{gap} de $27{,}9\%$ que deja la sola competencia entre
+intermediarios— se obtuvo bajo agentes homogéneos y parámetros ilustrativos.
+El objetivo de PT2 es producir el insumo de \textbf{validación empírica} que la
+tesis de Venegas (2024) no desarrolla: evaluar si ese resultado es consistente
+con datos reales, calibrando los primitivos del modelo ($\mu_i$, $\Sigma_i$,
+$\gamma_i$) contra un caso concreto de datos públicos de financiamiento en
+Chile, en lugar de valores ilustrativos.
+
+A diferencia de lo planteado en \texttt{Hito\_2.tex} durante PT1, este semestre
+\textbf{no se aborda la extensión del modelo a agentes heterogéneos} en
+aversión al riesgo y creencias. Esa extensión queda como línea de trabajo
+futura, pendiente de una decisión posterior con el profesor guía, y las tres
+preguntas de investigación heredadas de Hito 2 se trabajan en su versión
+homogénea (Capítulo~\ref{c1}).
+
+\section{Actualización del orden de hitos}
+
+\texttt{ESTRATEGIA\_Semestre2.md} y \texttt{Propuesta\_de\_Hitos\_PT2.tex}
+—ambos redactados antes de esta actualización— describen el hito del 27 de
+septiembre como la formalización analítica del modelo heterogéneo y su
+validación numérica contra los \textit{benchmarks} de Venegas, dejando la
+aplicación a datos reales para el hito del 8 de noviembre. En una reunión
+posterior con el profesor guía, este orden se invirtió: el primer hito de
+avance pasa a ser una \textbf{prueba de factibilidad empírica}, y el segundo,
+la calibración y aplicación completas. Este capítulo refleja esa actualización;
+los dos documentos de planificación citados arriba aún no se han corregido en
+el repositorio para reflejarla, lo que el estudiante debe confirmar
+explícitamente con el profesor guía antes de la entrega de septiembre.
+
+\section{Hito I — 27 de septiembre de 2026: prueba de factibilidad empírica}
+
+Evaluar qué tan factible es tomar el modelo de \citeA{venegas_estabilidad_nodate}
+—en su versión homogénea, sin extensión a heterogeneidad— y cruzarlo con datos
+reales. Comprende:
+
+\begin{itemize}
+    \item Identificación y evaluación de acceso a fuentes de datos públicos de
+    financiamiento en Chile, en particular a través del Banco Interamericano de
+    Desarrollo (BID) y de CORFO, que permitan aproximar los primitivos del
+    modelo ($\mu_i$, $\Sigma_i$, $\gamma_i$) para un conjunto de agentes reales
+    (p. ej. bancos y empresas beneficiarias de líneas de financiamiento CORFO).
+    \item Verificación de consistencia numérica del modelo base implementado
+    (\texttt{code/Financial\_Networks\_Stability.qmd}) contra los
+    \textit{benchmarks} ya publicados por Venegas (2024): escenarios
+    3F-WITH/WITHOUT y 4F-WITH/WITHOUT.
+    \item Un primer diagnóstico de factibilidad: si los datos disponibles
+    permiten una calibración razonable de los primitivos del modelo, o si se
+    requieren supuestos adicionales o un caso alternativo.
+\end{itemize}
+
+\section{Hito II — 8 de noviembre de 2026: calibración y aplicación}
+
+Con el diagnóstico de factibilidad del Hito I resuelto, este hito comprende:
+
+\begin{itemize}
+    \item Calibración completa del modelo con los datos reales seleccionados.
+    \item Aplicación del modelo calibrado para contrastar sus predicciones de
+    recuperación de bienestar y de reparto de actividad entre la red
+    tradicional y la alternativa contra la evidencia observada en el caso real.
+    \item Análisis de sensibilidad de los resultados ante variaciones en los
+    parámetros calibrados ($\tau$, $\lambda_A$).
+\end{itemize}
+
+\section{Hitos de cierre — 21 de agosto y 28 de diciembre de 2026}
+
+El 21 de agosto de 2026 se entregó la \texttt{Propuesta\_de\_Hitos\_PT2.tex},
+con la carta Gantt del semestre re-secuenciada contra las cuatro fechas de este
+plan. El 28 de diciembre de 2026 corresponde a la entrega del documento de
+memoria completo (\texttt{Caballero.tex}): los cinco capítulos redactados y
+compilando sin errores, los resultados de la aplicación a datos reales
+integrados, y \texttt{referencias.bib} consolidado.
