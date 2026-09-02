@@ -22,15 +22,32 @@ repositorio.
   (Eisenberg-Noe 2001, Elliott et al. 2014, Jalan & Chakrabarti 2024) y del
   modelo dual de Venegas (2024), incluyendo el resultado de recuperación de
   bienestar y las oportunidades de mejora identificadas en `Hito_1.tex`.
+  Ampliado posteriormente (de 131 a 340 líneas) con mayor profundidad
+  teórica siguiendo el nivel de detalle del capítulo homólogo de Venegas:
+  propagación de riesgo y estabilidad de redes (Glasserman & Young 2016,
+  Acemoglu et al. 2015); mercados de dos lados y competencia entre
+  plataformas (Economides 1996, Rochet & Tirole 2003, Armstrong 2006,
+  Caillaud & Jullien 2003); arbitraje regulatorio (Kane 1977, Buchak et al.
+  2018, Gorton & Metrick 2010); adopción tecnológica y dependencia de
+  trayectoria (Katz & Shapiro 1985, Farrell & Saloner 1986, Arthur 1989); y
+  una nueva sección de blockchain/DeFi (Nakamoto 2008, Cong & He 2019,
+  Makarov & Schoar 2021, Huberman et al. 2021, Schär 2021, Werbach 2018,
+  Zetzsche et al. 2020, Auer et al. 2023) conectada explícitamente con los
+  parámetros $\tau$ y $\lambda_A$ del modelo dual.
 - `docs/MemoriasTesis/Caballero/chapters/chapter03.tex` (Desarrollo
   Metodológico): cruce de `ESTRATEGIA_Semestre2.md` con
   `Propuesta_de_Hitos_PT2.tex`, documentando el nuevo orden de hitos
   acordado con el profesor guía (Hito I = prueba de factibilidad empírica el
   27/09; Hito II = calibración y aplicación el 08/11) — pendiente de
   confirmación por escrito, ver PR #2.
-- `docs/MemoriasTesis/Caballero/referencias.bib`: 6 entradas nuevas
+- `docs/MemoriasTesis/Caballero/referencias.bib`: 6 entradas iniciales
   (Jalan & Chakrabarti ×2, Eisenberg y Noe, Elliott et al., Venegas, FSB
-  2024), reutilizadas desde `docs/MemoriasTesis/Venegas/referencias.bib`.
+  2024) más 25 entradas adicionales para el enriquecimiento del marco
+  teórico, todas reutilizadas desde
+  `docs/MemoriasTesis/Venegas/referencias.bib` (32 entradas en total, incluyendo
+  `cornell_valuing_2020`, ya presente antes de este PR).
+- `docs/MemoriasTesis/Caballero/mapeo_literatura.md`: tabla de mapeo
+  tema → cita → fuente usada para el enriquecimiento del capítulo 2.
 
 ## 2026-08-18 — `9831636` fin PT1 pre planificación PT2
 

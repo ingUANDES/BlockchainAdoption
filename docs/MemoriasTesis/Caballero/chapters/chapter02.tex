@@ -42,33 +42,241 @@ modelos de referencia:
     trabajo extiende.
 \end{itemize}
 
-Las redes financieras tradicionales presentan limitaciones relevantes: altos
-costos de intermediación, opacidad en la información, riesgo sistémico derivado
-de la centralización y baja inclusión financiera. Además, los efectos de red
-pueden generar tanto beneficios —mayor acceso a financiamiento— como costos,
-asociados a congestión y fricciones operacionales.
+\paragraph{Propagación de riesgo y estabilidad}
 
-\section{Competencia entre infraestructuras y arbitraje regulatorio}
+Las redes financieras tradicionales son particularmente vulnerables al contagio
+cuando falla un nodo crítico, como un banco sistémico. \citeA{glasserman_contagion_2016}
+muestran que las redes densamente conectadas pueden ser resilientes ante shocks
+pequeños pero frágiles ante crisis sistémicas: la misma conectividad que absorbe
+perturbaciones locales amplifica los choques de gran magnitud. En la misma línea,
+\citeA{acemoglu_systemic_2015} documentan que la diversificación de conexiones
+incrementa inicialmente la estabilidad del sistema, pero más allá de cierto
+umbral la interdependencia generada abre nuevos canales de riesgo sistémico; es
+decir, la relación entre conectividad y estabilidad no es monótona.
 
-Desde la perspectiva de mercados de dos lados y teoría de plataformas, las redes
-funcionan como plataformas que conectan a oferentes y demandantes de liquidez,
-donde los efectos de red y las decisiones de \textit{multi-homing} determinan el
-equilibrio competitivo. La coexistencia de múltiples plataformas depende de
-factores como los costos de cambio, la diferenciación entre servicios y la
-presencia de externalidades de red.
+Las redes financieras tradicionales presentan, además, limitaciones estructurales
+documentadas extensamente en la literatura:
 
-Un elemento central es el concepto de \textbf{arbitraje regulatorio}: las
-restricciones impuestas a las redes tradicionales incentivan la aparición de
-infraestructuras alternativas que permiten evadir esas limitaciones. Una parte
-importante del crecimiento del \textit{Fintech} y del \textit{shadow banking}
-responde justamente a estas restricciones, más que a sus ventajas tecnológicas
-intrínsecas. La tecnología \textit{blockchain}, como base de las finanzas
-descentralizadas, se presenta como una infraestructura alternativa que permite
-realizar transacciones sin intermediarios mediante un registro distribuido y
-transparente, con beneficios asociados a la reducción de asimetrías de
-información, menores costos de transacción y automatización de contratos vía
-\textit{smart contracts}; y con limitaciones asociadas a costos operacionales,
-problemas de escalabilidad y barreras regulatorias.
+\paragraph{Altos costos de intermediación}
+Los intermediarios financieros —bancos, cámaras de compensación— imponen
+comisiones sustanciales por transferencias internacionales y por gestión de
+riesgo y cumplimiento regulatorio, lo que constituye una barrera relevante a la
+inclusión financiera, en particular en mercados emergentes.
+
+\paragraph{Opacidad y asimetrías de información}
+La información transaccional suele restringirse a las partes directamente
+involucradas, lo que dificulta evaluar el riesgo de una contraparte y favorece
+el comportamiento oportunista.
+
+\paragraph{Riesgo sistémico y centralización}
+La centralización en instituciones clave —grandes bancos, mercados
+centralizados— crea puntos únicos de falla. \citeA{elliott_financial_2014}
+señalan que esta concentración del riesgo hace a las redes tradicionales más
+susceptibles de propagar shocks macroeconómicos o eventos de liquidez. En
+contraste, \citeA{gofman_efficiency_2017} argumentan que los bancos grandes e
+interconectados pueden mejorar la eficiencia agregada precisamente porque
+reducen el largo de las cadenas de intermediación en el mercado, de modo que la
+centralización no es unívocamente negativa: el efecto neto depende de si domina
+la reducción de fricciones de intermediación o la concentración del riesgo.
+
+\paragraph{Baja inclusión financiera}
+Las redes tradicionales suelen excluir a agentes que no cumplen criterios
+formales de acceso —historial crediticio, cuenta bancaria—, un problema
+particularmente agudo en economías en desarrollo, donde una parte importante de
+la población permanece fuera del sistema financiero formal \cite{singer_financial_2017}.
+
+\paragraph{Efectos de red}
+Una mayor conectividad amplía el acceso a financiamiento y permite diversificar
+riesgo (efecto positivo), pero también puede generar congestión operacional y
+mayores costos transaccionales a medida que la red crece (efecto negativo)
+\cite{hinzen_bitcoins_2022,iyengar_economics_2023}.
+
+\section{Competencia entre infraestructuras financieras}\label{c23}
+
+La competencia entre redes Tradicional y Alternativa que este trabajo analiza
+—y que \citeA{venegas_estabilidad_nodate} modela formalmente— se apoya en dos
+cuerpos de literatura complementarios: la teoría de plataformas y mercados de
+dos lados, que explica cómo compiten infraestructuras con efectos de red, y la
+literatura sobre arbitraje regulatorio, que explica por qué surgen
+infraestructuras alternativas en primer lugar.
+
+\subsection{Mercados de dos lados y competencia entre plataformas}
+
+\citeA{economides_economics_1996} establece que las redes financieras
+funcionan económicamente como plataformas debido a externalidades de red: la
+utilidad de una conexión financiera aumenta con la liquidez y profundidad de la
+red a la que pertenece. \citeA{rochet_platform_2003} formalizan esta idea en el
+marco de mercados de dos lados, definidos como mercados donde una plataforma
+habilita interacciones entre dos grupos de usuarios y donde el valor para un
+lado depende críticamente de la participación del otro lado (externalidades de
+red \textit{indirectas}). En el contexto de redes financieras, estos dos lados
+pueden entenderse como oferentes de liquidez (capital disponible para prestar o
+invertir) y demandantes de liquidez (agentes que buscan financiamiento o
+cobertura).
+
+\citeA{armstrong_competition_2006} extiende este marco a la competencia entre
+múltiples plataformas e identifica tres escenarios según el patrón de
+participación de los agentes: \textit{single-homing} (los usuarios se afilian a
+una sola plataforma, lo que tiende a generar resultados de tipo
+\textit{winner-take-all} reforzados por los efectos de red), \textit{multi-homing}
+(los usuarios se afilian a varias plataformas simultáneamente, lo que suaviza la
+competencia y permite la coexistencia) y \textit{cuellos de botella
+competitivos} (un lado se afilia a una sola plataforma mientras el otro se
+multi-afilia). El resultado central de Armstrong es que la coexistencia de
+infraestructuras es viable cuando el costo de multi-homing es moderado y las
+plataformas se diferencian; si ese costo es muy alto, el mercado tiende a
+concentrarse en una sola infraestructura.
+
+Este marco aplica directamente al modelo dual de \citeA{venegas_estabilidad_nodate}:
+la variable de decisión $(w_i^T, w_i^A)$ es, precisamente, una decisión de
+multi-homing entre la red Tradicional y la Alternativa, y el parámetro de
+fricción $\lambda_A$ representa el costo de ese multi-homing. \citeA{caillaud_chicken_2003}
+muestran, además, que la diferenciación entre plataformas —por ejemplo, en
+transparencia o en el tipo de contratos que cada red permite— actúa como
+mecanismo que suaviza la competencia directa y sostiene la coexistencia, en
+lugar de forzar un resultado de dominancia total de una infraestructura sobre
+la otra.
+
+\subsection{Arbitraje regulatorio}
+
+Un elemento central para entender por qué surgen infraestructuras alternativas
+es el concepto de \textbf{arbitraje regulatorio}. \citeA{kane_good_1977}
+conceptualiza esta dinámica como la ``dialéctica regulatoria'': un proceso
+cíclico en que la regulación induce a los agentes económicos a innovar
+tecnológicamente con el único fin de eludir restricciones costosas. A diferencia
+de modelos estáticos donde los agentes aceptan pasivamente las restricciones, el
+volumen ``excluido'' busca nuevos canales, dando origen a un sistema ``en la
+sombra''.
+
+Esta dinámica está bien documentada empíricamente: \citeA{buchak_fintech_2018}
+encuentran evidencia causal de que el arbitraje regulatorio es un motor
+determinante del crecimiento \textit{Fintech}, estimando que cerca del
+$50\%$ de la expansión del \textit{shadow banking} responde a la carga
+regulatoria sobre la banca tradicional (mayores requerimientos de capital,
+entre otros), y no solo a una preferencia por la tecnología en sí. Esto valida
+el mecanismo central del modelo dual: la migración de volumen hacia la red
+Alternativa ($w_i^A$) es una respuesta económica racional a la fricción
+regulatoria en el sector incumbente, no meramente una preferencia tecnológica.
+La literatura, sin embargo, no es unánime sobre las implicancias de bienestar de
+este arbitraje: mientras \citeA{buchak_fintech_2018} lo interpretan como una
+respuesta eficiente a restricciones costosas, \citeA{gorton_regulating_2010}
+advierten que el \textit{shadow banking} puede ser también una fuente de
+inestabilidad sistémica, precisamente por operar con menor transparencia y
+supervisión que el sistema regulado. El parámetro de transparencia $\tau$ en el
+modelo dual puede leerse como una forma de capturar esta tensión: una
+infraestructura alternativa transparente ($\tau > 0$) podría ofrecer los
+beneficios de eficiencia del arbitraje regulatorio sin heredar necesariamente
+los riesgos típicamente asociados al \textit{shadow banking} opaco.
+
+\subsection{Adopción tecnológica, efectos de red y dependencia de trayectoria}
+
+La adopción de una infraestructura financiera alternativa enfrenta, además,
+problemas de coordinación característicos de mercados con externalidades de
+red. \citeA{katz_network_1985} muestran que las tecnologías con externalidades
+de red positivas —donde el valor para cada usuario aumenta con el número de
+otros usuarios— enfrentan un problema de coordinación fundamental: los
+adoptantes potenciales pueden preferir no adoptar si esperan que pocos otros lo
+hagan, incluso cuando la adopción universal beneficiaría a todos. Esto genera
+\textit{exceso de inercia} (el mercado permanece anclado a una tecnología
+inferior porque los agentes esperan racionalmente que otros sigan usando el
+estándar establecido) y equilibrios múltiples para los mismos parámetros
+fundamentales, dependiendo únicamente de las expectativas sobre el
+comportamiento de los demás.
+
+\citeA{farrell_installed_1986} formalizan el concepto de \textit{exceso de
+inercia} derivado de la base instalada: una tecnología establecida con una base
+de usuarios grande puede resistir la competencia de alternativas objetivamente
+superiores, porque cada agente racionalmente espera que otros se muevan
+primero. La red Tradicional posee, en este sentido, una base instalada enorme
+—relaciones existentes, infraestructura, marcos regulatorios, procedimientos
+operacionales— que la red Alternativa debe superar no con una ventaja marginal,
+sino con beneficios de transparencia ($\tau$) suficientemente grandes para
+compensar tanto los costos de fricción directos ($\lambda_A$) como la ventaja de
+coordinación de la red incumbente.
+
+\citeA{arthur_competing_1989} extiende esta lógica introduciendo los conceptos
+de \textit{path dependence} y \textit{lock-in} en mercados con retornos
+crecientes a la adopción: cuando una tecnología exhibe retroalimentaciones
+positivas, pequeños accidentes históricos o ventajas tempranas pueden llevar a
+la dominancia permanente de una tecnología, incluso si otra es objetivamente
+superior. Aplicado al modelo dual, esto implica que la asignación inicial
+$w_i^*$ —heredada del equilibrio de red única sin restricciones— condiciona el
+punto de partida desde el cual se evalúa la adopción de la red Alternativa; la
+multiplicidad de equilibrios del modelo dual (cuando $Z_F^{\text{dual}}$ no
+tiene rango completo) puede interpretarse precisamente como una manifestación de
+esta dependencia de trayectoria.
+
+\section{Blockchain y finanzas descentralizadas}
+
+La tecnología \textit{blockchain}, introducida por \citeA{nakamoto_bitcoin_2008}
+como la estructura subyacente de Bitcoin, es un sistema de registro
+distribuido que permite consignar transacciones de forma segura, transparente e
+inmutable a través de una red de nodos, sin requerir una autoridad central que
+controle el libro de cuentas. \citeA{cong_blockchain_2019} identifican cuatro
+mecanismos económicos centrales a través de los cuales blockchain afecta los
+resultados de mercado: (i) \textbf{transparencia y auditabilidad}, ya que todas
+las transacciones quedan registradas en un libro público e inmutable, verificable
+por cualquier participante; (ii) \textbf{automatización vía \textit{smart
+contracts}}, que permite ejecutar términos contractuales sin depender de
+intermediarios de confianza, reduciendo el riesgo de contraparte; (iii)
+\textbf{desintermediación}, al habilitar transacciones directas entre pares; y
+(iv) \textbf{composabilidad}, que permite construir productos financieros
+complejos combinando contratos más simples. Estos mismos autores advierten que
+estas propiedades introducen nuevas disyuntivas entre eficiencia y otros
+objetivos —como privacidad o flexibilidad contractual— que no están presentes en
+las redes tradicionales.
+
+La evidencia empírica sobre blockchain como infraestructura alternativa es
+mixta. \citeA{makarov_blockchain_2021}, en un análisis extenso del mercado de
+Bitcoin, documentan que la transparencia transaccional reduce ciertas asimetrías
+de información —los participantes sofisticados pueden observar patrones de flujo
+y comportamiento de las contrapartes en tiempo real— pero simultáneamente crea
+nuevas ventajas informacionales para quienes tienen mayor capacidad analítica
+sobre los datos \textit{on-chain}; además, encuentran que los costos de
+transacción son altamente variables y pueden dispararse durante periodos de
+congestión de red. \citeA{huberman_monopoly_2021} caracterizan este fenómeno
+como un ``monopolio sin monopolista'': el protocolo restringe la oferta de
+espacio de bloque, generando precios de monopolio, pero ninguna entidad
+individual captura esas rentas (que van, en cambio, a los mineros o validadores).
+Esta evidencia empírica sobre costos variables y crecientes con la congestión es
+consistente con la forma funcional cuadrática $\lambda_A \|w_i^A\|^2$ que el
+modelo dual utiliza para representar el costo de fricción de la red Alternativa.
+
+\citeA{schar_decentralized_2021} identifica los canales concretos a través de
+los cuales la transparencia de blockchain crea valor económico: reduce la
+selección adversa en mercados \textit{over-the-counter} al hacer observables
+los historiales transaccionales, mejora el monitoreo de riesgo de contraparte,
+habilita la ejecución \textit{trustless} de operaciones complejas sin depender
+de intermediarios humanos, y facilita la auditoría regulatoria. Sin embargo,
+\citeA{werbach_trust_2018} matiza esta lectura: la evidencia de vulnerabilidades
+en \textit{smart contracts}, la persistencia de mecanismos de gobernanza humana
+para resolver disputas, y el llamado ``problema del oráculo'' (la necesidad de
+información externa confiable para que los contratos inteligentes funcionen)
+muestran que blockchain no elimina la confianza, sino que la redistribuye —de
+la confianza en instituciones humanas a la confianza en código, criptografía y
+mecanismos de consenso—, con beneficios que dependen del contexto institucional
+específico. Estos mecanismos —transparencia con beneficios acotados por
+limitaciones prácticas— son los que el parámetro $\tau$ del modelo dual busca
+capturar de forma neta.
+
+Finalmente, la diferencia regulatoria entre redes Tradicional y Alternativa
+($\Psi_i^T \neq \Psi_i^A$) tiene respaldo institucional directo.
+\citeA{zetzsche_decentralized_2020} documentan que los sistemas
+descentralizados suelen operar en zonas grises regulatorias, por la dificultad
+de determinar qué jurisdicción aplica a un protocolo inherentemente global, lo
+que habilita cierto arbitraje jurisdiccional pero también genera incertidumbre
+legal. \citeA{auer_rise_2023}, en un estudio del Banco de Pagos Internacionales,
+documentan un patrón de adopción institucional \textit{bifurcado}: las
+instituciones financieras grandes y reguladas experimentan principalmente con
+\textit{blockchains} permisionados que preservan privacidad y cumplimiento
+regulatorio, mientras que entidades más pequeñas o menos reguladas adoptan más
+directamente sistemas públicos y sin permisos; en ambos casos, la adopción se
+concentra en casos de uso específicos —pagos transfronterizos, financiamiento de
+comercio, liquidación de valores— en lugar de un reemplazo total de la
+infraestructura existente. Este patrón de adopción parcial y heterogénea entre
+instituciones es consistente con la predicción del modelo dual de que la
+asignación óptima $w_i^{A*}$ es, en general, estrictamente interior
+($0 < w_i^{A*} < w_i^*$) y no una migración completa hacia la red Alternativa.
 
 \section{El modelo de redes duales de \citeA{venegas_estabilidad_nodate}}
 
