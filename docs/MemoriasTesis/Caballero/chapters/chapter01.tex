@@ -7,61 +7,41 @@
 % Contenido retomado de Proyecto de Título I (PT1), Hito 1 (Hito_1.tex)
 % ============================================================
 
-Las infraestructuras financieras alternativas al sistema bancario tradicional
-—agrupadas bajo el concepto de \textit{shadow banking} o \textit{non-bank financial
-intermediation} (NBFI)— representan hoy USD~238 billones a nivel global, equivalentes
-al 49,1\% de los activos financieros mundiales \citeA{fsb_global_2024}. Esta escala
+Las infraestructuras financieras alternativas al sistema bancario tradicional, agrupadas bajo el concepto de \textit{shadow banking} o \textit{non-bank financial intermediation} (NBFI), representan hoy USD~238 billones a nivel global, equivalentes
+al 49,1\% de los activos financieros mundiales \cite{fsb_global_2024}. Esta escala
 convierte en un problema económico relevante el estudio de cómo las restricciones
 regulatorias sobre las redes financieras tradicionales inciden en el bienestar
-agregado, y bajo qué condiciones la coexistencia de infraestructuras con
-regulaciones distintas —tradicionales y alternativas, incluyendo aquellas basadas en
-tecnología \textit{blockchain}— puede recuperar parte o la totalidad de ese bienestar.
+agregado. Entonces se vuelve interesante ver bajo qué condiciones la coexistencia de infraestructuras con
+regulaciones distintas (tradicionales y alternativas como por ejemplo \textit{blockchain}) puede recuperar parte o la totalidad de ese bienestar.
 
 Este trabajo se enmarca en la extensión del modelo de redes financieras duales
-propuesto por \citeA{venegas_estabilidad_nodate}, quien a su vez extiende el marco
+propuesto por \citeA{venegas_reyes_financial_2025}, quien a su vez extiende el marco
 de negociación bilateral en redes de \citeA{jalan_incentive-aware_2024}. El modelo
-de Venegas (2024) muestra que, cuando una restricción regulatoria impide el
+de \citeA{venegas_reyes_financial_2025} muestra que, cuando una restricción regulatoria impide el
 contrato directo entre dos agentes, la sola competencia entre intermediarios
-habilitados recupera solo parcialmente el bienestar perdido, mientras que habilitar
-una infraestructura alternativa con regulación distinta —donde el contrato
-prohibido en la red tradicional sí puede ejecutarse— logra una recuperación
-completa del bienestar agregado. Este resultado, sin embargo, se obtiene bajo
-parámetros ilustrativos y no calibrados contra datos reales, lo que limita su
-interpretación cuantitativa y su valor como evidencia para política regulatoria.
+habilitados recupera solo parcialmente el bienestar perdido. Habilitar
+una infraestructura alternativa con regulación distinta, donde el contrato prohibido en la red tradicional sí puede ejecutarse, logra una recuperación completa del bienestar agregado. Este resultado, sin embargo, se obtiene bajo parámetros ilustrativos y no calibrados contra datos reales, lo que limita su interpretación cuantitativa y su valor como evidencia para política regulatoria.
 
-\textbf{Nota sobre el origen de este capítulo:} la revisión crítica del modelo de
-Venegas (2024) que se presenta en el Capítulo~\ref{c2} y las preguntas de
-investigación de esta sección fueron desarrolladas originalmente durante
-\textit{Proyecto de Título I (PT1, primer semestre de 2026)}, documentadas en
-\texttt{Hito\_1.tex} y \texttt{Hito\_2.tex}. Este capítulo las incorpora y actualiza
-para reflejar el enfoque acordado con el profesor guía para \textit{Proyecto de
-Título II (PT2, segundo semestre de 2026)}, detallado en el
-Capítulo~\ref{MCP:subastador}.
+En función de esto establecemos el siguiente objetivo general.
 
 \section{Objetivos}
+
+Se busca evaluar la capacidad del modelo de redes financieras duales de \citeA{venegas_reyes_financial_2025} para representar y predecir la recuperación de bienestar observada en un caso con datos reales.  Ese ejercicio genera un insumo de validación empírica que la tesis de \citeA{venegas_reyes_financial_2025} no desarrolla y que resulta valioso para una eventual publicación relacionada en una revista de finanzas o de investigación de operaciones.
+
 \subsection{Objetivo general}
 
-Evaluar la capacidad del modelo de redes financieras duales de
-\citeA{venegas_estabilidad_nodate} para representar y predecir la recuperación de
-bienestar observada en un caso de datos reales, aportando así el insumo de
-validación empírica que la tesis de Venegas (2024) no desarrolla y que resulta
-necesario para su eventual publicación en una revista de finanzas o de
-investigación de operaciones.
+\begin{quote}
+    \emph{Aplicar un modelo de redes financieras a datos reales para evaluar cambios en bienestar.}
+\end{quote}
+
+El objetivo general se lleva a cabo a través de los siguientes objetivos específicos.
 
 \subsection{Objetivos específicos}
 
 \begin{enumerate}
-    \item Evaluar la factibilidad de calibrar los primitivos del modelo de Venegas
-    (2024) —creencias de retorno, matrices de covarianza y coeficientes de aversión
-    al riesgo— contra datos reales disponibles a través del Banco Interamericano
-    de Desarrollo (BID) y CORFO, en lugar de los valores ilustrativos utilizados
-    en el trabajo original.
-    \item Implementar y validar numéricamente el modelo base contra los
-    \textit{benchmarks} ya publicados por Venegas (2024) (escenarios 3F-WITH/WITHOUT
-    y 4F-WITH/WITHOUT), como condición previa a su aplicación empírica.
-    \item Aplicar el modelo calibrado al caso de datos reales seleccionado y
-    contrastar sus predicciones de bienestar y de reparto de actividad entre redes
-    con la evidencia observada.
+    \item Evaluar la factibilidad de calibrar los primitivos del modelo de \citeA{venegas_reyes_financial_2025}, por ejemplocreencias de retorno, matrices de covarianza y coeficientes de aversión al riesgo.
+    \item Implementar y validar numéricamente el modelo base contra los \textit{benchmarks} ya desarrollados por \citeA{venegas_reyes_financial_2025}.
+    \item Aplicar el modelo calibrado al caso de datos reales seleccionado y contrastar sus predicciones de bienestar y de reparto de actividad entre redes con la evidencia observada.
 \end{enumerate}
 
 \section{Preguntas de investigación}
