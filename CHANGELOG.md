@@ -7,6 +7,26 @@ repositorio.
 
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
+### Corregido
+- `docs/MemoriasTesis/Caballero/chapters/chapter02.tex` (Marco Teórico):
+  revisión ortográfica y gramatical completa tras la edición en Overleaf
+  (acentuación, concordancia y fragmentos de oración sin verbo). Se
+  resuelven además tres comentarios pendientes de Overleaf:
+  - Se atribuye la definición general de redes (nodos/vínculos, decisión
+    estratégica costo-beneficio) a `jackson_strategic_1996` (Jackson &
+    Wolinsky, 1996), la referencia fundacional del concepto de estabilidad
+    por pares (\textit{pairwise stability}) usado más adelante en el
+    capítulo.
+  - Se precisa la cifra de "comisiones sustanciales" por transferencias
+    internacionales con datos del *World Bank Remittance Prices Worldwide*
+    (`world_bank_rpw_2025`): costo promedio mundial 6,36\%, 4,59\% por
+    canales digitales vs. 7,30\% por canales no digitales.
+  - Se agrega el dato de exclusión financiera (~2 mil millones de adultos,
+    38\% de la población adulta mundial en 2014) a la cita ya existente
+    `singer_financial_2017`.
+- `docs/MemoriasTesis/Caballero/referencias.bib`: se agregan las entradas
+  `jackson_strategic_1996` y `world_bank_rpw_2025` (34 entradas en total).
+
 ### Añadido
 - `docs/MemoriasTesis/Caballero/ESTRATEGIA_Semestre2.md`: plan de trabajo y
   calendario de hitos para el segundo semestre (agosto–diciembre 2026).
