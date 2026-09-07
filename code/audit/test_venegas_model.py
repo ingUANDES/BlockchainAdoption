@@ -314,3 +314,196 @@ def test_defecto_H9_region_estable():
                                  num_iterations=500, eta=eta,
                                  Gamma=vm.EJEMPLO5_GAMMA, tol_pct=1e-1)
         assert info["divergio"]
+
+
+# ============================================================== ÁLGEBRA
+# Verifican que el código implementa la CPO del modelo declarado en la tesis
+# (docs/MemoriasTesis/Venegas/chapters/chapter03.tex). Derivaciones en
+# verificacion_algebraica.md. Si alguna falla, el código dejó de implementar
+# el modelo -- no es un defecto documentado, es una regresión algebraica.
+
+from scipy.linalg import solve_sylvester
+
+COV, MEAN, GAM = vm.EJEMPLO5_COV, vm.EJEMPLO5_MEAN, vm.EJEMPLO5_GAMMA
+
+
+def _P_aleatoria(rng, n=3):
+    A = rng.normal(size=(n, n))
+    return A - A.T
+
+
+def test_algebra_foc_no_restringida():
+    """opt_portfolio_mat resuelve (mu_i - P e_i) - 2 gamma_i Sigma w_i = 0."""
+    rng = np.random.default_rng(0)
+    Gamma = np.diag([0.7, 1.3, 2.0])
+    P = _P_aleatoria(rng)
+    W = vm.opt_portfolio_mat(np.linalg.inv(COV), MEAN, P, Gamma=Gamma)
+    for i in range(3):
+        resid = (MEAN[:, i] - P[:, i]) - 2 * Gamma[i, i] * COV @ W[:, i]
+        assert np.abs(resid).max() < 1e-12, i
+
+
+def test_algebra_optimo_restringido_resuelve_el_sistema_reducido():
+    """Q_i es la inversa del sistema REDUCIDO, no filas anuladas de Sigma^-1."""
+    rng = np.random.default_rng(1)
+    P = _P_aleatoria(rng)
+    R = vm.construct_prohibition_matrices(3, [(0, 2)])
+    Q = vm.construct_q_matrices([COV.copy()] * 3, R, Gamma=GAM)
+    W = vm.opt_w_with_edge_constraints(Q, MEAN, P)
+
+    # (a) cero exacto en la contraparte prohibida
+    assert W[2, 0] == 0.0 and W[0, 2] == 0.0
+
+    # (b) CPO proyectada sobre las contrapartes permitidas
+    for i in (0, 2):
+        resid = R[i] @ ((MEAN[:, i] - P[:, i]) - 2 * GAM[i, i] * COV @ W[:, i])
+        assert np.abs(resid).max() < 1e-12, i
+
+    # (c) NO coincide con anular filas de la inversa (la forma ingenua e incorrecta)
+    ingenuo = 0.5 * np.linalg.inv(COV) @ (MEAN[:, 0] - P[:, 0])
+    ingenuo[2] = 0.0
+    assert np.abs(ingenuo - W[:, 0]).max() > 1e-3
+
+
+def test_algebra_paso_de_precio_es_exacto():
+    """El shift de price_update_naive iguala W_ij = W_ji en un paso (eta=1)."""
+    rng = np.random.default_rng(2)
+    P0 = _P_aleatoria(rng)
+    Q = vm.construct_q_matrices([COV.copy()] * 3,
+                                vm.construct_prohibition_matrices(3, []), Gamma=GAM)
+    i, j = 0, 1
+    W0 = vm.opt_w_with_edge_constraints(Q, MEAN, P0)
+    shift = (W0[i, j] - W0[j, i]) / (Q[i][j, j] + Q[j][i, i])
+    P1 = P0.copy()
+    P1[i, j] = P0[i, j] + shift
+    P1[j, i] = -P1[i, j]
+    W1 = vm.opt_w_with_edge_constraints(Q, MEAN, P1)
+    assert abs(W1[i, j] - W1[j, i]) < 1e-12
+
+
+def test_algebra_sylvester_coincide_con_el_punto_fijo():
+    """Validación independiente: solución cerrada vs. iteración amortiguada."""
+    Q = 0.5 * np.linalg.inv(COV)
+    P_cerrada = solve_sylvester(Q, Q, Q @ MEAN - MEAN.T @ Q)
+    _, P_iter, _ = av.dinamica(COV, MEAN, (), num_iterations=20000,
+                               eta=vm.EJEMPLO5_ETA, Gamma=GAM, tol_pct=1e-10)
+    assert np.abs(P_cerrada - P_iter).max() < 1e-9
+    assert np.allclose(P_cerrada, -P_cerrada.T, atol=1e-13)
+
+
+def test_algebra_sylvester_requiere_gamma_identidad():
+    """Resuelve el TODO de la linea 135: la forma cerrada asume Gamma = I."""
+    Gamma = np.diag([0.7, 1.3, 2.0])
+    Q = 0.5 * np.linalg.inv(COV)          # lo que el codigo usa, ignora Gamma
+    P_cerrada = solve_sylvester(Q, Q, Q @ MEAN - MEAN.T @ Q)
+    _, P_iter, _ = av.dinamica(COV, MEAN, (), num_iterations=20000,
+                               eta=vm.EJEMPLO5_ETA, Gamma=Gamma, tol_pct=1e-10)
+    assert np.abs(P_cerrada - P_iter).max() > 1e-2
+
+
+def test_algebra_iterados_publicados_en_la_tesis():
+    """W y P en t = 0, 5, 10, inf del cap. 3 de la tesis, a 2 decimales."""
+    X = np.nan
+    esperado = {
+        0: (np.array([[-0.10, 0.20, X], [0.40, -0.31, 0.74], [X, 0.44, -0.45]]),
+            np.array([[0, 0, X], [0, 0, 0], [X, 0, 0]], dtype=float)),
+        5: (np.array([[-0.08, 0.24, X], [0.30, -0.38, 0.61], [X, 0.53, -0.37]]),
+            np.array([[0, -0.19, X], [0.19, 0, 0.17], [X, -0.17, 0]])),
+        10: (np.array([[-0.07, 0.25, X], [0.27, -0.40, 0.58], [X, 0.55, -0.35]]),
+             np.array([[0, -0.24, X], [0.24, 0, 0.21], [X, -0.21, 0]])),
+        -1: (np.array([[-0.07, 0.26, X], [0.26, -0.40, 0.56], [X, 0.56, -0.34]]),
+             np.array([[0, -0.26, X], [0.26, 0, 0.23], [X, -0.23, 0]])),
+    }
+    W_list, P_list = _corre(ESCENARIOS["con_restriccion"])
+    for t, (We, Pe) in esperado.items():
+        for nom, calc, esp in (("W", W_list[t], We), ("P", P_list[t], Pe)):
+            d = np.where(np.isnan(esp), 0.0, np.abs(calc - esp))
+            assert np.nanmax(d) <= 0.005, (t, nom, float(np.nanmax(d)))
+
+
+def test_algebra_q_dual_no_es_generalizacion_directa():
+    """Trampa del factor 1/2: Q_dual(lambda_B=0) = Q_Jalan / 2, no Q_Jalan."""
+    gam, lam = 1.3, 0.0
+    Q_jalan = np.linalg.inv(2 * gam * COV)
+    Q_dual = 0.5 * np.linalg.inv(2 * gam * COV + lam * np.eye(3))
+    assert np.abs(Q_dual - Q_jalan / 2).max() < 1e-12
+    assert np.abs(Q_dual - Q_jalan).max() > 1e-2
+
+
+# ============================================================== COBERTURA
+# Fijan los resultados de la tesis que ESTA auditoría demostró reproducibles.
+# Las definiciones de métrica viven en metricas_tesis.py (recuperadas por
+# ingeniería inversa y confirmadas contra las tablas publicadas).
+
+import metricas_tesis as mt
+
+
+def _resumen(prohib, Sigma, M, Gamma):
+    Wl, Pl = vm.run_price_dynamics(Sigma, M, prohib, num_iterations=500,
+                                   eta=0.5, Gamma=Gamma)
+    return mt.resumen(Wl[-1], Pl[-1], Sigma, M, Gamma)
+
+
+def test_cobertura_tabla_baseline_cap4():
+    """Tabla 'Baseline Comparison (3-Firm)' del cap. 4, a la precisión impresa."""
+    con = _resumen(ESCENARIOS["con_restriccion"], COV, MEAN, GAM)
+    sin = _resumen(ESCENARIOS["sin_restriccion"], COV, MEAN, GAM)
+    assert abs(con["bilateral_volume"] - 0.822) < 5e-4
+    assert abs(sin["bilateral_volume"] - 1.976) < 5e-4
+    assert abs(con["total_positions"] - 1.626) < 5e-4
+    assert abs(sin["total_positions"] - 4.543) < 5e-4
+    for calc, esp in zip(con["utilities"], (0.0636, 0.4405, 0.2020)):
+        assert abs(calc - esp) < 5e-5, (calc, esp)
+    for calc, esp in zip(sin["utilities"], (0.4125, 0.4254, 0.5959)):
+        assert abs(calc - esp) < 5e-5, (calc, esp)
+
+
+def test_cobertura_numero_titular_perdida_de_bienestar():
+    """El 50,8% de pérdida de bienestar del cap. 1 es reproducible."""
+    con = _resumen(ESCENARIOS["con_restriccion"], COV, MEAN, GAM)
+    sin = _resumen(ESCENARIOS["sin_restriccion"], COV, MEAN, GAM)
+    assert abs(con["total_welfare"] - 0.7061) < 5e-5
+    assert abs(sin["total_welfare"] - 1.4338) < 5e-5
+    perdida = 100 * (sin["total_welfare"] - con["total_welfare"]) / sin["total_welfare"]
+    assert abs(perdida - 50.8) < 0.05
+
+
+def test_cobertura_escenario_fintech_4_firmas():
+    """El escenario de 4 firmas del cap. 4 corre con el núcleo versionado."""
+    con = _resumen(mt.PROHIBIDAS_4F_WITH, mt.COV4, mt.MEAN4, mt.GAMMA4)
+    sin = _resumen(mt.PROHIBIDAS_4F_WITHOUT, mt.COV4, mt.MEAN4, mt.GAMMA4)
+    assert abs(con["total_welfare"] - 1.0341) < 5e-5
+    assert abs(sin["total_welfare"] - 1.7413) < 5e-5
+    assert abs(con["utilities"][3] - 0.2390) < 5e-5      # utilidad de la Fintech
+    assert abs(con["bilateral_volume"] - 1.351) < 5e-4
+    # El escenario es EXACTAMENTE simetrico bajo permutar los agentes 2 y 4
+    # (filas/columnas 2 y 4 de Sigma y M coinciden), asi que sus utilidades
+    # deberian ser identicas. Con el umbral fijo del codigo queda un residuo:
+    residuo = abs(con["utilities"][1] - con["utilities"][3])
+    assert 1e-7 < residuo < 1e-5
+
+    # y el residuo ES el umbral (H4), no la simetria del escenario: al apretarlo
+    # cae varios ordenes de magnitud
+    W, P, _ = av.dinamica(mt.COV4, mt.MEAN4, tuple(mt.PROHIBIDAS_4F_WITH),
+                          num_iterations=20000, eta=0.5, Gamma=mt.GAMMA4,
+                          tol_pct=1e-10)
+    u = mt.utilities(W, P, mt.COV4, mt.MEAN4, mt.GAMMA4)
+    assert abs(u[1] - u[3]) < residuo / 100
+
+
+def test_cobertura_brecha_residual_27_9_pct():
+    """La competencia mejora el bienestar pero no cierra la brecha (27,9%)."""
+    sin3 = _resumen(ESCENARIOS["sin_restriccion"], COV, MEAN, GAM)["total_welfare"]
+    con4 = _resumen(mt.PROHIBIDAS_4F_WITH, mt.COV4, mt.MEAN4, mt.GAMMA4)["total_welfare"]
+    assert abs(100 * (sin3 - con4) / sin3 - 27.9) < 0.05
+
+
+def test_cobertura_volumen_requiere_valor_absoluto():
+    """Sin |.| el volumen del escenario 3F sin restriccion no cuadra con la tesis."""
+    Wl, _ = vm.run_price_dynamics(COV, MEAN, [], num_iterations=500,
+                                  eta=0.5, Gamma=GAM)
+    W = Wl[-1]
+    iu = np.triu_indices(3, 1)
+    assert abs(np.abs(W[iu]).sum() - 1.976) < 5e-4       # definicion de la tesis
+    assert abs(W[iu].sum() - 1.976) > 0.1                # suma con signo: no cuadra
+    assert (W[iu] < 0).sum() == 1                        # hay una exposicion negativa
