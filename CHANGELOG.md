@@ -7,7 +7,23 @@ repositorio.
 
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
+### Añadido
+- `docs/MemoriasTesis/Caballero/Diapositivas.tex` queda completo y compilable:
+  se agregan sus cuatro dependencias que faltaban desde el sync original de
+  Overleaf (commit `801e1a4`) — `Flecha-Uandes-Blanco.png`, `Flecha-Uandes.png`,
+  `logoFICA.png` y `references.bib` (bibliografía propia de la presentación,
+  independiente de `referencias.bib` de la memoria).
+- `docs/MemoriasTesis/Caballero/font/DMSans.ttf`: fuente variable oficial de
+  Google Fonts (licencia OFL, incluida en `font/OFL.txt`) que reemplaza a los
+  tres archivos estáticos por peso (`DMSans-Medium/SemiBold/Bold.ttf`) que el
+  `.tex` original esperaba y que Google ya no distribuye por separado.
+
 ### Corregido
+- `docs/MemoriasTesis/Caballero/Diapositivas.tex`: se reescribe el bloque de
+  configuración de tipografía (`\setsansfont`, `\newfontfamily`) para
+  seleccionar los pesos Medium/SemiBold/Bold como instancias nombradas
+  (`wght=500/600/700`, `opsz=14`) de la fuente variable única `font/DMSans.ttf`,
+  en vez de archivos sueltos por peso que ya no existen.
 - `docs/MemoriasTesis/Caballero/chapters/chapter02.tex` (Marco Teórico):
   revisión ortográfica y gramatical completa tras la edición en Overleaf
   (acentuación, concordancia y fragmentos de oración sin verbo). Se

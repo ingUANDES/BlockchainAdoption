@@ -10,24 +10,18 @@
 \usepackage{amssymb}
 
 % --- Configuración de Tipografía (DM Sans) ---
-\setsansfont{DMSans}[
-    Path = font/,         % Ruta a la carpeta de fuentes
-    Extension = .ttf,      % Extensión de los archivos
-    UprightFont = *-Medium, % Fuente normal
-    BoldFont = *-Bold,        % Fuente para \bfseries
-    % ItalicFont = *-MediumItalic, % Fuente para \itshape (si la tienes)
-    % BoldItalicFont = *-BoldItalic % Fuente para \bfseries\itshape (si la tienes)
+% DM Sans ya no se distribuye como archivos sueltos por peso: Google Fonts la
+% publica como una única fuente variable (ejes "opsz"/"wght"). Se selecciona
+% cada peso por su instancia nombrada (Medium=500, SemiBold=600, Bold=700)
+% directamente sobre ese único archivo font/DMSans.ttf.
+\setsansfont{DMSans.ttf:opsz=14;wght=500}[
+    Path = font/,                          % Ruta a la carpeta de fuentes
+    BoldFont = DMSans.ttf:opsz=14;wght=700, % Fuente para \bfseries
 ]
-% \setsansfont{font/DMSans-Medium.ttf}[
-%     BoldFont = font/DMSans-Bold.ttf,
-%     % Si tienes las versiones itálicas, descomenta estas líneas:
-%     % ItalicFont = DMSans-MediumItalic.ttf,
-%     % BoldItalicFont = DMSans-BoldItalic.ttf
-% ]
 
-\newfontfamily\DMSansMedium[Path=font/,BoldFont=DMSans-Medium.ttf]{DMSans-Medium}
-\newfontfamily\DMSansBold[Path=font/,BoldFont=DMSans-Bold.ttf]{DMSans-Bold}
-\newfontfamily\DMSansSemiBold[Path=font/,BoldFont=DMSans-SemiBold.ttf]{DMSans-SemiBold}
+\newfontfamily\DMSansMedium[Path=font/]{DMSans.ttf:opsz=14;wght=500}
+\newfontfamily\DMSansBold[Path=font/]{DMSans.ttf:opsz=14;wght=700}
+\newfontfamily\DMSansSemiBold[Path=font/]{DMSans.ttf:opsz=14;wght=600}
 
 % Se crean comandos para acceder a los otros pesos de la fuente fácilmente.
 % \newfontfamily\DMSansBold{DMSans-BoldFont}
