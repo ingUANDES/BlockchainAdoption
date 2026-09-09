@@ -8,6 +8,28 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Añadido
+- `code/audit/`: auditoría completa del código de la tesis de Venegas, previa a
+  la calibración con datos reales (branch `audit/venegas-code`). Ningún archivo
+  del autor original fue modificado; se tratan como evidencia.
+  - `AUDITORIA_VENEGAS.md`: informe por severidad, con veredicto de
+    reproducibilidad e implicancias para la calibración con datos externos.
+  - `venegas_model.py`: núcleo numérico extraído del `.qmd` como transcripción
+    fiel, con los defectos preservados y anotados; equivalente bit a bit al
+    original en ambos escenarios del Ejemplo 5.
+  - `metricas_tesis.py`: capa de métricas del capítulo 4 (volumen bilateral,
+    posiciones, utilidad media-varianza) recuperada por ingeniería inversa —
+    ningún archivo versionado la calculaba — más los parámetros del escenario
+    de 4 firmas declarados en la tesis.
+  - `verificacion_algebraica.md`: cuatro derivaciones verificadas con SymPy
+    contra el modelo declarado en la tesis, resolución del `# todo` de la
+    solución de Sylvester y extensión al modelo dual.
+  - `test_venegas_model.py`: 30 pruebas (regresión de resultados publicados,
+    captura de defectos, álgebra y cobertura).
+  - `Verificacion_Derivaciones_rescatado.py`: verificación simbólica del modelo
+    dual, rescatada de `code/.ipynb_checkpoints/` donde estaba mal versionada.
+  - Inventario de cobertura, réplicas de las tablas del capítulo 4, barridos de
+    convergencia y tres figuras del informe.
+
 - `docs/MemoriasTesis/Caballero/Diapositivas.tex` queda completo y compilable:
   se agregan sus cuatro dependencias que faltaban desde el sync original de
   Overleaf (commit `801e1a4`) — `Flecha-Uandes-Blanco.png`, `Flecha-Uandes.png`,
@@ -19,6 +41,11 @@ repositorio.
   `.tex` original esperaba y que Google ya no distribuye por separado.
 
 ### Corregido
+- `README.md`: la descripción de `code/Financial_Networks_Stability.qmd` le
+  atribuía el modelo dual, los cálculos de bienestar y los scripts de los
+  escenarios 3F/4F. La auditoría establece que el archivo contiene solo el
+  núcleo numérico y la réplica del Ejemplo 5. Se agrega una nota de estado con
+  qué resultados de la tesis son reproducibles hoy y cuáles no.
 - `docs/MemoriasTesis/Caballero/Diapositivas.tex`: se reescribe el bloque de
   configuración de tipografía (`\setsansfont`, `\newfontfamily`) para
   seleccionar los pesos Medium/SemiBold/Bold como instancias nombradas

@@ -17,9 +17,13 @@ docs/
     Caballero/    # Memoria de pregrado de Eduardo Caballero (en curso, 2026)
   Diapos/         # Presentaciones de avance y de defensa
 code/
-  Financial_Networks_Stability.qmd   # Notebook Quarto/Python con los ejemplos numéricos
-                                      # (Ejemplo 1, Ejemplo 5, redes 3F/4F con y sin
-                                      # restricción) que sustentan los resultados de Venegas
+  Financial_Networks_Stability.qmd   # Notebook Quarto/Python: núcleo numérico del modelo
+                                     # (cartera óptima, restricciones de arista, dinámica
+                                     # de precios) y réplica del Ejemplo 5 de Jalan &
+                                     # Chakrabarti. Ver nota de estado más abajo.
+  audit/                             # Auditoría del código de Venegas (sept. 2026):
+                                     # informe, módulo extraído, verificación algebraica,
+                                     # inventario de cobertura y suite de 30 pruebas
 ```
 
 Cada carpeta de memoria/tesis sigue la plantilla estándar de Ingeniería UAndes: `core/`
@@ -43,8 +47,18 @@ Local, Firma Local) con una restricción regulatoria que prohíbe el contrato di
 Banco Nacional–Firma Local: la restricción destruye el 50,8% del bienestar potencial; la
 competencia entre intermediarios (agregando una Fintech) recupera solo el 46,5% de esa
 pérdida, dejando un *gap* de 27,9%; habilitar una red alternativa recupera el **100%** del
-bienestar del benchmark sin restricción. El código que reproduce estos escenarios
-(3F-WITH/WITHOUT, 4F-WITH/WITHOUT, dual-network) vive en `code/Financial_Networks_Stability.qmd`.
+bienestar del benchmark sin restricción.
+
+> **Estado del código (auditoría de septiembre 2026).** `code/Financial_Networks_Stability.qmd`
+> contiene el **núcleo numérico** del modelo de Jalan & Chakrabarti (optimización de cartera,
+> restricciones de arista y dinámica de precios bilateral) y reproduce el Ejemplo 5 del paper,
+> pero **no** contiene el modelo dual, ni la capa de métricas (utilidad, bienestar, volumen), ni
+> los scripts de los escenarios 3F/4F, ni el código que genera las figuras del capítulo 4. Las
+> derivaciones simbólicas del modelo dual sí existen y están verificadas, pero quedaron en
+> `code/.ipynb_checkpoints/`. De los tres números citados arriba, 50,8%, 46,5% y 27,9% son
+> reproducibles con el código versionado; el **100%** de la red alternativa requiere una
+> implementación numérica que no existe todavía. Informe completo, inventario unidad por unidad
+> y suite de pruebas en [`code/audit/`](code/audit/AUDITORIA_VENEGAS.md).
 
 El propio Venegas identifica en la sección 5.3.3 de su tesis dos supuestos simplificadores
 que dejan las estimaciones de recuperación de bienestar en un piso conservador: aversión al
