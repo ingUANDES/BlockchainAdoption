@@ -101,7 +101,7 @@ fricción $\lambda_A$ representa el costo de ese multi-homing. \citeA{caillaud_c
 
 \subsection{Arbitraje regulatorio}
 
-Un elemento central para entender por qué surgen infraestructuras alternativas es el concepto de \textbf{arbitraje regulatorio}. Se conceptualiza esta dinámica por \citeA{kane_good_1977} como la ``dialética regulatoria". Quien a su vez la define como un proceso cíclico en que la regulación induce a los agentes económicos a innovar tecnológicamente, con el único fin de eludir restricciones costosas. A diferencia de modelos estáticos donde los agentes aceptan pasivamente las restricciones, el volumen `excluido" busca nuevos canales, dando origen a un sistema ``en la sombra".
+Un elemento central para entender por qué surgen infraestructuras alternativas es el concepto de \textbf{arbitraje regulatorio}. Se conceptualiza esta dinámica por \citeA{kane_good_1977} como la ``dialética regulatoria''. Quien a su vez la define como un proceso cíclico en que la regulación induce a los agentes económicos a innovar tecnológicamente, con el único fin de eludir restricciones costosas. A diferencia de modelos estáticos donde los agentes aceptan pasivamente las restricciones, el volumen ``excluido'' busca nuevos canales, dando origen a un sistema ``en la sombra''.
 
 Esta dinámica está documentada empíricamente por \citeA{buchak_fintech_2018}, quienes encuentran evidencia causal de que el arbitraje regulatorio es un motor determinante del crecimiento \textit{Fintech}. 
 Estiman que cerca del $50\%$ de la expansión del \textit{shadow banking} responde a la carga regulatoria sobre la banca tradicional (mayores requerimientos de capital, entre otros).
@@ -177,7 +177,7 @@ nuevas ventajas de información para quienes tienen mayor capacidad analítica
 sobre los datos \textit{on-chain}. Además, encuentran que los costos de
 transacción son altamente variables y pueden dispararse durante periodos de
 congestión de red. \citeA{huberman_monopoly_2021} caracterizan este fenómeno
-como un "monopolio sin monopolista". El protocolo restringe la oferta de
+como un ``monopolio sin monopolista''. El protocolo restringe la oferta de
 espacio de bloque, generando precios de monopolio, pero ninguna entidad
 individual captura esas rentas (que van, en cambio, a los mineros o validadores).
 Esta evidencia empírica sobre costos variables y crecientes con la congestión es
@@ -192,7 +192,7 @@ También habilita la ejecución \textit{trustless} de operaciones complejas sin 
 de intermediarios humanos. Por último, facilita la auditoría regulatoria. Sin embargo,
 \citeA{werbach_trust_2018} matiza esta lectura. La evidencia de vulnerabilidades
 en \textit{smart contracts}, la persistencia de mecanismos de gobernanza humana
-para resolver disputas, y el llamado "problema del oráculo" (la necesidad de
+para resolver disputas, y el llamado ``problema del oráculo'' (la necesidad de
 información externa confiable para que los contratos inteligentes funcionen)
 muestran que blockchain no elimina la confianza. En realidad, la redistribuye de
 la confianza en instituciones humanas a la confianza en código, criptografía y
@@ -258,6 +258,119 @@ recuperación completa del bienestar. La utilidad agregada del sistema iguala
 exactamente al benchmark sin restricción, con el contrato $N$--$F$ transando casi
 enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural
 que recupera eficiencia.
+
+\subsection{Identificación y estimación desde datos}\label{c25:identificacion}
+
+El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la
+factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales.
+Venegas (2024) no aborda esta pregunta: trabaja con esos primitivos dados como
+parámetros ilustrativos, nunca estimados. El propio \citeA{jalan_incentive-aware_2024},
+en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos
+primitivos desde datos y bajo qué condiciones —resultados que Venegas no retoma,
+pero que son el respaldo teórico directo de la validación empírica de este trabajo.
+
+\paragraph{Estimación de la covarianza desde retornos históricos}
+Un primer enfoque estima $\Sigma_i$ a partir del historial de retornos observado
+por cada agente. Si el agente $i$ observa $m$ muestras independientes de los
+retornos de contratos unitarios con los $n$ agentes de la red, recogidas en una
+matriz $X_i \in \mathbb{R}^{n \times m}$, la covarianza muestral $\hat\Sigma_i$
+converge en probabilidad a la covarianza poblacional $\Sigma$, pero con muestras
+finitas cada agente puede terminar con una $\hat\Sigma_i$ distinta, lo que
+degrada el factor de amortiguación seguro $\eta^*$ del Teorema~4 (arriba) y con
+ello la velocidad de convergencia del Algoritmo~1. \citeA{jalan_incentive-aware_2024}
+acotan qué tan severa es esa degradación: bajo condiciones de regularidad estándar
+sobre $\Sigma$ y $\Gamma$ (normas de $\Sigma$, $\Sigma^{-1}$, $\Gamma$ y
+$\Gamma^{-1}$ acotadas independientemente de $n$, y sin aristas prohibidas), si
+cada agente estima su covarianza con $m = \lceil n \log n \rceil$ muestras
+independientes, el factor de amortiguación estimado $\hat\eta^*$ se mantiene
+arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que tiende a
+uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre
+agentes ($m_1,\dots,m_n$): basta con que el menor de ellos satisfaga
+$\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con
+distinto historial disponible usar ventanas de estimación de largo distinto.
+
+La lectura correcta de este resultado no es que el requisito de datos disminuya
+al crecer $n$ —$\lceil n \log n \rceil$ crece con $n$, aunque sea
+moderadamente—, sino que crece muy poco comparado con lo que exigiría estimar
+sin estructura una matriz de covarianza $n \times n$ completa (con $n(n+1)/2$
+entradas libres): la cota mínima teórica conocida para ese problema general es de
+orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por
+encima del óptimo. Para la red de $n=3$ agentes de este trabajo
+(BID/CORFO--intermediaria--MiPyME, Capítulo~\ref{MCP:subastador}), esto se
+traduce en apenas $4$ a $5$ periodos históricos por agente según la base del
+logaritmo —un requisito de datos modesto, no las decenas o cientos que una
+estimación sin estructura podría sugerir.
+
+\paragraph{Inferir creencias a partir de la estructura de la red}
+Un obstáculo anterior a la pregunta de cuántos datos bastan es de
+identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un
+único corte transversal de la red observada $W$ en su punto estable,
+$(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única —ni siquiera fijando
+una escala, p.ej. $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$: para
+cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente
+consistente con la misma $W$. Observar varias redes generadas con la misma
+$\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La
+consecuencia práctica es directa: una sola observación de la red
+BID/CORFO--intermediaria--MiPyME, por completa que sea, nunca bastaría para
+calibrar el modelo. El dato requerido es necesariamente longitudinal, una
+secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
+
+Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024}
+introducen el Supuesto~1: (a) $\Gamma(t)=I$ y $\Sigma_i(t)=\Sigma$ para todo
+$t\in[T]$ —aversión al riesgo y covarianza homogéneas y constantes en el
+periodo—; (b) cada entrada $M_{ij}(t)$ evoluciona de forma independiente según
+un movimiento browniano con los mismos parámetros para todos los pares
+$(i,j)$; y (c) $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El
+supuesto (a) se motiva en la literatura de teoría de portafolios, donde los
+errores de estimación de la media suelen dominar sobre los de la covarianza, de
+modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de
+estimación en $M$, que es lo que efectivamente varía en el tiempo. Nótese que
+$\Gamma=I$ es, convenientemente, tanto el supuesto de homogeneidad de Venegas
+(2024) como la condición que \citeA{jalan_incentive-aware_2024} necesitan para
+que la inferencia de $\Sigma$ sea tratable —compatible con la decisión de
+alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
+$\gamma_i$ por ahora.
+
+\paragraph{Proposición 1: estimar $\Sigma$ desde incrementos de la red, no contrato por contrato}
+Bajo el Supuesto~1, \citeA{jalan_incentive-aware_2024} muestran que el
+estimador de máxima verosimilitud de $\Sigma$ no requiere observar los retornos
+subyacentes de cada agente —la ruta del Teorema~5— sino que se recupera
+enteramente a partir de cómo cambia la red observada $W(t)$ de un periodo al
+siguiente. La Proposición~1 reduce el problema a un programa semidefinido
+(SDP):
+\begin{equation}
+    \min_{\Sigma} \sum_{t=1}^{T-1} \left\| \Sigma\big(W(t+1)-W(t)\big) + \big(W(t+1)-W(t)\big)\Sigma \right\|_F^2
+    \quad \text{sujeto a } \Sigma \succeq 0,\ \operatorname{tr}(\Sigma)=1.
+\end{equation}
+La razón por la que este resultado es más relevante que el Teorema~5 para la
+aplicación a datos de BID/CORFO es que la variable de entrada del problema es
+directamente la secuencia de incrementos $\Delta W(t) = W(t+1)-W(t)$ del propio
+contrato observado —los montos de financiamiento entre BID/CORFO, la
+intermediaria y las MiPyMEs, año a año—, no una serie de retornos internos de
+cada institución que en la práctica no está disponible públicamente. En vez de
+estimar $\Sigma_i$ contrato por contrato a partir de datos que las instituciones
+normalmente no publican, la Proposición~1 solo exige la misma serie de flujos de
+financiamiento $W(t)$ que ya es el objeto de interés de la validación empírica
+de este trabajo. El Remark~2 del paper generaliza además la Proposición~1 a una
+$\Sigma$ que varía en el tiempo, agregando un regularizador
+$\nu\sum_j \|\Sigma_{(j+1)}-\Sigma_{(j)}\|$ al objetivo del SDP que preserva la
+convexidad del problema —relevante si el perfil de riesgo del programa cambió
+estructuralmente durante 2016--2024 (p.ej. tras 2020).
+
+\paragraph{Una limitación no resuelta por el paper, relevante para redes reguladas}
+Ni el Teorema~5 ni la Proposición~1 discuten qué ocurre cuando la red tiene
+aristas prohibidas por regulación —precisamente el caso de este trabajo, donde
+el contrato directo BID/CORFO--MiPyME está excluido por diseño. Un experimento
+propio con datos sintéticos generados sobre esta estructura de 3 agentes
+(arista 1--3 prohibida) sugiere que la Proposición~1, tal como está formulada,
+pierde identificabilidad en la entrada de $\Sigma$ correspondiente al par sin
+contrato: como $W_{13}(t)\equiv 0$ para todo $t$ por construcción regulatoria,
+esa entrada nunca aporta información al objetivo del SDP, y el error de
+recuperación de $\Sigma_{13}$ no decrece aunque se aumente el número de periodos
+observados $T$. Esta es una limitación metodológica propia de este trabajo, no
+señalada por \citeA{jalan_incentive-aware_2024} —cuyos resultados de
+identificación se enuncian para redes sin restricciones de arista— y se retoma
+como hallazgo de factibilidad en el Capítulo~\ref{MCP:subastador}.
 
 \subsection{Oportunidades de mejora identificadas}
 
