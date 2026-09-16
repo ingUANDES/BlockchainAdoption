@@ -64,6 +64,35 @@ reales. Comprende:
     requieren supuestos adicionales o un caso alternativo.
 \end{itemize}
 
+\subsection{Diagnóstico muestral preliminar}
+
+La Sección~\ref{c25:identificacion} estableció que estimar $\Sigma$ mediante la
+Proposición~1 de \citeA{jalan_incentive-aware_2024} requiere una secuencia
+longitudinal $W(t)$ observada en $T$ periodos, y que para una red de $n=3$
+agentes el Teorema~5 sugiere un mínimo del orden de $4$ a $5$ observaciones por
+agente. Un primer levantamiento de datos públicos sobre el programa
+\textit{Crédito Corfo Mipyme}, a partir de las Cuentas Públicas Participativas
+de CORFO, permitió construir un panel preliminar de flujos anuales
+BID/CORFO$\to$intermediaria ($W_{12}$) e intermediaria$\to$MiPyME ($W_{23}$)
+para los años 2016, 2019, 2020, 2021, 2023 y 2024 ($T=6$ periodos con cifras
+utilizables, con 2014, 2015, 2017, 2018 y 2022 aún sin cifra nacional
+comparable localizada). Aun con esos vacíos, $T=6$ ya satisface el mínimo
+teórico de la Proposición~1 para $n=3$, lo que sostiene un diagnóstico de
+factibilidad muestral positivo para el Hito~I.
+
+Dos advertencias matizan esa conclusión preliminar. Primero, $W_{23}$ no es un
+flujo derivado únicamente del $W_{12}$ del mismo año —incluye capital rotativo
+de desembolsos previos que siguen vigentes—, lo que genera una tensión
+conceptual con el modelo estático de \citeA{jalan_incentive-aware_2024} y
+\citeA{venegas_reyes_financial_2025}, que tratan $W_{ij}$ como el tamaño de un
+contrato vigente en un punto estable, no como un flujo acumulado; queda
+pendiente decidir si $W_{12}(t)$ debe reconstruirse como saldo vigente o si se
+acepta $W_{23}$ como aproximación de flujo anual. Segundo, la arista prohibida
+BID/CORFO--MiPyME de esta red implica que la entrada $\Sigma_{13}$ queda débilmente
+identificada por la Proposición~1 (Sección~\ref{c25:identificacion}), por lo
+que la calibración completa del Hito~II probablemente deba reportar $\Sigma_{13}$
+como no identificado en vez de estimarlo directamente.
+
 \section{Hito II — 8 de noviembre de 2026: calibración y aplicación}
 
 Con el diagnóstico de factibilidad del Hito I resuelto, este hito comprende:
