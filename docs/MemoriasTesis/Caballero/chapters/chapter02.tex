@@ -42,7 +42,7 @@ Las redes financieras tradicionales presentan, además, limitaciones estructural
 documentadas extensamente en la literatura:
 
 \paragraph{Altos costos de intermediación}
-Los intermediarios financieros tales como bancos o cámaras de compensación imponen comisiones por transferencias internacionales y por gestión de riesgo y cumplimiento regulatorio que en promedio alcanzan un $6,36\%$ del monto enviado a nivel mundial —más del doble de la meta de $3\%$ fijada en el ODS 10.c—, cifra que baja a $4,59\%$ cuando la transferencia se realiza por canales digitales frente a $7,30\%$ en canales no digitales \cite{world_bank_rpw_2025}. Esto constituye una barrera a la inclusión financiera, en particular en mercados emergentes.
+Los intermediarios financieros tales como bancos o cámaras de compensación imponen comisiones por transferencias internacionales y por gestión de riesgo y cumplimiento regulatorio que en promedio alcanzan un $6,36\%$ del monto enviado a nivel mundial (más del doble de la meta de $3\%$ fijada en el ODS 10.c), cifra que baja a $4,59\%$ cuando la transferencia se realiza por canales digitales frente a $7,30\%$ en canales no digitales \cite{world_bank_rpw_2025}. Esto constituye una barrera a la inclusión financiera, en particular en mercados emergentes.
 
 \paragraph{Opacidad y asimetrías de información}
 La información transaccional suele restringirse a las partes directamente
@@ -61,7 +61,7 @@ reducen el largo de las cadenas de intermediación en el mercado. El efecto neto
 \paragraph{Baja inclusión financiera}
 Las redes tradicionales suelen excluir a agentes que no cumplen criterios
 formales de acceso como un historial crediticio, cuenta bancaria. Un problema
-particularmente agudo en economías en desarrollo, donde aproximadamente 2 mil millones de adultos —un $38\%$ de la población adulta mundial, cifra de 2014— permanecían fuera del sistema financiero formal \cite{singer_financial_2017}.
+particularmente agudo en economías en desarrollo, donde aproximadamente 2 mil millones de adultos (un $38\%$ de la población adulta mundial, cifra de 2014) permanecían fuera del sistema financiero formal \cite{singer_financial_2017}.
 
 \paragraph{Efectos de red}
 Una mayor conectividad amplía el acceso a financiamiento y permite diversificar
@@ -266,7 +266,7 @@ factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales.
 Venegas (2024) no aborda esta pregunta: trabaja con esos primitivos dados como
 parámetros ilustrativos, nunca estimados. El propio \citeA{jalan_incentive-aware_2024},
 en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos
-primitivos desde datos y bajo qué condiciones —resultados que Venegas no retoma,
+primitivos desde datos y bajo qué condiciones: resultados que Venegas no retoma,
 pero que son el respaldo teórico directo de la validación empírica de este trabajo.
 
 \paragraph{Estimación de la covarianza desde retornos históricos}
@@ -290,23 +290,23 @@ $\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con
 distinto historial disponible usar ventanas de estimación de largo distinto.
 
 La lectura correcta de este resultado no es que el requisito de datos disminuya
-al crecer $n$ —$\lceil n \log n \rceil$ crece con $n$, aunque sea
-moderadamente—, sino que crece muy poco comparado con lo que exigiría estimar
+al crecer $n$ (aunque $\lceil n \log n \rceil$ sí crece con $n$, moderadamente),
+sino que crece muy poco comparado con lo que exigiría estimar
 sin estructura una matriz de covarianza $n \times n$ completa (con $n(n+1)/2$
 entradas libres): la cota mínima teórica conocida para ese problema general es de
 orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por
 encima del óptimo. Para la red de $n=3$ agentes de este trabajo
 (BID/CORFO--intermediaria--MiPyME, Capítulo~\ref{MCP:subastador}), esto se
 traduce en apenas $4$ a $5$ periodos históricos por agente según la base del
-logaritmo —un requisito de datos modesto, no las decenas o cientos que una
+logaritmo, un requisito de datos modesto y no las decenas o cientos que una
 estimación sin estructura podría sugerir.
 
 \paragraph{Inferir creencias a partir de la estructura de la red}
 Un obstáculo anterior a la pregunta de cuántos datos bastan es de
 identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un
 único corte transversal de la red observada $W$ en su punto estable,
-$(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única —ni siquiera fijando
-una escala, p.ej. $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$: para
+$(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única, ni siquiera fijando
+una escala (p.ej. $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$): para
 cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente
 consistente con la misma $W$. Observar varias redes generadas con la misma
 $\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La
@@ -317,8 +317,8 @@ secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
 
 Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024}
 introducen el Supuesto~1: (a) $\Gamma(t)=I$ y $\Sigma_i(t)=\Sigma$ para todo
-$t\in[T]$ —aversión al riesgo y covarianza homogéneas y constantes en el
-periodo—; (b) cada entrada $M_{ij}(t)$ evoluciona de forma independiente según
+$t\in[T]$, es decir, aversión al riesgo y covarianza homogéneas y constantes en el
+periodo; (b) cada entrada $M_{ij}(t)$ evoluciona de forma independiente según
 un movimiento browniano con los mismos parámetros para todos los pares
 $(i,j)$; y (c) $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El
 supuesto (a) se motiva en la literatura de teoría de portafolios, donde los
@@ -327,14 +327,14 @@ modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de
 estimación en $M$, que es lo que efectivamente varía en el tiempo. Nótese que
 $\Gamma=I$ es, convenientemente, tanto el supuesto de homogeneidad de Venegas
 (2024) como la condición que \citeA{jalan_incentive-aware_2024} necesitan para
-que la inferencia de $\Sigma$ sea tratable —compatible con la decisión de
-alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
+que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión
+de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
 $\gamma_i$ por ahora.
 
 \paragraph{Proposición 1: estimar $\Sigma$ desde incrementos de la red, no contrato por contrato}
 Bajo el Supuesto~1, \citeA{jalan_incentive-aware_2024} muestran que el
 estimador de máxima verosimilitud de $\Sigma$ no requiere observar los retornos
-subyacentes de cada agente —la ruta del Teorema~5— sino que se recupera
+subyacentes de cada agente (la ruta del Teorema~5), sino que se recupera
 enteramente a partir de cómo cambia la red observada $W(t)$ de un periodo al
 siguiente. La Proposición~1 reduce el problema a un programa semidefinido
 (SDP):
@@ -345,8 +345,8 @@ siguiente. La Proposición~1 reduce el problema a un programa semidefinido
 La razón por la que este resultado es más relevante que el Teorema~5 para la
 aplicación a datos de BID/CORFO es que la variable de entrada del problema es
 directamente la secuencia de incrementos $\Delta W(t) = W(t+1)-W(t)$ del propio
-contrato observado —los montos de financiamiento entre BID/CORFO, la
-intermediaria y las MiPyMEs, año a año—, no una serie de retornos internos de
+contrato observado, es decir, los montos de financiamiento entre BID/CORFO, la
+intermediaria y las MiPyMEs año a año, no una serie de retornos internos de
 cada institución que en la práctica no está disponible públicamente. En vez de
 estimar $\Sigma_i$ contrato por contrato a partir de datos que las instituciones
 normalmente no publican, la Proposición~1 solo exige la misma serie de flujos de
@@ -354,12 +354,12 @@ financiamiento $W(t)$ que ya es el objeto de interés de la validación empíric
 de este trabajo. El Remark~2 del paper generaliza además la Proposición~1 a una
 $\Sigma$ que varía en el tiempo, agregando un regularizador
 $\nu\sum_j \|\Sigma_{(j+1)}-\Sigma_{(j)}\|$ al objetivo del SDP que preserva la
-convexidad del problema —relevante si el perfil de riesgo del programa cambió
-estructuralmente durante 2016--2024 (p.ej. tras 2020).
+convexidad del problema, lo cual sería relevante si el perfil de riesgo del
+programa cambió estructuralmente durante 2016--2024 (p.ej. tras 2020).
 
 \paragraph{Una limitación no resuelta por el paper, relevante para redes reguladas}
 Ni el Teorema~5 ni la Proposición~1 discuten qué ocurre cuando la red tiene
-aristas prohibidas por regulación —precisamente el caso de este trabajo, donde
+aristas prohibidas por regulación, precisamente el caso de este trabajo, donde
 el contrato directo BID/CORFO--MiPyME está excluido por diseño. Un experimento
 propio con datos sintéticos generados sobre esta estructura de 3 agentes
 (arista 1--3 prohibida) sugiere que la Proposición~1, tal como está formulada,
@@ -368,8 +368,8 @@ contrato: como $W_{13}(t)\equiv 0$ para todo $t$ por construcción regulatoria,
 esa entrada nunca aporta información al objetivo del SDP, y el error de
 recuperación de $\Sigma_{13}$ no decrece aunque se aumente el número de periodos
 observados $T$. Esta es una limitación metodológica propia de este trabajo, no
-señalada por \citeA{jalan_incentive-aware_2024} —cuyos resultados de
-identificación se enuncian para redes sin restricciones de arista— y se retoma
+señalada por \citeA{jalan_incentive-aware_2024}, cuyos resultados de
+identificación se enuncian para redes sin restricciones de arista, y se retoma
 como hallazgo de factibilidad en el Capítulo~\ref{MCP:subastador}.
 
 \subsection{Oportunidades de mejora identificadas}
@@ -378,4 +378,4 @@ El modelo de \citeA{venegas_reyes_financial_2025} obtiene su resultado de bienes
 bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para
 sostener los experimentos numéricos, no estimados de datos reales. Además, trabaja bajo dos
 supuestos de homogeneidad entre agentes, con $\gamma_i = 1$ para todo agente y
-$\mu_i = \mu_j$, que el propio autor reconoce como limitaciones. De las oportunidades de mejora identificadas —calibración empírica de los primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e incorporación de riesgo sistémico y contagio—, este trabajo retoma la primera: calibrar el modelo con datos reales, como se detalla en el Capítulo~\ref{MCP:subastador}.
+$\mu_i = \mu_j$, que el propio autor reconoce como limitaciones. De las oportunidades de mejora identificadas (calibración empírica de los primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e incorporación de riesgo sistémico y contagio), este trabajo retoma la primera: calibrar el modelo con datos reales, como se detalla en el Capítulo~\ref{MCP:subastador}.
