@@ -17,23 +17,25 @@ considerando los beneficios esperados y sus costos \cite{jackson_strategic_1996}
 modelos de referencia:
 
 \begin{itemize}
-    \item \textbf{\citeA{eisenberg_systemic_2001}:} Representan las redes
+    \item \textbf{\citeA{eisenberg_systemic_2001}:} representan las redes
     financieras a través de una matriz de obligaciones entre agentes. El modelo se distingue pues captura el efecto
     cascada en la red cuando ocurre un \textit{default}, mostrando la existencia
     y unicidad de un vector de pagos que liquida el sistema.
 
-    \item \textbf{\citeA{elliott_financial_2014}:} Modelan el contagio financiero en dos dimensiones. La primera dimensión corresponde a la dependencia de contraparte (integración) y la segunda por el número de contrapartes por agente (diversificación). Se distingue en el modelo que ambas dimensiones tienen efectos no monótonos sobre la amplificación o mitigación del riesgo sistémico.
+    \item \textbf{\citeA{elliott_financial_2014}:} modelan el contagio financiero en dos dimensiones. La primera dimensión corresponde a la dependencia de contraparte (integración) y la segunda por el número de contrapartes por agente (diversificación). Se distingue en el modelo que ambas dimensiones tienen efectos no monótonos sobre la amplificación o mitigación del riesgo sistémico.
 
-    \item \textbf{\citeA{jalan_incentive-aware_2024}:} Introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y
+    \item \textbf{\citeA{jalan_incentive-aware_2024}:} introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y
     beneficios entre pares de agentes. Además utiliza una función de utilidad media-varianza que permite modelar decisiones óptimas de contratación bilateral en un equilibrio \textit{pairwise stable}. Es el modelo base sobre
     el cual se construye la tesis de \citeA{venegas_reyes_financial_2025}, que este
     trabajo extiende.
 \end{itemize}
 
-\paragraph{Propagación de riesgo y estabilidad}
+INCLUIR DESARROLLO POST-LITERATURA.
+
+\paragraph{Propagación de riesgo y estabilidad.}
 
 Las redes financieras tradicionales son particularmente vulnerables al contagio
-cuando falla un nodo crítico, como un banco sistémico. Como muestra \citeA{glasserman_contagion_2016}, las redes densamente conectadas pueden ser resilientes ante \textit{shocks} pequeños pero frágiles ante crisis sistémicas. Demuestra que la conectividad absorbe perturbaciones locales, pero también amplifica los choques de gran magnitud. En la misma línea, \citeA{acemoglu_systemic_2015} documentan que la diversificación de conexiones
+cuando falla un nodo crítico, como un banco sistémico. Como muestran \citeA{glasserman_contagion_2016}, las redes densamente conectadas pueden ser resilientes ante \textit{shocks} pequeños, pero frágiles ante crisis sistémicas. Además demuestran que la conectividad absorbe perturbaciones locales, pero también amplifica los choques de gran magnitud. En la misma línea, \citeA{acemoglu_systemic_2015} documentan que la diversificación de conexiones
 incrementa inicialmente la estabilidad del sistema, pero más allá de cierto
 umbral la interdependencia generada abre nuevos canales de riesgo sistémico. Es
 decir, la relación entre conectividad y estabilidad no es monótona.
@@ -41,15 +43,15 @@ decir, la relación entre conectividad y estabilidad no es monótona.
 Las redes financieras tradicionales presentan, además, limitaciones estructurales
 documentadas extensamente en la literatura:
 
-\paragraph{Altos costos de intermediación}
+\paragraph{Altos costos de intermediación.}
 Los intermediarios financieros tales como bancos o cámaras de compensación imponen comisiones por transferencias internacionales y por gestión de riesgo y cumplimiento regulatorio que en promedio alcanzan un $6,36\%$ del monto enviado a nivel mundial (más del doble de la meta de $3\%$ fijada en el ODS 10.c), cifra que baja a $4,59\%$ cuando la transferencia se realiza por canales digitales frente a $7,30\%$ en canales no digitales \cite{world_bank_rpw_2025}. Esto constituye una barrera a la inclusión financiera, en particular en mercados emergentes.
 
-\paragraph{Opacidad y asimetrías de información}
+\paragraph{Opacidad y asimetrías de información.}
 La información transaccional suele restringirse a las partes directamente
 involucradas, lo que dificulta evaluar el riesgo de una contraparte y favorece
 el comportamiento oportunista.
 
-\paragraph{Riesgo sistémico y centralización}
+\paragraph{Riesgo sistémico y centralización.}
 La centralización en instituciones clave como grandes bancos y mercados
 centralizados crea puntos únicos de falla. \citeA{elliott_financial_2014}
 señalan que esta concentración del riesgo hace a las redes tradicionales más
@@ -58,12 +60,12 @@ contraste, \citeA{gofman_efficiency_2017} argumentan que los bancos grandes e
 interconectados pueden mejorar la eficiencia agregada. Esto, precisamente porque
 reducen el largo de las cadenas de intermediación en el mercado. El efecto neto depende de si domina la reducción de fricciones de intermediación o la concentración del riesgo, de modo que la centralización no es unívocamente negativa.
 
-\paragraph{Baja inclusión financiera}
+\paragraph{Baja inclusión financiera.}
 Las redes tradicionales suelen excluir a agentes que no cumplen criterios
 formales de acceso como un historial crediticio, cuenta bancaria. Un problema
 particularmente agudo en economías en desarrollo, donde aproximadamente 2 mil millones de adultos (un $38\%$ de la población adulta mundial, cifra de 2014) permanecían fuera del sistema financiero formal \cite{singer_financial_2017}.
 
-\paragraph{Efectos de red}
+\paragraph{Efectos de red.}
 Una mayor conectividad amplía el acceso a financiamiento y permite diversificar
 riesgo. Por otra parte, también puede generar congestión operacional y mayores costos transaccionales a medida que la red crece \cite{hinzen_bitcoins_2022,iyengar_economics_2023}.
 
