@@ -22,9 +22,10 @@ contrato directo entre dos agentes, la sola competencia entre intermediarios
 habilitados recupera solo parcialmente el bienestar perdido. Habilitar
 una infraestructura alternativa con regulación distinta, donde el contrato prohibido en la red tradicional sí puede ejecutarse, logra una recuperación completa del bienestar agregado. Este resultado, sin embargo, se obtiene bajo parámetros ilustrativos y no calibrados contra datos reales, lo que limita su interpretación cuantitativa y su valor como evidencia para política regulatoria.
 
-En función de esto establecemos el siguiente objetivo general.
+En función de lo anterior se establece el siguiente objetivo general.
 
 \section{Objetivos}
+\label{c1:objetivos}
 
 Se busca evaluar la capacidad del modelo de redes financieras duales de \citeA{venegas_reyes_financial_2025} para representar y predecir la recuperación de bienestar observada en un caso con datos reales.  Ese ejercicio genera un insumo de validación empírica que la tesis de \citeA{venegas_reyes_financial_2025} no desarrolla y que resulta valioso para una eventual publicación relacionada en una revista de finanzas o de investigación de operaciones.
 
@@ -41,15 +42,17 @@ Aplicar un modelo de redes financieras a datos reales para evaluar cambios en bi
 \end{enumerate}
 
 \section{Preguntas de investigación}
+\label{c1:preguntas}
 
-Con base en el marco de Venegas (2024) y bajo el enfoque empírico acordado para
-PT2 (Capítulo~\ref{MCP:subastador}), este trabajo busca responder tres preguntas
-que el modelo original, calibrado solo con parámetros ilustrativos, no puede
-responder por sí mismo:
+Con base en el marco de \citeA{venegas_reyes_financial_2025} y bajo el enfoque
+empírico descrito en el Capítulo~\ref{c3}, este trabajo busca responder tres
+preguntas que el modelo original, calibrado solo con parámetros ilustrativos, no
+puede responder por sí mismo.
 
 \begin{enumerate}
     \item ?`Persiste la recuperación (parcial o completa) del bienestar que predice
-    el modelo de Venegas (2024) cuando sus parámetros se calibran con datos reales,
+    el modelo de \citeA{venegas_reyes_financial_2025} cuando sus parámetros se
+    calibran con datos reales,
     en lugar de valores ilustrativos?
     \item ?`Es consistente el reparto de actividad entre la red tradicional y la
     red alternativa que predice el modelo con el reparto efectivamente observado
@@ -59,31 +62,64 @@ responder por sí mismo:
     modelo teórico?
 \end{enumerate}
 
-Estas preguntas retoman la estructura de las tres preguntas de investigación
-formuladas en \texttt{Hito\_2.tex} durante PT1, que en esa etapa estaban planteadas
-sobre una extensión del modelo a agentes heterogéneos en aversión al riesgo y
-creencias ($\gamma_i$, $\mu_i$), pero se reformulan aquí en la versión homogénea
-del modelo, con foco en su validación empírica. La extensión a heterogeneidad
-queda como línea de trabajo futura, pendiente de decisión con el profesor guía,
-y no se aborda en el presente semestre.
+Las tres preguntas se formulan sobre la versión homogénea del modelo, con foco
+en su validación empírica, según el alcance que delimita la sección siguiente.
 
 \section{Alcances}
+\label{c1:alcances}
 
-definir lo que se hace y lo que no se va a hacer en la memoria
+El trabajo se circunscribe a la validación empírica del modelo de redes duales
+de \citeA{venegas_reyes_financial_2025} en su versión homogénea, es decir, con
+$\gamma_i = 1$ para todo agente y creencias comunes. Dentro de ese marco se
+abordan la selección de un caso real de financiamiento en Chile, el
+levantamiento de las series públicas que describen sus flujos, la declaración de
+los supuestos necesarios para las variables que ninguna fuente observa, la
+calibración de los primitivos del modelo y el contraste de sus predicciones con
+la evidencia disponible.
+
+Quedan fuera del alcance tres líneas de trabajo. La primera es la extensión del
+modelo a agentes heterogéneos en aversión al riesgo y creencias, que exige un
+desarrollo analítico propio y se deja como trabajo futuro. La segunda es la
+incorporación de dinámica, dependencia de trayectoria y riesgo de contagio al
+modelo dual, identificadas como oportunidades de mejora en la
+Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La
+tercera es la estimación de aquellas entradas del modelo que la propia
+estructura regulatoria del caso deja sin identificar, las que se reportan como
+no identificadas en lugar de estimarse, según se argumenta en la
+Sección~\ref{c24:identificacion}.
 
 \section{Metodología}
+\label{c1:metodologia}
 
+El trabajo se desarrolla en cuatro etapas. La primera consiste en el estudio del
+marco teórico de redes financieras, de la competencia entre infraestructuras y
+del modelo dual que este trabajo valida, lo que constituye el contenido del
+Capítulo~\ref{c2}. La segunda corresponde a la selección de un caso real cuya
+topología reproduzca la estructura de dos redes del modelo y al levantamiento de
+las fuentes públicas que describen sus flujos de financiamiento. La tercera
+consiste en la prueba de factibilidad empírica, que confronta los datos
+efectivamente disponibles con los requisitos formales de identificación y
+estimación del marco teórico. La cuarta corresponde a la calibración de los
+primitivos del modelo, al cálculo del punto estable y al contraste de las
+predicciones de bienestar y de reparto de actividad entre redes con la evidencia
+observada. Las etapas segunda a cuarta se detallan en el Capítulo~\ref{c3}.
 
-\begin{enumerate}
-\item estudio de la tematica
-\item presentación de los modelos econométricos
-
-\end{enumerate}
-
-\newpage
 \section{Estructura del documento}
+\label{c1:estructura}
 
-describir la estructura general del documento global
+El documento se organiza en cinco capítulos. El presente capítulo introduce el
+problema, los objetivos, las preguntas de investigación y el alcance del
+trabajo. El Capítulo~\ref{c2} reúne el marco teórico, desde los modelos de
+referencia de redes financieras hasta el modelo de redes duales y los
+resultados formales sobre existencia del equilibrio, convergencia de las
+negociaciones bilaterales e identificación de los primitivos a partir de datos.
+El Capítulo~\ref{c3} presenta el desarrollo metodológico, que comprende el caso
+de aplicación, el plan de hitos del semestre, las fuentes de datos levantadas,
+los supuestos adoptados para las variables no observadas y el diagnóstico de
+factibilidad empírica. El Capítulo~\ref{c4} expone el análisis de los resultados
+de la calibración y el Capítulo~\ref{c5} recoge las conclusiones y
+recomendaciones. Los anexos reúnen el material de referencia, esto es, la
+notación del modelo y el detalle de las fuentes de datos consultadas.
 
 
 

@@ -1,10 +1,75 @@
 % anexo_a.tex
 
 \chapter{Anexos}
-\label{}
+\label{anexos}
 
+\section{Notación del modelo}
+\label{anexo:notacion}
 
+La Tabla~\ref{tab:notacion} reúne los símbolos empleados en el Capítulo~\ref{c2}
+y en el Capítulo~\ref{c3}, con el significado que cada uno tiene en el modelo de
+\citeA{jalan_incentive-aware_2024} y en su extensión dual de
+\citeA{venegas_reyes_financial_2025}.
 
-\section{Ejemplo Suma ponderada}\label{ej:sumapond}
+\begin{table}[htbp]
+\centering
+\caption[Notación del modelo de redes duales]{Notación empleada en el documento para el modelo de redes duales y su calibración empírica.}
+\label{tab:notacion}
+\small
+\begin{tabular}{ll}
+\hline
+Símbolo & Significado \\
+\hline
+$W$ & Matriz simétrica de tamaños de contrato. $W_{ij}$ es el contrato vigente entre $i$ y $j$ \\
+$P$ & Matriz antisimétrica de precios o pagos laterales entre pares de agentes \\
+$M$ & Matriz de creencias de retorno esperado. $\mu_i = Me_i$ es el vector de creencias de $i$ \\
+$\Sigma_i$ & Matriz de covarianza de retornos percibida por el agente $i$ \\
+$\gamma_i$ & Coeficiente de aversión al riesgo del agente $i$ \\
+$\Gamma$ & Matriz diagonal que agrupa los $\gamma_i$ de todos los agentes \\
+$\Psi_i$ & Matriz que codifica qué contrapartes tiene permitidas el agente $i$ \\
+$Q_i$ & Matriz de sensibilidad del agente $i$, definida en la Ecuación~\eqref{eq:optimo} \\
+$F$ & Conjunto de pares $(i,j)$ con $i<j$ donde el precio $P_{ij}$ puede ser no nulo \\
+$Z_F$ & Matriz de coeficientes del sistema de precios de la Ecuación~\eqref{eq:teorema1} \\
+$\eta$ & Factor de amortiguación del algoritmo de negociación bilateral, Ecuación~\eqref{eq:eta} \\
+$\lambda_A$ & Parámetro de fricción de acceso a la red Alternativa (modelo dual) \\
+$\tau$ & Parámetro de transparencia o fricción del modelo dual \\
+$m$ & Número de observaciones históricas por agente para estimar $\Sigma_i$ \\
+$n$ & Número de agentes de la red. En el caso de aplicación, $n=4$ \\
+\hline
+\end{tabular}
+\end{table}
 
+\section{Fuentes de datos consultadas}
+\label{anexo:fuentes}
 
+La Tabla~\ref{tab:fuentes} detalla las fuentes revisadas durante el
+levantamiento descrito en la Sección~\ref{c3:datos}, el régimen de acceso de
+cada una y el insumo que aporta a la calibración del modelo.
+
+\begin{table}[htbp]
+\centering
+\caption[Fuentes de datos consultadas para la calibración empírica]{Fuentes de datos consultadas, régimen de acceso e insumo que aporta cada una a la calibración del caso CORFO--Intermediario--MiPyME--Banco.}
+\label{tab:fuentes}
+\small
+\begin{tabular}{p{0.26\textwidth}p{0.12\textwidth}p{0.50\textwidth}}
+\hline
+Fuente & Acceso & Insumo que aporta \\
+\hline
+Cuentas Públicas Participativas de CORFO, colección 2014--2024 & Público &
+Monto de préstamos de CORFO a los IFNB ($W_{12}$) para 2019, 2020 y 2024, y
+cifra de colocaciones del programa antecesor Microcrédito para 2016 \\
+DIPRES, Informe de Monitoreo del programa 2020--2021 & Público &
+Tasa de interés mayorista CORFO$\to$IFNB y spread de la tasa a cliente final
+respecto del benchmark de mercado ACHEF/EFA \\
+ELE-7, microdatos \texttt{ele7-full.csv} & Público &
+Tasa de interés anualizada del crédito de mayor monto aprobado en 2022, por
+tamaño de empresa, empleada como aproximación de $M_{34}$ \\
+ELE-7, informe oficial de resultados & Público &
+Tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa,
+empleada como ancla del supuesto sobre $\lambda_A$ \\
+Reglamento operativo del programa Crédito Corfo Mipyme, Texto Refundido, punto 19 & No público &
+Tasa de interés y saldo de capital vigente por operación y por mes, que
+resolvería directamente el vacío de $W_{23}$ \\
+\hline
+\end{tabular}
+\end{table}

@@ -7,7 +7,14 @@
 % Contenido retomado de Proyecto de Título I (PT1), Hito 1 (Hito_1.tex)
 % ============================================================
 
-El presente capítulo contiene el marco teórico necesario para sustentar el análisis de redes financieras. De esta forma, se estudiará, bajo el marco teórico presentado, la competencia que surge entre infraestructuras tradicionales y alternativas.
+El presente capítulo reúne el marco teórico que sustenta el análisis de redes
+financieras desarrollado en este trabajo. Se revisan en primer lugar los modelos
+de referencia de la literatura de redes financieras, a continuación los dos
+cuerpos teóricos que explican la competencia entre infraestructuras y la
+aparición de infraestructuras alternativas, y finalmente el modelo de redes
+duales de \citeA{venegas_reyes_financial_2025} junto con los resultados formales
+de \citeA{jalan_incentive-aware_2024} sobre existencia, convergencia e
+identificación que la validación empírica del Capítulo~\ref{c3} requiere.
 
 \section{Modelos de redes financieras}\label{c22}
 
@@ -30,7 +37,7 @@ modelos de referencia:
     trabajo extiende.
 \end{itemize}
 
-INCLUIR DESARROLLO POST-LITERATURA.
+% TODO (autor): incluir desarrollo posterior a la revision de literatura.
 
 \paragraph{Propagación de riesgo y estabilidad.}
 
@@ -219,35 +226,111 @@ asignación óptima $w_i^{A*}$ es, en general, estrictamente interior
 ($0 < w_i^{A*} < w_i^*$) y no una migración completa hacia la red Alternativa.
 
 \section{Un modelo de redes duales}
+\label{c24}
 
-El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $N$
+Esta sección presenta el modelo base de \citeA{jalan_incentive-aware_2024}, la
+extensión dual de \citeA{venegas_reyes_financial_2025} y los resultados formales
+de ambos marcos que sostienen la aplicación empírica desarrollada en el
+Capítulo~\ref{c3}. La notación empleada en el resto del documento se resume en
+la Tabla~\ref{tab:notacion} del Anexo~\ref{anexo:notacion}. De los resultados de
+\citeA{jalan_incentive-aware_2024} se recogen aquí los que sostienen la
+calibración empírica, quedando fuera los de su Sección 3, relativos a
+fricciones, estática comparativa y detección de la fuente de un cambio en la
+red, por no tener relación directa con ese ejercicio.
+
+El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $n$
 agentes que negocian contratos bilaterales bajo una función de utilidad
 media-varianza. Cada agente $i$ posee un vector de creencias $\mu_i$ sobre los
 retornos esperados, una matriz de covarianzas $\Sigma_i$ y un coeficiente de
 aversión al riesgo $\gamma_i$. La utilidad de un agente $i$ toma la forma
 \begin{equation}
+\label{eq:utilidad}
     g_i(W, P) = w_i^\top (\mu_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i,
 \end{equation}
 sujeta a una restricción regulatoria capturada por una matriz de proyección
-$\Psi_i$. La solución óptima admite la forma cerrada $w_i^* = Q_i(\mu_i - Pe_i)$,
-y una asignación $(W,P)$ es \textit{pairwise stable} si ningún par de agentes
-puede mejorar simultáneamente desviándose unilateralmente de ella.
+$\Psi_i$. La solución óptima de la Ecuación~\eqref{eq:utilidad} admite la forma
+cerrada
+\begin{equation}
+\label{eq:optimo}
+    w_i^* = Q_i(\mu_i - P e_i),
+    \qquad
+    Q_i = \Psi_i^\top \left( 2\gamma_i\, \Psi_i \Sigma_i \Psi_i^\top \right)^{-1} \Psi_i ,
+\end{equation}
+donde $Q_i$ es la matriz de sensibilidad del agente $i$. Una asignación $(W,P)$ es
+\textit{pairwise stable} si ningún par de agentes puede mejorar simultáneamente
+desviándose unilateralmente de ella.
 
 \citeA{venegas_reyes_financial_2025} extiende este marco introduciendo dos
 infraestructuras paralelas. Primero, una red Tradicional ($T$) con restricción
 regulatoria $\Psi_i^T$. Segundo, una red Alternativa ($A$) con restricción $\Psi_i^A$.
-Cada agente reparte su exposición total entre ambas, $w_i^* = w_i^T + w_i^A$, y
-la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red
-alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$:
+Cada agente reparte su exposición total entre ambas según la partición
 \begin{equation}
+\label{eq:particion}
+    w_i^* = w_i^T + w_i^A ,
+\end{equation}
+y la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red
+alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$,
+\begin{equation}
+\label{eq:utilidad-dual}
     g_i(W, P) = w_i^\top (\mu_i + \tau e^A_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i
-    - \lambda_A \|w^A_i\|^2.
+    - \lambda_A \|w^A_i\|^2 .
 \end{equation}
 El modelo dual es consistente con el modelo base de Jalan y Chakrabarti en tres
 casos límite. Cuando $\lambda_A \to 0$ y $\tau = 0$, cuando $\Psi^A$ desactiva
 todos los contratos y finalmente cuando $\Psi^T = \Psi^A$.
 
+\subsection{Factibilidad y estabilidad de una asignación}
+\label{c24:estabilidad}
+
+Las Definiciones 2 y 3 de \citeA{jalan_incentive-aware_2024} precisan qué
+significa formalmente un punto de equilibrio de la red. Una tupla $(W,P)$ es
+factible si $W=W^\top$, $P=-P^\top$, y ambas obedecen las restricciones de red
+codificadas en $(\Psi_i)_{i\in[n]}$. Es estable si, además, cada agente $i$
+maximiza su utilidad $g_i(W,P)$ dado $P$, sobre todas las alternativas factibles
+$W'$ que solo modifican su propia fila y columna. En consecuencia, $(W,P)$ es
+estable cuando ningún agente puede mejorar unilateralmente su utilidad
+renegociando sus contratos vigentes, que es el sentido en que se interpreta el
+equilibrio de la red del caso de aplicación del Capítulo~\ref{c3}.
+
+\subsection{Existencia y unicidad del punto estable}
+\label{c24:teorema1}
+
+Bajo condiciones generales, el Teorema 1 de \citeA{jalan_incentive-aware_2024}
+establece que el punto estable es único y se obtiene resolviendo el sistema
+lineal
+\begin{equation}
+\label{eq:teorema1}
+    Z_F \cdot \mathrm{uvec}(P)_F = \mathrm{uvec}(A-A^\top)_F ,
+\end{equation}
+donde $F$ es el conjunto de aristas permitidas y $Z_F$ se construye a partir de
+las matrices de sensibilidad $Q_i$ definidas en la Ecuación~\eqref{eq:optimo}.
+% TODO (autor): explicitar la definicion de la matriz A segun Jalan y Chakrabarti (2024).
+La Ecuación~\eqref{eq:teorema1} es el mecanismo que, dado un conjunto de
+creencias $(M,\Gamma,\Sigma)$, entrega el tamaño de contrato predicho por el
+modelo para cada par de agentes, y es por lo tanto el resultado que articula la
+calibración empírica desarrollada en el Capítulo~\ref{c3}.
+
+\subsection{Negociaciones bilaterales y convergencia}
+\label{c24:algoritmo1}
+
+En la práctica, el punto estable se alcanza mediante negociaciones bilaterales
+iterativas (Algoritmo 1 de \citeA{jalan_incentive-aware_2024}), en las que, en
+cada ronda, todos los pares de agentes permitidos actualizan simultáneamente su
+precio $P_{ij}$ hacia el valor que resuelve su desacuerdo, ponderado por un
+factor de amortiguación $\eta \in (0,1)$. El Teorema 4 establece que la
+convergencia está garantizada para
+\begin{equation}
+\label{eq:eta}
+    \eta < \eta^* = \frac{2}{\lambda_{\max}} ,
+\end{equation}
+donde $\lambda_{\max}$ es el autovalor máximo de la matriz $(L^\dagger K)|_R$
+construida a partir de las mismas matrices $Q_i$. El interés de este mecanismo
+descentralizado es que cada par negocia usando solo su propio precio vigente,
+sin necesidad de conocer de antemano toda la red, tal como lo haría un agente
+real.
+
 \subsection{Resultado central}
+\label{c24:resultado}
 
 Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa
 Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$,
@@ -261,32 +344,38 @@ exactamente al benchmark sin restricción, con el contrato $N$--$F$ transando ca
 enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural
 que recupera eficiencia.
 
-\subsection{Identificación y estimación desde datos}\label{c25:identificacion}
+\subsection{Identificación y estimación desde datos}
+\label{c24:identificacion}
 
 El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la
 factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales.
-Venegas (2024) no aborda esta pregunta: trabaja con esos primitivos dados como
+\citeA{venegas_reyes_financial_2025} no aborda esta pregunta, ya que trabaja con esos primitivos dados como
 parámetros ilustrativos, nunca estimados. El propio \citeA{jalan_incentive-aware_2024},
 en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos
 primitivos desde datos y bajo qué condiciones: resultados que Venegas no retoma,
 pero que son el respaldo teórico directo de la validación empírica de este trabajo.
 
-\paragraph{Estimación de la covarianza desde retornos históricos}
+\paragraph{Estimación de la covarianza desde retornos históricos.}
 Un primer enfoque estima $\Sigma_i$ a partir del historial de retornos observado
 por cada agente. Si el agente $i$ observa $m$ muestras independientes de los
 retornos de contratos unitarios con los $n$ agentes de la red, recogidas en una
 matriz $X_i \in \mathbb{R}^{n \times m}$, la covarianza muestral $\hat\Sigma_i$
 converge en probabilidad a la covarianza poblacional $\Sigma$, pero con muestras
 finitas cada agente puede terminar con una $\hat\Sigma_i$ distinta, lo que
-degrada el factor de amortiguación seguro $\eta^*$ del Teorema~4 (arriba) y con
-ello la velocidad de convergencia del Algoritmo~1. \citeA{jalan_incentive-aware_2024}
+degrada el factor de amortiguación seguro $\eta^*$ de la
+Ecuación~\eqref{eq:eta} y con ello la velocidad de convergencia del Algoritmo~1
+presentado en la Sección~\ref{c24:algoritmo1}. \citeA{jalan_incentive-aware_2024}
 acotan qué tan severa es esa degradación: bajo condiciones de regularidad estándar
 sobre $\Sigma$ y $\Gamma$ (normas de $\Sigma$, $\Sigma^{-1}$, $\Gamma$ y
 $\Gamma^{-1}$ acotadas independientemente de $n$, y sin aristas prohibidas), si
-cada agente estima su covarianza con $m = \lceil n \log n \rceil$ muestras
-independientes, el factor de amortiguación estimado $\hat\eta^*$ se mantiene
-arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que tiende a
-uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre
+cada agente estima su covarianza con
+\begin{equation}
+\label{eq:teorema5}
+    m \geq \lceil n \log n \rceil
+\end{equation}
+muestras independientes, el factor de amortiguación estimado $\hat\eta^*$ se
+mantiene arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que
+tiende a uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre
 agentes ($m_1,\dots,m_n$): basta con que el menor de ellos satisfaga
 $\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con
 distinto historial disponible usar ventanas de estimación de largo distinto.
@@ -297,13 +386,13 @@ sino que crece muy poco comparado con lo que exigiría estimar
 sin estructura una matriz de covarianza $n \times n$ completa (con $n(n+1)/2$
 entradas libres): la cota mínima teórica conocida para ese problema general es de
 orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por
-encima del óptimo. Para la red de $n=3$ agentes de este trabajo
-(BID/CORFO--intermediaria--MiPyME, Capítulo~\ref{MCP:subastador}), esto se
-traduce en apenas $4$ a $5$ periodos históricos por agente según la base del
+encima del óptimo. Para la red de $n=4$ agentes del caso de
+aplicación de este trabajo (Capítulo~\ref{c3}), la Ecuación~\eqref{eq:teorema5}
+se traduce en entre $6$ y $8$ periodos históricos por agente según la base del
 logaritmo, un requisito de datos modesto y no las decenas o cientos que una
 estimación sin estructura podría sugerir.
 
-\paragraph{Inferir creencias a partir de la estructura de la red}
+\paragraph{Inferir creencias a partir de la estructura de la red.}
 Un obstáculo anterior a la pregunta de cuántos datos bastan es de
 identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un
 único corte transversal de la red observada $W$ en su punto estable,
@@ -312,9 +401,8 @@ una escala (p.ej. $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$): para
 cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente
 consistente con la misma $W$. Observar varias redes generadas con la misma
 $\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La
-consecuencia práctica es directa: una sola observación de la red
-BID/CORFO--intermediaria--MiPyME, por completa que sea, nunca bastaría para
-calibrar el modelo. El dato requerido es necesariamente longitudinal, una
+consecuencia práctica es directa, ya que una sola observación de la red del caso
+de aplicación, por completa que sea, nunca bastaría para calibrar el modelo. El dato requerido es necesariamente longitudinal, una
 secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
 
 Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024}
@@ -326,29 +414,30 @@ $(i,j)$; y (c) $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El
 supuesto (a) se motiva en la literatura de teoría de portafolios, donde los
 errores de estimación de la media suelen dominar sobre los de la covarianza, de
 modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de
-estimación en $M$, que es lo que efectivamente varía en el tiempo. Nótese que
-$\Gamma=I$ es, convenientemente, tanto el supuesto de homogeneidad de Venegas
-(2024) como la condición que \citeA{jalan_incentive-aware_2024} necesitan para
+estimación en $M$, que es lo que efectivamente varía en el tiempo. Cabe notar que
+$\Gamma=I$ es, a la vez, el supuesto de homogeneidad de
+\citeA{venegas_reyes_financial_2025} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para
 que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión
 de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
 $\gamma_i$ por ahora.
 
-\paragraph{Proposición 1: estimar $\Sigma$ desde incrementos de la red, no contrato por contrato}
+\paragraph{Proposición 1, estimar $\Sigma$ desde incrementos de la red, no contrato por contrato.}
 Bajo el Supuesto~1, \citeA{jalan_incentive-aware_2024} muestran que el
 estimador de máxima verosimilitud de $\Sigma$ no requiere observar los retornos
 subyacentes de cada agente (la ruta del Teorema~5), sino que se recupera
 enteramente a partir de cómo cambia la red observada $W(t)$ de un periodo al
 siguiente. La Proposición~1 reduce el problema a un programa semidefinido
-(SDP):
+(SDP),
 \begin{equation}
+\label{eq:prop1}
     \min_{\Sigma} \sum_{t=1}^{T-1} \left\| \Sigma\big(W(t+1)-W(t)\big) + \big(W(t+1)-W(t)\big)\Sigma \right\|_F^2
     \quad \text{sujeto a } \Sigma \succeq 0,\ \operatorname{tr}(\Sigma)=1.
 \end{equation}
 La razón por la que este resultado es más relevante que el Teorema~5 para la
 aplicación a datos de BID/CORFO es que la variable de entrada del problema es
 directamente la secuencia de incrementos $\Delta W(t) = W(t+1)-W(t)$ del propio
-contrato observado, es decir, los montos de financiamiento entre BID/CORFO, la
-intermediaria y las MiPyMEs año a año, no una serie de retornos internos de
+contrato observado, es decir, los montos de financiamiento entre CORFO, el
+intermediario financiero y la MiPyME año a año, no una serie de retornos internos de
 cada institución que en la práctica no está disponible públicamente. En vez de
 estimar $\Sigma_i$ contrato por contrato a partir de datos que las instituciones
 normalmente no publican, la Proposición~1 solo exige la misma serie de flujos de
@@ -359,12 +448,12 @@ $\nu\sum_j \|\Sigma_{(j+1)}-\Sigma_{(j)}\|$ al objetivo del SDP que preserva la
 convexidad del problema, lo cual sería relevante si el perfil de riesgo del
 programa cambió estructuralmente durante 2016--2024 (p.ej. tras 2020).
 
-\paragraph{Una limitación no resuelta por el paper, relevante para redes reguladas}
+\paragraph{Una limitación no resuelta por la literatura, relevante para redes reguladas.}
 Ni el Teorema~5 ni la Proposición~1 discuten qué ocurre cuando la red tiene
 aristas prohibidas por regulación, precisamente el caso de este trabajo, donde
-el contrato directo BID/CORFO--MiPyME está excluido por diseño. Un experimento
-propio con datos sintéticos generados sobre esta estructura de 3 agentes
-(arista 1--3 prohibida) sugiere que la Proposición~1, tal como está formulada,
+el contrato directo CORFO--MiPyME está excluido por diseño. Un experimento
+con datos sintéticos, realizado en el marco de este trabajo sobre la estructura
+de tres agentes de la red Tradicional (arista 1--3 prohibida) sugiere que la Proposición~1, tal como está formulada,
 pierde identificabilidad en la entrada de $\Sigma$ correspondiente al par sin
 contrato: como $W_{13}(t)\equiv 0$ para todo $t$ por construcción regulatoria,
 esa entrada nunca aporta información al objetivo del SDP, y el error de
@@ -372,12 +461,13 @@ recuperación de $\Sigma_{13}$ no decrece aunque se aumente el número de period
 observados $T$. Esta es una limitación metodológica propia de este trabajo, no
 señalada por \citeA{jalan_incentive-aware_2024}, cuyos resultados de
 identificación se enuncian para redes sin restricciones de arista, y se retoma
-como hallazgo de factibilidad en el Capítulo~\ref{MCP:subastador}.
+como hallazgo de factibilidad en la Sección~\ref{c3:diagnostico}.
 
 \subsection{Oportunidades de mejora identificadas}
+\label{c24:oportunidades}
 
 El modelo de \citeA{venegas_reyes_financial_2025} obtiene su resultado de bienestar
 bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para
 sostener los experimentos numéricos, no estimados de datos reales. Además, trabaja bajo dos
 supuestos de homogeneidad entre agentes, con $\gamma_i = 1$ para todo agente y
-$\mu_i = \mu_j$, que el propio autor reconoce como limitaciones. De las oportunidades de mejora identificadas (calibración empírica de los primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e incorporación de riesgo sistémico y contagio), este trabajo retoma la primera: calibrar el modelo con datos reales, como se detalla en el Capítulo~\ref{MCP:subastador}.
+$\mu_i = \mu_j$, que el propio autor reconoce como limitaciones. De las oportunidades de mejora identificadas (calibración empírica de los primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e incorporación de riesgo sistémico y contagio), este trabajo retoma la primera, es decir, calibrar el modelo con datos reales, según se detalla en el Capítulo~\ref{c3}.
