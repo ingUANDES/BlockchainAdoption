@@ -110,29 +110,131 @@ La \textbf{MiPyME es el único agente presente en ambas redes}, y por eso el ún
 \footnotesize{Detalle de restricciones, mapeo institucional y notación en el Anexo.}
 \end{frame}
 
-\begin{frame}{Qué le solicitamos a CORFO}
-\begin{itemize}
-    \item La normativa vigente ya exige a cada IFNB una \textbf{rendición mensual} con el detalle de cada operación de crédito, leasing o factoring (RUT del beneficiario, ventas, monto, tasa, plazo, saldo de capital, mora).
-    \item Solicitamos acceso a un extracto o agregación anonimizada de esas rendiciones 2014--2024, y la serie de desembolsos CORFO $\to$ IFNB por institución individual.
-    \item Como información complementaria: tasas y spread por tramo, morosidad por intermediario, cronograma real del préstamo BID, y número de beneficiarios por período.
-\end{itemize}
+% ---- Beneficio mutuo ----
+\begin{frame}{Cómo nos podemos ayudar mutuamente}
+\begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Lo que el estudio aporta}
+    \begin{itemize}
+        \item ¿El programa y la banca son \textbf{complementarios o sustitutos}?
+        \item ¿Pasar por un intermediario le cuesta bienestar a la MiPyME?
+        \item Herramienta para evaluar \textbf{ajustes futuros}: tasas, garantías, nuevos intermediarios.
+        \item Evidencia propia para la rendición ante el BID.
+    \end{itemize}
 
-\vspace{0.3cm}
-\footnotesize{No solicitamos una regla de distribución de recursos entre MiPyMEs individuales, ya que esa asignación surge de miles de decisiones de crédito independientes de cada IFNB y no es algo que CORFO sintetice como fórmula. Formato y detalle completo de la solicitud en el Anexo.}
+    \column{0.48\textwidth}
+    \textbf{Lo que necesitamos}
+    \begin{itemize}
+        \item Montos y tasas \textbf{por intermediario y por mes}.
+        \item Es un extracto de lo que los intermediarios \textbf{ya reportan}.
+        \item Sin identidades: ni de los intermediarios ni de las MiPyMEs.
+    \end{itemize}
+\end{columns}
+
+\vfill
+\begin{block}{}
+\centering Con datos anuales agregados el modelo no se puede calibrar. Con el detalle mensual que CORFO ya recibe, sí.
+\end{block}
 \end{frame}
 
-\begin{frame}{Valor de este estudio para CORFO}
-\begin{itemize}
-    \item El estudio entrega un marco cuantitativo para evaluar si el programa Crédito Corfo Mipyme y el crédito bancario tradicional operan como canales complementarios para financiar a las MiPyMEs, más allá de los indicadores agregados de cobertura que ya se reportan.
-    \item Permite estimar si la intermediación obligatoria del programa, en la que la MiPyME no accede directo a CORFO, genera alguna pérdida de bienestar para las MiPyMEs, o si el acceso a la banca tradicional la compensa.
-    \item El mismo marco queda disponible para evaluar ajustes futuros del programa, como cambios en tasas, garantías o la incorporación de nuevos intermediarios financieros.
-    \item El diagnóstico de disponibilidad de datos que este trabajo produce, sobre cuántos años de historia se necesitan para calibrar el riesgo del programa con confianza, es en sí mismo un insumo para mejorar el diseño de los reportes de seguimiento.
-    \item Con los datos solicitados, esta evaluación puede completarse con cifras reales del caso chileno, entregando a CORFO evidencia cuantitativa propia sobre el desempeño del programa, útil también para su rendición de cuentas ante el BID.
-\end{itemize}
+% ---- Solicitud: encuadre ----
+\begin{frame}{Qué le solicitamos a CORFO}
+\begin{block}{La solicitud, en una frase}
+Extracto de las rendiciones mensuales del numeral 19 del programa Crédito Corfo Mipyme, período \textbf{enero 2016 -- diciembre 2024}, con el RUT del beneficiario reemplazado por un identificador seudonimizado estable, en un único archivo CSV o Excel con \textbf{una fila por (período, operación)}.
+\end{block}
 
-\vspace{0.3cm}
+\vspace{0.2cm}
+\begin{itemize}
+    \item El \textbf{numeral 19} de las Normas del Programa (``Justificación de la utilización de los préstamos otorgados a los IFNB'') ya obliga a cada intermediario a rendir \textbf{mensualmente}, operación por operación: monto, tasa de interés, plazo, saldo de capital, saldo anterior, mora y estado.
+    \item Pedimos \textbf{dos tablas}. La segunda es un extracto directo de esa rendición: \textbf{11 de sus 12 columnas} están explícitamente exigidas por el numeral 19 y el Anexo N$^\circ$4, y la restante se deriva de ellas. La primera, más corta (8 columnas), proviene de los registros propios de CORFO sobre el préstamo a cada intermediario.
+    \item \alert{No pedimos construir un dataset nuevo}, sino un extracto de información que CORFO ya recibe todos los meses.
+\end{itemize}
+\end{frame}
+
+% ---- Tabla 1 ----
+\begin{frame}{Tabla 1: el giro de CORFO a cada intermediario}
+\textbf{Una fila por (mes, intermediario, tipo de operación).} Es el tramo CORFO $\to$ IFNB ($W_{12}$).
+
+\vspace{0.25cm}
+\begin{table}
 \centering
-\Large{¡Gracias! Preguntas y comentarios son bienvenidos.}
+\scriptsize
+\begin{tabular}{@{}llllrrrr@{}}
+\toprule
+\texttt{PERIODO} & \texttt{ID\_IFNB} & \texttt{TIPO\_IFNB} & \texttt{TIPO\_OPER.} & \texttt{DESEMB\_NUEVO} & \texttt{SALDO\_CAPITAL} & \texttt{TASA} & \texttt{PLAZO} \\
+\midrule
+2020-03 & IFNB\_01 & Factoring   & Factoring & 1.250 & 4.800 & 4,73 & 60 \\
+2020-03 & IFNB\_02 & Leasing     & Leasing   &     0 &   980 & 4,23 & 60 \\
+2020-03 & IFNB\_03 & Cooperativa & Crédito   & 2.100 & 7.350 & 4,23 & 60 \\
+2020-04 & IFNB\_01 & Factoring   & Factoring &   900 & 5.300 & 4,73 & 60 \\
+2020-04 & IFNB\_02 & Leasing     & Leasing   &   450 & 1.380 & 4,23 & 60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\footnotesize
+\begin{itemize}\footnotesize
+    \item \texttt{DESEMB\_NUEVO}: monto girado nuevo en el mes (flujo). \texttt{SALDO\_CAPITAL}: saldo al cierre del mes (stock). \alert{Necesitamos los dos}: hoy las cifras públicas los mezclan y no son comparables entre años.
+    \item \texttt{TASA}: tasa anual CORFO $\to$ IFNB. \texttt{PLAZO}: en meses.
+    \item Montos en millones de pesos. \emph{Los valores de la tabla son ilustrativos del formato, no cifras reales.}
+\end{itemize}
+\end{frame}
+
+% ---- Tabla 2 ----
+\begin{frame}{Tabla 2: la rendición mensual de cada intermediario}
+\textbf{Una fila por (mes, operación).} Es el tramo IFNB $\to$ MiPyME ($W_{23}$), y es el extracto del numeral 19.
+
+\vspace{0.25cm}
+\begin{table}
+\centering
+\tiny
+\begin{tabular}{@{}lllrrrrrrr@{}}
+\toprule
+\texttt{PERIODO} & \texttt{ID\_IFNB} & \texttt{ID\_MIPYME} & \texttt{TIPO\_OPER.} & \texttt{MONTO\_ORIG} & \texttt{SALDO\_CAPITAL} & \texttt{SALDO\_ANT} & \texttt{TASA\_OPER} & \texttt{MORA\_DIAS} & \texttt{VENTAS\_UF} \\
+\midrule
+2020-03 & IFNB\_01 & E-004871 & Factoring & 18,4 & 12,1 & 15,0 & 18,5 &  0 &  9.400 \\
+2020-03 & IFNB\_01 & E-011250 & Factoring &  6,2 &  6,2 &  0,0 & 21,0 &  0 &  2.150 \\
+2020-03 & IFNB\_03 & E-004871 & Crédito   & 45,0 & 41,8 & 43,5 & 14,2 & 31 &  9.400 \\
+2020-04 & IFNB\_01 & E-004871 & Factoring & 18,4 &  9,0 & 12,1 & 18,5 &  0 &  9.400 \\
+2020-04 & IFNB\_02 & E-007733 & Leasing   & 32,0 & 31,1 & 32,0 & 16,8 &  0 & 24.800 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\begin{itemize}\footnotesize
+    \item \texttt{ID\_MIPYME}: \alert{no necesitamos el RUT}. Basta un código seudonimizado que sea \textbf{el mismo para la misma empresa en todos los meses}, para poder seguir la operación en el tiempo.
+    \item \texttt{TASA\_OPER}: tasa anual de la operación al cliente final. \texttt{VENTAS\_UF}: ya está en el Anexo N$^\circ$4 de la rendición; permite distinguir micro, pequeña y mediana.
+    \item También sirve la tabla \textbf{agregada} por (mes, intermediario, tipo de operación), con monto total, tasa promedio ponderada y número de operaciones, si el detalle por operación no es compartible.
+    \item Montos en millones de pesos. \emph{Los valores de la tabla son ilustrativos del formato, no cifras reales.}
+\end{itemize}
+\end{frame}
+
+% ---- Dos precisiones ----
+\begin{frame}{Dos precisiones que deciden si el ejercicio es viable}
+\begin{block}{1. La periodicidad debe ser mensual, no anual}
+El método estima el riesgo percibido a partir de \textbf{cómo cambia la red de un período al siguiente}, de modo que el número de períodos es el insumo crítico. Con datos anuales el panel tiene del orden de \textbf{6 observaciones}; con el detalle mensual que la rendición ya genera, \textbf{alrededor de 108} (enero 2016 -- diciembre 2024). Es la diferencia entre no poder calibrar y poder calibrar.
+\end{block}
+
+\vspace{0.2cm}
+\begin{block}{2. Los intermediarios deben venir distinguidos uno a uno}
+Necesitamos poder \textbf{separar} a cada intermediario (al menos tres, idealmente todos los del programa), pero \textbf{no necesitamos saber cuál es cuál}: un código estable como \texttt{IFNB\_01} es suficiente. Si las cifras vienen sumadas en una sola categoría, o agrupadas en dos, se pierde la posibilidad de estimar el riesgo percibido por agente.
+\end{block}
+
+\vspace{0.2cm}
+\footnotesize Especificación campo por campo, con prioridad y respaldo normativo de cada uno, en el Anexo.
+\end{frame}
+
+% ---- Cierre ----
+\begin{frame}{}
+\vfill
+\centering
+\Large{¡Gracias!}
+
+\vspace{0.4cm}
+\normalsize Preguntas y comentarios son bienvenidos.
+\vfill
 \end{frame}
 
 % ===================================================================
@@ -401,21 +503,91 @@ $\Psi_i$ (restricciones) & MiPyME no accede directo a fondos CORFO & Diseño nor
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Qué le solicitamos a CORFO: la información que ya recopila}
-\textbf{La normativa vigente ya exige un reporte operación por operación}
+\begin{frame}{Respaldo normativo de la solicitud}
 \begin{itemize}
-    \item Las Normas del Programa (aprobadas por la Contraloría General de la República, Toma de Razón 28-05-2026) obligan a cada IFNB a enviar una \textbf{rendición mensual} con el detalle de cada operación de crédito, leasing o factoring financiada con recursos de CORFO.
-    \item Esa rendición incluye, entre otros campos, RUT del beneficiario, ventas anuales, actividad económica, número de trabajadores, monto financiado, tasa de interés, plazo, saldo de capital y estado de mora de cada operación.
+    \item Las Normas del Programa (aprobadas por la Contraloría General de la República, Toma de Razón 28-05-2026) obligan a cada IFNB a enviar una \textbf{rendición mensual} con el detalle de cada operación de crédito, leasing, leaseback o factoring financiada con recursos de CORFO.
+    \item El \textbf{numeral 19}, ``Justificación de la utilización de los préstamos otorgados a los IFNB'', especifica los campos: RUT del beneficiario, tasa de interés de la operación, monto original, saldo anterior de capital, saldo de capital, plazo, mora y estado. El \textbf{Anexo N$^\circ$4} identifica a la empresa beneficiaria incluyendo sus ventas anuales en UF.
+    \item Es decir, la información existe a nivel de operación individual y con frecuencia mensual desde el inicio del programa. La solicitud es de \textbf{acceso a un extracto}, no de levantamiento de información nueva.
 \end{itemize}
 
 \vspace{0.2cm}
-\textbf{Lo que solicitamos}
-\begin{itemize}
-    \item Acceso a un extracto o agregación anonimizada de esas rendiciones 2014--2024, por IFNB y por período.
-    \item Serie de desembolsos CORFO $\to$ IFNB por institución individual, en Excel o CSV, separando el desembolso nuevo del período del saldo de cartera vigente o renovaciones.
-\end{itemize}
+\footnotesize El período solicitado es enero 2016 -- diciembre 2024: el programa Crédito Corfo Mipyme inicia en 2016, de modo que no hay rendiciones anteriores que solicitar.
+\end{frame}
 
-\vspace{0.2cm}
+\begin{frame}{Especificación de la Tabla 1 (lado CORFO)}
+\textbf{Una fila por (mes, intermediario, tipo de operación).}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{2.9cm}p{5.2cm}p{1.5cm}p{2.3cm}@{}}
+\toprule
+\textbf{Campo} & \textbf{Contenido} & \textbf{Prioridad} & \textbf{Origen} \\
+\midrule
+\texttt{PERIODO} & Mes (AAAA-MM), malla uniforme sin huecos & Crítica & Registro CORFO \\
+\texttt{ID\_IFNB} & Código estable del intermediario (puede ser seudónimo) & Crítica & Registro CORFO \\
+\texttt{TIPO\_IFNB} & Cooperativa, factoring, leasing o financiera & Alta & Registro CORFO \\
+\texttt{TIPO\_OPERACION} & Crédito, leasing, leaseback o factoring & Crítica & Numeral 19 \\
+\texttt{DESEMBOLSO\_NUEVO} & Monto girado nuevo en el mes (flujo) & Crítica & Registro CORFO \\
+\texttt{SALDO\_CAPITAL} & Saldo del préstamo CORFO $\to$ IFNB al cierre del mes & Crítica & Registro CORFO \\
+\texttt{TASA} & Tasa anual fijada por el Comité Ejecutivo de Créditos & Alta & Registro CORFO \\
+\texttt{PLAZO} & Plazo en meses & Media & Registro CORFO \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\footnotesize Es el único bloque que no proviene de la rendición de los intermediarios, sino de los registros propios de CORFO.
+\end{frame}
+
+\begin{frame}{Especificación de la Tabla 2 (rendición del numeral 19)}
+\textbf{Una fila por (mes, operación).} Todos los campos salvo uno están ya exigidos por la normativa.
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{3.1cm}p{5.1cm}p{1.4cm}p{2.2cm}@{}}
+\toprule
+\textbf{Campo} & \textbf{Contenido} & \textbf{Prioridad} & \textbf{Origen} \\
+\midrule
+\texttt{PERIODO} & Mes de la operación o del corte de saldo & Crítica & Rendición mensual \\
+\texttt{ID\_IFNB} & Código estable del intermediario & Crítica & Numeral 19 \\
+\texttt{ID\_MIPYME} & Identificador seudonimizado estable, \textbf{no el RUT} & Media & Numeral 19 (RUT) \\
+\texttt{TIPO\_OPERACION} & Crédito, leasing, leaseback o factoring & Crítica & Numeral 19 \\
+\texttt{MONTO\_ORIGINAL} & Monto pactado de la operación & Media & Numeral 19 \\
+\texttt{DESEMBOLSO\_NUEVO} & Monto girado nuevo en el mes (flujo) & Crítica & Derivable \\
+\texttt{SALDO\_CAPITAL} & Saldo de capital al cierre del mes (stock) & Crítica & Numeral 19 \\
+\texttt{SALDO\_ANTERIOR} & Saldo de capital del mes previo & Alta & Numeral 19 \\
+\texttt{TASA\_OPERACION} & Tasa anual al cliente final & Alta & Numeral 19 \\
+\texttt{PLAZO} & Plazo en meses & Media & Numeral 19 \\
+\texttt{MORA\_DIAS}, \texttt{ESTADO} & Días de mora y estado de la operación & Media & Numeral 19 \\
+\texttt{VENTAS\_UF} & Ventas anuales en UF, o tramo de tamaño & Alta & Anexo N$^\circ$4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Por qué pedimos los intermediarios distinguidos uno a uno}
+\textbf{No es una preferencia de granularidad: cambia lo que se puede estimar.}
+
+\vspace{0.3cm}
+\begin{table}
+\centering
+\small
+\begin{tabular}{@{}p{6.2cm}p{6.2cm}@{}}
+\toprule
+\textbf{Si las cifras vienen agregadas} & \textbf{Si vienen separadas por intermediario ($\geq 3$)} \\
+\midrule
+El riesgo percibido se reduce a \textbf{un único parámetro común} a todos los agentes del programa. & Se puede estimar \textbf{una varianza de riesgo percibido por agente}, es decir, cuánto riesgo percibe cada intermediario. \\
+\addlinespace
+No permite distinguir si un intermediario de factoring percibe más riesgo que una cooperativa. & Permite contrastar ese perfil entre tipos de intermediario, y contra la mora efectivamente observada. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\begin{itemize}\small
+    \item Verificado numéricamente sobre la topología del programa: con dos intermediarios el parámetro por agente aún no queda determinado; \textbf{a partir de tres sí}.
+    \item Insistimos en que esto \textbf{no requiere revelar identidades}: basta que el código de cada intermediario sea estable en el tiempo.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Qué le solicitamos a CORFO: información complementaria}
@@ -425,10 +597,11 @@ $\Psi_i$ (restricciones) & MiPyME no accede directo a fondos CORFO & Diseño nor
     \item Tasas de morosidad (NPL) por intermediario.
     \item Cronograma real de desembolsos del préstamo BID de US\$120 millones a CORFO.
     \item Número de beneficiarios y monto promedio de crédito por MiPyME, por período.
+    \item Líneas y coberturas que CORFO coloca a través de \textbf{bancos comerciales} (no IFNB), por período, para contrastar ambos canales de colocación.
 \end{itemize}
 
 \vspace{0.3cm}
-\footnotesize{El formato solicitado es una tabla única y estructurada (Excel o CSV), con los años como filas, en lugar de los reportes en PDF de la Cuenta Pública, cuyo formato cambia año a año.}
+\footnotesize{El formato solicitado es un único archivo estructurado (Excel o CSV) con una fila por período, en lugar de los reportes en PDF de la Cuenta Pública, cuyo formato cambia año a año y que en algunos años se publican escaneados.}
 \end{frame}
 
 \begin{frame}{Fuente 2: CMF (Red Alternativa)}
