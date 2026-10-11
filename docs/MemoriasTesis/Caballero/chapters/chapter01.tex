@@ -7,22 +7,9 @@
 % Contenido retomado de Proyecto de Título I (PT1), Hito 1 (Hito_1.tex)
 % ============================================================
 
-Las infraestructuras financieras alternativas al sistema bancario tradicional, agrupadas bajo el concepto de \textit{shadow banking} o \textit{non-bank financial intermediation} (NBFI), representan hoy USD~238 billones a nivel global, equivalentes
-al 49,1\% de los activos financieros mundiales \cite{fsb_global_2024}. Esta escala
-convierte en un problema económico relevante el estudio de cómo las restricciones
-regulatorias sobre las redes financieras tradicionales inciden en el bienestar
-agregado. En consecuencia, cobra relevancia investigar bajo qué condiciones la coexistencia de infraestructuras con
-regulaciones distintas (tradicionales y alternativas como por ejemplo \textit{blockchain}) puede recuperar parte o la totalidad de ese bienestar.
+Las infraestructuras financieras alternativas al sistema bancario tradicional, agrupadas bajo el concepto de \textit{shadow banking} o instituciones financieras no bancarias (IFNB), representan hoy USD~238 billones a nivel global, equivalentes al 49,1\% de los activos financieros mundiales \cite{fsb_global_2024}. Esta escala convierte en un problema económico relevante el estudio de cómo las restricciones regulatorias sobre las redes financieras tradicionales inciden en el bienestar agregado. En consecuencia, cobra relevancia investigar bajo qué condiciones la coexistencia de infraestructuras con regulaciones distintas (tradicionales y alternativas como por ejemplo \textit{blockchain}) puede recuperar parte o la totalidad de ese bienestar.
 
-El presente trabajo se enmarca en la extensión del modelo de redes financieras duales
-propuesto por \citeA{venegas_reyes_financial_2025}, quien a su vez extiende el marco
-de negociación bilateral en redes de \citeA{jalan_incentive-aware_2024}. El modelo
-de \citeA{venegas_reyes_financial_2025} muestra que, cuando una restricción regulatoria impide el
-contrato directo entre dos agentes, la sola competencia entre intermediarios
-habilitados recupera solo parcialmente el bienestar perdido. Habilitar
-una infraestructura alternativa con regulación distinta, donde el contrato prohibido en la red tradicional sí puede ejecutarse, logra una recuperación completa del bienestar agregado. Este resultado, sin embargo, se obtiene bajo parámetros ilustrativos y no calibrados contra datos reales, lo que limita su interpretación cuantitativa y su valor como evidencia para política regulatoria.
-
-En función de lo anterior se establece el siguiente objetivo general.
+El presente trabajo se enmarca en la extensión del modelo de redes financieras duales propuesto por \citeA{venegas_reyes_financial_2025}, quien a su vez extiende el marco de negociación bilateral en redes de \citeA{jalan_incentive-aware_2024}. El modelo de \citeA{venegas_reyes_financial_2025} muestra que, cuando una restricción regulatoria impide el contrato directo entre dos agentes, la sola competencia entre intermediarios habilitados recupera solo parcialmente el bienestar perdido. Habilitar una infraestructura alternativa con regulación distinta, donde el contrato prohibido en la red tradicional sí puede ejecutarse, logra una recuperación completa del bienestar agregado. Este resultado, sin embargo, se obtiene bajo parámetros ilustrativos y no calibrados contra datos reales, lo que limita su interpretación cuantitativa y su valor como evidencia para política regulatoria. En función de lo anterior se establece el siguiente objetivo general.
 
 \section{Objetivos}
 \label{c1:objetivos}
@@ -44,10 +31,7 @@ Aplicar un modelo de redes financieras a datos reales para evaluar cambios en bi
 \section{Preguntas de investigación}
 \label{c1:preguntas}
 
-Con base en el marco de \citeA{venegas_reyes_financial_2025} y bajo el enfoque
-empírico descrito en el Capítulo~\ref{c3}, este trabajo busca responder tres
-preguntas que el modelo original, calibrado solo con parámetros ilustrativos, no
-puede responder por sí mismo.
+Con base en el marco de \citeA{venegas_reyes_financial_2025} y bajo el enfoque empírico descrito en el Capítulo~\ref{c3}, este trabajo busca responder tres preguntas que el modelo original, calibrado solo con parámetros ilustrativos, no puede responder por sí mismo.
 
 \begin{enumerate}
     \item ?`Persiste la recuperación (parcial o completa) del bienestar que predice
@@ -62,70 +46,21 @@ puede responder por sí mismo.
     modelo teórico?
 \end{enumerate}
 
-Las tres preguntas se formulan sobre la versión homogénea del modelo, con foco
-en su validación empírica, según el alcance que delimita la sección siguiente.
+Las tres preguntas se formulan sobre la versión homogénea del modelo, con foco en su validación empírica, según el alcance que delimita la sección siguiente.
 
 \section{Alcances}
 \label{c1:alcances}
 
-El trabajo se circunscribe a la validación empírica del modelo de redes duales
-de \citeA{venegas_reyes_financial_2025} en su versión homogénea, es decir, con
-$\gamma_i = 1$ para todo agente y creencias comunes. Dentro de ese marco se
-abordan la selección de un caso real de financiamiento en Chile, el
-levantamiento de las series públicas que describen sus flujos, la declaración de
-los supuestos necesarios para las variables que ninguna fuente observa, la
-calibración de los primitivos del modelo y el contraste de sus predicciones con
-la evidencia disponible.
+El trabajo se circunscribe a la validación empírica del modelo de redes duales de \citeA{venegas_reyes_financial_2025} en su versión homogénea, es decir, con $\gamma_i = 1$ para todo agente y creencias comunes. Dentro de ese marco se abordan la selección de un caso real de financiamiento en Chile, el levantamiento de las series públicas que describen sus flujos, la declaración de los supuestos necesarios para las variables que ninguna fuente observa, la calibración de los primitivos del modelo y el contraste de sus predicciones con la evidencia disponible.
 
-Quedan fuera del alcance tres líneas de trabajo. La primera es la extensión del
-modelo a agentes heterogéneos en aversión al riesgo y creencias, que exige un
-desarrollo analítico propio y se deja como trabajo futuro. La segunda es la
-incorporación de dinámica, dependencia de trayectoria y riesgo de contagio al
-modelo dual, identificadas como oportunidades de mejora en la
-Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La
-tercera es la estimación de aquellas entradas de $\Sigma$ que la estructura de la
-red del caso deja sin identificar, esto es, las varianzas propias y las
-covarianzas a lo largo de las aristas observadas, las que se reportan como no
-identificadas en lugar de estimarse, según se argumenta en la
-Sección~\ref{c24:identificacion} y se cuantifica en la
-Sección~\ref{c3:identificabilidad}.
+Quedan fuera del alcance tres líneas de trabajo. La primera es la extensión del modelo a agentes heterogéneos en aversión al riesgo y creencias, que exige undesarrollo analítico propio y se deja como trabajo futuro. La segunda es laincorporación de dinámica, dependencia de trayectoria y riesgo de contagio al modelo dual, identificadas como oportunidades de mejora en la Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La tercera es la estimación de aquellas entradas de $\Sigma$ que la estructura de la red del caso deja sin identificar, esto es, las varianzas propias y las covarianzas a lo largo de las aristas observadas, las que se reportan como no identificadas en lugar de estimarse, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}.
 
 \section{Metodología}
 \label{c1:metodologia}
 
-El trabajo se desarrolla en cinco etapas. La primera consiste en el estudio del
-marco teórico de redes financieras, de la competencia entre infraestructuras y
-del modelo dual que este trabajo valida, lo que constituye el contenido del
-Capítulo~\ref{c2}. La segunda corresponde a la verificación de la implementación
-numérica publicada junto con el modelo que se valida, de modo que una
-discrepancia posterior con los datos no pueda atribuirse a ella. La tercera
-corresponde a la selección de un caso real cuya topología reproduzca la
-estructura de dos redes del modelo y al levantamiento de las fuentes públicas
-que describen sus flujos de financiamiento. La cuarta consiste en la prueba de
-factibilidad empírica, que confronta los datos efectivamente disponibles con los
-requisitos formales de identificación y estimación del marco teórico. La quinta
-corresponde a la calibración de los primitivos del modelo, al cálculo del punto
-estable y al contraste de las predicciones de bienestar y de reparto de
-actividad entre redes con la evidencia observada. Las etapas segunda a quinta se
-detallan en el Capítulo~\ref{c3}.
+El trabajo se desarrolla en cinco etapas. La primera consiste en el estudio del marco teórico de redes financieras, de la competencia entre infraestructuras y del modelo dual que este trabajo valida, lo que constituye el contenido del Capítulo~\ref{c2}. La segunda corresponde a la verificación de la implementación numérica publicada junto con el modelo que se valida, de modo que una discrepancia posterior con los datos no pueda atribuirse a ella. La tercera corresponde a la selección de un caso real cuya topología reproduzca la estructura de dos redes del modelo y al levantamiento de las fuentes públicas que describen sus flujos de financiamiento. La cuarta consiste en la prueba de factibilidad empírica, que confronta los datos efectivamente disponibles con los requisitos formales de identificación y estimación del marco teórico. La quinta corresponde a la calibración de los primitivos del modelo, al cálculo del punto estable y al contraste de las predicciones de bienestar y de reparto de actividad entre redes con la evidencia observada. Las etapas segunda a quinta se detallan en el Capítulo~\ref{c3}.
 
 \section{Estructura del documento}
 \label{c1:estructura}
 
-El documento se organiza en cinco capítulos. El presente capítulo introduce el
-problema, los objetivos, las preguntas de investigación y el alcance del
-trabajo. El Capítulo~\ref{c2} reúne el marco teórico, desde los modelos de
-referencia de redes financieras hasta el modelo de redes duales y los
-resultados formales sobre existencia del equilibrio, convergencia de las
-negociaciones bilaterales e identificación de los primitivos a partir de datos.
-El Capítulo~\ref{c3} presenta el desarrollo metodológico, que comprende el
-estudio del marco de referencia, la verificación de la implementación publicada,
-el caso de aplicación, las fuentes de datos levantadas, los supuestos adoptados
-para las variables no observadas, el diagnóstico de factibilidad empírica y el
-procedimiento de calibración. El Capítulo~\ref{c4} expone el análisis de los resultados
-de la calibración y el Capítulo~\ref{c5} recoge las conclusiones y
-recomendaciones. Los anexos reúnen el material de referencia, esto es, la
-notación del modelo y el detalle de las fuentes de datos consultadas.
-
-
-
+El documento se organiza en cinco capítulos. El presente capítulo introduce el problema, los objetivos, las preguntas de investigación y el alcance del trabajo. El Capítulo~\ref{c2} reúne el marco teórico, desde los modelos de referencia de redes financieras hasta el modelo de redes duales y los resultados formales sobre existencia del equilibrio, convergencia de las negociaciones bilaterales e identificación de los primitivos a partir de datos. El Capítulo~\ref{c3} presenta el desarrollo metodológico, que comprende el estudio del marco de referencia, la verificación de la implementación publicada, el caso de aplicación, las fuentes de datos levantadas, los supuestos adoptados para las variables no observadas, el diagnóstico de factibilidad empírica y el procedimiento de calibración. El Capítulo~\ref{c4} expone el análisis de los resultados de la calibración y el Capítulo~\ref{c5} recoge las conclusiones y recomendaciones. Los anexos reúnen el material de referencia, esto es, la notación del modelo y el detalle de las fuentes de datos consultadas.
