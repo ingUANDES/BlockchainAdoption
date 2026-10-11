@@ -4,12 +4,15 @@
 \label{c3}
 
 Este capítulo describe el desarrollo metodológico de la validación empírica del
-modelo de redes duales presentado en el Capítulo~\ref{c2}. Se expone primero el
-enfoque general del trabajo, a continuación el caso real sobre el que se aplica
-el modelo y el plan de hitos del semestre, y finalmente la ejecución del primer
-hito, que comprende el levantamiento de datos, la declaración de supuestos para
-las variables no observadas, el diagnóstico de factibilidad y las limitaciones
-detectadas.
+modelo de redes duales presentado en el Capítulo~\ref{c2} y sigue el orden en
+que el trabajo se llevó a cabo. Se expone primero el enfoque general. A
+continuación se relata el estudio del marco de referencia, que delimitó el
+aporte propio, y la verificación de la implementación numérica sobre la que se
+apoya el ejercicio. Sigue la selección del caso real y la formulación de sus dos
+redes, el levantamiento de las fuentes de datos, la declaración de los supuestos
+para las variables que ninguna fuente observa y el diagnóstico de factibilidad
+empírica. El capítulo cierra con el procedimiento de calibración y con las
+limitaciones detectadas.
 
 \section{Enfoque de la validación empírica}
 \label{c3:enfoque}
@@ -27,8 +30,73 @@ delimita en la Sección~\ref{c1:alcances}.
 La validación se organiza en dos etapas sucesivas. La primera determina si los
 datos disponibles permiten siquiera plantear la calibración, y la segunda
 ejecuta la calibración y contrasta las predicciones del modelo con la evidencia
-observada. Ambas etapas corresponden a los dos hitos de avance del semestre,
-descritos en las Secciones~\ref{c3:hito1} y~\ref{c3:hito2}.
+observada. El orden responde a una razón de economía del esfuerzo, ya que una
+calibración completa solo se justifica una vez establecido que los datos admiten
+el cruce con los requisitos formales del marco teórico.
+
+\section{Estudio del marco de referencia y delimitación del aporte}
+\label{c3:literatura}
+
+El trabajo comenzó con el estudio del marco teórico que recoge el
+Capítulo~\ref{c2}. Esa revisión tuvo un propósito instrumental además del
+expositivo, puesto que de ella se desprende qué pregunta queda abierta y con qué
+herramientas formales puede abordarse.
+
+De \citeA{jalan_incentive-aware_2024} se retuvieron los resultados que sostienen
+el ejercicio empírico. El Teorema 1 entrega el punto estable como solución de un
+sistema lineal y es el mecanismo que produce el tamaño de contrato predicho. El
+Teorema 5 fija cuántas observaciones históricas requiere la estimación de
+$\Sigma$. La Proposición 1 permite recuperar $\Sigma$ desde la secuencia de
+incrementos de la red observada, sin exigir los retornos internos de cada
+institución. Quedaron fuera los resultados de su Sección 3, relativos a
+fricciones y a la detección de la fuente de un cambio en la red, por no
+intervenir en la calibración. Se revisó además la extensión de
+\citeA{jalan_strategic_2024}, que admite que un subconjunto de agentes reporte
+posiciones de negociación estratégicas en lugar de sus creencias verdaderas.
+Esa línea se dejó fuera del alcance, ya que supone un problema de inferencia
+distinto del que plantea la validación de un modelo con creencias declaradas.
+
+De \citeA{venegas_reyes_financial_2025} se retuvo la extensión dual, esto es, la
+partición del portafolio de cada agente entre una red Tradicional y una
+Alternativa, junto con los parámetros de transparencia $\tau$ y de fricción de
+acceso $\lambda_A$ de la Ecuación~\eqref{eq:utilidad-dual}. El examen de ese
+trabajo dejó ver que sus primitivos se fijan como parámetros ilustrativos y
+nunca se estiman, y que su autor reconoce la homogeneidad entre agentes como
+limitación. De las oportunidades de mejora que se desprenden de ahí, recogidas
+en la Sección~\ref{c24:oportunidades}, este trabajo retoma la calibración
+empírica de los primitivos. Las dos restantes, la incorporación de dinámica y la
+de riesgo sistémico, quedan como trabajo futuro según la
+Sección~\ref{c1:alcances}.
+
+\section{Verificación de la implementación de referencia}
+\label{c3:auditoria}
+
+Antes de aplicar el modelo a datos reales se auditó la implementación numérica
+publicada junto con la tesis de \citeA{venegas_reyes_financial_2025}. El
+propósito fue descartar que una discrepancia posterior con los datos
+proviniera de la implementación y no del modelo. La auditoría no modificó
+ningún archivo original y quedó versionada por separado en el directorio
+\texttt{code/audit} del repositorio del trabajo.
+
+La verificación se apoyó en una batería de 30 pruebas automatizadas, todas las
+cuales se superan. El núcleo numérico reproduce el Ejemplo 5 de
+\citeA{jalan_incentive-aware_2024}, que es la red de tres agentes con una arista
+prohibida sobre la que se construye el escenario de referencia, y su solución
+cerrada coincide con la negociación iterada a precisión de máquina. Se
+verificaron también los escenarios 3F-WITH, 3F-WITHOUT, 4F-WITH y 4F-WITHOUT
+declarados en la tesis. No se detectó ningún error que invalide un resultado
+publicado.
+
+El hallazgo relevante no fue de corrección sino de cobertura. De las 32 unidades
+de resultado inventariadas en la tesis de referencia, 7 son reproducibles con el
+código versionado, 16 requieren código que no acompaña al documento, 5 no tienen
+ni código ni derivación asociados y 4 no admiten reproducción por su naturaleza.
+Las derivaciones simbólicas del modelo dual sí existen y sus comprobaciones son
+correctas, de modo que lo que falta es la implementación numérica de esa capa y
+no el álgebra que la sustenta. En consecuencia, el motor de red única puede
+emplearse con confianza para el caso de aplicación, mientras que la capa que
+acopla las redes Tradicional y Alternativa debe implementarse como parte de este
+trabajo.
 
 \section{Caso de aplicación. El programa Crédito Corfo Mipyme}
 \label{c3:caso}
@@ -59,50 +127,150 @@ La elección de esta partición responde a dos criterios. Primero, la red Tradic
 \label{fig:redes}
 \end{figure}
 
-\section{Hito I (27 de septiembre de 2026). Prueba de factibilidad empírica}
-\label{c3:hito1}
+\section{Datos disponibles y método de obtención}
+\label{c3:datos}
 
-El primer hito de avance corresponde a una prueba de factibilidad empírica. Su
-propósito es establecer si el modelo dual admite un cruce con datos reales antes
-de comprometer el esfuerzo de una calibración completa, de modo que el producto
-esperado no es una estimación sino un diagnóstico fundado. El hito comprende
-cuatro tareas.
+\subsection[Panel W12 (CORFO a Intermediario/IFNB)]{Panel $W_{12}$ (CORFO $\to$ Intermediario/IFNB)}
+\label{c3:panel-w12}
 
-\begin{enumerate}
-    \item Identificación de un caso real cuya topología reproduzca la estructura
-    de redes del modelo sin forzarla, junto con la especificación de los agentes
-    y de las restricciones de acceso que lo caracterizan, según se detalla en la
-    Sección~\ref{c3:caso}.
-    \item Identificación y evaluación de acceso a fuentes públicas de datos de
-    financiamiento en Chile, en particular las asociadas al programa Crédito
-    Corfo Mipyme y a su apoyo por parte del Banco Interamericano de Desarrollo,
-    que permitan aproximar los primitivos del modelo para los agentes del caso.
-    El resultado de este levantamiento se presenta en la
-    Sección~\ref{c3:datos}.
-    \item Declaración explícita de los supuestos necesarios para las variables
-    que ninguna fuente pública observa de forma directa, junto con la evidencia
-    que respalda cada uno de ellos, tarea desarrollada en la
-    Sección~\ref{c3:supuestos}.
-    \item Diagnóstico de factibilidad propiamente tal, que confronta los datos
-    levantados con los requisitos formales del marco teórico del
-    Capítulo~\ref{c2} y deja registradas las limitaciones que condicionan la
-    etapa siguiente, según se expone en las Secciones~\ref{c3:diagnostico}
-    y~\ref{c3:limitaciones}.
-\end{enumerate}
+Esta serie se extrajo de las ``Cuentas Públicas Participativas'' anuales de CORFO, disponibles en el repositorio institucional \texttt{repositoriodigital.corfo.cl}, cuya colección 2014--2024 permitió listar y descargar los PDF de cada gestión anual. De los 11 documentos descargados se obtuvo el monto de préstamos otorgados por CORFO a intermediarios financieros no bancarios (IFNB) para los años 2019, 2020 y 2024 \cite{corfo_cuenta_publica_2019,corfo_cuenta_publica_2020,corfo_cuenta_publica_2024} (en 2016 solo se dispone de la cifra de colocaciones a MiPyMEs bajo el programa antecesor Microcrédito, sin el monto mayorista CORFO-IFNB desagregado). En cambio, para el resto de los años esta cifra desagregada no está publicada, y solo se dispone en algunos casos de la cifra agregada de ``colocaciones'' a MiPyMEs, que mezcla flujo nuevo con cartera rotativa (véase la Sección~\ref{c3:limitaciones}).
 
-A estas tareas se suma la verificación de consistencia numérica del modelo base
-ya implementado en \texttt{code/Financial\_Networks\_Stability.qmd} contra los
-\textit{benchmarks} publicados por \citeA{venegas_reyes_financial_2025}, esto es,
-los escenarios 3F-WITH, 3F-WITHOUT, 4F-WITH y 4F-WITHOUT, cuyo propósito es
-descartar que cualquier discrepancia posterior con los datos reales provenga de
-la implementación y no del modelo.
+\subsection[Ausencia de datos para W23 (Intermediario a MiPyME)]{Ausencia de datos para $W_{23}$ (Intermediario $\to$ MiPyME)}
+\label{c3:ausencia-w23}
 
-\section{Hito II (8 de noviembre de 2026). Calibración y aplicación}
-\label{c3:hito2}
+No existe, hasta donde se ha buscado, una fuente pública que reporte esta arista de forma desagregada y comparable entre años. No obstante, el reglamento operativo del programa Crédito Corfo Mipyme (Texto Refundido, punto 19, ``Justificación de la utilización de los préstamos otorgados a los IFNB'') \cite{corfo_reglamento_credito_mipyme} revela que CORFO sí recibe internamente, mes a mes y por operación individual, tanto la tasa de interés como el saldo de capital vigente de cada crédito. Dicha información resolvería directamente este vacío, aunque no es pública y solo sería accesible a través de un contacto institucional. Actualmente se encuentran en curso conversaciones con dicho contacto para evaluar su disponibilidad.
 
-Resuelto el diagnóstico de factibilidad del primer hito, el segundo hito ejecuta
-la calibración y la aplicación del modelo sobre el caso seleccionado. Comprende
-las siguientes tareas.
+\subsection{Datos para la red Alternativa}
+\label{c3:datos-alternativa}
+
+Se utilizan dos fuentes públicas. La primera es DIPRES, cuyo Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
+
+
+El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que aporta cada una.
+
+\section{Supuestos del modelo para las variables no observadas}
+\label{c3:supuestos}
+
+\subsection[Supuesto para W23. Tasa subsidiada del canal Tradicional]{Supuesto para $W_{23}$. Tasa subsidiada del canal Tradicional}
+\label{c3:supuesto-w23}
+
+Se asume que la tasa de interés que los IFNB cobran a la MiPyME bajo el programa Crédito Corfo Mipyme se ubica entre 7 y 10 puntos porcentuales por debajo del benchmark de mercado (ACHEF/EFA), según reporta DIPRES en su Informe de Monitoreo 2021 del programa \cite{dipres_monitoreo_2021}. Tomando como benchmark de mercado la tasa mediana observada para empresas de menor tamaño (Sección~\ref{c3:tasa-mercado}), esto implica una tasa subsidiada implícita del orden de 3\%--6\% anual, cifra consistente en magnitud con la tasa mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual, según \citeA{dipres_detalle_2021}). Dado que ambas cifras coinciden en orden de magnitud, esta consistencia respalda el supuesto de que el IFNB traspasa el subsidio casi íntegro a la MiPyME, agregando solo un margen operativo menor, en línea con el rol de ``banca de segundo piso'' que describe CORFO para este programa.
+
+\subsection[Supuesto para la red Alternativa. Tasa de mercado M34]{Supuesto para la red Alternativa. Tasa de mercado $M_{34}$}
+\label{c3:tasa-mercado}
+
+$M_{34}$ representa, en la notación del modelo, la creencia de retorno esperado entre la MiPyME y un banco tradicional si negociaran un contrato de crédito en la red Alternativa. No se dispone de una fuente que mida directamente esta creencia bilateral, por lo que se la aproxima mediante la tasa de interés de mercado efectivamente pagada por empresas de tamaño comparable, bajo el supuesto de que dicha tasa refleja razonablemente el costo/retorno que ambas partes anticiparían en una negociación real. Para la tasa de mercado que enfrentaría la MiPyME en el canal bancario tradicional (sin fondeo CORFO), se utiliza la tasa de interés anualizada del crédito de mayor monto aprobado en 2022, calculada directamente de los microdatos de la ELE-7 \cite{ele7_microdatos_2024} (variable B066 segmentada por TAMANO, con anualización explícita de los casos reportados en base mensual). Se reporta la mediana en preferencia a la media, dado que esta última se ve distorsionada por un pequeño número de casos atípicos en el segmento de empresas grandes, según se observa en la Tabla~\ref{tab:ele7-tasas}.
+
+\begin{table}[htbp]
+\centering
+\caption[Tasa de interés mediana anual 2022 por tamaño de empresa (ELE-7)]{Tasa de interés anualizada mediana del crédito de mayor monto aprobado en 2022, por tamaño de empresa. Elaboración propia a partir de los microdatos de la ELE-7 \cite{ele7_microdatos_2024} (variable \texttt{B066} segmentada por \texttt{TAMANO}).}
+\label{tab:ele7-tasas}
+\begin{tabular}{lcc}
+\hline
+Tamaño (CORFO) & Tasa mediana anual 2022 & $n$ \\
+\hline
+Grande      & 10,43\% & 574 \\
+Mediana     & 12,01\% & 225 \\
+Pequeña 2   & 12,68\% & 150 \\
+Pequeña 1   & 15,39\% & 151 \\
+Micro       & 14,00\% & 152 \\
+\hline
+\end{tabular}
+\end{table}
+
+Se adopta, por lo tanto, el rango 14\%--15,4\% (segmentos Pequeña~1 y Micro) como supuesto de $M_{34}$ para la MiPyME en la red Alternativa. La Tabla~\ref{tab:ele7-tasas} muestra una tendencia general de mayor tasa a menor tamaño (Grande 10,43\% frente a Pequeña~1 15,39\%); sin embargo, esta relación no es estrictamente monotónica, ya que Micro (14,00\%) queda levemente por debajo de Pequeña~1 (15,39\%). Dicha diferencia puede reflejar más bien el tamaño de muestra reducido ($n=151$ y $n=152$ respectivamente) que un efecto económico real, por lo que debe reportarse sin forzar una lectura estrictamente monotónica.
+
+\subsection[Supuesto para la fricción de acceso lambda A]{Supuesto para la fricción de acceso $\lambda_A$}
+\label{c3:supuesto-lambda}
+
+$\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el parámetro que determina cuán costoso o restringido resulta para la MiPyME acceder a la red Alternativa en comparación con la red Tradicional, y por lo tanto gobierna cómo la MiPyME reparte su portafolio entre ambos canales. Un $\lambda_A$ alto implica que, aun si el modelo predijera una tasa competitiva en la red Alternativa, la MiPyME en la práctica no podría aprovecharla con facilidad. Como segunda ancla, independiente de la anterior, se utiliza la tasa de rechazo condicional a la solicitud de crédito reportada en el informe oficial de resultados de la ELE-7 \cite{ele7_informe_2024}, que llega a 15\% para MiPyMEs frente a 3\% para empresas grandes (cinco veces mayor). Adicionalmente, 111 de las 1.018 empresas que necesitaban crédito pero nunca lo solicitaron declaran autocensura, una población disjunta de las 819 empresas que sí solicitaron crédito. Esta brecha de acceso, combinada con la brecha de tasa anterior, sustenta por lo tanto el supuesto de que $\lambda_A$ es sustancialmente mayor que la fricción de acceso a la red Tradicional para el agente MiPyME.
+
+\section{Diagnóstico de factibilidad empírica}
+\label{c3:diagnostico}
+
+\subsection{Aplicación del Teorema 5 al caso de cuatro agentes}
+\label{c3:teorema5-aplicado}
+
+Con $n=4$ agentes (CORFO, Intermediario, MiPyME y Banco tradicional), la cota del Teorema 5 recogida en la Ecuación~\eqref{eq:teorema5} exige un mínimo de $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes para que la estimación de $\Sigma$ no degrade sustancialmente la convergencia del algoritmo de negociación bilateral. Sin embargo, según el levantamiento de la Sección~\ref{c3:panel-w12}, el panel disponible para $W_{12}$ cubre tres años no consecutivos (2019, 2020 y 2024), a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor, de modo que el número de observaciones comparables queda por debajo del umbral mínimo teórico.
+
+\subsection[Identificabilidad de Sigma en la red del programa]{Identificabilidad de $\Sigma$ en la red del programa}
+\label{c3:identificabilidad}
+
+La cota del Teorema 5 responde cuántos periodos se necesitan, pero presupone que $\Sigma$ puede recuperarse en principio. Esa condición se evaluó de forma independiente para la red del programa, mediante el rango de la información del estimador de la Proposición~1 de \citeA{jalan_incentive-aware_2024}. El estimador de la Ecuación~\eqref{eq:prop1} actúa sobre el residuo $\Sigma\,\Delta W + \Delta W\,\Sigma$ evaluado en las aristas permitidas, de modo que el rango del mapa lineal que lleva $\Sigma$ a ese residuo indica cuántas de sus $n(n+1)/2$ entradas libres quedan determinadas. La matriz $\Sigma$ es identificable cuando el rango iguala ese número, o cuando falta una sola dirección y su traza no es nula, ya que la normalización $\operatorname{tr}(\Sigma)=1$ solo puede fijar una.
+
+\paragraph{Caso de tres agentes.}
+Sea la cadena CORFO (1), Intermediario (2) y MiPyME (3), con la arista 1--3 prohibida. Si $a=\Delta W_{12}$ y $b=\Delta W_{23}$ denotan los cambios de los dos contratos entre un periodo y el siguiente, el residuo en las dos aristas permitidas es
+\begin{equation}
+\label{eq:residuo-cadena}
+\begin{aligned}
+R_{12} &= a\,(\Sigma_{11}+\Sigma_{22}) + b\,\Sigma_{13},\\
+R_{23} &= b\,(\Sigma_{22}+\Sigma_{33}) + a\,\Sigma_{13}.
+\end{aligned}
+\end{equation}
+Solo intervienen cuatro de las seis entradas de $\Sigma$. Las covarianzas $\Sigma_{12}$ y $\Sigma_{23}$ no figuran en ninguna ecuación y las varianzas aparecen únicamente a través de sumas. En cambio, $\Sigma_{13}$ aparece de forma aislada, por lo que queda determinada aunque el contrato directo 1--3 esté prohibido. En consecuencia, el rango es 3 de 6 grados de libertad. La normalización de la traza no basta para cerrar la brecha, porque faltan tres direcciones y no una.
+
+\paragraph{Estructura bipartita de la red de registros de CORFO.}
+La red que entregan los registros de CORFO, formada por CORFO, los $k$ intermediarios y la MiPyME, es bipartita. Un lado lo integran CORFO y la MiPyME, y el otro lado los intermediarios, de modo que toda arista une agentes de lados distintos y ninguna une agentes del mismo lado. Como consecuencia, el residuo de cada arista involucra solo covarianzas entre agentes del mismo lado, y las covarianzas entre lados, que son las de las propias aristas, no intervienen en ninguna ecuación. Este resultado se limita a esa red y no a la de cuatro agentes del modelo, donde el Banco participa solo en la red Alternativa.
+
+La Tabla~\ref{tab:rango-bipartita} muestra que el déficit de rango crece como $2k+1$ con el número de intermediarios. En consecuencia, agregar intermediarios no repara la identificación. Tampoco lo hace aumentar el número de periodos, ya que cada periodo adicional aporta ecuaciones de la misma forma que la Ecuación~\eqref{eq:residuo-cadena}. La limitación es, por lo tanto, estructural y no muestral.
+
+\begin{table}[htbp]
+\centering
+\caption[Rango de identificación en la red bipartita de CORFO]{Rango de la información del estimador de la Proposición~1 en la red CORFO, $k$ intermediarios y MiPyME, con la arista CORFO--MiPyME prohibida. Elaboración propia.}
+\label{tab:rango-bipartita}
+\small
+\begin{tabular}{cccccc}
+\hline
+$k$ & Agentes $n$ & Grados de libertad & Rango & Déficit & Identificable \\
+\hline
+1 & 3 & 6  & 3  & 3  & No \\
+2 & 4 & 10 & 5  & 5  & No \\
+3 & 5 & 15 & 8  & 7  & No \\
+4 & 6 & 21 & 12 & 9  & No \\
+5 & 7 & 28 & 17 & 11 & No \\
+6 & 8 & 36 & 23 & 13 & No \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Entradas recuperables.}
+En las topologías con uno y con tres intermediarios, las únicas entradas determinadas son las covarianzas entre agentes que no contratan entre sí, esto es, $\Sigma_{13}$ entre CORFO y la MiPyME y las covarianzas entre pares de intermediarios. No quedan determinadas, de manera individual, las varianzas propias ni las covarianzas a lo largo de las aristas observadas. El detalle por tipo de entrada se presenta en la Sección~\ref{anexo:entradas} del Anexo.
+
+\paragraph{Extensión de diseño que completa la identificación.}
+El modelo dual tiene tres aristas estructurales, CORFO--Intermediario e Intermediario--MiPyME en la red Tradicional y Banco--MiPyME en la red Alternativa. Las aristas Intermediario--Banco y CORFO--Banco no pertenecen al modelo vigente y se evaluaron como una extensión de diseño. La Tabla~\ref{tab:rango-extension} resume el resultado con tres intermediarios. Solo la arista Intermediario--Banco rompe la bipartición, puesto que une dos agentes que quedan del mismo lado. La arista CORFO--Banco cruza de lado y no la rompe, pero el rango completo se alcanza únicamente cuando ambas están presentes.
+
+\begin{table}[htbp]
+\centering
+\caption[Rango de identificación con aristas bancarias adicionales]{Rango de la información del estimador de la Proposición~1 con tres intermediarios al incorporar el Banco y las aristas Intermediario--Banco y CORFO--Banco. Elaboración propia.}
+\label{tab:rango-extension}
+\small
+\begin{tabular}{lcccc}
+\hline
+Red evaluada & Grados de libertad & Rango & Déficit & Identificable \\
+\hline
+Registros de CORFO (sin Banco)             & 15 & 8  & 7 & No \\
+Con Banco--MiPyME                          & 21 & 12 & 9 & No \\
+Con Banco--MiPyME y CORFO--Banco           & 21 & 12 & 9 & No \\
+Con Banco--MiPyME e Intermediario--Banco  & 21 & 18 & 3 & No \\
+Con ambas aristas bancarias                & 21 & 21 & 0 & Sí \\
+\hline
+\end{tabular}
+\end{table}
+
+En términos prácticos, las aristas Intermediario--Banco y CORFO--Banco corresponden al fondeo bancario de los propios intermediarios y a las líneas que CORFO coloca a través de bancos comerciales, respectivamente. Incorporarlas supone una decisión de diseño sobre el modelo y requiere series que hoy no están disponibles, por lo que se reportan aquí como condición de identificación y no como dato faltante del modelo vigente.
+
+\subsection{Relación con el Algoritmo 1 y el Teorema 4}
+\label{c3:algoritmo1-aplicado}
+
+El Teorema 1, recogido en la Ecuación~\eqref{eq:teorema1}, resuelve el punto estable de forma exacta mediante un sistema lineal, y para el caso de cuatro agentes con las restricciones estructurales ya conocidas ese sistema $Z_F$ es de baja dimensión, por lo que se resolvería exactamente y sin necesidad de iterar. En consecuencia, el mecanismo directo para calcular el $W_{23}$ predicho a partir de los supuestos de la Sección~\ref{c3:supuestos}, tarea que corresponde al procedimiento de la Sección~\ref{c3:calibracion}, es el Teorema 1 y no el Algoritmo 1.
+
+El Algoritmo 1, en cambio, cobra relevancia práctica en un problema distinto y de mayor escala, que es la implementación completa del modelo dual mediante la capa de acoplamiento T/A. Ahí, el sistema conjunto que resuelve la partición de la Ecuación~\eqref{eq:particion} para la MiPyME se beneficia de un mecanismo descentralizado, en el que cada par de agentes negocia usando solo su propio precio vigente y sin necesidad de conocer de antemano toda la red, tal como lo haría un agente real. Es en ese contexto, y no en el cálculo puntual de este caso de cuatro agentes, donde el factor de amortiguación $\eta$ y su cota de convergencia, dada por la Ecuación~\eqref{eq:eta}, pasan a ser relevantes en la práctica.
+
+\section{Procedimiento de calibración}
+\label{c3:calibracion}
+
+Establecida la factibilidad, la calibración y la aplicación del modelo sobre el
+caso seleccionado comprenden las tareas siguientes.
 
 \begin{enumerate}
     \item Construcción de los primitivos $(M,\Gamma,\Sigma)$ a partir de las
@@ -126,92 +294,11 @@ las siguientes tareas.
 \end{enumerate}
 
 Por el resultado de identificabilidad discutido en la
-Sección~\ref{c24:identificacion}, la calibración reporta la entrada
-$\Sigma_{13}$ como no identificada en lugar de estimarla, ya que la arista
-CORFO--MiPyME está prohibida por diseño y no aporta información al problema de
-inferencia.
-
-\section{Hitos de cierre}
-\label{c3:cierre}
-
-El 21 de agosto de 2026 se entregó la propuesta de hitos del semestre, con la
-carta Gantt re-secuenciada contra las cuatro fechas de este plan. El 28 de
-diciembre de 2026 corresponde la entrega del documento de memoria completo, con
-los capítulos redactados y compilando sin errores, los resultados de la
-aplicación a datos reales integrados y la bibliografía consolidada.
-
-\section{Datos disponibles y método de obtención}
-\label{c3:datos}
-
-\subsection[Panel W12 (CORFO a Intermediario/IFNB)]{Panel $W_{12}$ (CORFO $\to$ Intermediario/IFNB)}
-\label{c3:panel-w12}
-
-Esta serie se extrajo de las ``Cuentas Públicas Participativas'' anuales de CORFO, disponibles en el repositorio institucional \texttt{repositoriodigital.corfo.cl}, cuya colección 2014--2024 permitió listar y descargar los PDF de cada gestión anual. De los 11 documentos descargados se obtuvo el monto de préstamos otorgados por CORFO a intermediarios financieros no bancarios (IFNB) para los años 2019, 2020 y 2024 (en 2016 solo se dispone de la cifra de colocaciones a MiPyMEs bajo el programa antecesor Microcrédito, sin el monto mayorista CORFO-IFNB desagregado). En cambio, para el resto de los años esta cifra desagregada no está publicada, y solo se dispone en algunos casos de la cifra agregada de ``colocaciones'' a MiPyMEs, que mezcla flujo nuevo con cartera rotativa (véase la Sección~\ref{c3:limitaciones}).
-
-\subsection[Ausencia de datos para W23 (Intermediario a MiPyME)]{Ausencia de datos para $W_{23}$ (Intermediario $\to$ MiPyME)}
-\label{c3:ausencia-w23}
-
-No existe, hasta donde se ha buscado, una fuente pública que reporte esta arista de forma desagregada y comparable entre años. No obstante, el reglamento operativo del programa Crédito Corfo Mipyme (Texto Refundido, punto 19, ``Justificación de la utilización de los préstamos otorgados a los IFNB'') revela que CORFO sí recibe internamente, mes a mes y por operación individual, tanto la tasa de interés como el saldo de capital vigente de cada crédito. Dicha información resolvería directamente este vacío, aunque no es pública y solo sería accesible a través de un contacto institucional. Actualmente se encuentran en curso conversaciones con dicho contacto para evaluar su disponibilidad.
-
-\subsection{Datos para la red Alternativa}
-\label{c3:datos-alternativa}
-
-Se utilizan dos fuentes del Ministerio de Economía, ambas de acceso público. La primera es DIPRES, cuyo Informe de Monitoreo del programa 2020--2021 reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
-
-
-El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que aporta cada una.
-
-\section{Supuestos del modelo para las variables no observadas}
-\label{c3:supuestos}
-
-\subsection[Supuesto para W23. Tasa subsidiada del canal Tradicional]{Supuesto para $W_{23}$. Tasa subsidiada del canal Tradicional}
-\label{c3:supuesto-w23}
-
-Se asume que la tasa de interés que los IFNB cobran a la MiPyME bajo el programa Crédito Corfo Mipyme se ubica entre 7 y 10 puntos porcentuales por debajo del benchmark de mercado (ACHEF/EFA), según reporta DIPRES en su Informe de Monitoreo 2020--2021 del programa. Tomando como benchmark de mercado la tasa mediana observada para empresas de menor tamaño (Sección~\ref{c3:tasa-mercado}), esto implica una tasa subsidiada implícita del orden de 3\%--6\% anual, cifra consistente en magnitud con la tasa mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual, DIPRES 2021). Dado que ambas cifras coinciden en orden de magnitud, esta consistencia respalda el supuesto de que el IFNB traspasa el subsidio casi íntegro a la MiPyME, agregando solo un margen operativo menor, en línea con el rol de ``banca de segundo piso'' que describe CORFO para este programa.
-
-\subsection[Supuesto para la red Alternativa. Tasa de mercado M34]{Supuesto para la red Alternativa. Tasa de mercado $M_{34}$}
-\label{c3:tasa-mercado}
-
-$M_{34}$ representa, en la notación del modelo, la creencia de retorno esperado entre la MiPyME y un banco tradicional si negociaran un contrato de crédito en la red Alternativa. No se dispone de una fuente que mida directamente esta creencia bilateral, por lo que se la aproxima mediante la tasa de interés de mercado efectivamente pagada por empresas de tamaño comparable, bajo el supuesto de que dicha tasa refleja razonablemente el costo/retorno que ambas partes anticiparían en una negociación real. Para la tasa de mercado que enfrentaría la MiPyME en el canal bancario tradicional (sin fondeo CORFO), se utiliza la tasa de interés anualizada del crédito de mayor monto aprobado en 2022, calculada directamente de los microdatos de la ELE-7 (variable B066 segmentada por TAMANO, con anualización explícita de los casos reportados en base mensual). Se reporta la mediana en preferencia a la media, dado que esta última se ve distorsionada por un pequeño número de casos atípicos en el segmento de empresas grandes, según se observa en la Tabla~\ref{tab:ele7-tasas}.
-
-\begin{table}[htbp]
-\centering
-\caption[Tasa de interés mediana anual 2022 por tamaño de empresa (ELE-7)]{Tasa de interés anualizada mediana del crédito de mayor monto aprobado en 2022, por tamaño de empresa. Elaboración propia a partir de los microdatos de la ELE-7 (variable \texttt{B066} segmentada por \texttt{TAMANO}).}
-\label{tab:ele7-tasas}
-\begin{tabular}{lcc}
-\hline
-Tamaño (CORFO) & Tasa mediana anual 2022 & $n$ \\
-\hline
-Grande      & 10,43\% & 574 \\
-Mediana     & 12,01\% & 225 \\
-Pequeña 2   & 12,68\% & 150 \\
-Pequeña 1   & 15,39\% & 151 \\
-Micro       & 14,00\% & 152 \\
-\hline
-\end{tabular}
-\end{table}
-
-Se adopta, por lo tanto, el rango 14\%--15,4\% (segmentos Pequeña~1 y Micro) como supuesto de $M_{34}$ para la MiPyME en la red Alternativa. La Tabla~\ref{tab:ele7-tasas} muestra una tendencia general de mayor tasa a menor tamaño (Grande 10,43\% frente a Pequeña~1 15,39\%); sin embargo, esta relación no es estrictamente monotónica, ya que Micro (14,00\%) queda levemente por debajo de Pequeña~1 (15,39\%). Dicha diferencia puede reflejar más bien el tamaño de muestra reducido ($n=151$ y $n=152$ respectivamente) que un efecto económico real, por lo que debe reportarse sin forzar una lectura estrictamente monotónica.
-
-\subsection[Supuesto para la fricción de acceso lambda A]{Supuesto para la fricción de acceso $\lambda_A$}
-\label{c3:supuesto-lambda}
-
-$\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el parámetro que determina cuán costoso o restringido resulta para la MiPyME acceder a la red Alternativa en comparación con la red Tradicional, y por lo tanto gobierna cómo la MiPyME reparte su portafolio entre ambos canales. Un $\lambda_A$ alto implica que, aun si el modelo predijera una tasa competitiva en la red Alternativa, la MiPyME en la práctica no podría aprovecharla con facilidad. Como segunda ancla, independiente de la anterior, se utiliza la tasa de rechazo condicional a la solicitud de crédito reportada en el informe oficial de resultados de la ELE-7, que llega a 15\% para MiPyMEs frente a 3\% para empresas grandes (cinco veces mayor). Adicionalmente, 111 de las 1.018 empresas que necesitaban crédito pero nunca lo solicitaron declaran autocensura, una población disjunta de las 819 empresas que sí solicitaron crédito. Esta brecha de acceso, combinada con la brecha de tasa anterior, sustenta por lo tanto el supuesto de que $\lambda_A$ es sustancialmente mayor que la fricción de acceso a la red Tradicional para el agente MiPyME.
-
-\section{Diagnóstico de factibilidad empírica}
-\label{c3:diagnostico}
-
-\subsection{Aplicación del Teorema 5 al caso de cuatro agentes}
-\label{c3:teorema5-aplicado}
-
-Con $n=4$ agentes (CORFO, Intermediario, MiPyME y Banco tradicional), la cota del Teorema 5 recogida en la Ecuación~\eqref{eq:teorema5} exige un mínimo de $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes para que la estimación de $\Sigma$ no degrade sustancialmente la convergencia del algoritmo de negociación bilateral. Sin embargo, según el levantamiento de la Sección~\ref{c3:panel-w12}, el panel disponible para $W_{12}$ cubre tres años no consecutivos (2019, 2020 y 2024), a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor, de modo que el número de observaciones comparables queda por debajo del umbral mínimo teórico.
-
-\subsection{Relación con el Algoritmo 1 y el Teorema 4}
-\label{c3:algoritmo1-aplicado}
-
-El Teorema 1, recogido en la Ecuación~\eqref{eq:teorema1}, resuelve el punto estable de forma exacta mediante un sistema lineal, y para el caso de cuatro agentes con las restricciones estructurales ya conocidas ese sistema $Z_F$ es de baja dimensión, por lo que se resolvería exactamente y sin necesidad de iterar. En consecuencia, el mecanismo directo para calcular el $W_{23}$ predicho a partir de los supuestos de la Sección~\ref{c3:supuestos}, tarea que corresponde al Hito II (Sección~\ref{c3:hito2}), es el Teorema 1 y no el Algoritmo 1.
-
-El Algoritmo 1, en cambio, cobra relevancia práctica en un problema distinto y de mayor escala, que es la implementación completa del modelo dual mediante la capa de acoplamiento T/A. Ahí, el sistema conjunto que resuelve la partición de la Ecuación~\eqref{eq:particion} para la MiPyME se beneficia de un mecanismo descentralizado, en el que cada par de agentes negocia usando solo su propio precio vigente y sin necesidad de conocer de antemano toda la red, tal como lo haría un agente real. Es en ese contexto, y no en el cálculo puntual de este caso de cuatro agentes, donde el factor de amortiguación $\eta$ y su cota de convergencia, dada por la Ecuación~\eqref{eq:eta}, pasan a ser relevantes en la práctica.
+Sección~\ref{c24:identificacion}, la calibración reporta como no
+identificadas las varianzas propias y las covarianzas a lo largo de las aristas
+observadas, en lugar de estimarlas, ya que la estructura bipartita de la red del
+programa no permite recuperarlas aunque aumente el volumen de datos. En cambio,
+la covarianza $\Sigma_{13}$ entre CORFO y la MiPyME sí queda determinada.
 
 \section{Limitaciones}
 \label{c3:limitaciones}
@@ -219,6 +306,6 @@ El Algoritmo 1, en cambio, cobra relevancia práctica en un problema distinto y 
 \begin{enumerate}
     \item Ambigüedad entre flujo y saldo. En varios años, la cifra reportada de ``colocaciones'' a MiPyMEs mezcla desembolso nuevo con cartera rotativa de años anteriores, lo que impide tratarla como $W_{23}(t)$ en el sentido estricto del modelo, es decir, como una fotografía del contrato vigente en un punto estable.
     \item Asimetría de agregación entre redes. $W_{12}$ proviene de un programa e institución identificables, mientras que los supuestos de la red Alternativa provienen de promedios de mercado a nivel nacional (ELE-7), no de una relación bilateral banco--MiPyME específica.
-    \item Identificabilidad estructural de $\Sigma_{13}$. La arista CORFO--MiPyME, al estar prohibida, deja esa entrada de covarianza débilmente identificada en cualquier intento de aplicar el programa semidefinido de la Ecuación~\eqref{eq:prop1}, independientemente del volumen de datos disponible, según se argumenta en la Sección~\ref{c24:identificacion}.
+    \item Identificabilidad estructural de $\Sigma$. La red del programa es bipartita, de modo que el programa semidefinido de la Ecuación~\eqref{eq:prop1} no determina las varianzas propias ni las covarianzas a lo largo de las aristas observadas, independientemente del volumen de datos disponible, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}. Solo las covarianzas entre agentes que no contratan entre sí, como $\Sigma_{13}$, quedan determinadas.
     \item Cobertura incompleta del panel CORFO. Existen años cuyos datos desagregados de este programa no están publicados. Esto significa que los años disponibles no son una muestra representativa del período completo, lo que introduce un sesgo de selección no cuantificado.
 \end{enumerate}

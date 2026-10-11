@@ -451,17 +451,25 @@ programa cambió estructuralmente durante 2016--2024 (p.ej. tras 2020).
 \paragraph{Una limitación no resuelta por la literatura, relevante para redes reguladas.}
 Ni el Teorema~5 ni la Proposición~1 discuten qué ocurre cuando la red tiene
 aristas prohibidas por regulación, precisamente el caso de este trabajo, donde
-el contrato directo CORFO--MiPyME está excluido por diseño. Un experimento
-con datos sintéticos, realizado en el marco de este trabajo sobre la estructura
-de tres agentes de la red Tradicional (arista 1--3 prohibida) sugiere que la Proposición~1, tal como está formulada,
-pierde identificabilidad en la entrada de $\Sigma$ correspondiente al par sin
-contrato: como $W_{13}(t)\equiv 0$ para todo $t$ por construcción regulatoria,
-esa entrada nunca aporta información al objetivo del SDP, y el error de
-recuperación de $\Sigma_{13}$ no decrece aunque se aumente el número de periodos
-observados $T$. Esta es una limitación metodológica propia de este trabajo, no
-señalada por \citeA{jalan_incentive-aware_2024}, cuyos resultados de
-identificación se enuncian para redes sin restricciones de arista, y se retoma
-como hallazgo de factibilidad en la Sección~\ref{c3:diagnostico}.
+el contrato directo CORFO--MiPyME está excluido por diseño. Un análisis del rango
+de la información del estimador de la Proposición~1, realizado en el marco de
+este trabajo, muestra que en esa situación $\Sigma$ no puede recuperarse por
+completo. Sobre la cadena de tres agentes CORFO--Intermediario--MiPyME, con la
+arista 1--3 prohibida, el rango es 3 de 6 grados de libertad. Quedan determinadas
+las covarianzas entre agentes que no contratan entre sí, en particular
+$\Sigma_{13}$, ya que esa entrada interviene en el residuo a través de los
+flujos de las aristas vecinas aunque $W_{13}(t)\equiv 0$. En cambio, no quedan
+determinadas ni las varianzas propias ni las covarianzas a lo largo de las
+aristas observadas.
+
+La misma estructura se mantiene al agregar intermediarios. La red CORFO,
+intermediarios y MiPyME es bipartita, de modo que con tres intermediarios el
+rango es 8 de 15 y el déficit crece con el número de intermediarios, sin que
+aumentar el número de periodos observados $T$ lo repare. Esta es una limitación
+propia de la aplicación de este trabajo, no señalada por
+\citeA{jalan_incentive-aware_2024}, cuyos resultados de identificación se
+enuncian para redes sin restricciones de arista, y se retoma como hallazgo de
+factibilidad en la Sección~\ref{c3:diagnostico}.
 
 \subsection{Oportunidades de mejora identificadas}
 \label{c24:oportunidades}
