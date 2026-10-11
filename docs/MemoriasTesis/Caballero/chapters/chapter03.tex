@@ -104,9 +104,38 @@ trabajo.
 \subsection{Contexto institucional}
 \label{c3:contexto}
 
-El programa Crédito Corfo Mipyme es el instrumento mediante el cual CORFO canaliza financiamiento hacia micro, pequeñas y medianas empresas sin prestarles de forma directa. CORFO opera en este esquema como banca de segundo piso, es decir, entrega recursos a intermediarios financieros para que estos refinancien u originen créditos hacia el segmento MiPyME. El programa cuenta con apoyo del Banco Interamericano de Desarrollo (BID) desde 2016, y su antecesor directo operaba previamente bajo la denominación de programa de Microcrédito.
+La Corporación de Fomento de la Producción (CORFO) es el organismo del Estado de Chile encargado del fomento productivo y depende del Ministerio de Economía, Fomento y Turismo. Parte de sus instrumentos de financiamiento no llega de forma directa a las empresas beneficiarias, sino a través de instituciones financieras que actúan como intermediarias.
+
+El programa Crédito Corfo Mipyme es el instrumento mediante el cual CORFO canaliza financiamiento hacia micro, pequeñas y medianas empresas sin prestarles de forma directa. CORFO opera en este esquema como banca de segundo piso, es decir, entrega recursos a intermediarios financieros no bancarios (IFNB) para que estos refinancien u originen créditos hacia el segmento MiPyME. Los intermediarios habilitados son cooperativas de ahorro y crédito, sociedades de leasing, empresas de factoring y financieras, y el programa distingue sus operaciones por componente según el tipo de producto que financia, esto es, crédito, leasing y factoring. Su antecesor directo operaba bajo la denominación de programa de Microcrédito, que en 2016 giró MM\$9.400 en colocaciones hacia micro y pequeñas empresas antes de cerrarse para dar paso al programa actual \cite{corfo_cuenta_publica_2016}.
+
+El Banco Interamericano de Desarrollo (BID) es el banco multilateral de desarrollo de América Latina y el Caribe, del que Chile es país miembro. Su vínculo con el programa es el de fuente de fondeo de CORFO y no el de prestamista de las empresas beneficiarias, de modo que no constituye un agente adicional de la red que se modela. En 2016 el BID otorgó a CORFO un préstamo de US\$120 millones dirigido específicamente a intermediarios financieros no bancarios cuyos principales clientes son micro y pequeñas empresas \cite{corfo_cuenta_publica_2016}, y la Cuenta Pública de 2024 confirma que el programa se implementa desde ese año con apoyo del BID \cite{corfo_cuenta_publica_2024}.
 
 La arquitectura de este programa es relevante para el presente trabajo porque reproduce, sin necesidad de forzar el modelo, una estructura de tres agentes con una restricción de acceso. Es decir, exactamente la topología que \citeA{jalan_incentive-aware_2024} utilizan en su Ejemplo 5 y que \citeA{venegas_reyes_financial_2025} retoma como escenario de referencia. La MiPyME no puede acceder de forma directa a los recursos de CORFO, sino que debe hacerlo a través de un intermediario financiero no bancario (IFNB) que participa del programa.
+
+\subsection{Definición de MiPyME y tramos de tamaño}
+\label{c3:mipyme}
+
+La sigla MiPyME agrupa a las micro, pequeñas y medianas empresas. En Chile esa clasificación la fija el artículo 2 de la Ley N.º 20.416, conocida como Estatuto Pyme, que segmenta a las empresas según sus ingresos anuales por ventas, servicios y otras actividades del giro en el último año calendario, descontados el IVA y los impuestos específicos, y los expresa en unidades de fomento (UF) \cite{ley_20416_2010}. Bajo ese criterio una empresa es MiPyME cuando sus ventas anuales no superan las 100.000 UF.
+
+La ELE-7, de la que proviene el supuesto de tasa de mercado de la Sección~\ref{c3:tasa-mercado}, emplea una clasificación de cinco tramos que subdivide a la pequeña empresa en dos \cite{ele7_metodologia_2024}. La Tabla~\ref{tab:tramos-tamano} reúne ambas clasificaciones y permite leer los tramos que emplea la Tabla~\ref{tab:ele7-tasas}.
+
+\begin{table}[htbp]
+\centering
+\caption[Tramos de tamaño de empresa según ventas anuales]{Tramos de tamaño de empresa según ventas anuales en UF, con la correspondencia entre los cinco tramos de la ELE-7 y las categorías del Estatuto Pyme.}
+\label{tab:tramos-tamano}
+\small
+\begin{tabular}{lll}
+\hline
+Tramo ELE-7 & Ventas anuales (UF) & Categoría de la Ley N.º 20.416 \\
+\hline
+Micro      & Hasta 2.400                      & Microempresa \\
+Pequeña 1  & Más de 2.400 y hasta 5.000       & Pequeña empresa \\
+Pequeña 2  & Más de 5.000 y hasta 25.000      & Pequeña empresa \\
+Mediana    & Más de 25.000 y hasta 100.000    & Mediana empresa \\
+Grande     & Más de 100.000                   & Gran empresa \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Estructura de las dos redes}
 \label{c3:estructura}
@@ -143,7 +172,7 @@ No existe, hasta donde se ha buscado, una fuente pública que reporte esta arist
 \subsection{Datos para la red Alternativa}
 \label{c3:datos-alternativa}
 
-Se utilizan dos fuentes públicas. La primera es DIPRES, cuyo Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
+Se utilizan dos fuentes públicas. La primera es la Dirección de Presupuestos (DIPRES), organismo dependiente del Ministerio de Hacienda que elabora el presupuesto del sector público y realiza el monitoreo y seguimiento de los programas públicos, entre ellos el programa Crédito Corfo Mipyme. Su Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
 
 
 El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que aporta cada una.
@@ -167,7 +196,7 @@ $M_{34}$ representa, en la notación del modelo, la creencia de retorno esperado
 \label{tab:ele7-tasas}
 \begin{tabular}{lcc}
 \hline
-Tamaño (CORFO) & Tasa mediana anual 2022 & $n$ \\
+Tramo ELE-7 & Tasa mediana anual 2022 & $n$ \\
 \hline
 Grande      & 10,43\% & 574 \\
 Mediana     & 12,01\% & 225 \\
