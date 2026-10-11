@@ -17,7 +17,7 @@ limitaciones detectadas.
 \section{Enfoque de la validación empírica}
 \label{c3:enfoque}
 
-El resultado central del modelo de \citeA{venegas_reyes_financial_2025},
+El resultado central del modelo de \citeA{venegas_dual_network_2024},
 descrito en la Sección~\ref{c24:resultado}, se obtuvo bajo agentes homogéneos y
 parámetros ilustrativos. El propósito de este trabajo es producir el insumo de
 validación empírica que esa tesis no desarrolla, esto es, evaluar si dicho
@@ -56,7 +56,7 @@ posiciones de negociación estratégicas en lugar de sus creencias verdaderas.
 Esa línea se dejó fuera del alcance, ya que supone un problema de inferencia
 distinto del que plantea la validación de un modelo con creencias declaradas.
 
-De \citeA{venegas_reyes_financial_2025} se retuvo la extensión dual, esto es, la
+De \citeA{venegas_dual_network_2024} se retuvo la extensión dual, esto es, la
 partición del portafolio de cada agente entre una red Tradicional y una
 Alternativa, junto con los parámetros de transparencia $\tau$ y de fricción de
 acceso $\lambda_A$ de la Ecuación~\eqref{eq:utilidad-dual}. El examen de ese
@@ -72,7 +72,7 @@ Sección~\ref{c1:alcances}.
 \label{c3:auditoria}
 
 Antes de aplicar el modelo a datos reales se auditó la implementación numérica
-publicada junto con la tesis de \citeA{venegas_reyes_financial_2025}. El
+publicada junto con la tesis de \citeA{venegas_dual_network_2024}. El
 propósito fue descartar que una discrepancia posterior con los datos
 proviniera de la implementación y no del modelo. La auditoría no modificó
 ningún archivo original y quedó versionada por separado en el directorio
@@ -110,7 +110,7 @@ El programa Crédito Corfo Mipyme es el instrumento mediante el cual CORFO canal
 
 El Banco Interamericano de Desarrollo (BID) es el banco multilateral de desarrollo de América Latina y el Caribe, del que Chile es país miembro. Su vínculo con el programa es el de fuente de fondeo de CORFO y no el de prestamista de las empresas beneficiarias, de modo que no constituye un agente adicional de la red que se modela. En 2016 el BID otorgó a CORFO un préstamo de US\$120 millones dirigido específicamente a intermediarios financieros no bancarios cuyos principales clientes son micro y pequeñas empresas \cite{corfo_cuenta_publica_2016}, y la Cuenta Pública de 2024 confirma que el programa se implementa desde ese año con apoyo del BID \cite{corfo_cuenta_publica_2024}.
 
-La arquitectura de este programa es relevante para el presente trabajo porque reproduce, sin necesidad de forzar el modelo, una estructura de tres agentes con una restricción de acceso. Es decir, exactamente la topología que \citeA{jalan_incentive-aware_2024} utilizan en su Ejemplo 5 y que \citeA{venegas_reyes_financial_2025} retoma como escenario de referencia. La MiPyME no puede acceder de forma directa a los recursos de CORFO, sino que debe hacerlo a través de un intermediario financiero no bancario (IFNB) que participa del programa.
+La arquitectura de este programa es relevante para el presente trabajo porque reproduce, sin necesidad de forzar el modelo, una estructura de tres agentes con una restricción de acceso. Es decir, exactamente la topología que \citeA{jalan_incentive-aware_2024} utilizan en su Ejemplo 5 y que \citeA{venegas_dual_network_2024} retoma como escenario de referencia. La MiPyME no puede acceder de forma directa a los recursos de CORFO, sino que debe hacerlo a través de un intermediario financiero no bancario (IFNB) que participa del programa.
 
 \subsection{Definición de MiPyME y tramos de tamaño}
 \label{c3:mipyme}
@@ -140,7 +140,7 @@ Grande     & Más de 100.000                   & Gran empresa \\
 \subsection{Estructura de las dos redes}
 \label{c3:estructura}
 
-El caso se modela como un sistema de cuatro agentes distribuidos en dos redes, siguiendo la extensión dual de \citeA{venegas_reyes_financial_2025} presentada en la Sección~\ref{c24}. La Figura~\ref{fig:redes} resume esta estructura.
+El caso se modela como un sistema de cuatro agentes distribuidos en dos redes, siguiendo la extensión dual de \citeA{venegas_dual_network_2024} presentada en la Sección~\ref{c24}. La Figura~\ref{fig:redes} resume esta estructura.
 
 \begin{itemize}
     \item Red Tradicional (T). CORFO (1) $\to$ Intermediario/IFNB (2) $\to$ MiPyME (3), con la arista CORFO--MiPyME prohibida, lo que se codifica como $\Psi_1 e_3 = 0$. Corresponde al canal del programa Crédito Corfo Mipyme.

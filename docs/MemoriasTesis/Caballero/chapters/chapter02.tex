@@ -12,7 +12,7 @@ financieras desarrollado en este trabajo. Se revisan en primer lugar los modelos
 de referencia de la literatura de redes financieras, a continuación los dos
 cuerpos teóricos que explican la competencia entre infraestructuras y la
 aparición de infraestructuras alternativas, y finalmente el modelo de redes
-duales de \citeA{venegas_reyes_financial_2025} junto con los resultados formales
+duales de \citeA{venegas_dual_network_2024} junto con los resultados formales
 de \citeA{jalan_incentive-aware_2024} sobre existencia, convergencia e
 identificación que la validación empírica del Capítulo~\ref{c3} requiere.
 
@@ -33,7 +33,7 @@ modelos de referencia:
 
     \item \textbf{\citeA{jalan_incentive-aware_2024}:} introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y
     beneficios entre pares de agentes. Además utiliza una función de utilidad media-varianza que permite modelar decisiones óptimas de contratación bilateral en un equilibrio \textit{pairwise stable}. Es el modelo base sobre
-    el cual se construye la tesis de \citeA{venegas_reyes_financial_2025}, que este
+    el cual se construye la tesis de \citeA{venegas_dual_network_2024}, que este
     trabajo extiende.
 \end{itemize}
 
@@ -78,7 +78,7 @@ riesgo. Por otra parte, también puede generar congestión operacional y mayores
 
 \section{Competencia entre infraestructuras financieras}\label{c23}
 
-La competencia entre redes Tradicional y Alternativa que este trabajo analiza, que \citeA{venegas_reyes_financial_2025} modela formalmente, se apoya en dos
+La competencia entre redes Tradicional y Alternativa que este trabajo analiza, que \citeA{venegas_dual_network_2024} modela formalmente, se apoya en dos
 cuerpos de literatura complementarios. El primero, la teoría de plataformas y mercados de
 dos lados que explica cómo compiten infraestructuras con efectos de red. Segundo, el arbitraje regulatorio que explica por qué surgen infraestructuras alternativas.
 
@@ -105,7 +105,7 @@ multi-afilia. El resultado central de Armstrong es que la coexistencia de
 infraestructuras es viable cuando el costo de multi-homing es moderado y las
 plataformas se diferencian. Ya que, si el costo es muy alto, el mercado tiende a concentrarse en una sola infraestructura.
 
-Este marco aplica directamente al modelo dual de \citeA{venegas_reyes_financial_2025}: la variable de decisión $(w_i^T, w_i^A)$ es, finalmente, una decisión de multi-homing entre la red Tradicional y la Alternativa. El parámetro de
+Este marco aplica directamente al modelo dual de \citeA{venegas_dual_network_2024}: la variable de decisión $(w_i^T, w_i^A)$ es, finalmente, una decisión de multi-homing entre la red Tradicional y la Alternativa. El parámetro de
 fricción $\lambda_A$ representa el costo de ese multi-homing. \citeA{caillaud_chicken_2003} muestran que la diferenciación entre plataformas actúa como un mecanismo que suaviza la competencia directa. Esta diferenciación puede darse por ejemplo en la transparencia o en el tipo de contratos que cada red permite. De esta forma se sostiene la coexistencia entre plataformas, en lugar de forzar un resultado de dominancia total de una infraestructura sobre la otra.
 
 \subsection{Arbitraje regulatorio}
@@ -229,7 +229,7 @@ asignación óptima $w_i^{A*}$ es, en general, estrictamente interior
 \label{c24}
 
 Esta sección presenta el modelo base de \citeA{jalan_incentive-aware_2024}, la
-extensión dual de \citeA{venegas_reyes_financial_2025} y los resultados formales
+extensión dual de \citeA{venegas_dual_network_2024} y los resultados formales
 de ambos marcos que sostienen la aplicación empírica desarrollada en el
 Capítulo~\ref{c3}. La notación empleada en el resto del documento se resume en
 la Tabla~\ref{tab:notacion} del Anexo~\ref{anexo:notacion}. De los resultados de
@@ -260,7 +260,7 @@ donde $Q_i$ es la matriz de sensibilidad del agente $i$. Una asignación $(W,P)$
 \textit{pairwise stable} si ningún par de agentes puede mejorar simultáneamente
 desviándose unilateralmente de ella.
 
-\citeA{venegas_reyes_financial_2025} extiende este marco introduciendo dos
+\citeA{venegas_dual_network_2024} extiende este marco introduciendo dos
 infraestructuras paralelas. Primero, una red Tradicional ($T$) con restricción
 regulatoria $\Psi_i^T$. Segundo, una red Alternativa ($A$) con restricción $\Psi_i^A$.
 Cada agente reparte su exposición total entre ambas según la partición
@@ -334,7 +334,7 @@ real.
 
 Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa
 Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$,
-\citeA{venegas_reyes_financial_2025} muestra que la sola competencia entre
+\citeA{venegas_dual_network_2024} muestra que la sola competencia entre
 intermediarios habilitados (incorporando una cuarta firma que compite con $L$)
 recupera solo parcialmente el bienestar perdido por la restricción. Esta deja un
 \textit{gap} de $27{,}9\%$ respecto del benchmark sin restricción. En cambio,
@@ -349,7 +349,7 @@ que recupera eficiencia.
 
 El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la
 factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales.
-\citeA{venegas_reyes_financial_2025} no aborda esta pregunta, ya que trabaja con esos primitivos dados como
+\citeA{venegas_dual_network_2024} no aborda esta pregunta, ya que trabaja con esos primitivos dados como
 parámetros ilustrativos, nunca estimados. El propio \citeA{jalan_incentive-aware_2024},
 en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos
 primitivos desde datos y bajo qué condiciones: resultados que Venegas no retoma,
@@ -416,7 +416,7 @@ errores de estimación de la media suelen dominar sobre los de la covarianza, de
 modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de
 estimación en $M$, que es lo que efectivamente varía en el tiempo. Cabe notar que
 $\Gamma=I$ es, a la vez, el supuesto de homogeneidad de
-\citeA{venegas_reyes_financial_2025} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para
+\citeA{venegas_dual_network_2024} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para
 que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión
 de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
 $\gamma_i$ por ahora.
@@ -474,7 +474,7 @@ factibilidad en la Sección~\ref{c3:diagnostico}.
 \subsection{Oportunidades de mejora identificadas}
 \label{c24:oportunidades}
 
-El modelo de \citeA{venegas_reyes_financial_2025} obtiene su resultado de bienestar
+El modelo de \citeA{venegas_dual_network_2024} obtiene su resultado de bienestar
 bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para
 sostener los experimentos numéricos, no estimados de datos reales. Además, trabaja bajo dos
 supuestos de homogeneidad entre agentes, con $\gamma_i = 1$ para todo agente y
