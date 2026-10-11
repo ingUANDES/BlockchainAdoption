@@ -32,7 +32,7 @@
 
 % --- METADATA ---
 \title[Redes Duales BID/CORFO]{Redes de Financiamiento Duales: \\ Aplicando el Modelo de Jalan et al. (2024) \\ al Caso BID/CORFO}
-\subtitle{Validación empírica del modelo dual de Venegas (2025)}
+\subtitle{Validación empírica del modelo dual de Venegas (2024)}
 \author[Eduardo Caballero]{Eduardo Caballero \\ \small{Profesor Guía: Sebastián Cea}}
 \institute{Universidad de Los Andes}
 \date{\today}
@@ -267,7 +267,7 @@ Necesitamos poder \textbf{separar} a cada intermediario (al menos tres, idealmen
 \begin{frame}{Por qué un modelo de redes financieras}
 \begin{itemize}
     \item La intermediación obligatoria (CORFO $\not\to$ MiPyME directo) es exactamente el tipo de \textcolor{blue}{restricción de red} que estudian Jalan, Chakrabarti \& Sarkar (2024).
-    \item Venegas (2025) extiende ese modelo a \textbf{dos redes en competencia} (tradicional vs. alternativa) para estudiar la emergencia de infraestructuras de financiamiento no tradicionales.
+    \item Venegas (2024) extiende ese modelo a \textbf{dos redes en competencia} (tradicional vs. alternativa) para estudiar la emergencia de infraestructuras de financiamiento no tradicionales.
     \item Este trabajo toma esa extensión dual y la \textbf{lleva a datos reales} del caso BID/CORFO, en vez de parámetros ilustrativos.
 \end{itemize}
 
@@ -339,11 +339,11 @@ $$w_i^* = Q_i(\mu_i - Pe_i), \qquad Q_i = \Psi_i^\top\left(2\gamma_i \Psi_i \Sig
 La red se alcanza mediante un \textbf{algoritmo de negociación bilateral iterativa} (Algorithm 1) que actualiza los precios $P(t)$ hasta convergencia, con parámetro de amortiguación $\eta$.
 \end{frame}
 
-% ---- Extensión Dual (Venegas, 2025) ----
-\section{Extensión Dual (Venegas, 2025)}
+% ---- Extensión Dual (Venegas, 2024) ----
+\section{Extensión Dual (Venegas, 2024)}
 
 \begin{frame}{La extensión: dos redes en competencia}
-Venegas (2025) extiende el modelo agregando una \textbf{segunda red} hacia la que los agentes pueden reasignar su portafolio.
+Venegas (2024) extiende el modelo agregando una \textbf{segunda red} hacia la que los agentes pueden reasignar su portafolio.
 
 \vspace{0.3cm}
 \textbf{Idea central:} el portafolio total de cada agente es \textbf{fijo} y se reparte entre la red Tradicional (T) y la red Alternativa (A):
