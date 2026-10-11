@@ -23,15 +23,15 @@ Aplicar un modelo de redes financieras a datos reales para evaluar cambios en bi
 \subsection{Objetivos específicos}
 
 \begin{enumerate}
-    \item Evaluar la factibilidad de calibrar los primitivos del modelo de \citeA{venegas_dual_network_2024}, por ejemplo, creencias de retorno, matrices de covarianza y coeficientes de aversión al riesgo.
-    \item Implementar y validar numéricamente el modelo base contra los \textit{benchmarks} ya desarrollados por \citeA{venegas_dual_network_2024}.
+    \item Evaluar la factibilidad de calibrar los primitivos del modelo de \citeA{venegas_dual_network_2024}, tales como las creencias de retorno, matrices de covarianza y coeficientes de aversión al riesgo.
+    \item Imple1.mentar y validar numéricamente el modelo base contra los \textit{benchmarks} ya desarrollados por \citeA{venegas_dual_network_2024}.
     \item Aplicar el modelo calibrado al caso de datos reales seleccionado y contrastar sus predicciones de bienestar y de reparto de actividad entre redes con la evidencia observada.
 \end{enumerate}
 
 \section{Preguntas de investigación}
 \label{c1:preguntas}
 
-Con base en el marco de \citeA{venegas_dual_network_2024} y bajo el enfoque empírico descrito en el Capítulo~\ref{c3}, este trabajo busca responder tres preguntas que el modelo original, calibrado solo con parámetros ilustrativos, no puede responder por sí mismo.
+Con base en el marco de \citeA{venegas_dual_network_2024} y bajo el enfoque empírico descrito en el Capítulo~\ref{c3}, este trabajo busca responder tres preguntas que el modelo original, calibrado solo con parámetros ilustrativos, no puede responder por sí mismo
 
 \begin{enumerate}
     \item ?`Persiste la recuperación (parcial o completa) del bienestar que predice
@@ -53,7 +53,7 @@ Las tres preguntas se formulan sobre la versión homogénea del modelo, con foco
 
 El trabajo se circunscribe a la validación empírica del modelo de redes duales de \citeA{venegas_dual_network_2024} en su versión homogénea, es decir, con $\gamma_i = 1$ para todo agente y creencias comunes. Dentro de ese marco se abordan la selección de un caso real de financiamiento en Chile, el levantamiento de las series públicas que describen sus flujos, la declaración de los supuestos necesarios para las variables que ninguna fuente observa, la calibración de los primitivos del modelo y el contraste de sus predicciones con la evidencia disponible.
 
-Quedan fuera del alcance tres líneas de trabajo. La primera es la extensión del modelo a agentes heterogéneos en aversión al riesgo y creencias, que exige undesarrollo analítico propio y se deja como trabajo futuro. La segunda es laincorporación de dinámica, dependencia de trayectoria y riesgo de contagio al modelo dual, identificadas como oportunidades de mejora en la Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La tercera es la estimación de aquellas entradas de $\Sigma$ que la estructura de la red del caso deja sin identificar, esto es, las varianzas propias y las covarianzas a lo largo de las aristas observadas, las que se reportan como no identificadas en lugar de estimarse, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}.
+Quedan fuera del alcance tres líneas de trabajo. La primera es la extensión del modelo a agentes heterogéneos en aversión al riesgo y creencias, que exige un desarrollo analítico propio y se deja como trabajo futuro. La segunda es la incorporación de dinámica, dependencia de trayectoria y riesgo de contagio al modelo dual, identificadas como oportunidades de mejora en la Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La tercera es la estimación de aquellas entradas de $\Sigma$ que la estructura de la red del caso deja sin identificar, esto es, las varianzas propias y las covarianzas a lo largo de las aristas observadas. Estas se reportan como no identificadas en lugar de estimarse, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}.
 
 \section{Metodología}
 \label{c1:metodologia}
