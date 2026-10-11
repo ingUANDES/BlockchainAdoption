@@ -83,26 +83,31 @@ desarrollo analítico propio y se deja como trabajo futuro. La segunda es la
 incorporación de dinámica, dependencia de trayectoria y riesgo de contagio al
 modelo dual, identificadas como oportunidades de mejora en la
 Sección~\ref{c24:oportunidades} pero ajenas al objetivo de validación. La
-tercera es la estimación de aquellas entradas del modelo que la propia
-estructura regulatoria del caso deja sin identificar, las que se reportan como
-no identificadas en lugar de estimarse, según se argumenta en la
-Sección~\ref{c24:identificacion}.
+tercera es la estimación de aquellas entradas de $\Sigma$ que la estructura de la
+red del caso deja sin identificar, esto es, las varianzas propias y las
+covarianzas a lo largo de las aristas observadas, las que se reportan como no
+identificadas en lugar de estimarse, según se argumenta en la
+Sección~\ref{c24:identificacion} y se cuantifica en la
+Sección~\ref{c3:identificabilidad}.
 
 \section{Metodología}
 \label{c1:metodologia}
 
-El trabajo se desarrolla en cuatro etapas. La primera consiste en el estudio del
+El trabajo se desarrolla en cinco etapas. La primera consiste en el estudio del
 marco teórico de redes financieras, de la competencia entre infraestructuras y
 del modelo dual que este trabajo valida, lo que constituye el contenido del
-Capítulo~\ref{c2}. La segunda corresponde a la selección de un caso real cuya
-topología reproduzca la estructura de dos redes del modelo y al levantamiento de
-las fuentes públicas que describen sus flujos de financiamiento. La tercera
-consiste en la prueba de factibilidad empírica, que confronta los datos
-efectivamente disponibles con los requisitos formales de identificación y
-estimación del marco teórico. La cuarta corresponde a la calibración de los
-primitivos del modelo, al cálculo del punto estable y al contraste de las
-predicciones de bienestar y de reparto de actividad entre redes con la evidencia
-observada. Las etapas segunda a cuarta se detallan en el Capítulo~\ref{c3}.
+Capítulo~\ref{c2}. La segunda corresponde a la verificación de la implementación
+numérica publicada junto con el modelo que se valida, de modo que una
+discrepancia posterior con los datos no pueda atribuirse a ella. La tercera
+corresponde a la selección de un caso real cuya topología reproduzca la
+estructura de dos redes del modelo y al levantamiento de las fuentes públicas
+que describen sus flujos de financiamiento. La cuarta consiste en la prueba de
+factibilidad empírica, que confronta los datos efectivamente disponibles con los
+requisitos formales de identificación y estimación del marco teórico. La quinta
+corresponde a la calibración de los primitivos del modelo, al cálculo del punto
+estable y al contraste de las predicciones de bienestar y de reparto de
+actividad entre redes con la evidencia observada. Las etapas segunda a quinta se
+detallan en el Capítulo~\ref{c3}.
 
 \section{Estructura del documento}
 \label{c1:estructura}
@@ -113,10 +118,11 @@ trabajo. El Capítulo~\ref{c2} reúne el marco teórico, desde los modelos de
 referencia de redes financieras hasta el modelo de redes duales y los
 resultados formales sobre existencia del equilibrio, convergencia de las
 negociaciones bilaterales e identificación de los primitivos a partir de datos.
-El Capítulo~\ref{c3} presenta el desarrollo metodológico, que comprende el caso
-de aplicación, el plan de hitos del semestre, las fuentes de datos levantadas,
-los supuestos adoptados para las variables no observadas y el diagnóstico de
-factibilidad empírica. El Capítulo~\ref{c4} expone el análisis de los resultados
+El Capítulo~\ref{c3} presenta el desarrollo metodológico, que comprende el
+estudio del marco de referencia, la verificación de la implementación publicada,
+el caso de aplicación, las fuentes de datos levantadas, los supuestos adoptados
+para las variables no observadas, el diagnóstico de factibilidad empírica y el
+procedimiento de calibración. El Capítulo~\ref{c4} expone el análisis de los resultados
 de la calibración y el Capítulo~\ref{c5} recoge las conclusiones y
 recomendaciones. Los anexos reúnen el material de referencia, esto es, la
 notación del modelo y el detalle de las fuentes de datos consultadas.
