@@ -40,7 +40,7 @@ Con base en la lectura de \textit{``Financial Networks \& Technological Innovati
 Model''} (Venegas, 2024) se destacarán los puntos base sobre los que la tesis se sostiene, los
 elementos centrales del problema, el contexto en el que se enmarca y la extensión que realiza
 la tesis sobre el modelo de \textit{``Strategic Negotiations in Endogenous Network Formation''}
-(Jalan y Chakrabarti, 2024). Además, se expondrán algunas oportunidades de mejora al modelo.
+(Jalan, Chakrabarti y Sarkar, 2024). Además, se expondrán algunas oportunidades de mejora al modelo.
 El documento se dividirá en tres grandes capítulos siguiendo el orden establecido en la tesis:
 Marco teórico, modelo y resultados.
 
@@ -82,7 +82,7 @@ Se hace referencia a 3 modelos de redes financieras:
     \item \textbf{Elliott, Golub y Jackson (2014):} Modelo de red para contagio y cómo puede
     amplificar o mitigar riesgo sistemático.
 
-    \item \textbf{Jalan y Chakrabarti (2024):} Introduce una matriz $Q$ simétrica y semidefinida
+    \item \textbf{Jalan, Chakrabarti y Sarkar (2024):} Introduce una matriz $Q$ simétrica y semidefinida
     positiva que captura la estructura de costos y beneficios entre pares de agentes, junto con
     una función de utilidad media-varianza que permite modelar decisiones óptimas de
     contratación bilateral en equilibrio \textit{pairwise stable}. Es el modelo base que la tesis
@@ -144,7 +144,7 @@ regulatorias y de adopción tecnológica que dificultan su implementación en el
 \section*{Modelo}
 % ============================================================
 
-\subsection*{1. Modelo base de Jalan y Chakrabarti (2024)}
+\subsection*{1. Modelo base de Jalan, Chakrabarti y Sarkar (2024)}
 
 El modelo base que la tesis extiende considera una red de $N$ agentes que negocian contratos
 bilaterales bajo una función de utilidad media-varianza. Cada agente $i$ posee un vector de
@@ -206,7 +206,7 @@ adjudica al contrato con $j$ coincide con lo que $j$ adjudica al mismo contrato)
 antisimétrica y ambos respetan las restricciones regulatorias $\Psi_i$. Una asignación es
 estable si ningún par de agentes puede mejorar simultáneamente desviándose
 unilateralmente, lo que corresponde a un equilibrio de Nash en negociaciones \textit{pairwise}.
-Jalan y Chakrabarti (2024) muestran (Teorema 3.3.1) que un punto estable existe si y solo si
+Jalan, Chakrabarti y Sarkar (2024) muestran (Teorema 3.3.1) que un punto estable existe si y solo si
 una condición de proyección sobre el espacio columna de las restricciones se satisface, y
 proponen un algoritmo iterativo de negociaciones \textit{pairwise} que converge al equilibrio
 bajo un parámetro de amortiguamiento $\eta$.
@@ -284,7 +284,7 @@ El Teorema 3.5.6 extiende el resultado de existencia del modelo base al \textit{
 bajo condiciones análogas sobre las restricciones combinadas $(\Psi^T, \Psi^A)$, existe un
 punto estable en el equilibrio \textit{dual-network} y el algoritmo iterativo de negociaciones
 \textit{pairwise} converge a él. La Proposición 3.5.7 establece la consistencia con el modelo
-original. El modelo dual se reduce al modelo base de Jalan y Chakrabarti en tres casos límite:
+original. El modelo dual se reduce al modelo base de Jalan, Chakrabarti y Sarkar en tres casos límite:
 \begin{itemize}
     \item Cuando $\lambda_A \to 0$ y $\tau = 0$ (la red alternativa no aporta ni cobra).
     \item Cuando $\Psi^A$ desactiva todos los contratos (la red alternativa no existe
