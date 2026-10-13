@@ -11,23 +11,32 @@ El presente capítulo reúne el marco teórico que sustenta el análisis de rede
 
 \section{Modelos de redes financieras}\label{c22}
 
-Se definen las redes como conexiones entre nodos y \textit{links}. Los agentes (nodos) toman decisiones estratégicas sobre con quiénes formar vínculos, considerando los beneficios esperados y sus costos enS\cite{jackson_strategic_1996}. Con base en estas redes se modelan fenómenos como el contagio financiero, la propagación del riesgo sistémico y la estabilidad del sistema económico. La literatura distingue tres
-modelos de referencia:
+Se definen las redes como conexiones entre nodos y \textit{links}. Los agentes (nodos) toman decisiones estratégicas sobre con quiénes formar vínculos, considerando los beneficios esperados y sus costos \cite{jackson_strategic_1996}. Con base en estas redes se modelan fenómenos como el contagio financiero, la propagación del riesgo sistémico y la estabilidad del sistema económico. La literatura distingue tres modelos de referencia, que se describen a continuación.
 
 \begin{itemize}
-    \item \textbf{\citeA{eisenberg_systemic_2001}:} representan las redes financieras a través de una matriz de obligaciones entre agentes. El modelo se distingue pues captura el efecto cascada en la red cuando ocurre un \textit{default}, mostrando la existencia y unicidad de un vector de pagos que liquida el sistema.
+    \item \textbf{\citeA{eisenberg_systemic_2001}.} Representan las redes financieras a través de una matriz de obligaciones entre agentes. El modelo se distingue pues captura el efecto cascada en la red cuando ocurre un \textit{default}, mostrando la existencia y unicidad de un vector de pagos que liquida el sistema.
 
-    \item \textbf{\citeA{elliott_financial_2014}:} modelan el contagio financiero en dos dimensiones. La primera dimensión corresponde a la dependencia de contraparte (integración) y la segunda por el número de contrapartes por agente (diversificación). Se distingue en el modelo que ambas dimensiones tienen efectos no monótonos sobre la amplificación o mitigación del riesgo sistémico.
+    \item \textbf{\citeA{elliott_financial_2014}.} Modelan el contagio financiero en dos dimensiones. La primera dimensión corresponde a la dependencia de contraparte (integración) y la segunda por el número de contrapartes por agente (diversificación). Se distingue en el modelo que ambas dimensiones tienen efectos no monótonos sobre la amplificación o mitigación del riesgo sistémico.
 
-    \item \textbf{\citeA{jalan_incentive-aware_2024}:} introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y beneficios entre pares de agentes. Además utiliza una función de utilidad media-varianza que permite modelar decisiones óptimas de contratación bilateral en un equilibrio \textit{pairwise stable}. Es el modelo base sobre el cual se construye la tesis de \citeA{venegas_dual_network_2024}, que este trabajo extiende.
+    \item \textbf{\citeA{jalan_incentive-aware_2024}.} Introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y beneficios entre pares de agentes. Además utilizan una función de utilidad media-varianza que permite modelar decisiones óptimas de contratación bilateral en un equilibrio \textit{pairwise stable}.
 \end{itemize}
 
-% TODO (autor): incluir desarrollo posterior a la revision de literatura.
+De estos tres modelos, el presente trabajo adopta el de \citeA{jalan_incentive-aware_2024} por tres razones.
+
+La primera y decisiva es que los dos primeros modelos toman la red como un dato exógeno. Tanto \citeA{eisenberg_systemic_2001} como \citeA{elliott_financial_2014} parten de una matriz de obligaciones ya formada y estudian cómo se propaga un \textit{shock} sobre ella. Este trabajo, en cambio, pregunta qué ocurre con el bienestar cuando una restricción regulatoria impide un contrato, lo que exige que los agentes puedan reoptimizar sus posiciones frente a esa restricción. Un modelo que recibe la red como un dato no puede responder esa pregunta, porque la red es precisamente lo que debe cambiar. En el modelo de \citeA{jalan_incentive-aware_2024} la red es endógena, ya que emerge de las decisiones de agentes que maximizan utilidad, de modo que prohibir una arista reconfigura todos los contratos de la red y no solo el contrato prohibido.
+
+La segunda razón es que ese modelo incorpora las restricciones de acceso como un objeto formal propio. Cada agente $i$ lleva asociada una matriz de proyección $\Psi_i$ que codifica con qué contrapartes le está permitido contratar, lo que permite representar la prohibición regulatoria del caso de aplicación sin modificar el resto de la estructura del modelo.
+
+La tercera razón es de tratabilidad empírica. El modelo admite una solución de forma cerrada para el contrato óptimo de cada agente y garantiza, bajo condiciones verificables, la existencia y unicidad de un punto estable, según se detalla en la Sección~\ref{c24}. Esa unicidad es lo que hace posible comparar una predicción del modelo contra una observación real, ya que un modelo con múltiples equilibrios no permitiría atribuir una discrepancia al modelo en vez de a la selección del equilibrio. A esto se añade que es el modelo base sobre el cual se construye la extensión dual que este trabajo valida.
 
 \paragraph{Propagación de riesgo y estabilidad.}
 Las redes financieras tradicionales son particularmente vulnerables al contagio cuando falla un nodo crítico, como un banco sistémico. Como muestran \citeA{glasserman_contagion_2016}, las redes densamente conectadas pueden ser resilientes ante \textit{shocks} pequeños, pero frágiles ante crisis sistémicas. Además demuestran que la conectividad absorbe perturbaciones locales, pero también amplifica los choques de gran magnitud. En la misma línea, \citeA{acemoglu_systemic_2015} documentan que la diversificación de conexiones incrementa inicialmente la estabilidad del sistema, pero más allá de cierto umbral la interdependencia generada abre nuevos canales de riesgo sistémico. Es decir, la relación entre conectividad y estabilidad no es monótona.
 
-Las redes financieras tradicionales presentan, además, limitaciones estructurales documentadas extensamente en la literatura:
+Estos trabajos estudian la propagación del riesgo sobre una red cuya estructura permanece fija. \citeA{jalan_incentive-aware_2024} aportan una perspectiva complementaria, ya que en su modelo la red misma se reconfigura cuando cambia la percepción de riesgo de los agentes. Su Teorema 7 formaliza dos efectos de ese tipo. Primero, si la covarianza percibida se escala de $\Sigma$ a $c\Sigma$ con $c>0$, entonces todos los contratos se escalan en el factor inverso y la red pasa de $W$ a $(1/c)W$. Segundo, si la covarianza aumenta en el sentido de que $\Sigma' \succ \Sigma$, entonces el promedio de los tamaños de contrato ponderado por las creencias de retorno disminuye. Este segundo efecto admite excepciones individuales relevantes, porque un aumento del riesgo percibido puede venir acompañado de mayores correlaciones que ofrecen mejores oportunidades de cobertura, de modo que un contrato particular puede crecer mientras el promedio ponderado cae.
+
+La implicancia para la estabilidad del sistema es distinta de la que estudia la literatura de contagio. Una noticia menor sobre un agente puede modificar las creencias y desencadenar cambios considerables en toda la red, incluso en contratos entre agentes ajenos a esa noticia, dado que el tamaño de cada contrato depende de las creencias de todos los agentes y no solo de las dos partes que lo suscriben. Además, \citeA{jalan_incentive-aware_2024} muestran que un regulador que observa el cambio en la red no puede, en condiciones realistas, identificar qué creencia lo originó, porque un aumento de la tolerancia al riesgo resulta indistinguible de un aumento del retorno esperado.
+
+Las redes financieras tradicionales presentan, además, cinco limitaciones estructurales documentadas extensamente en la literatura, que se desarrollan a continuación.
 
 \paragraph{Altos costos de intermediación.}
 Los intermediarios financieros tales como bancos o cámaras de compensación imponen comisiones por transferencias internacionales y por gestión de riesgo y cumplimiento regulatorio que en promedio alcanzan un $6,36\%$ del monto enviado a nivel mundial (más del doble de la meta de $3\%$ fijada en el ODS 10.c), cifra que baja a $4,59\%$ cuando la transferencia se realiza por canales digitales frente a $7,30\%$ en canales no digitales \cite{world_bank_rpw_2025}. Esto constituye una barrera a la inclusión financiera, en particular en mercados emergentes.
@@ -39,32 +48,40 @@ La información transaccional suele restringirse a las partes directamente invol
 La centralización en instituciones clave como grandes bancos y mercados
 centralizados crea puntos únicos de falla. \citeA{elliott_financial_2014}
 señalan que esta concentración del riesgo hace a las redes tradicionales más
-susceptibles de propagar shocks macroeconómicos o eventos de liquidez. En contraste, \citeA{gofman_efficiency_2017} argumentan que los bancos grandes e interconectados pueden mejorar la eficiencia agregada. Esto, precisamente porque reducen el largo de las cadenas de intermediación en el mercado. El efecto neto depende de si domina la reducción de fricciones de intermediación o la concentración del riesgo, de modo que la centralización no es unívocamente negativa.
+susceptibles de propagar \textit{shocks} macroeconómicos o eventos de liquidez. En contraste, \citeA{gofman_efficiency_2017} argumentan que los bancos grandes e interconectados pueden mejorar la eficiencia agregada. Esto, precisamente porque reducen el largo de las cadenas de intermediación en el mercado. El efecto neto depende de si domina la reducción de fricciones de intermediación o la concentración del riesgo, de modo que la centralización no es unívocamente negativa.
 
 \paragraph{Baja inclusión financiera.}
 Las redes tradicionales suelen excluir a agentes que no cumplen criterios
-formales de acceso como un historial crediticio, cuenta bancaria. Un problema particularmente agudo en economías en desarrollo, donde aproximadamente 2 mil millones de adultos (un $38\%$ de la población adulta mundial, cifra de 2014) permanecían fuera del sistema financiero formal \cite{singer_financial_2017}.
+formales de acceso, tales como contar con un historial crediticio o con una cuenta bancaria. Se trata de un problema particularmente agudo en economías en desarrollo, donde aproximadamente 2 mil millones de adultos, equivalentes a un $38\%$ de la población adulta mundial según cifras de 2014, permanecían fuera del sistema financiero formal \cite{singer_financial_2017}.
 
 \paragraph{Efectos de red.}
 Una mayor conectividad amplía el acceso a financiamiento y permite diversificar riesgo. Por otra parte, también puede generar congestión operacional y mayores costos transaccionales a medida que la red crece \cite{hinzen_bitcoins_2022,iyengar_economics_2023}.
 
 \section{Competencia entre infraestructuras financieras}\label{c23}
 
-La competencia entre redes Tradicional y Alternativa que este trabajo analiza, que \citeA{venegas_dual_network_2024} modela formalmente, se apoya en dos cuerpos de literatura complementarios. El primero, la teoría de plataformas y mercados de dos lados que explica cómo compiten infraestructuras con efectos de red. Segundo, el arbitraje regulatorio que explica por qué surgen infraestructuras alternativas.
+La competencia entre redes Tradicional y Alternativa que este trabajo analiza se apoya en dos cuerpos de literatura complementarios. El primero, la teoría de plataformas y mercados de dos lados que explica cómo compiten infraestructuras con efectos de red. Segundo, el arbitraje regulatorio que explica por qué surgen infraestructuras alternativas.
 
 \subsection{Mercados de dos lados y competencia entre plataformas}
 
-\citeA{economides_economics_1996} establece que las redes financieras funcionan económicamente como plataformas debido a externalidades de red. La utilidad de una conexión financiera aumenta con la liquidez y profundidad de la red a la que pertenece. \citeA{rochet_platform_2003} formalizan esta idea en el marco de mercados de dos lados. Este concepto se define como mercados donde una plataforma habilita interacciones entre dos grupos de usuarios y donde el valor para un lado depende críticamente de la participación del otro lado (externalidades de red \textit{indirectas}). Traducido en el contexto de redes financieras, estos dos lados se pueden entender como oferentes de liquidez (capital disponible para prestar o invertir) y demandantes de liquidez (agentes que buscan financiamiento o cobertura).
+\citeA{economides_economics_1996} establece que las redes financieras funcionan económicamente como plataformas porque exhiben externalidades de red. El argumento parte de observar que lo que un participante valora no es la infraestructura en sí misma, sino el conjunto de transacciones que puede efectivamente concretar a través de ella. Toda transacción financiera requiere una contraparte, de modo que cada participante nuevo que se incorpora a la red agrega contrapartes potenciales para todos los que ya están en ella. En consecuencia, el valor de pertenecer a la red crece con el número de participantes, y ese crecimiento no proviene de una mejora de la infraestructura sino de la presencia de los demás. La manifestación financiera concreta de esa externalidad es la liquidez, ya que una red con más participantes permite ejecutar operaciones de mayor tamaño con menor impacto sobre el precio y en plazos más breves.
 
-Por su parte, \citeA{armstrong_competition_2006} extiende este marco a la competencia entre múltiples plataformas e identifica tres escenarios según el patrón de participación de los agentes. \textit{single-homing}, los usuarios se afilian a una sola plataforma, lo que tiende a generar resultados de tipo \textit{winner-take-all}. \textit{Multi-homing}, donde los usuarios se afilian a varias plataformas simultáneamente, lo que suaviza la competencia y permite la coexistencia. Por último, en los \textit{cuellos de botella competitivos}, un lado se afilia a una sola plataforma mientras el otro se multi-afilia. El resultado central de Armstrong es que la coexistencia de infraestructuras es viable cuando el costo de multi-homing es moderado y las plataformas se diferencian. Ya que, si el costo es muy alto, el mercado tiende a concentrarse en una sola infraestructura.
+\citeA{rochet_platform_2003} formalizan esta idea en el marco de mercados de dos lados. Este concepto se define como mercados donde una plataforma habilita interacciones entre dos grupos de usuarios y donde el valor para un lado depende críticamente de la participación del otro lado, lo que se denomina externalidad de red indirecta porque el beneficio no proviene de los usuarios del mismo lado sino del lado opuesto. Traducido en el contexto de redes financieras, estos dos lados se pueden entender como oferentes de liquidez, es decir, capital disponible para prestar o invertir, y demandantes de liquidez, es decir, agentes que buscan financiamiento o cobertura.
 
-Este marco aplica directamente al modelo dual de \citeA{venegas_dual_network_2024}. La variable de decisión $(w_i^T, w_i^A)$ es, finalmente, una decisión de multi-homing entre la red Tradicional y la Alternativa. El parámetro de fricción $\lambda_A$ representa el costo de ese multi-homing. \citeA{caillaud_chicken_2003} muestran que la diferenciación entre plataformas actúa como un mecanismo que suaviza la competencia directa. Esta diferenciación puede darse por ejemplo en la transparencia o en el tipo de contratos que cada red permite. De esta forma se sostiene la coexistencia entre plataformas, en lugar de forzar un resultado de dominancia total de una infraestructura sobre la otra.
+Por su parte, \citeA{armstrong_competition_2006} extiende este marco a la competencia entre múltiples plataformas e identifica tres escenarios según el patrón de participación de los agentes. En el \textit{single-homing} los usuarios se afilian a una sola plataforma, lo que tiende a generar resultados de tipo \textit{winner-take-all}. En el \textit{multi-homing} los usuarios se afilian a varias plataformas simultáneamente, lo que suaviza la competencia y permite la coexistencia. Por último, en los \textit{competitive bottlenecks}, o cuellos de botella competitivos, un lado se afilia a una sola plataforma mientras el otro se multi-afilia. El resultado central de \citeA{armstrong_competition_2006} es que la coexistencia de infraestructuras es viable cuando el costo de \textit{multi-homing} es moderado y las plataformas se diferencian, ya que, si el costo es muy alto, el mercado tiende a concentrarse en una sola infraestructura.
+
+Este marco aplica directamente al modelo dual. La variable de decisión $(w_i^T, w_i^A)$ es, finalmente, una decisión de \textit{multi-homing} entre la red Tradicional y la Alternativa, y el parámetro de fricción $\lambda_A$ representa el costo de ese \textit{multi-homing}. \citeA{caillaud_chicken_2003} muestran que la diferenciación entre plataformas actúa como un mecanismo que suaviza la competencia directa. Esta diferenciación puede darse por ejemplo en la transparencia o en el tipo de contratos que cada red permite. De esta forma se sostiene la coexistencia entre plataformas, en lugar de forzar un resultado de dominancia total de una infraestructura sobre la otra.
 
 \subsection{Arbitraje regulatorio}
 
-Un elemento central para entender por qué surgen infraestructuras alternativas es el concepto de \textbf{arbitraje regulatorio}. Se conceptualiza esta dinámica por \citeA{kane_good_1977} como la ``dialética regulatoria''. Quien a su vez la define como un proceso cíclico en que la regulación induce a los agentes económicos a innovar tecnológicamente, con el único fin de eludir restricciones costosas. A diferencia de modelos estáticos donde los agentes aceptan pasivamente las restricciones, el volumen ``excluido'' busca nuevos canales, dando origen a un sistema ``en la sombra''.
+Un elemento central para entender por qué surgen infraestructuras alternativas es el concepto de \textbf{arbitraje regulatorio}. \citeA{kane_good_1977} conceptualiza esta dinámica como la ``dialéctica regulatoria'' y la define como un proceso cíclico en que la regulación induce a los agentes económicos a innovar tecnológicamente, con el único fin de eludir restricciones costosas. A diferencia de modelos estáticos donde los agentes aceptan pasivamente las restricciones, el volumen ``excluido'' busca nuevos canales, dando origen a un sistema ``en la sombra''.
 
-Esta dinámica está documentada empíricamente por \citeA{buchak_fintech_2018}, quienes encuentran evidencia causal de que el arbitraje regulatorio es un motor determinante del crecimiento \textit{Fintech}. Estiman que cerca del $50\%$ de la expansión del \textit{shadow banking} responde a la carga regulatoria sobre la banca tradicional (mayores requerimientos de capital, entre otros). Por lo tanto, no se trata solo de una decisión de preferencia por la tecnología que la acompaña. Esto valida el mecanismo central del modelo dual, que consiste en que la migración de volumen hacia la red Alternativa ($w_i^A$) es una respuesta económica racional a la fricción regulatoria en el sector incumbente, no meramente una preferencia tecnológica. La literatura, sin embargo, no es unánime sobre las implicancias de bienestar de este arbitraje. \citeA{buchak_fintech_2018} lo interpretan como una respuesta eficiente a restricciones costosas. Por su parte, \citeA{gorton_regulating_2010} advierten que el \textit{shadow banking} puede ser también una fuente de inestabilidad sistémica, precisamente por operar con menor transparencia y supervisión que el sistema regulado. El parámetro de transparencia $\tau$ en el modelo dual puede leerse como una forma de capturar esta tensión. Una infraestructura alternativa transparente ($\tau > 0$) podría ofrecer los beneficios de eficiencia del arbitraje regulatorio, sin heredar necesariamente los riesgos típicamente asociados al \textit{shadow banking} opaco.
+Esta dinámica está documentada empíricamente por \citeA{buchak_fintech_2018}, quienes encuentran evidencia causal de que el arbitraje regulatorio es un motor determinante del crecimiento \textit{Fintech}. Estiman que cerca del $50\%$ de la expansión del \textit{shadow banking} responde a la carga regulatoria sobre la banca tradicional, en particular a los mayores requerimientos de capital. Por lo tanto, no se trata solo de una decisión de preferencia por la tecnología que la acompaña.
+
+Esta evidencia valida el mecanismo central del modelo dual, que consiste en que la migración de volumen hacia la red Alternativa ($w_i^A$) es una respuesta económica racional a la fricción regulatoria en el sector incumbente, no meramente una preferencia tecnológica.
+
+La literatura, sin embargo, no es unánime sobre las implicancias de bienestar de este arbitraje. \citeA{buchak_fintech_2018} lo interpretan como una respuesta eficiente a restricciones costosas. Por su parte, \citeA{gorton_regulating_2010} advierten que el \textit{shadow banking} puede ser también una fuente de inestabilidad sistémica, precisamente por operar con menor transparencia y supervisión que el sistema regulado.
+
+El parámetro de transparencia $\tau$ en el modelo dual puede leerse como una forma de capturar esta tensión, ya que una infraestructura alternativa transparente, con $\tau > 0$, podría ofrecer los beneficios de eficiencia del arbitraje regulatorio sin heredar necesariamente los riesgos típicamente asociados al \textit{shadow banking} opaco.
 
 \subsection{Adopción tecnológica, efectos de red y dependencia de trayectoria}
 
@@ -73,14 +90,13 @@ problemas de coordinación característicos de mercados con externalidades de
 red. \citeA{katz_network_1985} muestran que las tecnologías con externalidades
 de red positivas, donde el valor para cada usuario aumenta con el número de
 otros usuarios, enfrentan un problema de coordinación fundamental. Los adoptantes potenciales pueden preferir no adoptar si esperan que pocos otros lo hagan, incluso cuando la adopción universal beneficiaría a todos. 
-Esto genera \textit{exceso de inercia}, que consiste en que el mercado permanece anclado a una tecnología
+Esto genera un exceso de inercia, o \textit{excess inertia}, que consiste en que el mercado permanece anclado a una tecnología
 inferior porque los agentes esperan racionalmente que otros sigan usando el
 estándar establecido. También causa equilibrios múltiples para los mismos parámetros
 fundamentales, dependiendo únicamente de las expectativas sobre el
 comportamiento de los demás.
 
-\citeA{farrell_installed_1986} formalizan el concepto de \textit{exceso de
-inercia} sobre cómo una tecnología establecida con una base
+\citeA{farrell_installed_1986} formalizan ese concepto de exceso de inercia sobre cómo una tecnología establecida con una base
 de usuarios grande puede resistir la competencia de alternativas objetivamente
 superiores, porque cada agente racionalmente espera que otros se muevan
 primero. La red Tradicional posee, en este sentido, una base ya instalada con relaciones existentes, infraestructura, marcos regulatorios y procedimientos operacionales, base que la red Alternativa debe superar con beneficios de transparencia ($\tau$) suficientemente grandes para compensar tanto los costos de fricción directos ($\lambda_A$) como la ventaja de coordinación de la red incumbente.
@@ -104,8 +120,8 @@ como la estructura subyacente de Bitcoin, es un sistema de registro
 distribuido que permite consignar transacciones de forma segura, transparente e
 inmutable. Esto se logra a través de una red de nodos, sin requerir una autoridad central que
 controle el libro de cuentas. \citeA{cong_blockchain_2019} identifican cuatro
-mecanismos económicos centrales a través de los cuales blockchain afecta los
-resultados de mercado:
+mecanismos económicos centrales a través de los cuales \textit{blockchain} afecta los
+resultados de mercado, que se enumeran a continuación.
 
 \begin{itemize}
     \item \textbf{Transparencia y auditabilidad}, ya que todas las transacciones quedan registradas en un libro público e inmutable, verificable por cualquier participante.
@@ -118,36 +134,39 @@ Estos mismos autores advierten que estas propiedades introducen nuevas disyuntiv
 objetivos, como privacidad o flexibilidad contractual que no están presentes en
 las redes tradicionales.
 
-La evidencia empírica sobre blockchain como infraestructura alternativa es
+La evidencia empírica sobre \textit{blockchain} como infraestructura alternativa es
 mixta. \citeA{makarov_blockchain_2021}, en un análisis extenso del mercado de
 Bitcoin, documentan que la transparencia transaccional reduce ciertas asimetrías
-de información. Los participantes sofisticados pueden observar patrones de flujo
+de información, dado que los participantes sofisticados pueden observar patrones de flujo
 y comportamiento de las contrapartes en tiempo real. Simultáneamente crea
 nuevas ventajas de información para quienes tienen mayor capacidad analítica
-sobre los datos \textit{on-chain}. Además, encuentran que los costos de
+sobre los datos \textit{on-chain}.
+
+Esos mismos autores encuentran, además, que los costos de
 transacción son altamente variables y pueden dispararse durante periodos de
 congestión de red. \citeA{huberman_monopoly_2021} caracterizan este fenómeno
-como un ``monopolio sin monopolista''. El protocolo restringe la oferta de
-espacio de bloque, generando precios de monopolio, pero ninguna entidad
-individual captura esas rentas (que van, en cambio, a los mineros o validadores).
-Esta evidencia empírica sobre costos variables y crecientes con la congestión es
+como un ``monopolio sin monopolista'', ya que el protocolo restringe la oferta de
+espacio de bloque y genera precios de monopolio, pero ninguna entidad
+individual captura esas rentas, que van en cambio a los mineros o validadores.
+Esta evidencia sobre costos variables y crecientes con la congestión es
 consistente con la forma funcional cuadrática $\lambda_A \|w_i^A\|^2$ que el
 modelo dual utiliza para representar el costo de fricción de la red Alternativa.
 
 \citeA{schar_decentralized_2021} identifica los canales concretos a través de
-los cuales la transparencia de blockchain crea valor económico. En primer lugar, reduce la
+los cuales la transparencia de \textit{blockchain} crea valor económico. En primer lugar, reduce la
 selección adversa en mercados \textit{over-the-counter} al hacer observables
 los historiales transaccionales. Además, mejora el monitoreo de riesgo de contraparte.
 También habilita la ejecución \textit{trustless} de operaciones complejas sin depender
-de intermediarios humanos. Por último, facilita la auditoría regulatoria. Sin embargo,
-\citeA{werbach_trust_2018} matiza esta lectura. La evidencia de vulnerabilidades
+de intermediarios humanos. Por último, facilita la auditoría regulatoria.
+
+Sin embargo, \citeA{werbach_trust_2018} matiza esta lectura. La evidencia de vulnerabilidades
 en \textit{smart contracts}, la persistencia de mecanismos de gobernanza humana
-para resolver disputas, y el llamado ``problema del oráculo'' (la necesidad de
-información externa confiable para que los contratos inteligentes funcionen)
-muestran que blockchain no elimina la confianza. En realidad, la redistribuye de
-la confianza en instituciones humanas a la confianza en código, criptografía y
-mecanismos de consenso. Sus beneficios dependen del contexto institucional
-específico. Estos mecanismos, transparencia con beneficios acotados por
+para resolver disputas, y el llamado ``problema del oráculo'', entendido como
+la necesidad de información externa confiable para que los contratos
+inteligentes funcionen, muestran que \textit{blockchain} no elimina la confianza. En realidad, la redistribuye desde
+la confianza en instituciones humanas hacia la confianza en código, criptografía y
+mecanismos de consenso, de modo que sus beneficios dependen del contexto institucional
+específico. Estos mecanismos, es decir, una transparencia cuyos beneficios están acotados por
 limitaciones prácticas, son los que el parámetro $\tau$ del modelo dual busca
 capturar de forma neta.
 
@@ -155,16 +174,16 @@ Finalmente, la diferencia regulatoria entre redes Tradicional y Alternativa
 ($\Psi_i^T \neq \Psi_i^A$) tiene respaldo institucional directo.
 \citeA{zetzsche_decentralized_2020} documentan que los sistemas
 descentralizados suelen operar en zonas grises regulatorias. Esto surge por la dificultad
-de determinar qué jurisdicción aplica a un protocolo global, lo que habilita cierto arbitraje jurisdiccional pero también genera incertidumbre legal. 
-\citeA{auer_rise_2023}, en un estudio del Banco de Pagos Internacionales, documentan un patrón de adopción institucional \textit{bifurcado}. 
+de determinar qué jurisdicción aplica a un protocolo global, lo que habilita cierto arbitraje jurisdiccional pero también genera incertidumbre legal.
+
+\citeA{auer_rise_2023}, en un estudio del Banco de Pagos Internacionales, documentan un patrón de adopción institucional bifurcado.
 Las instituciones financieras grandes y reguladas experimentan principalmente con
 \textit{blockchains} permisionados que preservan privacidad y cumplimiento
-regulatorio. 
-Mientras que entidades más pequeñas o menos reguladas adoptan más directamente sistemas públicos y sin permisos. 
-En ambos casos, la adopción se concentra en casos de uso específicos como pagos transfronterizos, financiamiento de comercio o liquidación de valores, en lugar de un reemplazo total de la infraestructura existente. 
+regulatorio, mientras que entidades más pequeñas o menos reguladas adoptan más directamente sistemas públicos y sin permisos.
+En ambos casos, la adopción se concentra en casos de uso específicos como pagos transfronterizos, financiamiento de comercio o liquidación de valores, en lugar de un reemplazo total de la infraestructura existente.
 Este patrón de adopción parcial y heterogénea entre instituciones es consistente con la predicción del modelo dual de que la
-asignación óptima $w_i^{A*}$ es, en general, estrictamente interior
-($0 < w_i^{A*} < w_i^*$) y no una migración completa hacia la red Alternativa.
+asignación óptima $w_i^{A*}$ es, en general, estrictamente interior, con
+$0 < w_i^{A*} < w_i^*$, y no una migración completa hacia la red Alternativa.
 
 \section{Un modelo de redes duales}
 \label{c24}
@@ -207,15 +226,21 @@ significa formalmente un punto de equilibrio de la red. Una tupla $(W,P)$ es fac
 \subsection{Existencia y unicidad del punto estable}
 \label{c24:teorema1}
 
-Bajo condiciones generales, el Teorema 1 de \citeA{jalan_incentive-aware_2024} establece que el punto estable es único y se obtiene resolviendo el sistema lineal
+El Teorema 1 de \citeA{jalan_incentive-aware_2024} establece que el punto estable se obtiene resolviendo el sistema lineal
 \begin{equation}
 \label{eq:teorema1}
     Z_F \cdot \mathrm{uvec}(P)_F = \mathrm{uvec}(A-A^\top)_F ,
 \end{equation}
-donde $F$ es el conjunto de aristas permitidas y $Z_F$ se construye a partir de las matrices de sensibilidad $Q_i$ definidas en la Ecuación~\eqref{eq:optimo}.
-% TODO (autor): explicitar la definicion de la matriz A segun Jalan, Chakrabarti y Sarkar (2024).
-La Ecuación~\eqref{eq:teorema1} es el mecanismo que, dado un conjunto de
-creencias $(M,\Gamma,\Sigma)$, entrega el tamaño de contrato predicho por el modelo para cada par de agentes, y es por lo tanto el resultado que articula la calibración empírica desarrollada en el Capítulo~\ref{c3}.
+donde $F$ es el conjunto de pares $i<j$ cuya arista está permitida y $\mathrm{uvec}(X)_F$ apila las entradas $X_{ij}$ de una matriz $X$ para esos pares.
+
+Las dos matrices que intervienen en la Ecuación~\eqref{eq:teorema1} se definen a partir de las matrices de sensibilidad $Q_i$ de la Ecuación~\eqref{eq:optimo}. La matriz $A$ tiene por entradas
+\begin{equation}
+\label{eq:matrizA}
+    A_{ij} = e_i^\top Q_j M e_j ,
+\end{equation}
+La Ecuación~\eqref{eq:matrizA} admite una lectura económica directa, ya que $A_{ij}$ es el tamaño de contrato que el agente $j$ querría mantener con el agente $i$ si no hubiese pagos, lo que se obtiene de evaluar la Ecuación~\eqref{eq:optimo} en $P=0$. En consecuencia, la entrada $(A-A^\top)_{ij}$ mide el desacuerdo entre las dos partes de la arista $(i,j)$ sobre el tamaño del contrato que cada una preferiría, y es ese desacuerdo el que el precio $P_{ij}$ debe reconciliar. Por su parte, $Z_F$ recoge la sensibilidad de ese desacuerdo ante cambios en los precios y se construye a partir de las matrices $B^{(i,j)} = e_i e_j^\top Q_i$ y $C^{(i,j)} = (B^{(i,j)} - B^{(j,i)}) - (B^{(i,j)} - B^{(j,i)})^\top$, tomando como filas de $Z_F$ los vectores $\mathrm{uvec}(C^{(i,j)})_F$ para cada par $(i,j) \in F$.
+
+El Teorema 1 muestra que existe un punto estable si y solo si $\mathrm{uvec}(A-A^\top)_F$ pertenece al espacio columna de $Z_F$. Cuando $Z_F$ tiene rango completo esa condición se satisface y la solución del sistema es única, lo que entrega un único punto estable. La Ecuación~\eqref{eq:teorema1} es, por lo tanto, el mecanismo que, dado un conjunto de creencias $(M,\Gamma,\Sigma)$, entrega el tamaño de contrato predicho por el modelo para cada par de agentes, y es el resultado que articula la calibración empírica desarrollada en el Capítulo~\ref{c3}.
 
 \subsection{Negociaciones bilaterales y convergencia}
 \label{c24:algoritmo1}
@@ -227,30 +252,75 @@ En la práctica, el punto estable se alcanza mediante negociaciones bilaterales 
 \end{equation}
 donde $\lambda_{\max}$ es el autovalor máximo de la matriz $(L^\dagger K)|_R$ construida a partir de las mismas matrices $Q_i$. El interés de este mecanismo descentralizado es que cada par negocia usando solo su propio precio vigente, sin necesidad de conocer de antemano toda la red, tal como lo haría un agente real.
 
+\subsection[La red de referencia de tres agentes]{La red de referencia de tres agentes (Ejemplo 5)}
+\label{c24:ejemplo5}
+
+El Ejemplo 5 de \citeA{jalan_incentive-aware_2024}, titulado \textit{pairwise negotiations for loan contracts}, introduce la red de referencia sobre la que se construyen tanto el escenario base de la extensión dual como el caso de aplicación de este trabajo. Documentarlo aquí es necesario porque fija la topología que el resto del documento reutiliza.
+
+El ejemplo considera una única red de tres firmas que negocian contratos de crédito. La firma 1 es un banco nacional, la firma 2 es un banco local y la firma 3 es una empresa local. El supuesto que define la estructura es que la empresa local no tiene acceso al banco nacional, de modo que la arista entre las firmas 1 y 3 está prohibida y el banco local queda como intermediario obligado entre ambas. Esa prohibición se codifica mediante la matriz de proyección $\Psi_1$, que elimina la columna correspondiente a la firma 3, y de forma simétrica mediante $\Psi_3$.
+
+Los agentes son homogéneos tanto en aversión al riesgo, con $\gamma_1=\gamma_2=\gamma_3=1$, como en la covarianza percibida, con $\Sigma_1=\Sigma_2=\Sigma_3=\Sigma$. Los parámetros del ejemplo son
+\begin{equation}
+\label{eq:ejemplo5-parametros}
+    \Sigma = \begin{pmatrix}
+        1 & 0{,}25 & 0{,}75 \\
+        0{,}25 & 1 & 0{,}6 \\
+        0{,}75 & 0{,}6 & 1
+    \end{pmatrix},
+    \qquad
+    M = \begin{pmatrix}
+        0 & 0{,}9 & 0{,}9 \\
+        0{,}75 & 0 & 0{,}95 \\
+        0{,}5 & 0{,}8 & 0
+    \end{pmatrix}.
+\end{equation}
+
+Con estos valores, el conjunto de aristas permitidas es $F=\{(1,2),(2,3)\}$ y la matriz $Z_F$ resulta de rango completo, de modo que el sistema de la Ecuación~\eqref{eq:teorema1} tiene solución única y el punto estable existe y es único. Al resolverlo se obtienen los precios $P_{12}=-0{,}262$ y $P_{23}=0{,}231$, y los tamaños de contrato $W_{12}=0{,}260$ y $W_{23}=0{,}562$, con $W_{13}=0$ por la prohibición regulatoria. La Tabla~\ref{tab:ejemplo5} reúne estos resultados.
+
+\begin{table}[htbp]
+\centering
+\caption[Punto estable del Ejemplo 5 de Jalan, Chakrabarti y Sarkar]{Punto estable de la red de tres agentes del Ejemplo 5 de \citeA{jalan_incentive-aware_2024}, obtenido al resolver el sistema de la Ecuación~\eqref{eq:teorema1} con los parámetros de la Ecuación~\eqref{eq:ejemplo5-parametros}. El contrato entre el banco nacional y la empresa local es nulo por prohibición regulatoria y no por decisión de los agentes.}
+\label{tab:ejemplo5}
+\small
+\begin{tabular}{llrr}
+\hline
+Arista & Partes & Precio $P_{ij}$ & Contrato $W_{ij}$ \\
+\hline
+$(1,2)$ & Banco nacional y banco local   & $-0{,}262$ & $0{,}260$ \\
+$(2,3)$ & Banco local y empresa local     & $0{,}231$  & $0{,}562$ \\
+$(1,3)$ & Banco nacional y empresa local  & \multicolumn{2}{c}{arista prohibida} \\
+\hline
+\end{tabular}
+\end{table}
+
+Sobre esta misma red, \citeA{jalan_incentive-aware_2024} ilustran la convergencia del Algoritmo~1 de la Sección~\ref{c24:algoritmo1} con un factor de amortiguación $\eta=0{,}5$, que alcanza el punto estable en pocas rondas de negociación. Ese valor es holgadamente admisible, ya que el umbral de la Ecuación~\eqref{eq:eta} para esta red es $\eta^*=1{,}288$, calculado a partir de un autovalor máximo $\lambda_{\max}=1{,}553$.
+
+La relevancia de este ejemplo para el presente trabajo es doble. Primero, es la red que \citeA{venegas_dual_network_2024} retoma como escenario de referencia para su extensión dual, según se expone en la Sección~\ref{c24:resultado}. Segundo, su topología es la misma que presenta el programa Crédito Corfo Mipyme, en que la MiPyME no puede acceder de forma directa a los recursos de CORFO y debe hacerlo a través de un intermediario financiero habilitado, lo que permite aplicar el modelo al caso real sin forzar su estructura.
+
 \subsection{Resultado central}
 \label{c24:resultado}
 
-Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$, \citeA{venegas_dual_network_2024} muestra que la sola competencia entre intermediarios habilitados (incorporando una cuarta firma que compite con $L$) recupera solo parcialmente el bienestar perdido por la restricción. Esta deja un \textit{gap} de $27{,}9\%$ respecto del benchmark sin restricción. En cambio, habilitar una red alternativa $A$ que sí permite el contrato $N$--$F$ logra una recuperación completa del bienestar. La utilidad agregada del sistema iguala exactamente al benchmark sin restricción, con el contrato $N$--$F$ transando casi enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural que recupera eficiencia.
+Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$, \citeA{venegas_dual_network_2024} muestra que la sola competencia entre intermediarios habilitados (incorporando una cuarta firma que compite con $L$) recupera solo parcialmente el bienestar perdido por la restricción. Esta deja un \textit{gap} de $27{,}9\%$ respecto del \textit{benchmark} sin restricción. En cambio, habilitar una red alternativa $A$ que sí permite el contrato $N$--$F$ logra una recuperación completa del bienestar. La utilidad agregada del sistema iguala exactamente al \textit{benchmark} sin restricción, con el contrato $N$--$F$ transando casi enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural que recupera eficiencia.
 
 \subsection{Identificación y estimación desde datos}
 \label{c24:identificacion}
 
-El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales. \citeA{venegas_dual_network_2024} no aborda esta pregunta, ya que trabaja con esos primitivos dados como parámetros ilustrativos, nunca estimados. El propio \citeA{jalan_incentive-aware_2024}, en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos primitivos desde datos y bajo qué condiciones. Resultados que Venegas no retoma, pero que son el respaldo teórico directo de la validación empírica de este trabajo.
+El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales. La extensión dual no aborda esta pregunta, ya que trabaja con esos primitivos dados como parámetros ilustrativos, nunca estimados. El modelo base de \citeA{jalan_incentive-aware_2024}, en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos primitivos desde datos y bajo qué condiciones, los que no son retomados por la extensión dual pero constituyen el respaldo teórico directo de la validación empírica de este trabajo.
 
 \paragraph{Estimación de la covarianza desde retornos históricos.}
-Un primer enfoque estima $\Sigma_i$ a partir del historial de retornos observado por cada agente. Si el agente $i$ observa $m$ muestras independientes de los retornos de contratos unitarios con los $n$ agentes de la red, recogidas en una matriz $X_i \in \mathbb{R}^{n \times m}$, la covarianza muestral $\hat\Sigma_i$ converge en probabilidad a la covarianza poblacional $\Sigma$, pero con muestras finitas cada agente puede terminar con una $\hat\Sigma_i$ distinta, lo que degrada el factor de amortiguación seguro $\eta^*$ de la Ecuación~\eqref{eq:eta} y con ello la velocidad de convergencia del Algoritmo~1 presentado en la Sección~\ref{c24:algoritmo1}. \citeA{jalan_incentive-aware_2024} acotan qué tan severa es esa degradación: bajo condiciones de regularidad estándar sobre $\Sigma$ y $\Gamma$ (normas de $\Sigma$, $\Sigma^{-1}$, $\Gamma$ y $\Gamma^{-1}$ acotadas independientemente de $n$, y sin aristas prohibidas), si cada agente estima su covarianza con
+Un primer enfoque estima $\Sigma_i$ a partir del historial de retornos observado por cada agente. Si el agente $i$ observa $m$ muestras independientes de los retornos de contratos unitarios con los $n$ agentes de la red, recogidas en una matriz $X_i \in \mathbb{R}^{n \times m}$, la covarianza muestral $\hat\Sigma_i$ converge en probabilidad a la covarianza poblacional $\Sigma$, pero con muestras finitas cada agente puede terminar con una $\hat\Sigma_i$ distinta, lo que degrada el factor de amortiguación seguro $\eta^*$ de la Ecuación~\eqref{eq:eta} y con ello la velocidad de convergencia del Algoritmo~1 presentado en la Sección~\ref{c24:algoritmo1}. \citeA{jalan_incentive-aware_2024} acotan qué tan severa es esa degradación. Bajo condiciones de regularidad estándar sobre $\Sigma$ y $\Gamma$, es decir, con las normas de $\Sigma$, $\Sigma^{-1}$, $\Gamma$ y $\Gamma^{-1}$ acotadas independientemente de $n$ y sin aristas prohibidas, si cada agente estima su covarianza con
 \begin{equation}
 \label{eq:teorema5}
     m \geq \lceil n \log n \rceil
 \end{equation}
-muestras independientes, el factor de amortiguación estimado $\hat\eta^*$ se mantiene arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que tiende a uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre agentes ($m_1,\dots,m_n$): basta con que el menor de ellos satisfaga $\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con distinto historial disponible usar ventanas de estimación de largo distinto.
+muestras independientes, el factor de amortiguación estimado $\hat\eta^*$ se mantiene arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que tiende a uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre agentes, $m_1,\dots,m_n$, ya que basta con que el menor de ellos satisfaga $\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con distinto historial disponible usar ventanas de estimación de largo distinto.
 
-La lectura correcta de este resultado no es que el requisito de datos disminuya al crecer $n$ (aunque $\lceil n \log n \rceil$ sí crece con $n$, moderadamente), sino que crece muy poco comparado con lo que exigiría estimar sin estructura una matriz de covarianza $n \times n$ completa (con $n(n+1)/2$ entradas libres): la cota mínima teórica conocida para ese problema general es de orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por encima del óptimo. Para la red de $n=4$ agentes del caso de aplicación de este trabajo (Capítulo~\ref{c3}), la Ecuación~\eqref{eq:teorema5} se traduce en entre $6$ y $8$ periodos históricos por agente según la base del logaritmo, un requisito de datos modesto y no las decenas o cientos que una estimación sin estructura podría sugerir.
+La lectura correcta de este resultado no es que el requisito de datos disminuya al crecer $n$, puesto que $\lceil n \log n \rceil$ sí crece con $n$ aunque moderadamente, sino que crece muy poco comparado con lo que exigiría estimar sin estructura una matriz de covarianza $n \times n$ completa, que tiene $n(n+1)/2$ entradas libres. En efecto, la cota mínima teórica conocida para ese problema general es de orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por encima del óptimo. Para la red de $n=4$ agentes del caso de aplicación de este trabajo (Capítulo~\ref{c3}), la Ecuación~\eqref{eq:teorema5} se traduce en entre $6$ y $8$ periodos históricos por agente según la base del logaritmo, un requisito de datos modesto y no las decenas o cientos que una estimación sin estructura podría sugerir.
 
 \paragraph{Inferir creencias a partir de la estructura de la red.}
-Un obstáculo anterior a la pregunta de cuántos datos bastan es de identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un único corte transversal de la red observada $W$ en su punto estable, $(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única, ni siquiera fijando una escala (p.ej. $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$): para cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente consistente con la misma $W$. Observar varias redes generadas con la misma $\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La consecuencia práctica es directa, ya que una sola observación de la red del caso de aplicación, por completa que sea, nunca bastaría para calibrar el modelo. El dato requerido es necesariamente longitudinal, una secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
+Un obstáculo anterior a la pregunta de cuántos datos bastan es de identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un único corte transversal de la red observada $W$ en su punto estable, $(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única, ni siquiera fijando una escala mediante $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$, porque para cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente consistente con la misma $W$. Observar varias redes generadas con la misma $\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La consecuencia práctica es directa, ya que una sola observación de la red del caso de aplicación, por completa que sea, nunca bastaría para calibrar el modelo. El dato requerido es necesariamente longitudinal, una secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
 
-Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024} introducen el Supuesto~1: (a) $\Gamma(t)=I$ y $\Sigma_i(t)=\Sigma$ para todo $t\in[T]$, es decir, aversión al riesgo y covarianza homogéneas y constantes en el periodo; (b) cada entrada $M_{ij}(t)$ evoluciona de forma independiente según un movimiento browniano con los mismos parámetros para todos los pares $(i,j)$; y (c) $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El supuesto (a) se motiva en la literatura de teoría de portafolios, donde los errores de estimación de la media suelen dominar sobre los de la covarianza, de modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de estimación en $M$, que es lo que efectivamente varía en el tiempo. Cabe notar que $\Gamma=I$ es, a la vez, el supuesto de homogeneidad de \citeA{venegas_dual_network_2024} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
+Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024} introducen el Supuesto~1, que consta de tres partes. La primera establece que $\Gamma(t)=I$ y $\Sigma_i(t)=\Sigma$ para todo $t\in[T]$, es decir, aversión al riesgo y covarianza homogéneas y constantes en el periodo. La segunda establece que cada entrada $M_{ij}(t)$ evoluciona de forma independiente según un movimiento browniano con los mismos parámetros para todos los pares $(i,j)$. La tercera fija $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El supuesto (a) se motiva en la literatura de teoría de portafolios, donde los errores de estimación de la media suelen dominar sobre los de la covarianza, de modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de estimación en $M$, que es lo que efectivamente varía en el tiempo. Cabe notar que $\Gamma=I$ es, a la vez, el supuesto de homogeneidad de \citeA{venegas_dual_network_2024} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
 $\gamma_i$ por ahora.
 
 \paragraph{Proposición 1, estimar $\Sigma$ desde incrementos de la red, no contrato por contrato.}
