@@ -39,6 +39,15 @@ ok..
 	{\hbox{\large{i}}}
 \newcommand{\RR}{\mathbb{R}}
 
+% El paquete babel en español rotula las tablas como «Cuadro» al iniciar el
+% documento, lo que sobrescribe el \tablename de core/preambulo.tex y deja el
+% rótulo del PDF en desacuerdo con las referencias en prosa, que dicen «Tabla».
+% \addto\captionsspanish aplica el cambio después de babel y lo corrige.
+\addto\captionsspanish{%
+  \renewcommand{\tablename}{Tabla}%
+  \renewcommand{\listtablename}{Índice de tablas}%
+}
+
 \geometry{margin=2cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
