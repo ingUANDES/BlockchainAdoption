@@ -245,12 +245,33 @@ El Teorema 1 muestra que existe un punto estable si y solo si $\mathrm{uvec}(A-A
 \subsection{Negociaciones bilaterales y convergencia}
 \label{c24:algoritmo1}
 
-En la práctica, el punto estable se alcanza mediante negociaciones bilaterales iterativas (Algoritmo 1 de \citeA{jalan_incentive-aware_2024}), en las que, en cada ronda, todos los pares de agentes permitidos actualizan simultáneamente su precio $P_{ij}$ hacia el valor que resuelve su desacuerdo, ponderado por un factor de amortiguación $\eta \in (0,1)$. El Teorema 4 establece que la convergencia está garantizada para
+El Teorema 1 entrega el punto estable de forma centralizada, ya que resolver el sistema de la Ecuación~\eqref{eq:teorema1} exige conocer las creencias de todos los agentes de la red. En la práctica los contratos no se fijan así, sino que surgen de negociaciones sucesivas entre pares de agentes. El Algoritmo~\ref{alg:negociaciones}, que corresponde al Algoritmo 1 de \citeA{jalan_incentive-aware_2024}, formaliza ese proceso descentralizado.
+
+\begin{algorithm}[Negociaciones bilaterales]
+\label{alg:negociaciones}
+\normalfont
+\textbf{Entrada.} Factor de amortiguación $\eta$. \\
+$t \leftarrow 0$ \\
+$P(0) \leftarrow$ cualquier matriz antisimétrica \\
+\bfWHILE $P(t)$ no haya convergido \bfDO \\
+\tab \bfFOR todo par permitido $(i,j) \in F$ \bfDO \\
+\tab \tab $P'_{ij} \leftarrow$ precio que iguala el contrato óptimo de $i$ con $j$ \\
+\tab \tab \hspace*{1.6em} y el de $j$ con $i$, manteniendo fijo $P(t)$ en el resto de la red \\
+\tab \bfEND \bfFOR \\
+\tab $P(t+1) \leftarrow (1-\eta)\,P(t) + \eta\,P'$ \\
+\tab $t \leftarrow t+1$ \\
+\bfEND \bfWHILE \\
+\textbf{Salida.} El punto estable $P^\star$ al que converge la sucesión $P(t)$.
+\end{algorithm}
+
+Tres rasgos del Algoritmo~\ref{alg:negociaciones} importan para este trabajo. Primero, las actualizaciones son simultáneas, puesto que todos los pares calculan su precio $P'_{ij}$ usando la misma matriz $P(t)$ de la ronda anterior y no los precios recién revisados por sus vecinos. Segundo, cada par negocia bajo el supuesto de que el resto de la red permanece congelado, supuesto que deja de cumplirse apenas todos los pares se mueven a la vez, y es ese desajuste residual el que obliga a iterar hasta que desaparece en el punto fijo. Tercero, la información de la red completa alcanza a cada par con un retardo de exactamente una ronda, lo que explica que el procedimiento converja al mismo punto estable que resuelve el sistema centralizado del Teorema 1 sin que ningún agente necesite conocer las creencias de terceros.
+
+El factor $\eta$ controla cuánto se avanza hacia el precio negociado en cada ronda y no altera el punto al que se converge, sino la velocidad con que se llega a él y, por sobre cierto umbral, la posibilidad misma de converger. El Teorema 4 establece que la convergencia está garantizada para
 \begin{equation}
 \label{eq:eta}
     \eta < \eta^* = \frac{2}{\lambda_{\max}} ,
 \end{equation}
-donde $\lambda_{\max}$ es el autovalor máximo de la matriz $(L^\dagger K)|_R$ construida a partir de las mismas matrices $Q_i$. El interés de este mecanismo descentralizado es que cada par negocia usando solo su propio precio vigente, sin necesidad de conocer de antemano toda la red, tal como lo haría un agente real.
+donde $\lambda_{\max}$ es el autovalor máximo de la matriz $(L^\dagger K)|_R$ construida a partir de las mismas matrices $Q_i$. Por debajo de ese umbral la convergencia es exponencial en el número de rondas, mientras que por encima el error de precio se amplifica en cada iteración y la negociación diverge.
 
 \subsection[La red de referencia de tres agentes]{La red de referencia de tres agentes (Ejemplo 5)}
 \label{c24:ejemplo5}
