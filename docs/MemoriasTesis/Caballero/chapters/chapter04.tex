@@ -8,9 +8,13 @@ que se persigue consiste en trasladar a un caso real un método que ya fue
 aplicado a datos reales por sus propios autores, el análisis comienza por
 reconstruir con precisión ese ejercicio de referencia, que es la aplicación de
 \citeA{jalan_incentive-aware_2024} a la red de comercio internacional de la
-OCDE. Sobre esa base se documenta después el levantamiento de datos realizado
-para el programa Crédito Corfo Mipyme y se contrastan ambos casos, de modo que
-la distancia entre uno y otro quede medida y no simplemente afirmada. El
+OCDE. Enseguida se examina con el mismo detalle el ejercicio numérico de
+\citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta
+memoria y del que proviene el modelo dual, puesto que la distancia que separa a
+este trabajo de dicha tesis es de otra naturaleza que la anterior. Sobre esa
+base se documenta después el levantamiento de datos realizado para el programa
+Crédito Corfo Mipyme y se contrastan los casos entre sí, de modo que la
+distancia que los separa quede medida y no simplemente afirmada. El
 capítulo cierra delimitando qué parte del análisis ya es concluyente con la
 información disponible y qué parte queda condicionada a la entrega de datos
 solicitada a CORFO.
@@ -168,6 +172,287 @@ archivos del repositorio oficial.
     \label{fig:ocde-resultados}
 \end{figure}
 
+\section{El ejercicio numérico del trabajo que se continúa}
+\label{c4:venegas}
+
+Entre el ejercicio de referencia y el levantamiento propio se sitúa la tesis de
+\citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta
+memoria y de la que proviene el modelo dual que aquí se aplica. Conviene
+examinarla con el mismo detalle, puesto que la distancia que separa a este
+trabajo de dicha tesis no es de la misma naturaleza que la que lo separa del
+artículo base. Frente al caso de la OCDE la diferencia está en el tipo de datos,
+ya que allá hay un panel completo y acá uno incompleto, mientras que frente al
+trabajo que se continúa la diferencia es anterior, puesto que en él no
+intervienen datos de ningún tipo.
+
+\subsection{Qué pregunta responde el ejercicio numérico}
+\label{c4:venegas-pregunta}
+
+La pregunta de dicha tesis es contrafactual y no descriptiva. Lo que se quiere
+establecer es cuánto bienestar destruye una restricción regulatoria de acceso y
+cuál de dos remedios lo restituye, es decir, si basta con introducir competencia
+dentro de la red restringida o si hace falta habilitar una red Alternativa que
+no cargue con dicha restricción.
+
+De esa formulación se sigue que el modelo se usa en la dirección opuesta a la
+del ejercicio de la OCDE. En aquel caso la red observada es el dato de entrada y
+las creencias de riesgo son la incógnita, mientras que aquí las creencias son el
+dato de entrada y la red es el resultado que se calcula. Ambos ejercicios
+descansan en el mismo punto estable del Teorema~1, recogido en la
+Ecuación~\eqref{eq:teorema1}, solo que lo recorren en sentidos contrarios. Por
+lo tanto el ejercicio de referencia inmediato no responde si el modelo describe
+una red real, sino qué predice el modelo cuando se lo alimenta con una
+configuración de creencias escogida de antemano.
+
+Esa distinción importa porque el presente trabajo necesita las dos direcciones
+encadenadas. Primero requiere la dirección inversa, para obtener $\Sigma$ desde
+la red efectivamente observada mediante la Proposición~1, y solo después la
+dirección directa, para calcular con esa $\Sigma$ el punto estable y las
+magnitudes de bienestar que el procedimiento de la Sección~\ref{c3:calibracion}
+contrasta con la evidencia del caso.
+
+\subsection{El origen de los números}
+\label{c4:venegas-datos}
+
+En dicha tesis no hay fuente de datos que describir, ya que los primitivos del
+modelo se fijan por estipulación. Para la configuración de tres agentes, la
+matriz de covarianzas y la de retornos esperados se heredan íntegras del
+Ejemplo~5 del artículo base, reproducidas en la
+Ecuación~\eqref{eq:ejemplo5-parametros}, y la aversión al riesgo se fija en la
+unidad para todos los agentes.
+
+Para la configuración de cuatro agentes, que incorpora un competidor del
+intermediario, ambas matrices se amplían agregando una fila y una columna casi
+idénticas a las del intermediario original, con una correlación de $0,99$ entre
+los dos. Esa cifra no proviene de ninguna medición, sino que es una decisión de
+diseño del experimento cuyo propósito es que los demás agentes perciban a ambos
+intermediarios como sustitutos cercanos, de manera que el escenario aísle el
+efecto de la competencia y nada más. Los dos parámetros propios del modelo
+dual, es decir la fricción de acceso a la red Alternativa y el beneficio de
+transparencia de la Ecuación~\eqref{eq:utilidad-dual}, también son exógenos y se
+recorren sobre el intervalo que va de cero a $0,5$, con el valor $0,15$ de
+fricción y transparencia nula como configuración de referencia.
+
+Dos consecuencias se siguen de ese origen. La primera es que los agentes son
+etiquetas genéricas, a saber, un banco nacional, un banco local, una empresa
+local y un entrante tecnológico, sin contraparte institucional identificable. La
+segunda es que el tamaño de contrato que el modelo devuelve carece de unidad
+monetaria, de modo que todos los resultados se enuncian como porcentajes y
+brechas relativas y ninguno como un nivel. Donde el caso de la OCDE describe una
+descarga desde un repositorio estadístico y el caso chileno una reconstrucción
+documento a documento, aquí simplemente no hubo recolección.
+
+\subsection{El procedimiento aplicado}
+\label{c4:venegas-procedimiento}
+
+El procedimiento de dicha tesis se compone de cinco pasos.
+
+\begin{enumerate}
+    \item Fijación de los primitivos y de las matrices de acceso $\Psi_i$ que
+    definen cada escenario, en particular la prohibición del contrato directo
+    entre el primer y el tercer agente.
+    \item Ejecución de la negociación bilateral del Algoritmo~1, descrito en la
+    Sección~\ref{c24:algoritmo1}, hasta la convergencia del tamaño de contrato y
+    del vector de precios.
+    \item Evaluación de métricas sobre el punto estable alcanzado, que son el
+    volumen bilateral, las posiciones totales, la utilidad de cada agente, la
+    utilidad total del sistema y el reparto de rentas entre las partes.
+    \item Comparación de seis escenarios entre sí, que combinan tres o cuatro
+    agentes, presencia o ausencia de la restricción y red única o dual.
+    \item Barridos de sensibilidad sobre la fricción de acceso y sobre el
+    beneficio de transparencia.
+\end{enumerate}
+
+Interesa registrar qué clase de validación admite ese procedimiento, porque es
+el punto donde esta memoria interviene. En ningún momento se contrasta la red
+predicha con una red observada, dado que no hay ninguna red observada en el
+ejercicio. El control de calidad es de consistencia interna, ya que la
+configuración simétrica, en la que ambas redes operan con transparencia nula,
+fricción nula y sin restricciones, reproduce exactamente el resultado de red
+única, lo que verifica que la capa dual no introduce distorsiones por sí misma.
+Ese control es necesario pero no suficiente para sostener que el modelo
+describe un sistema financiero real, y es justamente el contraste externo
+faltante el que da sentido al objetivo de esta memoria. La reproducibilidad de
+la implementación que sustenta dichos pasos se examinó en la
+Sección~\ref{c3:auditoria}, cuyo resultado fue que el motor de red única es
+confiable y que la capa dual carece de implementación publicada.
+
+\subsection{Los hallazgos del ejercicio numérico}
+\label{c4:venegas-hallazgos}
+
+La Tabla~\ref{tab:venegas-escenarios} recoge los seis escenarios con sus
+magnitudes de bienestar.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Escenarios de la tesis de referencia inmediata]{Bienestar y
+    adopción en los seis escenarios de \citeA{venegas_dual_network_2024}. La
+    utilidad total es adimensional. La brecha se mide contra la red de tres
+    agentes sin restricción, que es la referencia mínima que cualquier remedio
+    debería alcanzar, y se indica como no aplicable en los escenarios que la
+    superan por contar con un agente adicional.}
+    \label{tab:venegas-escenarios}
+    \begin{tabular}{p{5.2cm}cccc}
+        \toprule
+        Escenario & Utilidad & Mejora sobre & Brecha & Adopción de \\
+         & total & el caso base & & la red A \\
+        \midrule
+        Tradicional con restricción, tres agentes & 0,706 & no aplica & 50,8~\% & no aplica \\
+        Tradicional sin restricción, tres agentes & 1,434 & $+103,0$~\% & 0,0~\% & no aplica \\
+        Competencia con restricción, cuatro agentes & 1,034 & $+46,5$~\% & 27,9~\% & no aplica \\
+        Sin restricción, cuatro agentes & 1,741 & $+146,6$~\% & no aplica & no aplica \\
+        Dual con restricción, tres agentes & 1,434 & $+103,0$~\% & 0,0~\% & 72,4~\% \\
+        Dual con restricción, cuatro agentes & 1,741 & $+146,6$~\% & no aplica & 47,9~\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+El primer hallazgo es el costo de la restricción. Prohibir el contrato directo
+entre el banco nacional y la empresa local reduce la utilidad total de $1,434$ a
+$0,706$, es decir una pérdida de $50,8$~\%, mientras el volumen bilateral cae de
+$1,976$ a $0,822$. La reproducción de ese escenario base con el código auditado
+entrega un volumen bilateral de $0,8221$ y una utilidad total de $0,7061$,
+cifras que coinciden con las publicadas.
+
+El segundo hallazgo es que la competencia no sustituye a la desregulación. La
+entrada de un cuarto agente que compite con el intermediario eleva la utilidad
+total a $1,034$, lo que mejora en $46,5$~\% el escenario base, pero deja en pie
+una brecha de $27,9$~\% frente a la red sin restricción, porque la arista
+prohibida sigue prohibida y el nuevo agente solo puede competir en los tramos
+que ya existían.
+
+El tercer hallazgo es el que da título a dicha tesis. Habilitar la red
+Alternativa lleva la utilidad total a $1,434$ con tres agentes, valor que iguala
+exactamente la referencia sin restricción, y a $1,741$ con cuatro agentes, valor
+que iguala el óptimo sin restricción de esa misma configuración. Conviene
+precisar que la configuración dual de tres agentes cierra la brecha contra esa
+referencia pero conserva una de $17,6$~\% contra el óptimo de cuatro agentes,
+diferencia que su autor atribuye a la ausencia de competencia y no a una falla
+del mecanismo estructural, puesto que al incorporar el cuarto agente dicha
+brecha desaparece. Junto con ello
+las dos redes coexisten en lugar de desplazarse, ya que la adopción de la red
+Alternativa se sitúa en $72,4$~\% con tres agentes y en $47,9$~\% con cuatro,
+mientras la red Tradicional conserva volumen en ambos casos.
+
+El cuarto hallazgo es distributivo. La ganancia se concentra en la parte
+bloqueada por la restricción, cuya utilidad pasa de $0,202$ a $0,988$, mientras
+el intermediario que lucraba con la intermediación obligada la ve caer de
+$0,441$ a $0,256$. Finalmente, los barridos de sensibilidad muestran que la
+utilidad de la red Alternativa desciende de $1,74$ a $1,05$ cuando la fricción
+de acceso crece de cero a $0,5$, con la adopción cayendo de $50$~\% a $25$~\%,
+y que con fricción fija en $0,15$ un beneficio de transparencia de $0,5$ la
+eleva hasta $1,87$.
+
+\subsection{Qué cambia al reemplazar los parámetros por datos}
+\label{c4:venegas-contraste}
+
+La Tabla~\ref{tab:comparacion-venegas} contrasta, primitivo por primitivo, el
+tratamiento que recibe cada uno en dicha tesis y el que recibirá en este
+trabajo.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Comparación entre la tesis de referencia inmediata y este
+    trabajo]{Tratamiento de cada primitivo y de cada decisión de diseño en
+    \citeA{venegas_dual_network_2024} y en el presente trabajo.}
+    \label{tab:comparacion-venegas}
+    \begin{tabular}{p{3.2cm}p{4.4cm}p{5.6cm}}
+        \toprule
+        Primitivo o decisión & Tesis de referencia inmediata & Este trabajo \\
+        \midrule
+        Dirección de uso del modelo & directa, de creencias hacia red & inversa y luego directa, de red hacia creencias y de vuelta \\
+        Covarianza $\Sigma$ & matriz del Ejemplo~5, estipulada & inferida de los incrementos de la red con la Ecuación~\eqref{eq:prop1}, identificada solo en $\Sigma_{13}$ \\
+        Retornos esperados $M$ & matriz estipulada & anclada en tasas observadas, según las Secciones~\ref{c3:supuesto-w23} y \ref{c3:tasa-mercado} \\
+        Aversión al riesgo $\gamma_i$ & igual a uno en todo agente & igual a uno en todo agente \\
+        Fricción de acceso $\lambda_A$ & exógena, barrida entre cero y $0,5$ & anclada en la brecha de acceso de la Sección~\ref{c3:supuesto-lambda} \\
+        Transparencia $\tau$ & exógena, barrida entre cero y $0,5$ & no observable, se reporta por sensibilidad \\
+        Cuarto agente & entrante sintético, sustituto cercano del intermediario por construcción & banco comercial identificable, en la otra red y con fuente propia \\
+        Restricción de acceso & estipulada sobre el par uno y tres & institucional, derivada de la operación de segundo piso \\
+        Unidad del tamaño de contrato & adimensional & pesos chilenos \\
+        Criterio de validación & consistencia interna del marco dual & contraste con la red efectivamente observada \\
+        Datos requeridos & ninguno & panel por operación, según la Sección~\ref{c4:levantamiento} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Esa tabla deja abierta una pregunta que conviene responder antes de pasar al
+levantamiento, a saber, cuál de los primitivos estipulados carga efectivamente
+con el resultado titular. Si fueran todos igualmente determinantes, reemplazarlos
+por datos exigiría identificar la matriz completa, cosa que el diagnóstico del
+Capítulo~\ref{c3} ya descartó. Un ejercicio propio sobre el escenario base
+permite acotarlo.
+
+El primer resultado de ese ejercicio es que la escala de $\Sigma$ no interviene.
+Al multiplicar la matriz por un factor positivo cualquiera, el tamaño de
+contrato del punto estable se divide exactamente por ese mismo factor, lo que
+concuerda con la propiedad de escalamiento que \citeA{jalan_incentive-aware_2024}
+establecen para este modelo, según la cual un aumento proporcional de la
+covarianza percibida contrae la red en la misma proporción. Las utilidades se
+comportan de igual modo, de manera que la pérdida de bienestar permanece en
+$50,75$~\% y la ganancia de volumen en $140,4$~\% para factores de $0,5$, de $2$
+y de $10$. Los porcentajes
+que dicha tesis reporta son, por lo tanto, invariantes a la escala de las
+creencias de riesgo.
+
+El segundo resultado es que la forma sí interviene, y de manera concentrada. La
+Tabla~\ref{tab:sensibilidad-sigma13} muestra qué ocurre al variar únicamente la
+covarianza entre los dos agentes que la restricción separa, manteniendo el resto
+de la matriz fija y verificando en cada caso que siga siendo definida positiva.
+La pérdida de bienestar cae de $50,8$~\% a $20,0$~\% cuando esa covarianza baja
+de $0,75$ a $0,45$, y queda en $2,4$~\% cuando se anula. Dicho de otro modo, el
+hallazgo central del trabajo que se continúa descansa casi por completo en una
+sola entrada de $\Sigma$, puesto que la restricción solo destruye bienestar en la
+medida en que impide un contrato que habría sido valioso para cubrir riesgo.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Sensibilidad del costo de la restricción]{Pérdida de bienestar que
+    provoca la restricción en el escenario base de tres agentes, al variar solo
+    la covarianza entre los dos agentes separados por ella. Elaboración propia
+    con la implementación auditada en la Sección~\ref{c3:auditoria}. Las seis
+    matrices son definidas positivas.}
+    \label{tab:sensibilidad-sigma13}
+    \begin{tabular}{cccc}
+        \toprule
+        $\Sigma_{13}$ & Utilidad con & Utilidad sin & Pérdida \\
+         & restricción & restricción & de bienestar \\
+        \midrule
+        0,75 & 0,7061 & 1,4338 & 50,8~\% \\
+        0,60 & 0,7541 & 1,1025 & 31,6~\% \\
+        0,45 & 0,8111 & 1,0142 & 20,0~\% \\
+        0,30 & 0,8792 & 1,0008 & 12,2~\% \\
+        0,15 & 0,9611 & 1,0278 & 6,5~\% \\
+        0,00 & 1,0613 & 1,0879 & 2,4~\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Ese hallazgo tiene una consecuencia favorable para este trabajo, y resulta de
+cruzarlo con el diagnóstico de identificabilidad. La entrada que gobierna el
+resultado es la covarianza entre los dos agentes que no contratan entre sí, que
+en el caso chileno son CORFO y la MiPyME, y esa es precisamente la única entrada
+que la red bipartita del programa sí determina, según se argumenta en la
+Sección~\ref{c24:identificacion} y se cuantifica en la
+Sección~\ref{c3:identificabilidad}, ya que interviene en el residuo del
+estimador a través de las aristas vecinas aunque el contrato directo sea
+idénticamente nulo. Por lo tanto el déficit de rango documentado, con ser
+severo, no impide pronunciarse sobre el hallazgo central del trabajo que se
+continúa, dado que lo que queda sin identificar son las varianzas propias y las
+covarianzas a lo largo de las aristas efectivamente observadas.
+
+La contrapartida es una limitación sobre los niveles que conviene declarar aquí.
+Como la normalización de la Ecuación~\eqref{eq:prop1} fija la traza de $\Sigma$
+en uno, la escala de la matriz estimada no queda determinada por los datos, y
+por la invariancia recién verificada el nivel del tamaño de contrato predicho
+hereda esa indeterminación. En consecuencia, el contraste entre el modelo
+calibrado y la red observada es concluyente sobre proporciones, es decir sobre
+brechas de bienestar y sobre el reparto de actividad entre ambas redes, pero no
+sobre el monto en pesos de un contrato individual, a menos que se fije la escala
+con una referencia externa al estimador.
+
 \section{El levantamiento de datos del caso chileno}
 \label{c4:levantamiento}
 
@@ -292,11 +577,15 @@ los intermediarios como un único agregado, de modo que la red observable tiene 
 solo nodo intermediario, cuando en realidad el programa opera con varias
 instituciones distinguibles entre sí.
 
-\section{Comparación de los dos casos}
+\section{Comparación con el ejercicio empírico de referencia}
 \label{c4:comparacion}
 
-La Tabla~\ref{tab:comparacion-ocde-corfo} resume el contraste entre ambos
-ejercicios en las dimensiones que el método vuelve relevantes.
+La comparación con el trabajo que se continúa quedó resuelta en la
+Sección~\ref{c4:venegas-contraste}, donde las dimensiones pertinentes son los
+primitivos del modelo, ya que allí no hay datos que comparar. Resta la
+comparación con el caso de la OCDE, cuyas dimensiones pertinentes son las del
+panel. La Tabla~\ref{tab:comparacion-ocde-corfo} resume ese contraste en los
+términos que el método vuelve relevantes.
 
 \begin{table}[H]
     \centering
