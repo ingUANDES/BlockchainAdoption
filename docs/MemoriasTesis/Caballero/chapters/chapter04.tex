@@ -3,28 +3,9 @@
 \chapter{Análisis}
 \label{c4}
 
-Este capítulo desarrolla el análisis empírico con la información que el trabajo
-ha logrado reunir hasta ahora. Dado que la validación que se persigue consiste
-en trasladar a un caso real un método que ya fue aplicado a datos reales por sus
-propios autores, el análisis comienza por reconstruir con precisión ese
-ejercicio de referencia, que es la aplicación de
-\citeA{jalan_incentive-aware_2024} a la red de comercio internacional de la
-OCDE. Enseguida se examina con el mismo detalle el ejercicio numérico de
-\citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta
-memoria y del que proviene el modelo dual, puesto que la distancia que separa a
-este trabajo de dicha tesis es de otra naturaleza que la anterior. Sobre esa
-base se documenta después el levantamiento de datos realizado para el programa
-Crédito Corfo Mipyme y se contrastan los casos entre sí, de modo que la
-distancia que los separa quede medida y no simplemente afirmada.
+Este capítulo desarrolla el análisis empírico con la información que el trabajo ha logrado reunir hasta ahora. Dado que la validación que se persigue consiste en trasladar a un caso real un método que ya fue aplicado a datos reales por sus propios autores, el análisis comienza por reconstruir con precisión ese ejercicio de referencia, que es la aplicación de \citeA{jalan_incentive-aware_2024} a la red de comercio internacional de la OCDE. Enseguida se examina con el mismo detalle el ejercicio numérico de \citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta memoria y del que proviene el modelo dual, puesto que la distancia que separa a este trabajo de dicha tesis es de otra naturaleza que la anterior. Sobre esa base se documenta después el levantamiento de datos realizado para el programa Crédito Corfo Mipyme y se contrastan los casos entre sí, de modo que la distancia que los separa quede medida y no simplemente afirmada.
 
-El capítulo cierra estableciendo hasta dónde alcanza a llegar el análisis con lo
-ya levantado y qué agregaría cada pieza de información adicional. Ese cierre
-cumple un propósito práctico, ya que permite seguir avanzando sobre la
-información pública mientras se gestiona el acceso a los registros internos del
-programa, en lugar de detener el trabajo a la espera de esa entrega. Los
-resultados que aquí se presentan son, por lo tanto, los que la información
-disponible sostiene en este momento, y el capítulo identifica con precisión cuál
-de ellos se extiende y en qué dirección cuando esa información llegue.
+El capítulo cierra estableciendo hasta dónde alcanza a llegar el análisis con lo ya levantado y qué agregaría cada pieza de información adicional. Ese cierre cumple un propósito práctico, ya que permite seguir avanzando sobre la información pública mientras se gestiona el acceso a los registros internos del programa, en lugar de detener el trabajo a la espera de esa entrega. Los resultados que aquí se presentan son, por lo tanto, los que la información disponible sostiene en este momento, y el capítulo identifica con precisión cuál de ellos se extiende y en qué dirección cuando esa información llegue.
 
 \section{El ejercicio empírico de referencia. El caso de la OCDE}
 \label{c4:ocde}
@@ -32,78 +13,27 @@ de ellos se extiende y en qué dirección cuando esa información llegue.
 \subsection{Qué pregunta responde el ejercicio}
 \label{c4:ocde-pregunta}
 
-La aplicación empírica del modelo invierte la relación habitual entre datos y
-teoría. Los datos no entran para alimentar un modelo que luego produce una red,
-sino que la red observada es el dato de entrada y lo que se infiere son las
-creencias de riesgo de los agentes, resumidas en la matriz de covarianzas
-$\Sigma$. Esa inversión es la razón de ser del ejercicio, ya que $\Sigma$ no es
-observable en ninguna fuente, mientras que la red de contratos sí lo es cuando
-existe un registro de transacciones bilaterales.
+La aplicación empírica del modelo invierte la relación habitual entre datos y teoría. Los datos no entran para alimentar un modelo que luego produce una red, sino que la red observada es el dato de entrada y lo que se infiere son las creencias de riesgo de los agentes, resumidas en la matriz de covarianzas $\Sigma$. Esa inversión es la razón de ser del ejercicio, ya que $\Sigma$ no es observable en ninguna fuente, mientras que la red de contratos sí lo es cuando existe un registro de transacciones bilaterales.
 
-El alcance de lo que puede inferirse está acotado de antemano. Según el
-resultado de no identificabilidad recogido en la Sección~\ref{c24:identificacion},
-una red $W$ dada no permite separar la terna de creencias $(M,\Gamma,\Sigma)$,
-porque para cualquier par admisible de $\Gamma$ y $\Sigma$ existe un $M$ que
-reproduce exactamente la misma red, y esa ambigüedad persiste aunque se observen
-muchas redes generadas con los mismos $\Sigma$ y $\Gamma$. Por lo tanto el
-ejercicio no pretende recuperar las creencias completas, sino únicamente
-$\Sigma$ normalizada, bajo los supuestos de homogeneidad que se detallan más
-adelante.
+El alcance de lo que puede inferirse está acotado de antemano. Según el resultado de no identificabilidad recogido en la Sección~\ref{c24:identificacion}, una red $W$ dada no permite separar la terna de creencias $(M,\Gamma,\Sigma)$, porque para cualquier par admisible de $\Gamma$ y $\Sigma$ existe un $M$ que reproduce exactamente la misma red, y esa ambigüedad persiste aunque se observen muchas redes generadas con los mismos $\Sigma$ y $\Gamma$. Por lo tanto el ejercicio no pretende recuperar las creencias completas, sino únicamente $\Sigma$ normalizada, bajo los supuestos de homogeneidad que se detallan más adelante.
 
-Esto explica por qué el conjunto de datos escogido es una red de comercio
-internacional y no, por ejemplo, una cartera de créditos. El método exige una
-magnitud bilateral que pueda leerse como el tamaño de un contrato entre dos
-partes, medida repetidamente en el tiempo sobre el mismo conjunto de agentes y
-disponible para prácticamente todos los pares posibles. El comercio bilateral
-cumple las tres condiciones de manera natural.
+Esto explica por qué el conjunto de datos escogido es una red de comercio internacional y no, por ejemplo, una cartera de créditos. El método exige una magnitud bilateral que pueda leerse como el tamaño de un contrato entre dos partes, medida repetidamente en el tiempo sobre el mismo conjunto de agentes y disponible para prácticamente todos los pares posibles. El comercio bilateral cumple las tres condiciones de manera natural.
 
 \subsection{Los datos, su origen y su volumen}
 \label{c4:ocde-datos}
 
-Los datos provienen de las estadísticas de comercio internacional que publica la
-OCDE en su portal estadístico, y cubren el comercio bilateral entre 46 economías
-grandes, entre las que se incluyen las quince mayores del mundo por producto
-interno bruto. La medición es trimestral y abarca desde el primer trimestre de
-2010 hasta el segundo trimestre de 2022, lo que equivale a 50 trimestres.
+Los datos provienen de las estadísticas de comercio internacional que publica la OCDE en su portal estadístico, y cubren el comercio bilateral entre 46 economías grandes, entre las que se incluyen las quince mayores del mundo por producto interno bruto. La medición es trimestral y abarca desde el primer trimestre de 2010 hasta el segundo trimestre de 2022, lo que equivale a 50 trimestres.
 
-La construcción del peso de cada arista merece atención porque es una decisión
-metodológica y no un detalle de formato. El peso del par $\{i,j\}$ se define como
-la suma de los flujos de $i$ hacia $j$ y de $j$ hacia $i$, de modo que la matriz
-$W$ resulta simétrica y hay una sola cifra por par, tal como exige el punto
-estable del modelo, en el que ambas partes acuerdan la misma cantidad. Dado que
-no existe registro de comercio de un país consigo mismo, la red no tiene lazos
-propios, y esa ausencia no se trata como dato faltante sino como arista
-prohibida, mediante la extensión de la Proposición~1 al caso de aristas
-prohibidas.
+La construcción del peso de cada arista merece atención porque es una decisión metodológica y no un detalle de formato. El peso del par $\{i,j\}$ se define como la suma de los flujos de $i$ hacia $j$ y de $j$ hacia $i$, de modo que la matriz $W$ resulta simétrica y hay una sola cifra por par, tal como exige el punto estable del modelo, en el que ambas partes acuerdan la misma cantidad. Dado que no existe registro de comercio de un país consigo mismo, la red no tiene lazos propios, y esa ausencia no se trata como dato faltante sino como arista prohibida, mediante la extensión de la Proposición~1 al caso de aristas prohibidas.
 
-El volumen resultante se puede precisar. Con 46 agentes hay 1.035 pares
-posibles, y con 50 trimestres se obtienen 49 matrices de diferencias
-$\Delta W(t)$, de manera que el estimador dispone de 50.715 observaciones de par
-por período frente a los 1.081 parámetros libres de $\Sigma$, es decir cerca de
-47 ecuaciones por parámetro. Junto con el artículo, sus autores publican un
-material suplementario que contiene las matrices de diferencias y el código del
-ejercicio, y cuya revisión en el marco de este trabajo confirma las propiedades
-estructurales que el modelo supone, ya que las
-49 matrices son exactamente simétricas y de diagonal nula, el 98,50~\% de las
-entradas fuera de la diagonal es distinto de cero, 959 de los 1.035 pares son no
-nulos en los 49 períodos y un solo par permanece en cero durante todo el
-horizonte. La red es, en la práctica, completa.
+El volumen resultante se puede precisar. Con 46 agentes hay 1.035 pares posibles, y con 50 trimestres se obtienen 49 matrices de diferencias $\Delta W(t)$, de manera que el estimador dispone de 50.715 observaciones de par por período frente a los 1.081 parámetros libres de $\Sigma$, es decir cerca de 47 ecuaciones por parámetro. Junto con el artículo, sus autores publican un material suplementario que contiene las matrices de diferencias y el código del ejercicio, y cuya revisión en el marco de este trabajo confirma las propiedades estructurales que el modelo supone, ya que las 49 matrices son exactamente simétricas y de diagonal nula, el 98,50~\% de las entradas fuera de la diagonal es distinto de cero, 959 de los 1.035 pares son no nulos en los 49 períodos y un solo par permanece en cero durante todo el horizonte. La red es, en la práctica, completa.
 
-La forma en que se obtuvieron esos datos importa tanto como su volumen, puesto
-que es el punto en que el caso de referencia y el caso chileno se separan desde
-el principio. En el caso de la OCDE la obtención se redujo a una única descarga
-desde un repositorio estadístico internacional que ya publica la información
-organizada como panel, con periodicidad uniforme, cobertura homogénea y una sola
-unidad de medida. No hubo que decidir qué cifra corresponde a cada celda ni
-reconciliar definiciones entre fuentes distintas, tarea que, como se verá en la
-Sección~\ref{c4:levantamiento}, concentra buena parte del esfuerzo en el caso
-chileno.
+La forma en que se obtuvieron esos datos importa tanto como su volumen, puesto que es el punto en que el caso de referencia y el caso chileno se separan desde el principio. En el caso de la OCDE la obtención se redujo a una única descarga desde un repositorio estadístico internacional que ya publica la información organizada como panel, con periodicidad uniforme, cobertura homogénea y una sola unidad de medida. No hubo que decidir qué cifra corresponde a cada celda ni reconciliar definiciones entre fuentes distintas, tarea que, como se verá en la Sección~\ref{c4:levantamiento}, concentra buena parte del esfuerzo en el caso chileno.
 
 \subsection{El procedimiento aplicado a esos datos}
 \label{c4:ocde-procedimiento}
 
-El procedimiento, tal como está implementado en el material suplementario del
-artículo, se compone de cinco pasos encadenados.
+El procedimiento, tal como está implementado en el material suplementario del artículo, se compone de cinco pasos encadenados.
 
 \begin{enumerate}
     \item Construcción de la secuencia de redes $W(t)$ y de sus diferencias
@@ -124,85 +54,26 @@ artículo, se compone de cinco pasos encadenados.
     réplicas para cada tamaño de muestra.
 \end{enumerate}
 
-Es importante notar qué uso no se le da a $\hat\Sigma$ en el artículo. En
-ninguno de los dos análisis se la emplea como estimación puntual de la matriz de
-covarianzas verdadera, sino como insumo para una propiedad espectral y para una
-tasa de acierto relativa. Esa distinción, que en el artículo pasa inadvertida
-porque sus dos usos no la requieren, resulta decisiva para el presente trabajo,
-ya que calibrar el modelo con datos reales sí exige una estimación puntual de
-$\Sigma$ y no solo su espectro.
+Es importante notar qué uso no se le da a $\hat\Sigma$ en el artículo. En ninguno de los dos análisis se la emplea como estimación puntual de la matriz de covarianzas verdadera, sino como insumo para una propiedad espectral y para una tasa de acierto relativa. Esa distinción, que en el artículo pasa inadvertida porque sus dos usos no la requieren, resulta decisiva para el presente trabajo, ya que calibrar el modelo con datos reales sí exige una estimación puntual de $\Sigma$ y no solo su espectro.
 
-Por esa razón el estimador fue sometido a una auditoría numérica propia, cuyo
-desarrollo completo se presenta en el Anexo~\ref{anexo:auditoria} y cuyo
-resultado se resume aquí. Al evaluar el programa semidefinido sobre paneles
-simulados bajo el propio Supuesto~1 del artículo, es decir generados por el
-mismo proceso que el método supone, el error relativo de la matriz estimada deja
-de descender alrededor de $0{,}39$ por mucho que se aumente el número de
-períodos observados, de modo que el estimador no converge a la matriz
-verdadera.
+Por esa razón el estimador fue sometido a una auditoría numérica propia, cuyo desarrollo completo se presenta en el Anexo~\ref{anexo:auditoria} y cuyo resultado se resume aquí. Al evaluar el programa semidefinido sobre paneles simulados bajo el propio Supuesto~1 del artículo, es decir generados por el mismo proceso que el método supone, el error relativo de la matriz estimada deja de descender alrededor de $0{,}39$ por mucho que se aumente el número de períodos observados, de modo que el estimador no converge a la matriz verdadera.
 
-El diagnóstico que distingue un sesgo del criterio de una falla del solucionador
-numérico es directo. Evaluando la propia función objetivo del programa
-semidefinido en la matriz estimada y en la matriz verdadera, la primera alcanza
-un valor menor que la segunda. Dicho de otro modo, el solucionador hace bien su
-trabajo, puesto que encuentra una matriz que minimiza el criterio mejor de lo
-que lo hace la respuesta correcta. Lo que ocurre es que ese criterio no tiene su
-mínimo en la matriz verdadera.
+El diagnóstico que distingue un sesgo del criterio de una falla del solucionador numérico es directo. Evaluando la propia función objetivo del programa semidefinido en la matriz estimada y en la matriz verdadera, la primera alcanza un valor menor que la segunda. Dicho de otro modo, el solucionador hace bien su trabajo, puesto que encuentra una matriz que minimiza el criterio mejor de lo que lo hace la respuesta correcta. Lo que ocurre es que ese criterio no tiene su mínimo en la matriz verdadera.
 
-El origen del problema está en la derivación del Apéndice A.11 del artículo. El
-criterio se obtiene maximizando la densidad posterior de la trayectoria de
-creencias $M(1),\dots,M(T)$ condicional en las redes observadas y en $\Sigma$,
-donde el término que vincula las redes con las creencias entra como función
-indicadora de la condición de punto estable. Al despejar $M$ en función de $W$ y
-sustituir, se obtiene un objetivo expresado en $\Sigma$, pero ese cambio de
-variable tiene un jacobiano que depende de la propia $\Sigma$ y que la
-derivación no incorpora. Omitirlo convierte al criterio en algo distinto de una
-verosimilitud en $\Sigma$, y su efecto es encoger la matriz estimada. Al
-reponer el término jacobiano, el error relativo desciende de forma sostenida
-hasta $0{,}12$ en el mismo experimento.
+El origen del problema está en la derivación del Apéndice A.11 del artículo. El criterio se obtiene maximizando la densidad posterior de la trayectoria de creencias $M(1),\dots,M(T)$ condicional en las redes observadas y en $\Sigma$, donde el término que vincula las redes con las creencias entra como función indicadora de la condición de punto estable. Al despejar $M$ en función de $W$ y sustituir, se obtiene un objetivo expresado en $\Sigma$, pero ese cambio de variable tiene un jacobiano que depende de la propia $\Sigma$ y que la derivación no incorpora. Omitirlo convierte al criterio en algo distinto de una verosimilitud en $\Sigma$, y su efecto es encoger la matriz estimada. Al reponer el término jacobiano, el error relativo desciende de forma sostenida hasta $0{,}12$ en el mismo experimento.
 
-Conviene precisar el alcance de este hallazgo, ya que no invalida ningún
-resultado del artículo. Los dos análisis que sus autores construyen sobre
-$\hat\Sigma$ dependen de su espectro y de una tasa de acierto relativa, y
-ninguno de los dos requiere que la matriz estimada sea insesgada. La corrección
-importa para este trabajo y no para aquel, precisamente por el uso distinto que
-cada uno le da a la misma matriz.
+Conviene precisar el alcance de este hallazgo, ya que no invalida ningún resultado del artículo. Los dos análisis que sus autores construyen sobre $\hat\Sigma$ dependen de su espectro y de una tasa de acierto relativa, y ninguno de los dos requiere que la matriz estimada sea insesgada. La corrección importa para este trabajo y no para aquel, precisamente por el uso distinto que cada uno le da a la misma matriz.
 
 \subsection{Los hallazgos del ejercicio}
 \label{c4:ocde-hallazgos}
 
-El primer hallazgo es que el espectro de la matriz inferida está fuertemente
-sesgado. La reproducción realizada en este trabajo a partir de la matriz
-publicada por los autores entrega un valor propio mayor de 0,2748 y uno menor de
-$6,5\times 10^{-5}$, es decir una separación de 3,6 órdenes de magnitud, con los
-cinco primeros valores propios concentrando el 73,5~\% de la traza y los diez
-primeros el 90,7~\%, lo que equivale a un rango efectivo de 7,3. Dicho de otro
-modo, las creencias de riesgo de 46 economías se comportan como si estuvieran
-gobernadas por del orden de siete factores. El sesgo se agrava cuando la matriz
-se estima con pocas muestras, y en particular el valor propio más pequeño cae
-muy por debajo del segundo más pequeño.
+El primer hallazgo es que el espectro de la matriz inferida está fuertemente sesgado. La reproducción realizada en este trabajo a partir de la matriz publicada por los autores entrega un valor propio mayor de 0,2748 y uno menor de $6,5\times 10^{-5}$, es decir una separación de 3,6 órdenes de magnitud, con los cinco primeros valores propios concentrando el 73,5~\% de la traza y los diez primeros el 90,7~\%, lo que equivale a un rango efectivo de 7,3. Dicho de otro modo, las creencias de riesgo de 46 economías se comportan como si estuvieran gobernadas por del orden de siete factores. El sesgo se agrava cuando la matriz se estima con pocas muestras, y en particular el valor propio más pequeño cae muy por debajo del segundo más pequeño.
 
-El segundo hallazgo es la consecuencia práctica de lo anterior. Si un agente
-quiere identificar cuál fue el contrato que recibió un shock de creencias,
-observando únicamente cómo se movió la red, su tasa de acierto depende
-críticamente de cuántas muestras sustentan la estimación de $\hat\Sigma$. Con 46
-muestras la tasa de acierto exacto es nula y la de acertar dentro de los diez
-contratos más movidos es de 0,008, mientras que con 96 muestras suben a 0,824 y
-0,974 respectivamente, con crecimiento monótono entre ambos extremos. La lectura
-que hacen los autores es que el sesgo espectral, combinado con el ruido, provoca
-que los efectos indirectos de un cambio de creencias superen a los efectos
-directos sobre el propio contrato afectado, lo que vuelve difícil la
-intervención dirigida sobre una red real.
+El segundo hallazgo es la consecuencia práctica de lo anterior. Si un agente quiere identificar cuál fue el contrato que recibió un shock de creencias, observando únicamente cómo se movió la red, su tasa de acierto depende críticamente de cuántas muestras sustentan la estimación de $\hat\Sigma$. Con 46 muestras la tasa de acierto exacto es nula y la de acertar dentro de los diez contratos más movidos es de 0,008, mientras que con 96 muestras suben a 0,824 y 0,974 respectivamente, con crecimiento monótono entre ambos extremos. La lectura que hacen los autores es que el sesgo espectral, combinado con el ruido, provoca que los efectos indirectos de un cambio de creencias superen a los efectos directos sobre el propio contrato afectado, lo que vuelve difícil la intervención dirigida sobre una red real.
 
-Conviene agregar una lectura propia que el artículo no explicita. El barrido de
-tamaños de muestra llega hasta 96, mientras que la cota del Teorema~5, recogida
-en la Ecuación~\eqref{eq:teorema5}, exige $\lceil n\log n\rceil$ muestras, que
-para $n=46$ equivale a 177. El hecho de que la curva de acierto exacto aún no
-sature dentro del rango explorado es por lo tanto coherente con esa cota y no
-una anomalía del experimento.
+Conviene agregar una lectura propia que el artículo no explicita. El barrido de tamaños de muestra llega hasta 96, mientras que la cota del Teorema~5, recogida en la Ecuación~\eqref{eq:teorema5}, exige $\lceil n\log n\rceil$ muestras, que para $n=46$ equivale a 177. El hecho de que la curva de acierto exacto aún no sature dentro del rango explorado es por lo tanto coherente con esa cota y no una anomalía del experimento.
 
-La Figura~\ref{fig:ocde-resultados} reproduce ambos hallazgos a partir de los
-archivos de ese material suplementario.
+La Figura~\ref{fig:ocde-resultados} reproduce ambos hallazgos a partir de los archivos de ese material suplementario.
 
 \begin{figure}[H]
     \centering
@@ -220,81 +91,27 @@ archivos de ese material suplementario.
 \section{El ejercicio numérico del trabajo que se continúa}
 \label{c4:venegas}
 
-Entre el ejercicio de referencia y el levantamiento propio se sitúa la tesis de
-\citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta
-memoria y de la que proviene el modelo dual que aquí se aplica. Conviene
-examinarla con el mismo detalle, puesto que la distancia que separa a este
-trabajo de dicha tesis no es de la misma naturaleza que la que lo separa del
-artículo base. Frente al caso de la OCDE la diferencia está en el tipo de datos,
-ya que allá hay un panel completo y acá uno incompleto, mientras que frente al
-trabajo que se continúa la diferencia es anterior, puesto que en él no
-intervienen datos de ningún tipo.
+Entre el ejercicio de referencia y el levantamiento propio se sitúa la tesis de \citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta memoria y de la que proviene el modelo dual que aquí se aplica. Conviene examinarla con el mismo detalle, puesto que la distancia que separa a este trabajo de dicha tesis no es de la misma naturaleza que la que lo separa del artículo base. Frente al caso de la OCDE la diferencia está en el tipo de datos, ya que allá hay un panel completo y acá uno incompleto, mientras que frente al trabajo que se continúa la diferencia es anterior, puesto que en él no intervienen datos de ningún tipo.
 
 \subsection{Qué pregunta responde el ejercicio numérico}
 \label{c4:venegas-pregunta}
 
-La pregunta de dicha tesis es contrafactual y no descriptiva. Lo que se quiere
-establecer es cuánto bienestar destruye una restricción regulatoria de acceso y
-cuál de dos remedios lo restituye, es decir, si basta con introducir competencia
-dentro de la red restringida o si hace falta habilitar una red Alternativa que
-no cargue con dicha restricción.
+La pregunta de dicha tesis es contrafactual y no descriptiva. Lo que se quiere establecer es cuánto bienestar destruye una restricción regulatoria de acceso y cuál de dos remedios lo restituye, es decir, si basta con introducir competencia dentro de la red restringida o si hace falta habilitar una red Alternativa que no cargue con dicha restricción.
 
-De esa formulación se sigue que el modelo se usa en la dirección opuesta a la
-del ejercicio de la OCDE. En aquel caso la red observada es el dato de entrada y
-las creencias de riesgo son la incógnita, mientras que aquí las creencias son el
-dato de entrada y la red es el resultado que se calcula. Ambos ejercicios
-descansan en el mismo punto estable del Teorema~1, recogido en la
-Ecuación~\eqref{eq:teorema1}, solo que lo recorren en sentidos contrarios. Por
-lo tanto el ejercicio de referencia inmediato no responde si el modelo describe
-una red real, sino qué predice el modelo cuando se lo alimenta con una
-configuración de creencias escogida de antemano.
+De esa formulación se sigue que el modelo se usa en la dirección opuesta a la del ejercicio de la OCDE. En aquel caso la red observada es el dato de entrada y las creencias de riesgo son la incógnita, mientras que aquí las creencias son el dato de entrada y la red es el resultado que se calcula. Ambos ejercicios descansan en el mismo punto estable del Teorema~1, recogido en la Ecuación~\eqref{eq:teorema1}, solo que lo recorren en sentidos contrarios. Por lo tanto el ejercicio de referencia inmediato no responde si el modelo describe una red real, sino qué predice el modelo cuando se lo alimenta con una configuración de creencias escogida de antemano.
 
-Esa distinción importa porque el presente trabajo necesita las dos direcciones
-encadenadas. Primero requiere la dirección inversa, para obtener $\Sigma$ desde
-la red efectivamente observada mediante la Proposición~1, y solo después la
-dirección directa, para calcular con esa $\Sigma$ el punto estable y las
-magnitudes de bienestar que el procedimiento de la Sección~\ref{c3:calibracion}
-contrasta con la evidencia del caso.
+Esa distinción importa porque el presente trabajo necesita las dos direcciones encadenadas. Primero requiere la dirección inversa, para obtener $\Sigma$ desde la red efectivamente observada mediante la Proposición~1, y solo después la dirección directa, para calcular con esa $\Sigma$ el punto estable y las magnitudes de bienestar que el procedimiento de la Sección~\ref{c3:calibracion} contrasta con la evidencia del caso.
 
 \subsection{El origen de los números}
 \label{c4:venegas-datos}
 
-En dicha tesis no hay fuente de datos que describir, ya que los primitivos del
-modelo se fijan por estipulación. Para la configuración de tres agentes, la
-matriz de covarianzas y la de retornos esperados se heredan íntegras del
-Ejemplo~5 del artículo base, reproducidas en la
-Ecuación~\eqref{eq:ejemplo5-parametros}, y la aversión al riesgo se fija en la
-unidad para todos los agentes.
+En dicha tesis no hay fuente de datos que describir, ya que los primitivos del modelo se fijan por estipulación. Para la configuración de tres agentes, la matriz de covarianzas y la de retornos esperados se heredan íntegras del Ejemplo~5 del artículo base, reproducidas en la Ecuación~\eqref{eq:ejemplo5-parametros}, y la aversión al riesgo se fija en la unidad para todos los agentes.
 
-Para la configuración de cuatro agentes, que incorpora un competidor del
-intermediario, ambas matrices se amplían agregando una fila y una columna casi
-idénticas a las del intermediario original, con una correlación de $0,99$ entre
-los dos. Esa cifra no proviene de ninguna medición, sino que es una decisión de
-diseño del experimento cuyo propósito es que los demás agentes perciban a ambos
-intermediarios como sustitutos cercanos, de manera que el escenario aísle el
-efecto de la competencia y nada más. Los dos parámetros propios del modelo
-dual, es decir la fricción de acceso a la red Alternativa y el beneficio de
-transparencia de la Ecuación~\eqref{eq:utilidad-dual}, también son exógenos y se
-recorren sobre el intervalo que va de cero a $0,5$, con el valor $0,15$ de
-fricción y transparencia nula como configuración de referencia.
+Para la configuración de cuatro agentes, que incorpora un competidor del intermediario, ambas matrices se amplían agregando una fila y una columna casi idénticas a las del intermediario original, con una correlación de $0,99$ entre los dos. Esa cifra no proviene de ninguna medición, sino que es una decisión de diseño del experimento cuyo propósito es que los demás agentes perciban a ambos intermediarios como sustitutos cercanos, de manera que el escenario aísle el efecto de la competencia y nada más. Los dos parámetros propios del modelo dual, es decir la fricción de acceso a la red Alternativa y el beneficio de transparencia de la Ecuación~\eqref{eq:utilidad-dual}, también son exógenos y se recorren sobre el intervalo que va de cero a $0,5$, con el valor $0,15$ de fricción y transparencia nula como configuración de referencia.
 
-Dos consecuencias se siguen de ese origen. La primera es que los agentes son
-etiquetas genéricas, a saber, un banco nacional, un banco local, una empresa
-local y un entrante tecnológico, sin contraparte institucional identificable. La
-segunda es que el tamaño de contrato que el modelo devuelve carece de unidad
-monetaria, de modo que todos los resultados se enuncian como porcentajes y
-brechas relativas y ninguno como un nivel.
+Dos consecuencias se siguen de ese origen. La primera es que los agentes son etiquetas genéricas, a saber, un banco nacional, un banco local, una empresa local y un entrante tecnológico, sin contraparte institucional identificable. La segunda es que el tamaño de contrato que el modelo devuelve carece de unidad monetaria, de modo que todos los resultados se enuncian como porcentajes y brechas relativas y ninguno como un nivel.
 
-Conviene dejar explícita la diferencia de origen, porque es la que separa a este
-ejercicio de los otros dos que el capítulo examina. El caso de la OCDE parte de
-una descarga desde un repositorio estadístico y el caso chileno de una
-reconstrucción documento a documento, es decir, ambos tienen una etapa de
-recolección que puede describirse y auditarse. El ejercicio de dicha tesis no
-tiene esa etapa, ya que sus parámetros no se obtuvieron de fuente alguna sino
-que fueron fijados por el propio autor para sostener el experimento numérico.
-Por lo tanto, no se trata de que sus datos sean de mala calidad o de cobertura
-incompleta, sino de que no son datos en el sentido de una magnitud medida sobre
-agentes reales.
+Conviene dejar explícita la diferencia de origen, porque es la que separa a este ejercicio de los otros dos que el capítulo examina. El caso de la OCDE parte de una descarga desde un repositorio estadístico y el caso chileno de una reconstrucción documento a documento, es decir, ambos tienen una etapa de recolección que puede describirse y auditarse. El ejercicio de dicha tesis no tiene esa etapa, ya que sus parámetros no se obtuvieron de fuente alguna sino que fueron fijados por el propio autor para sostener el experimento numérico. Por lo tanto, no se trata de que sus datos sean de mala calidad o de cobertura incompleta, sino de que no son datos en el sentido de una magnitud medida sobre agentes reales.
 
 \subsection{El procedimiento aplicado}
 \label{c4:venegas-procedimiento}
@@ -317,25 +134,12 @@ El procedimiento de dicha tesis se compone de cinco pasos.
     beneficio de transparencia.
 \end{enumerate}
 
-Interesa registrar qué clase de validación admite ese procedimiento, porque es
-el punto donde esta memoria interviene. En ningún momento se contrasta la red
-predicha con una red observada, dado que no hay ninguna red observada en el
-ejercicio. El control de calidad es de consistencia interna, ya que la
-configuración simétrica, en la que ambas redes operan con transparencia nula,
-fricción nula y sin restricciones, reproduce exactamente el resultado de red
-única, lo que verifica que la capa dual no introduce distorsiones por sí misma.
-Ese control es necesario pero no suficiente para sostener que el modelo
-describe un sistema financiero real, y es justamente el contraste externo
-faltante el que da sentido al objetivo de esta memoria. La reproducibilidad de
-la implementación que sustenta dichos pasos se examinó en la
-Sección~\ref{c3:auditoria}, cuyo resultado fue que el motor de red única es
-confiable y que la capa dual carece de implementación publicada.
+Interesa registrar qué clase de validación admite ese procedimiento, porque es el punto donde esta memoria interviene. En ningún momento se contrasta la red predicha con una red observada, dado que no hay ninguna red observada en el ejercicio. El control de calidad es de consistencia interna, ya que la configuración simétrica, en la que ambas redes operan con transparencia nula, fricción nula y sin restricciones, reproduce exactamente el resultado de red única, lo que verifica que la capa dual no introduce distorsiones por sí misma. Ese control es necesario pero no suficiente para sostener que el modelo describe un sistema financiero real, y es justamente el contraste externo faltante el que da sentido al objetivo de esta memoria. La reproducibilidad de la implementación que sustenta dichos pasos se examinó en la Sección~\ref{c3:auditoria}, cuyo resultado fue que el motor de red única es confiable y que la capa dual carece de implementación publicada.
 
 \subsection{Los hallazgos del ejercicio numérico}
 \label{c4:venegas-hallazgos}
 
-La Tabla~\ref{tab:venegas-escenarios} recoge los seis escenarios con sus
-magnitudes de bienestar.
+La Tabla~\ref{tab:venegas-escenarios} recoge los seis escenarios con sus magnitudes de bienestar.
 
 \begin{table}[H]
     \centering
@@ -362,41 +166,14 @@ magnitudes de bienestar.
     \end{tabular}
 \end{table}
 
-El primer hallazgo es el costo de la restricción. Prohibir el contrato directo
-entre el banco nacional y la empresa local reduce la utilidad total de $1,434$ a
-$0,706$, es decir una pérdida de $50,8$~\%, mientras el volumen bilateral cae de
-$1,976$ a $0,822$. La reproducción de ese escenario base con el código auditado
-entrega un volumen bilateral de $0,8221$ y una utilidad total de $0,7061$,
-cifras que coinciden con las publicadas.
+El primer hallazgo es el costo de la restricción. Prohibir el contrato directo entre el banco nacional y la empresa local reduce la utilidad total de $1,434$ a $0,706$, es decir una pérdida de $50,8$~\%, mientras el volumen bilateral cae de $1,976$ a $0,822$. La reproducción de ese escenario base con el código auditado entrega un volumen bilateral de $0,8221$ y una utilidad total de $0,7061$, cifras que coinciden con las publicadas.
 
-El segundo hallazgo es que la competencia no sustituye a la desregulación. La
-entrada de un cuarto agente que compite con el intermediario eleva la utilidad
-total a $1,034$, lo que mejora en $46,5$~\% el escenario base, pero deja en pie
-una brecha de $27,9$~\% frente a la red sin restricción, porque la arista
-prohibida sigue prohibida y el nuevo agente solo puede competir en los tramos
-que ya existían.
+El segundo hallazgo es que la competencia no sustituye a la desregulación. La entrada de un cuarto agente que compite con el intermediario eleva la utilidad total a $1,034$, lo que mejora en $46,5$~\% el escenario base, pero deja en pie una brecha de $27,9$~\% frente a la red sin restricción, porque la arista prohibida sigue prohibida y el nuevo agente solo puede competir en los tramos que ya existían.
 
-El tercer hallazgo es el que da título a dicha tesis. Habilitar la red
-Alternativa lleva la utilidad total a $1,434$ con tres agentes, valor que iguala
-exactamente la referencia sin restricción, y a $1,741$ con cuatro agentes, valor
-que iguala el óptimo sin restricción de esa misma configuración. Conviene
-precisar que la configuración dual de tres agentes cierra la brecha contra esa
-referencia pero conserva una de $17,6$~\% contra el óptimo de cuatro agentes,
-diferencia que su autor atribuye a la ausencia de competencia y no a una falla
-del mecanismo estructural, puesto que al incorporar el cuarto agente dicha
-brecha desaparece. Junto con ello
-las dos redes coexisten en lugar de desplazarse, ya que la adopción de la red
-Alternativa se sitúa en $72,4$~\% con tres agentes y en $47,9$~\% con cuatro,
-mientras la red Tradicional conserva volumen en ambos casos.
+El tercer hallazgo es el que da título a dicha tesis. Habilitar la red Alternativa lleva la utilidad total a $1,434$ con tres agentes, valor que iguala exactamente la referencia sin restricción, y a $1,741$ con cuatro agentes, valor que iguala el óptimo sin restricción de esa misma configuración. Conviene precisar que la configuración dual de tres agentes cierra la brecha contra esa referencia pero conserva una de $17,6$~\% contra el óptimo de cuatro agentes, diferencia que su autor atribuye a la ausencia de competencia y no a una falla del mecanismo estructural, puesto que al incorporar el cuarto agente dicha brecha desaparece. Junto con ello las dos redes coexisten en lugar de desplazarse, ya que la adopción de la red Alternativa se sitúa en $72,4$~\% con tres agentes y en $47,9$~\% con cuatro, mientras la red Tradicional conserva volumen en ambos casos.
 
 El cuarto hallazgo es distributivo. La ganancia se concentra en la parte
-bloqueada por la restricción, cuya utilidad pasa de $0,202$ a $0,988$, mientras
-el intermediario que lucraba con la intermediación obligada la ve caer de
-$0,441$ a $0,256$. Finalmente, los barridos de sensibilidad muestran que la
-utilidad de la red Alternativa desciende de $1,74$ a $1,05$ cuando la fricción
-de acceso crece de cero a $0,5$, con la adopción cayendo de $50$~\% a $25$~\%,
-y que con fricción fija en $0,15$ un beneficio de transparencia de $0,5$ la
-eleva hasta $1,87$.
+bloqueada por la restricción, cuya utilidad pasa de $0,202$ a $0,988$, mientras el intermediario que lucraba con la intermediación obligada la ve caer de $0,441$ a $0,256$. Finalmente, los barridos de sensibilidad muestran que la utilidad de la red Alternativa desciende de $1,74$ a $1,05$ cuando la fricción de acceso crece de cero a $0,5$, con la adopción cayendo de $50$~\% a $25$~\%, y que con fricción fija en $0,15$ un beneficio de transparencia de $0,5$ la eleva hasta $1,87$.
 
 \subsection{Qué cambia al reemplazar los parámetros por datos}
 \label{c4:venegas-contraste}
@@ -431,34 +208,11 @@ trabajo.
     \end{tabular}
 \end{table}
 
-Esa tabla deja abierta una pregunta que conviene responder antes de pasar al
-levantamiento, a saber, cuál de los primitivos estipulados carga efectivamente
-con el resultado titular. Si fueran todos igualmente determinantes, reemplazarlos
-por datos exigiría identificar la matriz completa, cosa que el diagnóstico del
-Capítulo~\ref{c3} ya descartó. Un ejercicio propio sobre el escenario base
-permite acotarlo.
+Esa tabla deja abierta una pregunta que conviene responder antes de pasar al levantamiento, a saber, cuál de los primitivos estipulados carga efectivamente con el resultado titular. Si fueran todos igualmente determinantes, reemplazarlos por datos exigiría identificar la matriz completa, cosa que el diagnóstico del Capítulo~\ref{c3} ya descartó. Un ejercicio propio sobre el escenario base permite acotarlo.
 
-El primer resultado de ese ejercicio es que la escala de $\Sigma$ no interviene.
-Al multiplicar la matriz por un factor positivo cualquiera, el tamaño de
-contrato del punto estable se divide exactamente por ese mismo factor, lo que
-concuerda con la propiedad de escalamiento que \citeA{jalan_incentive-aware_2024}
-establecen para este modelo, según la cual un aumento proporcional de la
-covarianza percibida contrae la red en la misma proporción. Las utilidades se
-comportan de igual modo, de manera que la pérdida de bienestar permanece en
-$50,75$~\% y la ganancia de volumen en $140,4$~\% para factores de $0,5$, de $2$
-y de $10$. Los porcentajes
-que dicha tesis reporta son, por lo tanto, invariantes a la escala de las
-creencias de riesgo.
+El primer resultado de ese ejercicio es que la escala de $\Sigma$ no interviene. Al multiplicar la matriz por un factor positivo cualquiera, el tamaño de contrato del punto estable se divide exactamente por ese mismo factor, lo que concuerda con la propiedad de escalamiento que \citeA{jalan_incentive-aware_2024} establecen para este modelo, según la cual un aumento proporcional de la covarianza percibida contrae la red en la misma proporción. Las utilidades se comportan de igual modo, de manera que la pérdida de bienestar permanece en $50,75$~\% y la ganancia de volumen en $140,4$~\% para factores de $0,5$, de $2$ y de $10$. Los porcentajes que dicha tesis reporta son, por lo tanto, invariantes a la escala de las creencias de riesgo.
 
-El segundo resultado es que la forma sí interviene, y de manera concentrada. La
-Tabla~\ref{tab:sensibilidad-sigma13} muestra qué ocurre al variar únicamente la
-covarianza entre los dos agentes que la restricción separa, manteniendo el resto
-de la matriz fija y verificando en cada caso que siga siendo definida positiva.
-La pérdida de bienestar cae de $50,8$~\% a $20,0$~\% cuando esa covarianza baja
-de $0,75$ a $0,45$, y queda en $2,4$~\% cuando se anula. Dicho de otro modo, el
-hallazgo central del trabajo que se continúa descansa casi por completo en una
-sola entrada de $\Sigma$, puesto que la restricción solo destruye bienestar en la
-medida en que impide un contrato que habría sido valioso para cubrir riesgo.
+El segundo resultado es que la forma sí interviene, y de manera concentrada. La Tabla~\ref{tab:sensibilidad-sigma13} muestra qué ocurre al variar únicamente la covarianza entre los dos agentes que la restricción separa, manteniendo el resto de la matriz fija y verificando en cada caso que siga siendo definida positiva. La pérdida de bienestar cae de $50,8$~\% a $20,0$~\% cuando esa covarianza baja de $0,75$ a $0,45$, y queda en $2,4$~\% cuando se anula. Dicho de otro modo, el hallazgo central del trabajo que se continúa descansa casi por completo en una sola entrada de $\Sigma$, puesto que la restricción solo destruye bienestar en la medida en que impide un contrato que habría sido valioso para cubrir riesgo.
 
 \begin{table}[H]
     \centering
@@ -484,28 +238,9 @@ medida en que impide un contrato que habría sido valioso para cubrir riesgo.
     \end{tabular}
 \end{table}
 
-Ese hallazgo tiene una consecuencia favorable para este trabajo, y resulta de
-cruzarlo con el diagnóstico de identificabilidad. La entrada que gobierna el
-resultado es la covarianza entre los dos agentes que no contratan entre sí, que
-en el caso chileno son CORFO y la MiPyME, y esa es precisamente la única entrada
-que la red bipartita del programa sí determina, según se argumenta en la
-Sección~\ref{c24:identificacion} y se cuantifica en la
-Sección~\ref{c3:identificabilidad}, ya que interviene en el residuo del
-estimador a través de las aristas vecinas aunque el contrato directo sea
-idénticamente nulo. Por lo tanto el déficit de rango documentado, con ser
-severo, no impide pronunciarse sobre el hallazgo central del trabajo que se
-continúa, dado que lo que queda sin identificar son las varianzas propias y las
-covarianzas a lo largo de las aristas efectivamente observadas.
+Ese hallazgo tiene una consecuencia favorable para este trabajo, y resulta de cruzarlo con el diagnóstico de identificabilidad. La entrada que gobierna el resultado es la covarianza entre los dos agentes que no contratan entre sí, que en el caso chileno son CORFO y la MiPyME, y esa es precisamente la única entrada que la red bipartita del programa sí determina, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}, ya que interviene en el residuo del estimador a través de las aristas vecinas aunque el contrato directo sea idénticamente nulo. Por lo tanto el déficit de rango documentado, con ser severo, no impide pronunciarse sobre el hallazgo central del trabajo que se continúa, dado que lo que queda sin identificar son las varianzas propias y las covarianzas a lo largo de las aristas efectivamente  observadas.
 
-La contrapartida es una limitación sobre los niveles que conviene declarar aquí.
-Como la normalización de la Ecuación~\eqref{eq:prop1} fija la traza de $\Sigma$
-en uno, la escala de la matriz estimada no queda determinada por los datos, y
-por la invariancia recién verificada el nivel del tamaño de contrato predicho
-hereda esa indeterminación. En consecuencia, el contraste entre el modelo
-calibrado y la red observada es concluyente sobre proporciones, es decir sobre
-brechas de bienestar y sobre el reparto de actividad entre ambas redes, pero no
-sobre el monto en pesos de un contrato individual, a menos que se fije la escala
-con una referencia externa al estimador.
+La contrapartida es una limitación sobre los niveles que conviene declarar aquí. Como la normalización de la Ecuación~\eqref{eq:prop1} fija la traza de $\Sigma$ en uno, la escala de la matriz estimada no queda determinada por los datos, y por la invariancia recién verificada el nivel del tamaño de contrato predicho hereda esa indeterminación. En consecuencia, el contraste entre el modelo calibrado y la red observada es concluyente sobre proporciones, es decir sobre brechas de bienestar y sobre el reparto de actividad entre ambas redes, pero no sobre el monto en pesos de un contrato individual, a menos que se fije la escala con una referencia externa al estimador.
 
 \section{El levantamiento de datos del caso chileno}
 \label{c4:levantamiento}
@@ -513,11 +248,7 @@ con una referencia externa al estimador.
 \subsection{Estrategia de búsqueda y fuentes recorridas}
 \label{c4:levantamiento-fuentes}
 
-La diferencia de partida con el caso de referencia es que no existe ningún
-repositorio que publique la red del programa como panel. El panel debió
-construirse documento a documento, y esa reconstrucción es en sí misma parte del
-resultado de este trabajo, porque delimita lo que la información pública permite
-afirmar. Se recorrieron cuatro familias de fuentes.
+La diferencia de partida con el caso de referencia es que no existe ningún repositorio que publique la red del programa como panel. El panel debió construirse documento a documento, y esa reconstrucción es en sí misma parte del resultado de este trabajo, porque delimita lo que la información pública permite afirmar. Se recorrieron cuatro familias de fuentes.
 
 \begin{enumerate}
     \item Cuentas Públicas de CORFO entre 2014 y 2024, revisadas de forma
@@ -546,54 +277,19 @@ afirmar. Se recorrieron cuatro familias de fuentes.
     referidos a instrumentos distintos.
 \end{enumerate}
 
-De este levantamiento se sigue una consecuencia metodológica que conviene
-desarrollar, porque condiciona todo el análisis posterior. En un panel descargado
-de un repositorio estadístico, como el del caso de referencia, todas las celdas
-comparten origen, definición y unidad, de manera que el valor numérico basta por
-sí solo. En un panel reconstruido documento a documento eso deja de cumplirse por
-tres motivos simultáneos.
+De este levantamiento se sigue una consecuencia metodológica que conviene desarrollar, porque condiciona todo el análisis posterior. En un panel descargado de un repositorio estadístico, como el del caso de referencia, todas las celdas comparten origen, definición y unidad, de manera que el valor numérico basta por sí solo. En un panel reconstruido documento a documento eso deja de cumplirse por tres motivos simultáneos.
 
-El primero es que celdas contiguas pueden provenir de fuentes distintas, ya que
-una puede haberse obtenido de una Cuenta Pública y la siguiente de una ficha de
-DIPRES. El segundo es que celdas contiguas pueden medir conceptos distintos bajo
-la misma etiqueta, como ocurre con la cifra de 2017, que corresponde a aprobación
-de líneas y no a desembolso efectivo. El tercero es que una celda vacía resulta
-ambigua por sí misma, puesto que puede significar que el programa no operó ese
-año, que operó pero el documento no lo reportó, o que el documento existe pero no
-es legible, como sucede con el escaneo sin capa de texto de 2018.
+El primero es que celdas contiguas pueden provenir de fuentes distintas, ya que una puede haberse obtenido de una Cuenta Pública y la siguiente de una ficha de DIPRES. El segundo es que celdas contiguas pueden medir conceptos distintos bajo la misma etiqueta, como ocurre con la cifra de 2017, que corresponde a aprobación de líneas y no a desembolso efectivo. El tercero es que una celda vacía resulta ambigua por sí misma, puesto que puede significar que el programa no operó ese año, que operó pero el documento no lo reportó, o que el documento existe pero no es legible, como sucede con el escaneo sin capa de texto de 2018.
 
-Por esas tres razones el estado de cada celda pasa a ser parte del dato y no un
-comentario sobre él. Cada observación del panel se registra junto con su fuente,
-la página en que aparece y una marca que distingue lo observado de lo faltante y
-de lo supuesto. Ese registro cumple dos funciones. Por una parte, impide que el
-análisis posterior trate como medición lo que en realidad es un supuesto, que es
-el riesgo concreto de trabajar con fuentes heterogéneas. Por otra, permite
-rastrear cualquier cifra del análisis hasta el documento y la página de los que
-proviene, lo que hace verificable el levantamiento sin necesidad de repetirlo.
+Por esas tres razones el estado de cada celda pasa a ser parte del dato y no un comentario sobre él. Cada observación del panel se registra junto con su fuente, la página en que aparece y una marca que distingue lo observado de lo faltante y de lo supuesto. Ese registro cumple dos funciones. Por una parte, impide que el análisis posterior trate como medición lo que en realidad es un supuesto, que es el riesgo concreto de trabajar con fuentes heterogéneas. Por otra, permite rastrear cualquier cifra del análisis hasta el documento y la página de los que proviene, lo que hace verificable el levantamiento sin necesidad de repetirlo.
 
 \subsection{El panel obtenido}
 \label{c4:levantamiento-panel}
 
-El panel resultante se muestra en la Figura~\ref{fig:panel-comparado}. Antes de
-leerlo conviene fijar sobre qué conjunto de aristas se mide la cobertura, porque
-no es único. El modelo dual tal como está especificado en la
-Sección~\ref{c3:estructura} tiene tres aristas estructurales, que son CORFO con
-el intermediario y el intermediario con la MiPyME en la red Tradicional, más el
-banco comercial con la MiPyME en la red Alternativa, dado que CORFO y el
-intermediario participan solo en la primera y el banco solo en la segunda. A
-esas tres se agregan dos aristas que no forman parte de la especificación
-original y que el diagnóstico de identificabilidad propone incorporar como
-extensión de diseño, que son el fondeo bancario de los propios intermediarios y
-las líneas que CORFO coloca a través de bancos comerciales. La grilla de la
-figura se construye sobre ese conjunto extendido de cinco aristas, de modo que
-las dos últimas filas no deben leerse como datos faltantes de la especificación
-vigente sino como la información que haría falta si se adoptara la extensión.
+El panel resultante se muestra en la Figura~\ref{fig:panel-comparado}. Antes de leerlo conviene fijar sobre qué conjunto de aristas se mide la cobertura, porque no es único. El modelo dual tal como está especificado en la Sección~\ref{c3:estructura} tiene tres aristas estructurales, que son CORFO con el intermediario y el intermediario con la MiPyME en la red Tradicional, más el
+banco comercial con la MiPyME en la red Alternativa, dado que CORFO y el intermediario participan solo en la primera y el banco solo en la segunda. A esas tres se agregan dos aristas que no forman parte de la especificación original y que el diagnóstico de identificabilidad propone incorporar como extensión de diseño, que son el fondeo bancario de los propios intermediarios y las líneas que CORFO coloca a través de bancos comerciales. La grilla de la figura se construye sobre ese conjunto extendido de cinco aristas, de modo que las dos últimas filas no deben leerse como datos faltantes de la especificación vigente sino como la información que haría falta si se adoptara la extensión.
 
-Sobre esa grilla de nueve años hay nueve celdas observadas de cuarenta y cinco.
-De las tres aristas estructurales, la que une al banco comercial con la MiPyME
-está completamente vacía, mientras que las dos aristas de la red Tradicional
-coinciden en 2019, 2020 y 2024, de los cuales solo 2019 y 2020 son años
-consecutivos.
+Sobre esa grilla de nueve años hay nueve celdas observadas de cuarenta y cinco. De las tres aristas estructurales, la que une al banco comercial con la MiPyME está completamente vacía, mientras que las dos aristas de la red Tradicional coinciden en 2019, 2020 y 2024, de los cuales solo 2019 y 2020 son años consecutivos.
 
 \begin{figure}[H]
     \centering
@@ -607,24 +303,12 @@ consecutivos.
     \label{fig:panel-comparado}
 \end{figure}
 
-El dato decisivo para el método no es sin embargo el número de celdas, sino el
-número de diferencias utilizables, ya que el estimador de la Proposición~1 opera
-sobre $W(t+1)-W(t)$ y una sola celda faltante elimina el período completo. Bajo
-ese criterio el recuento depende de qué red se considere. Para la red de cuatro
-agentes, en cualquiera de sus dos versiones, no hay ninguna diferencia
-utilizable, porque ningún año tiene completas todas sus aristas. Restringiendo
-la mirada a la red Tradicional por separado, que involucra únicamente a CORFO,
-al intermediario y a la MiPyME, hay exactamente una diferencia utilizable, que
-es la que va de 2019 a 2020, frente a los seis parámetros libres de la $\Sigma$
-de tres agentes. Esa única diferencia tampoco alcanzaría aunque se dispusiera de
-muchas más, ya que el rango de la información en esa cadena es de 3 sobre 6,
-según se detalla en la Sección~\ref{c4:comparacion}.
+El dato decisivo para el método no es sin embargo el número de celdas, sino el número de diferencias utilizables, ya que el estimador de la Proposición~1 opera sobre $W(t+1)-W(t)$ y una sola celda faltante elimina el período completo. Bajo ese criterio el recuento depende de qué red se considere. Para la red de cuatro agentes, en cualquiera de sus dos versiones, no hay ninguna diferencia utilizable, porque ningún año tiene completas todas sus aristas. Restringiendo la mirada a la red Tradicional por separado, que involucra únicamente a CORFO, al intermediario y a la MiPyME, hay exactamente una diferencia utilizable, que es la que va de 2019 a 2020, frente a los seis parámetros libres de la $\Sigma$ de tres agentes. Esa única diferencia tampoco alcanzaría aunque se dispusiera de muchas más, ya que el rango de la información en esa cadena es de 3 sobre 6, según se detalla en la Sección~\ref{c4:comparacion}.
 
 \subsection{Obstáculos de comparabilidad detectados}
 \label{c4:levantamiento-obstaculos}
 
-Además de la cobertura, el levantamiento dejó al descubierto cuatro problemas que
-afectan la comparabilidad de las cifras entre sí.
+Además de la cobertura, el levantamiento dejó al descubierto cuatro problemas que afectan la comparabilidad de las cifras entre sí.
 
 \begin{enumerate}
     \item Ambigüedad entre flujo y saldo. Las Cuentas Públicas reportan
@@ -645,20 +329,12 @@ afectan la comparabilidad de las cifras entre sí.
     para 2017 corresponde a líneas de crédito aprobadas y no a montos girados.
 \end{enumerate}
 
-A estos cuatro se suma un problema de agregación. Las fuentes públicas reportan a
-los intermediarios como un único agregado, de modo que la red observable tiene un
-solo nodo intermediario, cuando en realidad el programa opera con varias
-instituciones distinguibles entre sí.
+A estos cuatro se suma un problema de agregación. Las fuentes públicas reportan a los intermediarios como un único agregado, de modo que la red observable tiene un solo nodo intermediario, cuando en realidad el programa opera con varias instituciones distinguibles entre sí.
 
 \section{Comparación con el ejercicio empírico de referencia}
 \label{c4:comparacion}
 
-La comparación con el trabajo que se continúa quedó resuelta en la
-Sección~\ref{c4:venegas-contraste}, donde las dimensiones pertinentes son los
-primitivos del modelo, ya que allí no hay datos que comparar. Resta la
-comparación con el caso de la OCDE, cuyas dimensiones pertinentes son las del
-panel. La Tabla~\ref{tab:comparacion-ocde-corfo} resume ese contraste en los
-términos que el método vuelve relevantes.
+La comparación con el trabajo que se continúa quedó resuelta en la Sección~\ref{c4:venegas-contraste}, donde las dimensiones pertinentes son los primitivos del modelo, ya que allí no hay datos que comparar. Resta la comparación con el caso de la OCDE, cuyas dimensiones pertinentes son las del panel. La Tabla~\ref{tab:comparacion-ocde-corfo} resume ese contraste en los términos que el método vuelve relevantes.
 
 \begin{table}[H]
     \centering
@@ -689,99 +365,32 @@ términos que el método vuelve relevantes.
     \end{tabular}
 \end{table}
 
-De esa comparación se desprenden tres diferencias, y conviene distinguirlas
-porque no son todas igualmente reparables.
+De esa comparación se desprenden tres diferencias, y conviene distinguirlas porque no son todas igualmente reparables.
 
-\paragraph{Diferencia de volumen.} Es la más visible y a la vez la menos grave,
-ya que depende únicamente de la periodicidad y de la cobertura de la fuente. La
-solicitud de información cursada a CORFO, que pide registros mensuales entre
-enero de 2016 y diciembre de 2024, llevaría el panel de nueve observaciones
-anuales a 108 períodos y 107 diferencias, con lo que el volumen dejaría de ser la
-restricción activa.
+\paragraph{Diferencia de volumen.} Es la más visible y a la vez la menos grave, ya que depende únicamente de la periodicidad y de la cobertura de la fuente. La solicitud de información cursada a CORFO, que pide registros mensuales entre enero de 2016 y diciembre de 2024, llevaría el panel de nueve observaciones anuales a 108 períodos y 107 diferencias, con lo que el volumen dejaría de ser la restricción activa.
 
-\paragraph{Diferencia de topología.} Es la decisiva y no se repara con más datos
-del mismo tipo. La red que entregan los registros de CORFO está formada por
-CORFO, por los intermediarios y por las MiPyMEs, y es bipartita, puesto que
-CORFO y las MiPyMEs quedan de un lado y los intermediarios del otro, sin ninguna
-arista dentro de cada lado, mientras que la red de la OCDE es prácticamente
-completa. En una red bipartita el residuo del estimador solo toca entradas de
-$\Sigma$ dentro de cada lado, de modo que ninguna cantidad de meses ni de
-intermediarios adicionales informa sobre el resto.
+\paragraph{Diferencia de topología.} Es la decisiva y no se repara con más datos del mismo tipo. La red que entregan los registros de CORFO está formada por CORFO, por los intermediarios y por las MiPyMEs, y es bipartita, puesto que CORFO y las MiPyMEs quedan de un lado y los intermediarios del otro, sin ninguna arista dentro de cada lado, mientras que la red de la OCDE es prácticamente completa. En una red bipartita el residuo del estimador solo toca entradas de $\Sigma$ dentro de cada lado, de modo que ninguna cantidad de meses ni de intermediarios adicionales informa sobre el resto.
 
-Esa misma lectura explica por qué la extensión de diseño descrita en la
-Sección~\ref{c4:levantamiento-panel} sí repara la identificación, y conviene
-distinguir el papel de cada una de sus dos aristas. El fondeo bancario de los
-intermediarios une a dos agentes que están del mismo lado, de manera que es la
-única de las dos que rompe la bipartición. Las líneas que CORFO coloca a través
-de bancos comerciales, en cambio, cruzan de un lado al otro y por lo tanto no la
-rompen, aunque el cálculo de rango muestra que de todos modos hacen falta,
-puesto que solo con ambas aristas presentes a la vez el rango pasa de 18 a 21
-sobre 21. El carácter bipartito de la red del programa es un aporte propio del
-presente trabajo y no una consecuencia enunciada en la fuente, dado que los
-resultados de identificación de dicho artículo se formulan para redes sin
-aristas prohibidas.
+Esa misma lectura explica por qué la extensión de diseño descrita en la Sección~\ref{c4:levantamiento-panel} sí repara la identificación, y conviene distinguir el papel de cada una de sus dos aristas. El fondeo bancario de los intermediarios une a dos agentes que están del mismo lado, de manera que es la única de las dos que rompe la bipartición. Las líneas que CORFO coloca a través de bancos comerciales, en cambio, cruzan de un lado al otro y por lo tanto no la rompen, aunque el cálculo de rango muestra que de todos modos hacen falta, puesto que solo con ambas aristas presentes a la vez el rango pasa de 18 a 21 sobre 21. El carácter bipartito de la red del programa es un aporte propio del presente trabajo y no una consecuencia enunciada en la fuente, dado que los resultados de identificación de dicho artículo se formulan para redes sin aristas prohibidas.
 
-\paragraph{Diferencia de homogeneidad de la medición.} El Supuesto~1 exige que la
-volatilidad de las creencias sea la misma en todas las aristas. En la red de la
-OCDE todas las aristas son comercio entre pares del mismo tipo, mientras que en
-el programa el tramo que va de CORFO hacia los intermediarios es administrado,
-porque las tasas las fija un comité y la asignación se hace por licitación, y por
-lo tanto no es un proceso de creencias de mercado. Este es el supuesto más frágil
-del traslado y debe declararse como tal.
+\paragraph{Diferencia de homogeneidad de la medición.} El Supuesto~1 exige que la volatilidad de las creencias sea la misma en todas las aristas. En la red de la OCDE todas las aristas son comercio entre pares del mismo tipo, mientras que en el programa el tramo que va de CORFO hacia los intermediarios es administrado, porque las tasas las fija un comité y la asignación se hace por licitación, y por lo tanto no es un proceso de creencias de mercado. Este es el supuesto más frágil del traslado y debe declararse como tal.
 
 \subsection{Una precisión sobre el uso del Teorema 5}
 \label{c4:precision-teorema5}
 
-El diagnóstico muestral del Capítulo~\ref{c3} aplica la cota del Teorema~5 al
-largo del panel disponible. Corresponde precisar esa lectura, porque el teorema y
-el panel se refieren a objetos distintos. La cantidad $m$ que aparece en la
-Ecuación~\eqref{eq:teorema5} es el número de muestras de retornos con que cada
-agente estima su propia covarianza $\hat\Sigma_i$, y el resultado acota cuánto se
-degrada el factor de amortiguación seguro de las negociaciones bilaterales cuando
-esa estimación es imperfecta. En cambio el largo del panel $W(t)$ es el insumo de
-la ruta alternativa, que es la Proposición~1 de la Ecuación~\eqref{eq:prop1},
-donde lo que se estima es una $\Sigma$ común a partir de los incrementos de la
-red observada. La propia Sección~\ref{c24:identificacion} presenta ambas rutas
-como alternativas entre sí.
+El diagnóstico muestral del Capítulo~\ref{c3} aplica la cota del Teorema~5 al largo del panel disponible. Corresponde precisar esa lectura, porque el teorema y el panel se refieren a objetos distintos. La cantidad $m$ que aparece en la Ecuación~\eqref{eq:teorema5} es el número de muestras de retornos con que cada agente estima su propia covarianza $\hat\Sigma_i$, y el resultado acota cuánto se degrada el factor de amortiguación seguro de las negociaciones bilaterales cuando esa estimación es imperfecta. En cambio el largo del panel $W(t)$ es el insumo de la ruta alternativa, que es la Proposición~1 de la Ecuación~\eqref{eq:prop1}, donde lo que se estima es una $\Sigma$ común a partir de los incrementos de la red observada. La propia Sección~\ref{c24:identificacion} presenta ambas rutas como alternativas entre sí.
 
-La precisión tiene dos consecuencias. La primera es que la cota de seis
-observaciones no es el criterio que decide si el panel alcanza, puesto que el
-criterio pertinente es cuántas diferencias completas $\Delta W$ existen, y hoy
-son cero. La segunda es que el Teorema~5 supone explícitamente que no hay aristas
-prohibidas, condición que la red del programa no cumple, de modo que su cota no
-es directamente aplicable al caso. El diagnóstico de insuficiencia del panel se
-sostiene igualmente, pero su fundamento correcto es la combinación de ausencia de
-diferencias utilizables y déficit de rango por bipartición, y no el
-incumplimiento de la cota del Teorema~5.
+La precisión tiene dos consecuencias. La primera es que la cota de seis observaciones no es el criterio que decide si el panel alcanza, puesto que el criterio pertinente es cuántas diferencias completas $\Delta W$ existen, y hoy son cero. La segunda es que el Teorema~5 supone explícitamente que no hay aristas prohibidas, condición que la red del programa no cumple, de modo que su cota no es directamente aplicable al caso. El diagnóstico de insuficiencia del panel se sostiene igualmente, pero su fundamento correcto es la combinación de ausencia de diferencias utilizables y déficit de rango por bipartición, y no el incumplimiento de la cota del Teorema~5.
 
 \section{Alcance del análisis con la información disponible}
 \label{c4:alcance}
 
-El contraste anterior permite ordenar el trabajo restante en tres niveles, según
-de quién dependa cada uno.
+El contraste anterior permite ordenar el trabajo restante en tres niveles, según de quién dependa cada uno.
 
-\paragraph{Resultados que ya son concluyentes.} No dependen de ninguna entrega
-pendiente y corresponden al diagnóstico de identificabilidad, es decir la
-bipartición de la red del programa y el déficit de rango que de ella se sigue, la
-caracterización de qué entradas de $\Sigma$ serían recuperables y cuáles no, y la
-auditoría del estimador publicado junto con la corrección propuesta.
+\paragraph{Resultados que ya son concluyentes.} No dependen de ninguna entrega pendiente y corresponden al diagnóstico de identificabilidad, es decir la bipartición de la red del programa y el déficit de rango que de ella se sigue, la caracterización de qué entradas de $\Sigma$ serían recuperables y cuáles no, y la auditoría del estimador publicado junto con la corrección propuesta.
 
-\paragraph{Resultados que se desbloquean con la entrega de CORFO.} Con registros
-mensuales e intermediarios distinguidos uno a uno, el panel pasa a 107
-diferencias y la red a $1+k+1$ nodos, lo que permite estimar las covarianzas
-entre pares de intermediarios y la covarianza entre CORFO y la MiPyME, que son
-precisamente las entradas que el cálculo de rango señala como recuperables en una
-red bipartita.
+\paragraph{Resultados que se desbloquean con la entrega de CORFO.} Con registros mensuales e intermediarios distinguidos uno a uno, el panel pasa a 107 diferencias y la red a $1+k+1$ nodos, lo que permite estimar las covarianzas entre pares de intermediarios y la covarianza entre CORFO y la MiPyME, que son precisamente las entradas que el cálculo de rango señala como recuperables en una red bipartita.
 
-\paragraph{Resultados que requieren fuentes externas a CORFO.} La identificación
-completa de $\Sigma$ exige dos aristas que deben levantarse simultáneamente, que
-son el fondeo bancario de los propios intermediarios, única de las dos que rompe
-la bipartición, y las líneas que CORFO coloca a través de bancos comerciales. La
-primera no pertenece al ámbito de CORFO y debe buscarse en la información de la
-CMF o en los estados financieros de los intermediarios.
+\paragraph{Resultados que requieren fuentes externas a CORFO.} La identificación completa de $\Sigma$ exige dos aristas que deben levantarse simultáneamente, que son el fondeo bancario de los propios intermediarios, única de las dos que rompe la bipartición, y las líneas que CORFO coloca a través de bancos comerciales. La primera no pertenece al ámbito de CORFO y debe buscarse en la información de la CMF o en los estados financieros de los intermediarios.
 
-Mientras esas entregas no se concreten, el análisis que este capítulo habilita es
-de naturaleza comparativa y estructural, en el sentido de que establece qué exige
-el método, cuánto de eso cubre la información pública chilena y qué faltaría
-exactamente para cerrar la brecha, lo que constituye el punto de partida del
-análisis cuantitativo que continúa en las secciones siguientes.
+Mientras esas entregas no se concreten, el análisis que este capítulo habilita es de naturaleza comparativa y estructural, en el sentido de que establece qué exige el método, cuánto de eso cubre la información pública chilena y qué faltaría exactamente para cerrar la brecha, lo que constituye el punto de partida del análisis cuantitativo que continúa en las secciones siguientes.
