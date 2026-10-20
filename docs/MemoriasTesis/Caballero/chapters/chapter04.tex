@@ -3,10 +3,11 @@
 \chapter{Análisis}
 \label{c4}
 
-Este capítulo inicia el análisis empírico del trabajo. Dado que la validación
-que se persigue consiste en trasladar a un caso real un método que ya fue
-aplicado a datos reales por sus propios autores, el análisis comienza por
-reconstruir con precisión ese ejercicio de referencia, que es la aplicación de
+Este capítulo desarrolla el análisis empírico con la información que el trabajo
+ha logrado reunir hasta ahora. Dado que la validación que se persigue consiste
+en trasladar a un caso real un método que ya fue aplicado a datos reales por sus
+propios autores, el análisis comienza por reconstruir con precisión ese
+ejercicio de referencia, que es la aplicación de
 \citeA{jalan_incentive-aware_2024} a la red de comercio internacional de la
 OCDE. Enseguida se examina con el mismo detalle el ejercicio numérico de
 \citeA{venegas_dual_network_2024}, que es el antecedente inmediato de esta
@@ -14,10 +15,16 @@ memoria y del que proviene el modelo dual, puesto que la distancia que separa a
 este trabajo de dicha tesis es de otra naturaleza que la anterior. Sobre esa
 base se documenta después el levantamiento de datos realizado para el programa
 Crédito Corfo Mipyme y se contrastan los casos entre sí, de modo que la
-distancia que los separa quede medida y no simplemente afirmada. El
-capítulo cierra delimitando qué parte del análisis ya es concluyente con la
-información disponible y qué parte queda condicionada a la entrega de datos
-solicitada a CORFO.
+distancia que los separa quede medida y no simplemente afirmada.
+
+El capítulo cierra estableciendo hasta dónde alcanza a llegar el análisis con lo
+ya levantado y qué agregaría cada pieza de información adicional. Ese cierre
+cumple un propósito práctico, ya que permite seguir avanzando sobre la
+información pública mientras se gestiona el acceso a los registros internos del
+programa, en lugar de detener el trabajo a la espera de esa entrega. Los
+resultados que aquí se presentan son, por lo tanto, los que la información
+disponible sostiene en este momento, y el capítulo identifica con precisión cuál
+de ellos se extiende y en qué dirección cuando esa información llegue.
 
 \section{El ejercicio empírico de referencia. El caso de la OCDE}
 \label{c4:ocde}
@@ -73,24 +80,30 @@ El volumen resultante se puede precisar. Con 46 agentes hay 1.035 pares
 posibles, y con 50 trimestres se obtienen 49 matrices de diferencias
 $\Delta W(t)$, de manera que el estimador dispone de 50.715 observaciones de par
 por período frente a los 1.081 parámetros libres de $\Sigma$, es decir cerca de
-47 ecuaciones por parámetro. La revisión directa del repositorio oficial del
-artículo confirma las propiedades estructurales que el modelo supone, ya que las
+47 ecuaciones por parámetro. Junto con el artículo, sus autores publican un
+material suplementario que contiene las matrices de diferencias y el código del
+ejercicio, y cuya revisión en el marco de este trabajo confirma las propiedades
+estructurales que el modelo supone, ya que las
 49 matrices son exactamente simétricas y de diagonal nula, el 98,50~\% de las
 entradas fuera de la diagonal es distinto de cero, 959 de los 1.035 pares son no
 nulos en los 49 períodos y un solo par permanece en cero durante todo el
 horizonte. La red es, en la práctica, completa.
 
-Conviene registrar también cómo se recolectaron esos datos, porque es el punto
-en que el caso de referencia y el caso chileno se separan desde el principio. La
-recolección consistió en una única descarga desde un repositorio estadístico
-internacional que ya publica la información organizada como panel, con
-periodicidad uniforme, cobertura homogénea y una sola unidad de medida.
+La forma en que se obtuvieron esos datos importa tanto como su volumen, puesto
+que es el punto en que el caso de referencia y el caso chileno se separan desde
+el principio. En el caso de la OCDE la obtención se redujo a una única descarga
+desde un repositorio estadístico internacional que ya publica la información
+organizada como panel, con periodicidad uniforme, cobertura homogénea y una sola
+unidad de medida. No hubo que decidir qué cifra corresponde a cada celda ni
+reconciliar definiciones entre fuentes distintas, tarea que, como se verá en la
+Sección~\ref{c4:levantamiento}, concentra buena parte del esfuerzo en el caso
+chileno.
 
 \subsection{El procedimiento aplicado a esos datos}
 \label{c4:ocde-procedimiento}
 
-El procedimiento, tal como está implementado en el repositorio oficial, se
-compone de cinco pasos encadenados.
+El procedimiento, tal como está implementado en el material suplementario del
+artículo, se compone de cinco pasos encadenados.
 
 \begin{enumerate}
     \item Construcción de la secuencia de redes $W(t)$ y de sus diferencias
@@ -157,13 +170,13 @@ sature dentro del rango explorado es por lo tanto coherente con esa cota y no
 una anomalía del experimento.
 
 La Figura~\ref{fig:ocde-resultados} reproduce ambos hallazgos a partir de los
-archivos del repositorio oficial.
+archivos de ese material suplementario.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{fig_jalan_ocde_resultados.png}
     \caption[Resultados del caso OCDE reproducidos]{Reproducción de los dos
-    resultados empíricos del caso OCDE a partir del repositorio oficial de
+    resultados empíricos del caso OCDE a partir del material suplementario de
     \citeA{jalan_incentive-aware_2024}. El panel izquierdo muestra el espectro de
     la matriz inferida por el programa semidefinido sobre 49 diferencias
     trimestrales, junto con el espectro de estimaciones construidas con $m$
@@ -238,9 +251,18 @@ etiquetas genéricas, a saber, un banco nacional, un banco local, una empresa
 local y un entrante tecnológico, sin contraparte institucional identificable. La
 segunda es que el tamaño de contrato que el modelo devuelve carece de unidad
 monetaria, de modo que todos los resultados se enuncian como porcentajes y
-brechas relativas y ninguno como un nivel. Donde el caso de la OCDE describe una
-descarga desde un repositorio estadístico y el caso chileno una reconstrucción
-documento a documento, aquí simplemente no hubo recolección.
+brechas relativas y ninguno como un nivel.
+
+Conviene dejar explícita la diferencia de origen, porque es la que separa a este
+ejercicio de los otros dos que el capítulo examina. El caso de la OCDE parte de
+una descarga desde un repositorio estadístico y el caso chileno de una
+reconstrucción documento a documento, es decir, ambos tienen una etapa de
+recolección que puede describirse y auditarse. El ejercicio de dicha tesis no
+tiene esa etapa, ya que sus parámetros no se obtuvieron de fuente alguna sino
+que fueron fijados por el propio autor para sostener el experimento numérico.
+Por lo tanto, no se trata de que sus datos sean de mala calidad o de cobertura
+incompleta, sino de que no son datos en el sentido de una magnitud medida sobre
+agentes reales.
 
 \subsection{El procedimiento aplicado}
 \label{c4:venegas-procedimiento}
@@ -492,11 +514,30 @@ afirmar. Se recorrieron cuatro familias de fuentes.
     referidos a instrumentos distintos.
 \end{enumerate}
 
-Una consecuencia metodológica de este levantamiento es que el estado de cada
-celda pasa a ser parte del dato. Cada observación del panel se registra junto con
-su fuente, su página y una marca que distingue lo observado de lo faltante, de
-modo que el análisis posterior nunca trate como medición lo que en realidad es un
-supuesto.
+De este levantamiento se sigue una consecuencia metodológica que conviene
+desarrollar, porque condiciona todo el análisis posterior. En un panel descargado
+de un repositorio estadístico, como el del caso de referencia, todas las celdas
+comparten origen, definición y unidad, de manera que el valor numérico basta por
+sí solo. En un panel reconstruido documento a documento eso deja de cumplirse por
+tres motivos simultáneos.
+
+El primero es que celdas contiguas pueden provenir de fuentes distintas, ya que
+una puede haberse obtenido de una Cuenta Pública y la siguiente de una ficha de
+DIPRES. El segundo es que celdas contiguas pueden medir conceptos distintos bajo
+la misma etiqueta, como ocurre con la cifra de 2017, que corresponde a aprobación
+de líneas y no a desembolso efectivo. El tercero es que una celda vacía resulta
+ambigua por sí misma, puesto que puede significar que el programa no operó ese
+año, que operó pero el documento no lo reportó, o que el documento existe pero no
+es legible, como sucede con el escaneo sin capa de texto de 2018.
+
+Por esas tres razones el estado de cada celda pasa a ser parte del dato y no un
+comentario sobre él. Cada observación del panel se registra junto con su fuente,
+la página en que aparece y una marca que distingue lo observado de lo faltante y
+de lo supuesto. Ese registro cumple dos funciones. Por una parte, impide que el
+análisis posterior trate como medición lo que en realidad es un supuesto, que es
+el riesgo concreto de trabajar con fuentes heterogéneas. Por otra, permite
+rastrear cualquier cifra del análisis hasta el documento y la página de los que
+proviene, lo que hace verificable el levantamiento sin necesidad de repetirlo.
 
 \subsection{El panel obtenido}
 \label{c4:levantamiento-panel}
