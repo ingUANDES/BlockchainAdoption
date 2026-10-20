@@ -127,14 +127,46 @@ artículo, se compone de cinco pasos encadenados.
 Es importante notar qué uso no se le da a $\hat\Sigma$ en el artículo. En
 ninguno de los dos análisis se la emplea como estimación puntual de la matriz de
 covarianzas verdadera, sino como insumo para una propiedad espectral y para una
-tasa de acierto relativa. Esa distinción es relevante para el presente trabajo,
-ya que la auditoría numérica del estimador realizada en este trabajo muestra que
-el programa semidefinido publicado está sesgado cuando se lo evalúa como
-estimación puntual, con un error relativo que se estanca en torno a 0,41 por
-mucho que crezca el número de períodos, mientras que el estimador corregido con
-el término jacobiano desciende hasta 0,10.
-% TODO (autor) trasladar la auditoría completa del estimador al Anexo y citarla
-% desde aquí con su \ref correspondiente.
+tasa de acierto relativa. Esa distinción, que en el artículo pasa inadvertida
+porque sus dos usos no la requieren, resulta decisiva para el presente trabajo,
+ya que calibrar el modelo con datos reales sí exige una estimación puntual de
+$\Sigma$ y no solo su espectro.
+
+Por esa razón el estimador fue sometido a una auditoría numérica propia, cuyo
+desarrollo completo se presenta en el Anexo~\ref{anexo:auditoria} y cuyo
+resultado se resume aquí. Al evaluar el programa semidefinido sobre paneles
+simulados bajo el propio Supuesto~1 del artículo, es decir generados por el
+mismo proceso que el método supone, el error relativo de la matriz estimada deja
+de descender alrededor de $0{,}39$ por mucho que se aumente el número de
+períodos observados, de modo que el estimador no converge a la matriz
+verdadera.
+
+El diagnóstico que distingue un sesgo del criterio de una falla del solucionador
+numérico es directo. Evaluando la propia función objetivo del programa
+semidefinido en la matriz estimada y en la matriz verdadera, la primera alcanza
+un valor menor que la segunda. Dicho de otro modo, el solucionador hace bien su
+trabajo, puesto que encuentra una matriz que minimiza el criterio mejor de lo
+que lo hace la respuesta correcta. Lo que ocurre es que ese criterio no tiene su
+mínimo en la matriz verdadera.
+
+El origen del problema está en la derivación del Apéndice A.11 del artículo. El
+criterio se obtiene maximizando la densidad posterior de la trayectoria de
+creencias $M(1),\dots,M(T)$ condicional en las redes observadas y en $\Sigma$,
+donde el término que vincula las redes con las creencias entra como función
+indicadora de la condición de punto estable. Al despejar $M$ en función de $W$ y
+sustituir, se obtiene un objetivo expresado en $\Sigma$, pero ese cambio de
+variable tiene un jacobiano que depende de la propia $\Sigma$ y que la
+derivación no incorpora. Omitirlo convierte al criterio en algo distinto de una
+verosimilitud en $\Sigma$, y su efecto es encoger la matriz estimada. Al
+reponer el término jacobiano, el error relativo desciende de forma sostenida
+hasta $0{,}12$ en el mismo experimento.
+
+Conviene precisar el alcance de este hallazgo, ya que no invalida ningún
+resultado del artículo. Los dos análisis que sus autores construyen sobre
+$\hat\Sigma$ dependen de su espectro y de una tasa de acierto relativa, y
+ninguno de los dos requiere que la matriz estimada sea insesgada. La corrección
+importa para este trabajo y no para aquel, precisamente por el uso distinto que
+cada uno le da a la misma matriz.
 
 \subsection{Los hallazgos del ejercicio}
 \label{c4:ocde-hallazgos}

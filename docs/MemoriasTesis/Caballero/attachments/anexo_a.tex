@@ -98,3 +98,144 @@ Total                                    & 6 & 1 & 15 & 4 \\
 \hline
 \end{tabular}
 \end{table}
+
+\section{Auditoría del estimador de la Proposición 1}
+\label{anexo:auditoria}
+
+Este anexo desarrolla la auditoría numérica del estimador de $\Sigma$ que se
+resume en la Sección~\ref{c4:ocde-procedimiento}. El motivo de auditarlo es que
+la calibración que este trabajo persigue necesita una estimación puntual de
+$\Sigma$, mientras que los dos análisis del artículo de referencia solo
+requieren su espectro y una tasa de acierto relativa, de modo que el estimador
+nunca fue evaluado para el uso que aquí se le quiere dar.
+
+\subsection{Diseño del experimento}
+\label{anexo:auditoria-diseno}
+
+La auditoría evalúa el estimador en la condición más favorable posible, que es
+aquella en que los datos provienen exactamente del proceso que el método supone.
+Se generan paneles sintéticos bajo el Supuesto~1 del artículo, es decir con
+aversión al riesgo unitaria, una matriz de covarianzas constante en el tiempo y
+cada entrada de la matriz de creencias evolucionando como un movimiento
+browniano independiente. Para cada período se resuelve el punto estable exacto
+mediante la condición de estabilidad, lo que entrega la red $W(t)$ que el
+estimador recibe como dato.
+
+La red elegida es completa y de cuatro agentes, condición necesaria para que el
+ejercicio tenga sentido, puesto que el diagnóstico de identificabilidad de la
+Sección~\ref{c3:identificabilidad} muestra que en una red con aristas prohibidas
+una parte de $\Sigma$ no es recuperable por ningún estimador y el experimento
+confundiría ese límite estructural con un defecto del método. En la red completa
+de cuatro agentes el rango de la información iguala los diez grados de libertad
+de $\Sigma$, de manera que cualquier error remanente es atribuible al estimador
+y no a la topología. La matriz verdadera se construye definida positiva y se
+normaliza a traza unitaria, igual que la solución del programa semidefinido, y
+el error se mide como la norma de Frobenius de la diferencia entre la matriz
+estimada y la verdadera, dividida por la norma de esta última.
+
+\subsection{Resultado}
+\label{anexo:auditoria-resultado}
+
+La Tabla~\ref{tab:auditoria-estimador} reporta la mediana del error relativo
+sobre cinco semillas para cada largo de panel, tanto para el programa
+semidefinido publicado como para el estimador corregido que se describe más
+abajo.
+
+\begin{table}[htbp]
+\centering
+\caption[Error relativo del estimador de Sigma segun el largo del panel]{Error
+relativo de la matriz estimada respecto de la verdadera, en función del número de
+períodos observados. Mediana sobre cinco semillas, con el rango observado entre
+paréntesis. Elaboración propia sobre paneles sintéticos generados bajo el
+Supuesto~1 en una red completa de cuatro agentes.}
+\label{tab:auditoria-estimador}
+\small
+\begin{tabular}{rcc}
+\hline
+Períodos $T$ & Programa semidefinido publicado & Estimador corregido \\
+\hline
+5   & 0,92 \ (0,75 a 1,21) & 0,62 \ (0,49 a 0,71) \\
+20  & 0,71 \ (0,58 a 0,84) & 0,38 \ (0,33 a 0,44) \\
+40  & 0,50 \ (0,42 a 0,63) & 0,26 \ (0,21 a 0,35) \\
+80  & 0,41 \ (0,34 a 0,50) & 0,16 \ (0,07 a 0,20) \\
+160 & 0,39 \ (0,29 a 0,48) & 0,12 \ (0,09 a 0,15) \\
+\hline
+\end{tabular}
+\end{table}
+
+El patrón distingue con claridad los dos comportamientos. El estimador publicado
+desciende mientras el panel es corto y luego se detiene alrededor de $0{,}39$,
+sin que duplicar el número de períodos de 80 a 160 produzca una mejora
+apreciable. El estimador corregido, en cambio, sigue descendiendo en todo el
+rango explorado y llega a $0{,}12$, comportamiento propio de un estimador que
+converge.
+
+\subsection{Por qué se trata de un sesgo del criterio}
+\label{anexo:auditoria-causa}
+
+Un estancamiento del error admite dos explicaciones, a saber, que el
+solucionador numérico no alcance el mínimo del problema o que el mínimo del
+problema no esté en la matriz verdadera. Ambas se distinguen evaluando la propia
+función objetivo del programa semidefinido en las dos matrices. Con un panel de
+160 períodos, el objetivo vale $871{,}13$ en la matriz estimada y $939{,}02$ en
+la verdadera. Como la matriz estimada alcanza un valor estrictamente menor, el
+solucionador no está fallando, sino resolviendo correctamente un problema cuyo
+óptimo no coincide con la respuesta buscada. El defecto está, por lo tanto, en
+el criterio y no en su implementación.
+
+El origen del problema se localiza en la derivación del Apéndice A.11 del
+artículo, que llega al programa semidefinido en dos pasos. El primero establece
+que, bajo el Supuesto~1, la trayectoria de creencias más probable dadas las
+redes observadas es la que minimiza la suma de los cambios cuadráticos
+$\sum_t \|M(t+1)-M(t)\|_F^2$, resultado que se obtiene maximizando la densidad
+posterior de $M(1),\dots,M(T)$ condicional en $W(1),\dots,W(T)$ y en $\Sigma$. En
+esa posterior, el factor que vincula las redes con las creencias aparece como
+función indicadora de la condición de punto estable, es decir, vale uno cuando la
+condición se cumple y cero en caso contrario. El segundo paso despeja
+$M(t)+M(t)^\top$ en función de $W(t)$ y de $\Sigma$ mediante esa misma condición
+y lo sustituye en el objetivo, con lo que se obtiene un programa expresado en
+$\Sigma$.
+
+La dificultad está en que el criterio así obtenido es el que selecciona la
+trayectoria de creencias más probable para una $\Sigma$ dada, y no la $\Sigma$
+más probable dadas las redes. Convertir el primero en el segundo exige el cambio
+de variable que lleva de $M$ a $W$, cuyo jacobiano depende de $\Sigma$, puesto
+que la relación entre ambas es lineal con matriz $\Sigma\otimes I + I\otimes\Sigma$.
+Ese factor no aparece en la derivación. Su omisión no es inocua, dado que el
+objetivo publicado puede reducirse encogiendo $\Sigma$ en las direcciones que
+más pesan en el residuo, y la restricción de traza unitaria no lo impide porque
+fija únicamente la escala global y no la forma de la matriz. De ahí que la
+estimación resulte sistemáticamente contraída hacia esas direcciones.
+
+\subsection{El estimador corregido}
+\label{anexo:auditoria-correccion}
+
+La corrección consiste en reponer el término omitido. Denotando por
+$B_\Sigma$ la matriz del mapa lineal que lleva las diferencias de red a los
+residuos sobre los pares permitidos, y por $Q(\Sigma)=\sum_t \|B_\Sigma\,
+\Delta W(t)\|^2$ el residuo acumulado, la verosimilitud perfilada conduce a
+minimizar
+\begin{equation}
+\label{eq:mle-corregido}
+    \frac{|F|}{2}\,\log Q(\Sigma) \;-\; \log\left|\det B_\Sigma\right| ,
+\end{equation}
+donde $|F|$ es el número de pares permitidos. El primer término reproduce el
+criterio publicado en escala logarítmica y el segundo es el jacobiano ausente.
+El objetivo de la Ecuación~\eqref{eq:mle-corregido} resulta invariante a la
+escala de $\Sigma$, de modo que la normalización de traza unitaria deja de
+cumplir un papel sustantivo y pasa a ser una convención de presentación. Los
+valores de la columna derecha de la Tabla~\ref{tab:auditoria-estimador}
+corresponden a minimizar esta expresión.
+
+\subsection{Alcance del hallazgo}
+\label{anexo:auditoria-alcance}
+
+Esta auditoría no invalida ningún resultado del artículo de referencia. Los dos
+análisis que sus autores construyen sobre la matriz estimada, que son el estudio
+de su espectro y el problema de detección de la fuente de un cambio en las
+creencias, dependen de propiedades relativas y no de su exactitud puntual, por
+lo que un sesgo de contracción no los compromete. La corrección es necesaria
+únicamente para el uso que este trabajo le da al estimador, que es obtener una
+$\Sigma$ con la cual calcular niveles de bienestar y contrafactuales, donde la
+diferencia entre un error de $0{,}39$ y uno de $0{,}12$ sí incide en las
+magnitudes que se reportan.
