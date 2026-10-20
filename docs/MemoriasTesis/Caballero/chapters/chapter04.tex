@@ -26,7 +26,7 @@ Los datos provienen de las estadísticas de comercio internacional que publica l
 
 La construcción del peso de cada arista merece atención porque es una decisión metodológica y no un detalle de formato. El peso del par $\{i,j\}$ se define como la suma de los flujos de $i$ hacia $j$ y de $j$ hacia $i$, de modo que la matriz $W$ resulta simétrica y hay una sola cifra por par, tal como exige el punto estable del modelo, en el que ambas partes acuerdan la misma cantidad. Dado que no existe registro de comercio de un país consigo mismo, la red no tiene lazos propios, y esa ausencia no se trata como dato faltante sino como arista prohibida, mediante la extensión de la Proposición~1 al caso de aristas prohibidas.
 
-El volumen resultante se puede precisar. Con 46 agentes hay 1.035 pares posibles, y con 50 trimestres se obtienen 49 matrices de diferencias $\Delta W(t)$, de manera que el estimador dispone de 50.715 observaciones de par por período frente a los 1.081 parámetros libres de $\Sigma$, es decir cerca de 47 ecuaciones por parámetro. Junto con el artículo, sus autores publican un material suplementario que contiene las matrices de diferencias y el código del ejercicio, y cuya revisión en el marco de este trabajo confirma las propiedades estructurales que el modelo supone, ya que las 49 matrices son exactamente simétricas y de diagonal nula, el 98,50~\% de las entradas fuera de la diagonal es distinto de cero, 959 de los 1.035 pares son no nulos en los 49 períodos y un solo par permanece en cero durante todo el horizonte. La red es, en la práctica, completa.
+El volumen resultante se puede precisar. Con 46 agentes hay 1.035 pares posibles, y con 50 trimestres se obtienen 49 matrices de diferencias $\Delta W(t)$, de manera que el estimador dispone de 50.715 observaciones de par por período frente a los 1.081 parámetros libres de $\Sigma$, es decir cerca de 47 observaciones por parámetro. Junto con el artículo, sus autores publican un material suplementario que contiene las matrices de diferencias y el código del ejercicio, y cuya revisión en el marco de este trabajo confirma las propiedades estructurales que el modelo supone, ya que las 49 matrices son exactamente simétricas y de diagonal nula, el 98,50~\% de las entradas fuera de la diagonal es distinto de cero, 959 de los 1.035 pares son no nulos en los 49 períodos y un solo par permanece en cero durante todo el horizonte. La red es, en la práctica, completa.
 
 La forma en que se obtuvieron esos datos importa tanto como su volumen, puesto que es el punto en que el caso de referencia y el caso chileno se separan desde el principio. En el caso de la OCDE la obtención se redujo a una única descarga desde un repositorio estadístico internacional que ya publica la información organizada como panel, con periodicidad uniforme, cobertura homogénea y una sola unidad de medida. No hubo que decidir qué cifra corresponde a cada celda ni reconciliar definiciones entre fuentes distintas, tarea que, como se verá en la Sección~\ref{c4:levantamiento}, concentra buena parte del esfuerzo en el caso chileno.
 
@@ -107,7 +107,7 @@ Esa distinción importa porque el presente trabajo necesita las dos direcciones 
 
 En dicha tesis no hay fuente de datos que describir, ya que los primitivos del modelo se fijan por estipulación. Para la configuración de tres agentes, la matriz de covarianzas y la de retornos esperados se heredan íntegras del Ejemplo~5 del artículo base, reproducidas en la Ecuación~\eqref{eq:ejemplo5-parametros}, y la aversión al riesgo se fija en la unidad para todos los agentes.
 
-Para la configuración de cuatro agentes, que incorpora un competidor del intermediario, ambas matrices se amplían agregando una fila y una columna casi idénticas a las del intermediario original, con una correlación de $0,99$ entre los dos. Esa cifra no proviene de ninguna medición, sino que es una decisión de diseño del experimento cuyo propósito es que los demás agentes perciban a ambos intermediarios como sustitutos cercanos, de manera que el escenario aísle el efecto de la competencia y nada más. Los dos parámetros propios del modelo dual, es decir la fricción de acceso a la red Alternativa y el beneficio de transparencia de la Ecuación~\eqref{eq:utilidad-dual}, también son exógenos y se recorren sobre el intervalo que va de cero a $0,5$, con el valor $0,15$ de fricción y transparencia nula como configuración de referencia.
+Para la configuración de cuatro agentes, que incorpora un competidor del intermediario dentro de la misma red, ambas matrices se amplían agregando una fila y una columna casi idénticas a las del intermediario original, con una correlación de $0,99$ entre los dos. Esa cifra no proviene de ninguna medición, sino que es una decisión de diseño del experimento cuyo propósito es que los demás agentes perciban a ambos intermediarios como sustitutos cercanos, de manera que el escenario aísle el efecto de la competencia y nada más. Los dos parámetros propios del modelo dual, es decir la fricción de acceso a la red Alternativa y el beneficio de transparencia de la Ecuación~\eqref{eq:utilidad-dual}, también son exógenos y se recorren sobre el intervalo que va de cero a $0,5$, con el valor $0,15$ de fricción y transparencia nula como configuración de referencia.
 
 Dos consecuencias se siguen de ese origen. La primera es que los agentes son etiquetas genéricas, a saber, un banco nacional, un banco local, una empresa local y un entrante tecnológico, sin contraparte institucional identificable. La segunda es que el tamaño de contrato que el modelo devuelve carece de unidad monetaria, de modo que todos los resultados se enuncian como porcentajes y brechas relativas y ninguno como un nivel.
 
@@ -166,7 +166,7 @@ La Tabla~\ref{tab:venegas-escenarios} recoge los seis escenarios con sus magnitu
     \end{tabular}
 \end{table}
 
-El primer hallazgo es el costo de la restricción. Prohibir el contrato directo entre el banco nacional y la empresa local reduce la utilidad total de $1,434$ a $0,706$, es decir una pérdida de $50,8$~\%, mientras el volumen bilateral cae de $1,976$ a $0,822$. La reproducción de ese escenario base con el código auditado entrega un volumen bilateral de $0,8221$ y una utilidad total de $0,7061$, cifras que coinciden con las publicadas.
+El primer hallazgo es el costo de la restricción. Prohibir el contrato directo entre el banco nacional y la empresa local reduce la utilidad total de $1,434$ a $0,706$, es decir una pérdida de $50,8$~\%, mientras el volumen bilateral cae de $1,976$ a $0,822$.
 
 El segundo hallazgo es que la competencia no sustituye a la desregulación. La entrada de un cuarto agente que compite con el intermediario eleva la utilidad total a $1,034$, lo que mejora en $46,5$~\% el escenario base, pero deja en pie una brecha de $27,9$~\% frente a la red sin restricción, porque la arista prohibida sigue prohibida y el nuevo agente solo puede competir en los tramos que ya existían.
 
@@ -174,6 +174,51 @@ El tercer hallazgo es el que da título a dicha tesis. Habilitar la red Alternat
 
 El cuarto hallazgo es distributivo. La ganancia se concentra en la parte
 bloqueada por la restricción, cuya utilidad pasa de $0,202$ a $0,988$, mientras el intermediario que lucraba con la intermediación obligada la ve caer de $0,441$ a $0,256$. Finalmente, los barridos de sensibilidad muestran que la utilidad de la red Alternativa desciende de $1,74$ a $1,05$ cuando la fricción de acceso crece de cero a $0,5$, con la adopción cayendo de $50$~\% a $25$~\%, y que con fricción fija en $0,15$ un beneficio de transparencia de $0,5$ la eleva hasta $1,87$.
+
+Antes de contrastar estos resultados con datos corresponde verificar que la
+implementación los reproduce, puesto que de otro modo una discrepancia posterior
+entre el modelo y la evidencia no podría atribuirse al modelo en vez de a un
+error de código. La Tabla~\ref{tab:reproduccion-escenarios} compara las cifras publicadas
+con las que entrega la implementación auditada en la Sección~\ref{c3:auditoria},
+para los cuatro escenarios de referencia que el objetivo específico~2 del
+Capítulo~\ref{c1} pide reproducir. Las cuatro utilidades totales coinciden en sus
+cuatro decimales y la mayor diferencia de toda la tabla es de $0,0005$, magnitud
+atribuible al redondeo con que la fuente reporta sus cifras. El contrato directo
+entre el primer y el tercer agente se reproduce además como exactamente nulo en
+los dos escenarios con restricción y del orden de $1,03$ en los dos escenarios
+sin ella, lo que confirma que las matrices de acceso operan como corresponde.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Reproducción de los cuatro escenarios de referencia]{Cifras
+    publicadas por \citeA{venegas_dual_network_2024} y cifras obtenidas al
+    ejecutar la implementación auditada, para los cuatro escenarios de
+    referencia. Las magnitudes son adimensionales. Elaboración propia.}
+    \label{tab:reproduccion-escenarios}
+    \begin{tabular}{p{4.6cm}cccc}
+        \toprule
+         & \multicolumn{2}{c}{Utilidad total} & \multicolumn{2}{c}{Volumen bilateral} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+        Escenario & publicada & reproducida & publicado & reproducido \\
+        \midrule
+        Tradicional con restricción, tres agentes & 0,7061 & 0,7061 & 0,822 & 0,8221 \\
+        Tradicional sin restricción, tres agentes & 1,4338 & 1,4338 & 1,976 & 1,9764 \\
+        Competencia con restricción, cuatro agentes & 1,0341 & 1,0341 & 1,351 & 1,3508 \\
+        Sin restricción, cuatro agentes & 1,7413 & 1,7413 & 2,372 & 2,3721 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+La reproducción dejó ver además un detalle de implementación que la fuente no
+menciona. La configuración de cuatro agentes necesita del orden de ochocientas
+rondas de negociación bilateral para converger, mientras que con tres agentes
+bastan unas pocas decenas, y la razón es que la correlación de $0,99$ entre los
+dos intermediarios deja la matriz de covarianzas casi singular, con un valor
+propio menor de $0,01$. Con menos rondas las cifras se aproximan a las
+publicadas sin coincidir en el cuarto decimal, de modo que quien quiera repetir
+el ejercicio debe fijar un criterio de convergencia y no un número de rondas
+heredado del caso de tres agentes.
 
 \subsection{Qué cambia al reemplazar los parámetros por datos}
 \label{c4:venegas-contraste}
@@ -303,7 +348,7 @@ Sobre esa grilla de nueve años hay nueve celdas observadas de cuarenta y cinco.
     \label{fig:panel-comparado}
 \end{figure}
 
-El dato decisivo para el método no es sin embargo el número de celdas, sino el número de diferencias utilizables, ya que el estimador de la Proposición~1 opera sobre $W(t+1)-W(t)$ y una sola celda faltante elimina el período completo. Bajo ese criterio el recuento depende de qué red se considere. Para la red de cuatro agentes, en cualquiera de sus dos versiones, no hay ninguna diferencia utilizable, porque ningún año tiene completas todas sus aristas. Restringiendo la mirada a la red Tradicional por separado, que involucra únicamente a CORFO, al intermediario y a la MiPyME, hay exactamente una diferencia utilizable, que es la que va de 2019 a 2020, frente a los seis parámetros libres de la $\Sigma$ de tres agentes. Esa única diferencia tampoco alcanzaría aunque se dispusiera de muchas más, ya que el rango de la información en esa cadena es de 3 sobre 6, según se detalla en la Sección~\ref{c4:comparacion}.
+El dato decisivo para el método no es sin embargo el número de celdas, sino el número de diferencias utilizables, ya que el estimador de la Proposición~1 opera sobre $W(t+1)-W(t)$ y una sola celda faltante elimina el período completo. Bajo ese criterio el recuento depende de qué red se considere. Tomando las dos redes en conjunto, que es el sistema sobre el que está definida $\Sigma$, no hay ninguna diferencia utilizable, ni en la especificación de tres aristas ni en la extensión de cinco, porque ningún año tiene completas todas sus aristas. Restringiendo la mirada a la red Tradicional por separado, que involucra únicamente a CORFO, al intermediario y a la MiPyME, hay exactamente una diferencia utilizable, que es la que va de 2019 a 2020, frente a los seis parámetros libres de la $\Sigma$ de tres agentes. Esa única diferencia tampoco alcanzaría aunque se dispusiera de muchas más, ya que el rango de la información en esa cadena es de 3 sobre 6, según se deriva en la Sección~\ref{c3:identificabilidad}.
 
 \subsection{Obstáculos de comparabilidad detectados}
 \label{c4:levantamiento-obstaculos}
@@ -347,17 +392,17 @@ La comparación con el trabajo que se continúa quedó resuelta en la Sección~\
         \toprule
         Dimensión & Caso OCDE & Crédito Corfo Mipyme \\
         \midrule
-        Agentes $n$ & 46 & 4 \\
+        Agentes $n$ & 46, en una sola red & 4, repartidos en dos redes \\
         Pares posibles & 1.035 & 6 \\
         Aristas admisibles & 1.035, solo se prohíbe el lazo propio & 3 estructurales, más 2 en la extensión de diseño \\
         Períodos & 50 trimestres entre 2010 y 2022 & 9 años entre 2016 y 2024 \\
-        Diferencias utilizables & 49 & 0 en la red de cuatro agentes y 1 en la red Tradicional sola \\
+        Diferencias utilizables & 49 & 0 en las dos redes en conjunto y 1 en la red Tradicional sola \\
         Celdas observadas & 50.715 de 50.715 & 9 de 45 en la grilla extendida \\
         Entradas no nulas & 98,50 \% & no evaluable \\
         Parámetros de $\Sigma$ & 1.081 & 10 \\
-        Ecuaciones por parámetro & 46,9 & 0 \\
-        Rango de la información & 21 de 21 en el análogo completo con $n=6$ & 5 de 10 en la cadena de cuatro agentes y 3 de 6 en la red Tradicional sola \\
-        Identificación de $\Sigma$ & sí & no \\
+        Observaciones por parámetro & 46,9 & 0,9 \\
+        Rango de la información & completo & 3 de 6 en la red Tradicional, con un déficit que crece al agregar intermediarios \\
+        Identificación de $\Sigma$ & sí & parcial, solo la covarianza entre CORFO y la MiPyME \\
         Peso de la arista & suma de los flujos en ambos sentidos & desembolso en un solo sentido \\
         Medición & flujo comercial en una sola base & mezcla de flujo y saldo en cuatro bases distintas \\
         Obtención & descarga única desde un repositorio estadístico & reconstrucción documento a documento \\
@@ -380,7 +425,7 @@ Esa misma lectura explica por qué la extensión de diseño descrita en la Secci
 
 El diagnóstico muestral del Capítulo~\ref{c3} aplica la cota del Teorema~5 al largo del panel disponible. Corresponde precisar esa lectura, porque el teorema y el panel se refieren a objetos distintos. La cantidad $m$ que aparece en la Ecuación~\eqref{eq:teorema5} es el número de muestras de retornos con que cada agente estima su propia covarianza $\hat\Sigma_i$, y el resultado acota cuánto se degrada el factor de amortiguación seguro de las negociaciones bilaterales cuando esa estimación es imperfecta. En cambio el largo del panel $W(t)$ es el insumo de la ruta alternativa, que es la Proposición~1 de la Ecuación~\eqref{eq:prop1}, donde lo que se estima es una $\Sigma$ común a partir de los incrementos de la red observada. La propia Sección~\ref{c24:identificacion} presenta ambas rutas como alternativas entre sí.
 
-La precisión tiene dos consecuencias. La primera es que la cota de seis observaciones no es el criterio que decide si el panel alcanza, puesto que el criterio pertinente es cuántas diferencias completas $\Delta W$ existen, y hoy son cero. La segunda es que el Teorema~5 supone explícitamente que no hay aristas prohibidas, condición que la red del programa no cumple, de modo que su cota no es directamente aplicable al caso. El diagnóstico de insuficiencia del panel se sostiene igualmente, pero su fundamento correcto es la combinación de ausencia de diferencias utilizables y déficit de rango por bipartición, y no el incumplimiento de la cota del Teorema~5.
+La precisión tiene dos consecuencias. La primera es que la cota de seis observaciones no es el criterio que decide si el panel alcanza, puesto que el criterio pertinente es cuántas diferencias completas $\Delta W$ existen, y hoy las dos redes en conjunto no tienen ninguna, mientras que la red Tradicional por separado tiene una sola. La segunda es que el Teorema~5 supone explícitamente que no hay aristas prohibidas, condición que la red del programa no cumple, de modo que su cota no es directamente aplicable al caso. El diagnóstico de insuficiencia del panel se sostiene igualmente, pero su fundamento correcto es la combinación de la escasez de diferencias utilizables y del déficit de rango por bipartición, y no el incumplimiento de la cota del Teorema~5.
 
 \section{Alcance del análisis con la información disponible}
 \label{c4:alcance}
@@ -393,4 +438,4 @@ El contraste anterior permite ordenar el trabajo restante en tres niveles, segú
 
 \paragraph{Resultados que requieren fuentes externas a CORFO.} La identificación completa de $\Sigma$ exige dos aristas que deben levantarse simultáneamente, que son el fondeo bancario de los propios intermediarios, única de las dos que rompe la bipartición, y las líneas que CORFO coloca a través de bancos comerciales. La primera no pertenece al ámbito de CORFO y debe buscarse en la información de la CMF o en los estados financieros de los intermediarios.
 
-Mientras esas entregas no se concreten, el análisis que este capítulo habilita es de naturaleza comparativa y estructural, en el sentido de que establece qué exige el método, cuánto de eso cubre la información pública chilena y qué faltaría exactamente para cerrar la brecha, lo que constituye el punto de partida del análisis cuantitativo que continúa en las secciones siguientes.
+Mientras esas entregas no se concreten, el análisis que este capítulo habilita es de naturaleza comparativa y estructural, en el sentido de que establece qué exige el método, cuánto de eso cubre la información pública chilena y qué faltaría exactamente para cerrar la brecha, lo que constituye el punto de partida del análisis cuantitativo que podrá ejecutarse una vez que esa información esté disponible.
