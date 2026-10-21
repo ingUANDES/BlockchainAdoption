@@ -86,19 +86,47 @@ cuales se superan. El núcleo numérico reproduce el Ejemplo 5 de
 prohibida sobre la que se construye el escenario de referencia, y su solución
 cerrada coincide con la negociación iterada a precisión de máquina. Se
 verificaron también los escenarios 3F-WITH, 3F-WITHOUT, 4F-WITH y 4F-WITHOUT
-declarados en la tesis. No se detectó ningún error que invalide un resultado
-publicado.
+declarados en la tesis. Dentro de ese motor de red única no se detectó ningún
+error que invalide un resultado publicado.
 
 El hallazgo relevante no fue de corrección sino de cobertura. De las 32 unidades
 de resultado inventariadas en la tesis de referencia, 7 son reproducibles con el
 código versionado, 16 requieren código que no acompaña al documento, 5 no tienen
 ni código ni derivación asociados y 4 no admiten reproducción por su naturaleza.
-Las derivaciones simbólicas del modelo dual sí existen y sus comprobaciones son
-correctas, de modo que lo que falta es la implementación numérica de esa capa y
-no el álgebra que la sustenta. En consecuencia, el motor de red única puede
-emplearse con confianza para el caso de aplicación, mientras que la capa que
-acopla las redes Tradicional y Alternativa debe implementarse como parte de este
-trabajo.
+Las derivaciones simbólicas del modelo dual sí existen, aunque su revisión
+arrojó un resultado mixto. El término lineal y el Hessiano del problema del
+agente están bien obtenidos en la demostración que acompaña a su proposición
+dual. En cambio, la expresión impresa para la matriz que resuelve el problema
+restringido no satisface la condición de estacionariedad, punto que no altera
+ninguna cifra porque la implementación publicada emplea la forma correcta. Más
+relevante es que la contabilidad del bienestar que emplea dicha tesis no resulta
+compatible con la condición de primer orden de la que ella misma obtiene el
+reparto entre ambas redes. Por lo tanto, lo que faltaba no era únicamente la
+implementación numérica de esa capa, sino también una parte del álgebra que la
+sustenta.
+
+En consecuencia, el motor de red única puede emplearse con confianza para el
+caso de aplicación, mientras que la capa que acopla las redes Tradicional y
+Alternativa debía implementarse como parte de este trabajo. Esa implementación
+ya se realizó y se apoya en 25 pruebas automatizadas propias, todas las cuales
+se superan. La Sección~\ref{c4:venegas-dual} reporta lo que se obtuvo con ella.
+Las utilidades totales de los escenarios duales se reproducen al cuarto decimal,
+mientras que las cifras de reparto no se reproducen con los parámetros que la
+fuente declara, es decir la adopción de la red Alternativa, el volumen de cada
+red y el diferencial de precio promedio. El Anexo~\ref{anexo:dual} desarrolla el
+diagnóstico de esa diferencia, que señala tres problemas de especificación, a
+saber la necesidad de dos contabilidades del riesgo incompatibles entre sí, la
+ganancia de bienestar artificial que aparece al fragmentar una exposición en dos
+redes y cobrar el riesgo de cada parte por separado, y la incompatibilidad del
+supuesto de precio único con la presencia de una arista prohibida.
+
+Conviene precisar que nada de esto refuta dicha tesis, puesto que sus cifras de
+bienestar son correctas dentro de su propia contabilidad y el ejercicio resulta
+internamente coherente si se acepta su supuesto de portafolio total fijo. Lo que
+el diagnóstico establece es algo más preciso, a saber que la recuperación
+completa del bienestar es una propiedad de ese supuesto y no una predicción
+contrastable del modelo. Por esa razón, determinar si el mecanismo opera en un
+sistema real exige el contraste con datos que esta memoria se propone.
 
 \section{Caso de aplicación. El programa Crédito Corfo Mipyme}
 \label{c3:caso}
