@@ -8,6 +8,42 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Añadido
+- `code/caballero/`: implementación propia de la capa de acoplamiento
+  Tradicional/Alternativa del modelo dual, separada de `code/audit/` porque
+  aquélla documenta el código de la tesis que se continúa y ésta es aporte de
+  esta memoria. Resuelve el hueco que la auditoría había dejado abierto, a
+  saber que el modelo dual tenía su álgebra derivada pero no su implementación
+  numérica.
+  - `caballero_dual.py`: la capa de acoplamiento. Reduce el reparto
+    $w_i^T + w_i^A = w_i^*$ a una corrida del mismo Algorithm 1 ya auditado,
+    con los primitivos transformados, de modo que no introduce un algoritmo de
+    negociación nuevo. Reproduce las utilidades totales publicadas, con 1,4339
+    frente a 1,434 en tres agentes y 1,7417 frente a 1,741 en cuatro.
+  - `caballero_verificacion_objeciones.py`: re-derivación simbólica de la
+    especificación dual, en ocho bloques. Establece que las dos contabilidades
+    del riesgo que la tesis de referencia usa son incompatibles entre sí, ya
+    que con el riesgo evaluado sobre la exposición combinada el Hessiano
+    colapsa y el reparto deja de tener óptimo interior, y que la fórmula de
+    $Q^{dual}$ está mal transcrita en el capítulo 3 y en el Apéndice A.1.
+    Refuta además una objeción anterior sobre el supuesto de precio único,
+    cuya formulación correcta es que ese supuesto no admite punto factible
+    bajo restricción.
+  - `test_caballero_dual.py`: 25 pruebas en cuatro grupos. El grupo
+    `test_discrepancia_*` fija las cifras publicadas que la capa **no**
+    reproduce, a saber las tasas de adopción, los volúmenes por red y el
+    diferencial de precio, de modo que la brecha quede dentro de la batería y
+    no fuera de ella.
+  - `venegas_model_corregido.py` y su batería de 21 pruebas: corrige los
+    hallazgos H1, H3, H4b y H7 de la auditoría más la validación de $\Sigma$,
+    sin modificar `venegas_model.py`, que se preserva como evidencia.
+    Verificado que ambos motores entregan valores duales idénticos.
+  - `_ruta_audit.py` y `conftest.py`: resuelven en un único lugar la ruta a
+    `code/audit`, desde la ubicación del archivo y no desde el directorio de
+    trabajo, para que las baterías corran sin `PYTHONPATH`.
+- `README.md`: bloque de estructura actualizado, subsección con los comandos de
+  las tres baterías y nota de estado de la capa dual. Se corrigió la
+  afirmación de que el 100 % de recuperación de bienestar requería una
+  implementación numérica inexistente.
 - `code/audit/`: auditoría completa del código de la tesis de Venegas, previa a
   la calibración con datos reales (branch `audit/venegas-code`). Ningún archivo
   del autor original fue modificado; se tratan como evidencia.

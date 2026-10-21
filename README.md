@@ -24,6 +24,30 @@ code/
   audit/                             # Auditoría del código de Venegas (sept. 2026):
                                      # informe, módulo extraído, verificación algebraica,
                                      # inventario de cobertura y suite de 30 pruebas
+  caballero/                         # Implementación propia de la memoria (oct. 2026):
+                                     # capa de acoplamiento T/A del modelo dual, motor
+                                     # corregido, re-derivación de las objeciones a la
+                                     # especificación dual y sus 46 pruebas
+```
+
+La separación entre `audit/` y `caballero/` es deliberada. `audit/` documenta el código de
+la tesis que se continúa y preserva su evidencia sin modificarla, mientras que `caballero/`
+contiene implementación propia de la memoria en curso. Los módulos de `caballero/` importan
+`venegas_model.py` y `metricas_tesis.py` desde `audit/`, resolviendo la ruta en
+`code/caballero/_ruta_audit.py`, de modo que no hace falta `PYTHONPATH`.
+
+### Baterías de pruebas
+
+```bash
+# Auditoría del motor original (30 pruebas). Debe correrse desde su propia
+# carpeta, porque una prueba lee ../Financial_Networks_Stability.qmd por ruta relativa.
+cd code/audit && python -m pytest test_venegas_model.py -v
+
+# Motor corregido (21) y capa de acoplamiento T/A (25), desde la raíz del repositorio.
+python -m pytest code/caballero -v
+
+# Re-derivación algebraica de las objeciones a la especificación dual.
+python code/caballero/caballero_verificacion_objeciones.py
 ```
 
 Cada carpeta de memoria/tesis sigue la plantilla estándar de Ingeniería UAndes: `core/`
@@ -56,9 +80,24 @@ bienestar del benchmark sin restricción.
 > los scripts de los escenarios 3F/4F, ni el código que genera las figuras del capítulo 4. Las
 > derivaciones simbólicas del modelo dual sí existen y están verificadas, pero quedaron en
 > `code/.ipynb_checkpoints/`. De los tres números citados arriba, 50,8%, 46,5% y 27,9% son
-> reproducibles con el código versionado; el **100%** de la red alternativa requiere una
-> implementación numérica que no existe todavía. Informe completo, inventario unidad por unidad
+> reproducibles con el código versionado. Informe completo, inventario unidad por unidad
 > y suite de pruebas en [`code/audit/`](code/audit/AUDITORIA_VENEGAS.md).
+
+> **Implementación de la capa dual (octubre 2026).** El **100%** de recuperación de
+> bienestar ya no depende de una implementación inexistente: la capa de acoplamiento T/A
+> está implementada en [`code/caballero/caballero_dual.py`](code/caballero/caballero_dual.py)
+> y reproduce las utilidades totales publicadas, con 1,4339 frente a 1,434 en el escenario
+> de tres agentes y 1,7417 frente a 1,741 en el de cuatro. La reproducción, sin embargo, es
+> parcial y de un modo que importa. Se reproducen exactamente las cifras que no dependen del
+> reparto entre redes, y ninguna de las que sí dependen de él, ya que las tasas de adopción
+> dan 81,6% y 75,0% frente a los 72,4% y 47,9% publicados. La re-derivación algebraica de la
+> especificación dual, en
+> [`caballero_verificacion_objeciones.py`](code/caballero/caballero_verificacion_objeciones.py),
+> muestra por qué, dado que las utilidades totales dependen únicamente de la exposición total
+> del agente, que está fija por supuesto y no cambia entre escenarios. Las cifras no
+> reproducidas quedan fijadas como regresión en el grupo `test_discrepancia_*` de
+> [`test_caballero_dual.py`](code/caballero/test_caballero_dual.py), en vez de quedar fuera
+> de la batería.
 
 El propio Venegas identifica en la sección 5.3.3 de su tesis dos supuestos simplificadores
 que dejan las estimaciones de recuperación de bienestar en un piso conservador: aversión al
