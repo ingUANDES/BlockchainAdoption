@@ -40,6 +40,9 @@ repositorio.
   - `_ruta_audit.py` y `conftest.py`: resuelven en un único lugar la ruta a
     `code/audit`, desde la ubicación del archivo y no desde el directorio de
     trabajo, para que las baterías corran sin `PYTHONPATH`.
+- `.gitignore`: el repositorio no tenía uno. Cubre artefactos de Python, de
+  LaTeX y de Quarto; las excepciones deliberadas están anotadas en el propio
+  archivo.
 - `README.md`: bloque de estructura actualizado, subsección con los comandos de
   las tres baterías y nota de estado de la capa dual. Se corrigió la
   afirmación de que el 100 % de recuperación de bienestar requería una
