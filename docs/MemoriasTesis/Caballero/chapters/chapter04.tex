@@ -134,7 +134,7 @@ El procedimiento de dicha tesis se compone de cinco pasos.
     beneficio de transparencia.
 \end{enumerate}
 
-Interesa registrar qué clase de validación admite ese procedimiento, porque es el punto donde esta memoria interviene. En ningún momento se contrasta la red predicha con una red observada, dado que no hay ninguna red observada en el ejercicio. El control de calidad es de consistencia interna, ya que la configuración simétrica, en la que ambas redes operan con transparencia nula, fricción nula y sin restricciones, reproduce exactamente el resultado de red única, lo que verifica que la capa dual no introduce distorsiones por sí misma. Ese control es necesario pero no suficiente para sostener que el modelo describe un sistema financiero real, y es justamente el contraste externo faltante el que da sentido al objetivo de esta memoria. La reproducibilidad de la implementación que sustenta dichos pasos se examinó en la Sección~\ref{c3:auditoria}, cuyo resultado fue que el motor de red única es confiable y que la capa dual carece de implementación publicada.
+Interesa registrar qué clase de validación admite ese procedimiento, porque es el punto donde esta memoria interviene. En ningún momento se contrasta la red predicha con una red observada, dado que no hay ninguna red observada en el ejercicio. El control de calidad es de consistencia interna, ya que la configuración simétrica, en la que ambas redes operan con transparencia nula, fricción nula y sin restricciones, reproduce exactamente el resultado de red única, lo que verifica que la capa dual no introduce distorsiones por sí misma. Ese control es necesario pero no suficiente para sostener que el modelo describe un sistema financiero real, y es justamente el contraste externo faltante el que da sentido al objetivo de esta memoria. La reproducibilidad de la implementación que sustenta dichos pasos se examinó en la Sección~\ref{c3:auditoria}, cuyo resultado fue que el motor de red única es confiable y que la capa que acopla ambas redes carece de implementación publicada. Esa ausencia obligó a implementarla en el marco de este trabajo, y lo que se obtuvo al hacerlo se expone en la Sección~\ref{c4:venegas-dual}.
 
 \subsection{Los hallazgos del ejercicio numérico}
 \label{c4:venegas-hallazgos}
@@ -170,7 +170,7 @@ El primer hallazgo es el costo de la restricción. Prohibir el contrato directo 
 
 El segundo hallazgo es que la competencia no sustituye a la desregulación. La entrada de un cuarto agente que compite con el intermediario eleva la utilidad total a $1,034$, lo que mejora en $46,5$~\% el escenario base, pero deja en pie una brecha de $27,9$~\% frente a la red sin restricción, porque la arista prohibida sigue prohibida y el nuevo agente solo puede competir en los tramos que ya existían.
 
-El tercer hallazgo es el que da título a dicha tesis. Habilitar la red Alternativa lleva la utilidad total a $1,434$ con tres agentes, valor que iguala exactamente la referencia sin restricción, y a $1,741$ con cuatro agentes, valor que iguala el óptimo sin restricción de esa misma configuración. Conviene precisar que la configuración dual de tres agentes cierra la brecha contra esa referencia pero conserva una de $17,6$~\% contra el óptimo de cuatro agentes, diferencia que su autor atribuye a la ausencia de competencia y no a una falla del mecanismo estructural, puesto que al incorporar el cuarto agente dicha brecha desaparece. Junto con ello las dos redes coexisten en lugar de desplazarse, ya que la adopción de la red Alternativa se sitúa en $72,4$~\% con tres agentes y en $47,9$~\% con cuatro, mientras la red Tradicional conserva volumen en ambos casos.
+El tercer hallazgo es el que da título a dicha tesis. Habilitar la red Alternativa lleva la utilidad total a $1,434$ con tres agentes, valor que iguala exactamente la referencia sin restricción, y a $1,741$ con cuatro agentes, valor que iguala el óptimo sin restricción de esa misma configuración. Conviene precisar que la configuración dual de tres agentes cierra la brecha contra esa referencia pero conserva una de $17,6$~\% contra el óptimo de cuatro agentes, diferencia que su autor atribuye a la ausencia de competencia y no a una falla del mecanismo estructural, puesto que al incorporar el cuarto agente dicha brecha desaparece. Junto con ello las dos redes coexisten en lugar de desplazarse, ya que la adopción de la red Alternativa se sitúa en $72,4$~\% con tres agentes y en $47,9$~\% con cuatro, mientras la red Tradicional conserva volumen en ambos casos. Estas dos últimas cifras son, sin embargo, precisamente las que la reproducción realizada en este trabajo no confirma, según se detalla en la Sección~\ref{c4:venegas-dual}.
 
 El cuarto hallazgo es distributivo. La ganancia se concentra en la parte
 bloqueada por la restricción, cuya utilidad pasa de $0,202$ a $0,988$, mientras el intermediario que lucraba con la intermediación obligada la ve caer de $0,441$ a $0,256$. Finalmente, los barridos de sensibilidad muestran que la utilidad de la red Alternativa desciende de $1,74$ a $1,05$ cuando la fricción de acceso crece de cero a $0,5$, con la adopción cayendo de $50$~\% a $25$~\%, y que con fricción fija en $0,15$ un beneficio de transparencia de $0,5$ la eleva hasta $1,87$.
@@ -220,6 +220,149 @@ publicadas sin coincidir en el cuarto decimal, de modo que quien quiera repetir
 el ejercicio debe fijar un criterio de convergencia y no un número de rondas
 heredado del caso de tres agentes.
 
+\subsection{La reproducción de los escenarios duales}
+\label{c4:venegas-dual}
+
+Los escenarios duales merecen un tratamiento aparte, porque son los que sostienen
+el resultado central de dicha tesis y a la vez los únicos que su código publicado
+no permite reproducir. Para examinarlos hubo que implementar la capa que acopla
+ambas redes, tarea que la Sección~\ref{c3:auditoria} ya había identificado como
+propia de este trabajo. Conviene precisar que esa capa resultó más simple de lo
+que su nombre sugiere, puesto que CORFO y el intermediario participan solo en la
+red Tradicional y el banco solo en la Alternativa, de modo que el único agente
+que debe repartir su portafolio es la MiPyME, y su problema se resuelve como una
+corrida del mismo punto estable ya auditado, sin necesidad de un algoritmo de
+negociación nuevo.
+
+La Tabla~\ref{tab:reproduccion-dual} contrasta las cifras duales publicadas con
+las que entrega esa implementación, bajo los mismos valores de transparencia nula
+y fricción nula que la fuente declara para estos escenarios.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Reproducción de los escenarios duales]{Cifras duales publicadas por
+    \citeA{venegas_dual_network_2024} y cifras obtenidas con la implementación de
+    la capa de acoplamiento desarrollada en este trabajo, bajo transparencia y
+    fricción nulas. La adopción es la fracción del volumen bilateral que se canaliza
+    por la red Alternativa. Elaboración propia.}
+    \label{tab:reproduccion-dual}
+    \begin{tabular}{p{4.6cm}cccc}
+        \toprule
+         & \multicolumn{2}{c}{Utilidad total} & \multicolumn{2}{c}{Adopción de la red A} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+        Escenario & publicada & reproducida & publicada & reproducida \\
+        \midrule
+        Dual simétrico, tres agentes & 1,434 & 1,4339 & 50,0~\% & 50,0~\% \\
+        Dual con restricción, tres agentes & 1,434 & 1,4339 & 72,4~\% & 81,6~\% \\
+        Dual con restricción, cuatro agentes & 1,741 & 1,7417 & 47,9~\% & 75,0~\% \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+El patrón que muestra esa tabla es el hallazgo de esta sección y conviene
+enunciarlo con cuidado. Las tres utilidades totales se reproducen al cuarto
+decimal, mientras que la adopción se reproduce únicamente en el escenario
+simétrico y falla en los dos escenarios con restricción. Esa división no es
+casual, ya que en el escenario simétrico ambas redes son indistinguibles y el
+reparto por mitades está forzado por la simetría, sin que intervenga nada
+propio del modelo dual. Los dos escenarios donde la adopción sí tiene contenido,
+que son aquellos en que la restricción hace que las redes dejen de ser
+equivalentes, son exactamente los que no se reproducen. Lo mismo ocurre con las
+demás magnitudes que miden el reparto, dado que el volumen de la red Tradicional
+se publica como $0,568$ y se reproduce como $0,411$, el de la red Alternativa se
+publica como $1,486$ y se reproduce como $1,826$, y el diferencial de precio
+promedio se publica como $0,059$ y se reproduce como $0,082$.
+
+\subsubsection{Por qué las utilidades se reproducen y el reparto no}
+\label{c4:venegas-dual-causa}
+
+La explicación de esa asimetría está en la propia construcción del modelo dual y
+puede enunciarse sin recurrir al álgebra, cuyo desarrollo queda en el
+Anexo~\ref{anexo:dual}.
+
+El modelo dual supone que el portafolio total de cada agente está dado de
+antemano, y lo toma del óptimo de red única sin restricciones. Lo que el agente
+decide no es cuánto contratar, sino cómo repartir entre ambas redes lo que ya
+tiene decidido contratar. Ahora bien, cuando el bienestar se evalúa sobre la
+exposición combinada del agente, es decir sobre la suma de lo que lleva a cada
+red, el resultado depende solo de ese portafolio total y no del reparto. Como el
+portafolio total es el mismo en todos los escenarios, la utilidad total también
+lo es, y por eso vale $1,434$ con tres agentes tanto en el caso simétrico como en
+el restringido, y $1,741$ con cuatro agentes. Esas cifras se reproducen porque no
+contienen información sobre la capa dual.
+
+De ahí se sigue una consecuencia que conviene declarar con precisión. La
+igualdad entre el bienestar del escenario dual restringido y el de la red única
+sin restricción, que dicha tesis presenta como recuperación completa del
+bienestar perdido, no es una predicción que el modelo genere sino una
+consecuencia aritmética de haber fijado el portafolio total en el valor que toma
+cuando no hay restricción. Dicho de otro modo, el resultado está contenido en el
+supuesto de partida. Esto no es una refutación del trabajo que se continúa,
+puesto que sus cifras son correctas dentro de su propia contabilidad y el
+ejercicio es internamente coherente si se acepta ese supuesto. Lo que establece
+el diagnóstico es algo más preciso, a saber que la recuperación completa es una
+propiedad del supuesto y no una predicción contrastable, de modo que determinar
+si el mecanismo opera en un sistema real exige justamente el contraste con datos
+que esta memoria se propone.
+
+\subsubsection{Una tensión en la contabilidad del riesgo}
+\label{c4:venegas-dual-tension}
+
+La reproducción dejó al descubierto, además, una tensión en la especificación del
+modelo dual que explica por qué el reparto no se reproduce. El problema está en
+cómo se contabiliza el riesgo cuando un agente divide su exposición entre dos
+redes, ya que la tesis necesita hacerlo de dos maneras distintas a la vez.
+
+Por una parte necesita evaluar el riesgo por separado en cada red, porque solo
+así el agente tiene un reparto óptimo interior del que pueda salir una cifra de
+adopción. Si en cambio el riesgo se evalúa sobre la exposición combinada, el
+término de riesgo queda fijo, dado que depende solo del portafolio total, y con
+fricción nula el problema del agente pasa a ser lineal en la fracción que lleva a
+cada red, de manera que el agente queda indiferente entre todos los repartos
+posibles y el reparto por mitades deja de poder derivarse.
+
+Por otra parte necesita evaluar el riesgo sobre la exposición combinada, porque
+es la única contabilidad bajo la cual el bienestar total iguala el valor de
+referencia de red única. Evaluándolo por separado el bienestar del escenario
+simétrico sube a $2,1507$ en vez de $1,4339$, y deja de ser invariante a la
+restricción, ya que cae a $1,7869$ cuando esta se activa.
+
+El origen de esa diferencia es intuitivo. Al partir una misma exposición en dos
+mitades y cobrarle riesgo a cada una por separado, se omite que ambas mitades
+están expuestas al mismo riesgo subyacente, de modo que parte del riesgo
+desaparece de la cuenta. La magnitud de esa omisión es máxima justamente cuando
+el reparto es por mitades, que es el reparto que el propio modelo elige, y vale
+$0,7169$ en el escenario simétrico. El Anexo~\ref{anexo:dual} entrega la
+expresión cerrada de esa brecha y muestra que su máximo está en el reparto
+parejo.
+
+La consecuencia práctica es que ninguna de las dos contabilidades produce por sí
+sola los dos resultados que la tesis reporta de manera conjunta, es decir el
+reparto entre redes y la igualdad del bienestar con la referencia de red única.
+
+\subsubsection{Una objeción al supuesto de precio único}
+\label{c4:venegas-dual-precio}
+
+Un tercer punto surgió al revisar la definición de asignación factible del modelo
+dual, que exige un mismo precio para una arista en ambas redes. Con la
+restricción inactiva ese supuesto no causa problemas. Con la restricción activa,
+en cambio, la implementación entrega para una misma arista dos cantidades
+distintas según desde qué extremo se la mire, con una discrepancia de $2,3$ por
+$10^{-1}$ frente a una tolerancia de convergencia de $7,7$ por $10^{-4}$, lo que
+no es un contrato sino dos. Dado que el punto estable del modelo exige que ambas
+partes acuerden la misma cantidad, el supuesto de precio único resulta
+incompatible con la presencia de una arista prohibida. Permitir que el precio
+difiera entre redes restaura la simetría y reduce la discrepancia a $2,5$ por
+$10^{-4}$, es decir al nivel de la tolerancia numérica.
+
+Conviene cerrar precisando el alcance de estos tres puntos. Ninguno altera las
+cifras de bienestar que dicha tesis publica, que se reproducen como muestra la
+Tabla~\ref{tab:reproduccion-dual}. Lo que afectan es qué puede concluirse de
+ellas, y en particular establecen que las cifras de reparto entre redes no son
+reproducibles con los parámetros declarados, de modo que este trabajo no puede
+apoyarse en ellas como referencia al calibrar el caso chileno.
+
 \subsection{Qué cambia al reemplazar los parámetros por datos}
 \label{c4:venegas-contraste}
 
@@ -257,7 +400,7 @@ Esa tabla deja abierta una pregunta que conviene responder antes de pasar al lev
 
 El primer resultado de ese ejercicio es que la escala de $\Sigma$ no interviene. Al multiplicar la matriz por un factor positivo cualquiera, el tamaño de contrato del punto estable se divide exactamente por ese mismo factor, lo que concuerda con la propiedad de escalamiento que \citeA{jalan_incentive-aware_2024} establecen para este modelo, según la cual un aumento proporcional de la covarianza percibida contrae la red en la misma proporción. Las utilidades se comportan de igual modo, de manera que la pérdida de bienestar permanece en $50,75$~\% y la ganancia de volumen en $140,4$~\% para factores de $0,5$, de $2$ y de $10$. Los porcentajes que dicha tesis reporta son, por lo tanto, invariantes a la escala de las creencias de riesgo.
 
-El segundo resultado es que la forma sí interviene, y de manera concentrada. La Tabla~\ref{tab:sensibilidad-sigma13} muestra qué ocurre al variar únicamente la covarianza entre los dos agentes que la restricción separa, manteniendo el resto de la matriz fija y verificando en cada caso que siga siendo definida positiva. La pérdida de bienestar cae de $50,8$~\% a $20,0$~\% cuando esa covarianza baja de $0,75$ a $0,45$, y queda en $2,4$~\% cuando se anula. Dicho de otro modo, el hallazgo central del trabajo que se continúa descansa casi por completo en una sola entrada de $\Sigma$, puesto que la restricción solo destruye bienestar en la medida en que impide un contrato que habría sido valioso para cubrir riesgo.
+El segundo resultado es que la forma sí interviene, y de manera concentrada. La Tabla~\ref{tab:sensibilidad-sigma13} muestra qué ocurre al variar únicamente la covarianza entre los dos agentes que la restricción separa, manteniendo el resto de la matriz fija y verificando en cada caso que siga siendo definida positiva. La pérdida de bienestar cae de $50,8$~\% a $20,0$~\% cuando esa covarianza baja de $0,75$ a $0,45$, y queda en $2,4$~\% cuando se anula. Dicho de otro modo, el costo que la restricción impone descansa casi por completo en una sola entrada de $\Sigma$, puesto que la restricción solo destruye bienestar en la medida en que impide un contrato que habría sido valioso para cubrir riesgo. Conviene no confundir este resultado con el de la Sección~\ref{c4:venegas-dual}, ya que aquél se refiere a cómo se recupera el bienestar mediante la red Alternativa, mientras que éste se refiere a cuánto bienestar destruye la restricción en primer lugar. Ambos apuntan en la misma dirección, puesto que uno muestra que la magnitud del daño depende de una sola covarianza y el otro que la magnitud de la reparación depende de un supuesto.
 
 \begin{table}[H]
     \centering
@@ -430,9 +573,11 @@ La precisión tiene dos consecuencias. La primera es que la cota de seis observa
 \section{Alcance del análisis con la información disponible}
 \label{c4:alcance}
 
-El contraste anterior permite ordenar el trabajo restante en tres niveles, según de quién dependa cada uno.
+Antes de ordenar el trabajo restante conviene dejar constancia de con qué herramientas se obtuvo lo que este capítulo reporta. El ejercicio de referencia y los cuatro escenarios de red única se reprodujeron con la implementación publicada junto con la tesis que se continúa, una vez auditada según la Sección~\ref{c3:auditoria}. Los escenarios duales, en cambio, exigieron implementar la capa que acopla ambas redes, que la fuente no acompaña con código, y esa implementación es un resultado propio de este trabajo. Queda verificada contra las cifras duales que sí se reproducen y deja documentadas las que no, según la Sección~\ref{c4:venegas-dual}. Es además la herramienta con la que habrá que calcular el reparto de actividad entre ambas redes una vez calibrado el caso, de modo que su disponibilidad no depende de ninguna entrega externa.
 
-\paragraph{Resultados que ya son concluyentes.} No dependen de ninguna entrega pendiente y corresponden al diagnóstico de identificabilidad, es decir la bipartición de la red del programa y el déficit de rango que de ella se sigue, la caracterización de qué entradas de $\Sigma$ serían recuperables y cuáles no, y la auditoría del estimador publicado junto con la corrección propuesta.
+Hecha esa precisión, el contraste anterior permite ordenar el trabajo restante en tres niveles, según de quién dependa cada uno.
+
+\paragraph{Resultados que ya son concluyentes.} No dependen de ninguna entrega pendiente y corresponden al diagnóstico de identificabilidad, es decir la bipartición de la red del programa y el déficit de rango que de ella se sigue, la caracterización de qué entradas de $\Sigma$ serían recuperables y cuáles no, la auditoría del estimador publicado junto con la corrección propuesta, y el diagnóstico de la especificación dual con la implementación de la capa de acoplamiento que lo sustenta.
 
 \paragraph{Resultados que se desbloquean con la entrega de CORFO.} Con registros mensuales e intermediarios distinguidos uno a uno, el panel pasa a 107 diferencias y la red a $1+k+1$ nodos, lo que permite estimar las covarianzas entre pares de intermediarios y la covarianza entre CORFO y la MiPyME, que son precisamente las entradas que el cálculo de rango señala como recuperables en una red bipartita.
 

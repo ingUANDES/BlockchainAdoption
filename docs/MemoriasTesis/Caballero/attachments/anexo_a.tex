@@ -239,3 +239,126 @@ lo que un sesgo de contracción no los compromete. La corrección es necesaria
 $\Sigma$ con la cual calcular niveles de bienestar y contrafactuales, donde la
 diferencia entre un error de $0{,}39$ y uno de $0{,}12$ sí incide en las
 magnitudes que se reportan.
+
+\section{Diagnóstico de la especificación dual}
+\label{anexo:dual}
+
+Este anexo desarrolla los tres puntos que la Sección~\ref{c4:venegas-dual}
+resume, a saber la tensión entre las dos contabilidades del riesgo, la brecha
+que produce fragmentar una exposición en dos redes y la incompatibilidad del
+supuesto de precio único con la presencia de una arista prohibida. Todos se
+obtuvieron al implementar la capa de acoplamiento que la tesis de
+\citeA{venegas_dual_network_2024} no acompaña con código.
+
+\subsection{Las dos contabilidades del riesgo}
+\label{anexo:dual-contabilidades}
+
+En el modelo dual cada agente reparte un portafolio total $w_i^{*}$, dado de
+antemano, entre la red Tradicional y la Alternativa, de manera que
+$w_i^{*} = w_i^{T} + w_i^{A}$. La pregunta que decide todo lo demás es sobre qué
+objeto se evalúa el término de riesgo de la utilidad.
+
+Si el riesgo se evalúa por separado en cada red, la utilidad del agente incluye
+los dos términos $w_i^{T\top}\Sigma_i w_i^{T}$ y $w_i^{A\top}\Sigma_i w_i^{A}$.
+En ese caso el problema del agente es estrictamente cóncavo en $w_i^{T}$, su
+Hessiano es $H_i = 2\gamma_i\Sigma_i + \lambda_A I$ y existe un óptimo interior,
+que con transparencia y fricción nulas entrega $w_i^{T} = \tfrac{1}{2}w_i^{*}$,
+es decir el reparto por mitades que la fuente publica.
+
+Si en cambio el riesgo se evalúa sobre la exposición combinada, el término
+cuadrático es $w_i^{*\top}\Sigma_i w_i^{*}$, que no depende del reparto porque
+$w_i^{*}$ está fijo por supuesto. El Hessiano colapsa entonces a
+$H_i = \lambda_A I$, sin intervención de $\Sigma_i$, y con $\lambda_A = 0$, que
+es el valor declarado para los escenarios de validación, el problema pasa a ser
+lineal en $w_i^{T}$. Un problema lineal sin cotas no tiene óptimo interior, de
+modo que el agente resulta indiferente entre todos los repartos y la cifra de
+adopción deja de estar determinada por el modelo.
+
+La dificultad es que la primera contabilidad no reproduce el bienestar publicado
+y la segunda sí. Bajo riesgo separado el bienestar total del escenario simétrico
+asciende a $2,1507$ y cae a $1,7869$ al activarse la restricción, mientras que
+bajo riesgo combinado vale $1,4339$ en ambos casos, que es la cifra que la fuente
+reporta. Por lo tanto el reparto por mitades proviene de una contabilidad y la
+igualdad del bienestar con la referencia de red única proviene de la otra, sin
+que ninguna de las dos produzca ambos resultados.
+
+\subsection{La brecha de fragmentación}
+\label{anexo:dual-brecha}
+
+La diferencia entre ambas contabilidades admite forma cerrada. Escribiendo el
+reparto como $w_i^{T} = f\,w_i^{*}$ con $f\in[0,1]$, de modo que
+$w_i^{A} = (1-f)\,w_i^{*}$, la diferencia entre evaluar el riesgo por separado y
+evaluarlo sobre la exposición combinada es
+\begin{equation}
+\label{eq:brecha-fragmentacion}
+    \text{brecha}(f) = 2f(1-f)\sum_i \gamma_i\, w_i^{*\top}\Sigma_i\, w_i^{*}.
+\end{equation}
+La derivada de la Ecuación~\eqref{eq:brecha-fragmentacion} respecto de $f$ se
+anula únicamente en $f = \tfrac{1}{2}$, que es un máximo, de manera que la
+sobreestimación crece de forma monótona a medida que el reparto se empareja y
+alcanza su valor mayor exactamente en el reparto que la condición de primer orden
+elige cuando la transparencia y la fricción son nulas. En el escenario simétrico
+de tres agentes la expresión entrega $0,7169$, cifra que coincide con la
+diferencia observada entre $2,1507$ y $1,4339$.
+
+La lectura económica de la Ecuación~\eqref{eq:brecha-fragmentacion} es directa.
+Al partir una exposición en dos y cobrarle riesgo a cada parte por separado se
+omite el término cruzado, que es el que recoge que ambas partes están expuestas
+al mismo riesgo subyacente. Esa omisión aparece como una ganancia de bienestar
+que no proviene de ninguna mejora en la asignación sino de la mera división del
+portafolio.
+
+\subsection{El supuesto de precio único bajo restricción}
+\label{anexo:dual-precio}
+
+La definición de asignación factible del modelo dual exige que una misma arista
+tenga el mismo precio en ambas redes. Bajo ese supuesto el término lineal del
+problema del agente deja de depender del precio, de modo que cada agente resuelve
+su reparto de forma aislada y no queda instrumento alguno con el cual conciliar
+las dos puntas de una arista.
+
+Sin restricción eso es inocuo, porque el reparto hereda la simetría del
+portafolio total. Con la restricción activa en la red Tradicional, en cambio, la
+matriz de acceso $\Psi_i$ es distinta para cada agente y el resultado deja de ser
+simétrico. La Tabla~\ref{tab:dual-simetria} recoge la asimetría máxima de la
+matriz de contratos de la red Tradicional en ambos casos, medida contra la
+tolerancia de convergencia del propio motor, que es de $7{,}72\times10^{-4}$ y se
+obtiene sobre el portafolio total.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Simetría de la red Tradicional bajo precio único]{Asimetría máxima
+    de la matriz de contratos de la red Tradicional, según se permita o no que el
+    precio difiera entre redes. El punto estable del modelo exige que ambas partes
+    acuerden la misma cantidad, de modo que una asimetría muy superior a la
+    tolerancia numérica indica que la asignación no es factible. Elaboración
+    propia.}
+    \label{tab:dual-simetria}
+    \begin{tabular}{lcc}
+        \toprule
+        Escenario & Precio único & Precio distinto por red \\
+        \midrule
+        Sin restricción & $3{,}86\times10^{-4}$ & $3{,}86\times10^{-4}$ \\
+        Con restricción en la red Tradicional & $2{,}27\times10^{-1}$ & $2{,}45\times10^{-4}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+La asimetría bajo precio único es dos órdenes de magnitud mayor que la tolerancia,
+y se traduce en que una misma arista recibe dos cantidades distintas según desde
+qué extremo se la observe. Permitir que el precio difiera entre redes la devuelve
+al nivel del ruido numérico, lo que identifica al diferencial de precio entre
+redes como el único instrumento que restaura la factibilidad.
+
+\subsection{Un error de transcripción sin consecuencia numérica}
+\label{anexo:dual-transcripcion}
+
+Corresponde dejar constancia de un punto menor, detectado al verificar las
+derivaciones. La expresión que la tesis imprime para la matriz que resuelve el
+problema restringido no satisface la condición de estacionariedad proyectada y,
+al evaluarla en el caso sin restricciones, contradice la simplificación que el
+propio enunciado declara dos líneas después. La forma que sí resuelve el problema
+es análoga a la del artículo base. El punto no afecta ninguna cifra, puesto que
+la implementación publicada emplea la forma correcta, de modo que se trata de un
+error de redacción y no de cálculo.
