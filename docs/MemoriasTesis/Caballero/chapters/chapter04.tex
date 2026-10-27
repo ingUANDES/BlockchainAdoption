@@ -77,7 +77,7 @@ La Figura~\ref{fig:ocde-resultados} reproduce ambos hallazgos a partir de los ar
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{fig_jalan_ocde_resultados.png}
+    \includegraphics[width=\textwidth]{{{artifact:art_49b2fcf3-485d-4d5f-aef4-ec3a3cbf7570}}}
     \caption[Resultados del caso OCDE reproducidos]{Reproducción de los dos
     resultados empíricos del caso OCDE a partir del material suplementario de
     \citeA{jalan_incentive-aware_2024}. El panel izquierdo muestra el espectro de
@@ -407,26 +407,53 @@ El segundo resultado es que la forma sí interviene, y de manera concentrada. La
     \small
     \caption[Sensibilidad del costo de la restricción]{Pérdida de bienestar que
     provoca la restricción en el escenario base de tres agentes, al variar solo
-    la covarianza entre los dos agentes separados por ella. Elaboración propia
-    con la implementación auditada en la Sección~\ref{c3:auditoria}. Las seis
-    matrices son definidas positivas.}
+    la covarianza entre los dos agentes separados por ella. La última columna
+    recoge la adopción de la red Alternativa en la configuración dual, bajo
+    transparencia y fricción nulas. Elaboración propia con la implementación
+    auditada en la Sección~\ref{c3:auditoria} y con la capa de acoplamiento de
+    la Sección~\ref{c4:venegas-dual}. Las seis matrices son definidas positivas.}
     \label{tab:sensibilidad-sigma13}
-    \begin{tabular}{cccc}
+    \begin{tabular}{ccccc}
         \toprule
-        $\Sigma_{13}$ & Utilidad con & Utilidad sin & Pérdida \\
-         & restricción & restricción & de bienestar \\
+        $\Sigma_{13}$ & Utilidad con & Utilidad sin & Pérdida & Adopción de \\
+         & restricción & restricción & de bienestar & la red A \\
         \midrule
-        0,75 & 0,7061 & 1,4338 & 50,8~\% \\
-        0,60 & 0,7541 & 1,1025 & 31,6~\% \\
-        0,45 & 0,8111 & 1,0142 & 20,0~\% \\
-        0,30 & 0,8792 & 1,0008 & 12,2~\% \\
-        0,15 & 0,9611 & 1,0278 & 6,5~\% \\
-        0,00 & 1,0613 & 1,0879 & 2,4~\% \\
+        0,75 & 0,7061 & 1,4338 & 50,8~\% & 81,6~\% \\
+        0,60 & 0,7541 & 1,1025 & 31,6~\% & 68,5~\% \\
+        0,45 & 0,8111 & 1,0142 & 20,0~\% & 62,1~\% \\
+        0,30 & 0,8792 & 1,0008 & 12,2~\% & 57,8~\% \\
+        0,15 & 0,9611 & 1,0278 & 6,5~\% & 54,5~\% \\
+        0,00 & 1,0613 & 1,0879 & 2,4~\% & 52,1~\% \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Ese hallazgo tiene una consecuencia favorable para este trabajo, y resulta de cruzarlo con el diagnóstico de identificabilidad. La entrada que gobierna el resultado es la covarianza entre los dos agentes que no contratan entre sí, que en el caso chileno son CORFO y la MiPyME, y esa es precisamente la única entrada que la red bipartita del programa sí determina, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}, ya que interviene en el residuo del estimador a través de las aristas vecinas aunque el contrato directo sea idénticamente nulo. Por lo tanto el déficit de rango documentado, con ser severo, no impide pronunciarse sobre el hallazgo central del trabajo que se continúa, dado que lo que queda sin identificar son las varianzas propias y las covarianzas a lo largo de las aristas efectivamente  observadas.
+El mismo barrido, repetido en la configuración dual de dicha tesis, agrega dos
+cosas. La primera es que el bienestar del escenario dual
+coincide con la columna sin restricción en las seis filas, con una diferencia
+máxima de $1,2$ por $10^{-4}$ que es ruido de convergencia. Esa coincidencia es
+la identidad de la Sección~\ref{c4:venegas-dual} hecha visible a lo largo de todo
+el rango, puesto que la recuperación que el modelo dual exhibe no es otra cosa
+que el costo de la restricción leído al revés. La segunda, y es la que aporta
+información nueva, es que la adopción de la red Alternativa también se gobierna
+por esa misma entrada, ya que cae de $81,6$~\% a $52,1$~\% cuando la covarianza
+se anula, es decir que con creencias no correlacionadas entre los agentes
+separados por la restricción el reparto se acerca al que impondría la pura
+simetría y la red Alternativa deja de tener un papel propio.
+
+Conviene ser cuidadoso con el alcance de este resultado, puesto que todo lo
+anterior se calcula sobre la configuración de dicha tesis y no sobre la del caso
+chileno. En aquella configuración la red Alternativa vuelve a conectar al mismo
+par que la restricción separa, de modo que todo el valor recuperado pasa por esa
+arista y es natural que la covarianza de ese par gobierne el resultado. La red
+Alternativa del caso chileno no hace eso, ya que incorpora una contraparte
+distinta en lugar de restituir el contrato prohibido, dado que CORFO no
+participa en ella y el contrato directo con la MiPyME sigue ausente en ambas
+redes. Por lo tanto el hallazgo recién expuesto describe el mecanismo de la
+fuente y no debe trasladarse sin más al caso de aplicación, punto que se retoma
+al calibrar el caso.
+
+Conviene entonces cruzar este hallazgo con el diagnóstico de identificabilidad, y el resultado es de doble filo. En la configuración de dicha tesis la entrada que gobierna el resultado es la covarianza entre los dos agentes que no contratan entre sí, que es además la única que una red bipartita determina, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}, ya que interviene en el residuo del estimador a través de las aristas vecinas aunque el contrato directo sea idénticamente nulo. Si el caso chileno heredara ese mecanismo, el déficit de rango no impediría pronunciarse sobre el resultado central, puesto que lo que queda sin identificar son las varianzas propias y las covarianzas a lo largo de las aristas observadas. Como se verá al calibrar el caso, sin embargo, ese traslado no se produce, y la entrada que allí gobierna el reparto resulta ser la covarianza entre las dos contrapartes de la MiPyME, que es una de las que la bipartición no determina.
 
 La contrapartida es una limitación sobre los niveles que conviene declarar aquí. Como la normalización de la Ecuación~\eqref{eq:prop1} fija la traza de $\Sigma$ en uno, la escala de la matriz estimada no queda determinada por los datos, y por la invariancia recién verificada el nivel del tamaño de contrato predicho hereda esa indeterminación. En consecuencia, el contraste entre el modelo calibrado y la red observada es concluyente sobre proporciones, es decir sobre brechas de bienestar y sobre el reparto de actividad entre ambas redes, pero no sobre el monto en pesos de un contrato individual, a menos que se fije la escala con una referencia externa al estimador.
 
@@ -481,7 +508,7 @@ Sobre esa grilla de nueve años hay nueve celdas observadas de cuarenta y cinco.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{fig_panel_ocde_vs_corfo.png}
+    \includegraphics[width=\textwidth]{{{artifact:art_92f0841a-38d4-4aad-baa0-c2337d9ce621}}}
     \caption[Cobertura comparada de ambos paneles]{Cobertura del panel en ambos
     casos. El panel izquierdo compara, período a período, la fracción de pares
     con dato disponible. El panel derecho detalla la grilla del caso chileno, con
@@ -570,6 +597,137 @@ El diagnóstico muestral del Capítulo~\ref{c3} aplica la cota del Teorema~5 al 
 
 La precisión tiene dos consecuencias. La primera es que la cota de seis observaciones no es el criterio que decide si el panel alcanza, puesto que el criterio pertinente es cuántas diferencias completas $\Delta W$ existen, y hoy las dos redes en conjunto no tienen ninguna, mientras que la red Tradicional por separado tiene una sola. La segunda es que el Teorema~5 supone explícitamente que no hay aristas prohibidas, condición que la red del programa no cumple, de modo que su cota no es directamente aplicable al caso. El diagnóstico de insuficiencia del panel se sostiene igualmente, pero su fundamento correcto es la combinación de la escasez de diferencias utilizables y del déficit de rango por bipartición, y no el incumplimiento de la cota del Teorema~5.
 
+\section{La predicción del modelo bajo supuestos declarados}
+\label{c4:prediccion}
+
+Las secciones anteriores establecen qué exige el método y cuánto de eso cubre la información pública disponible. Resta ejecutar el modelo con esa información y reportar qué predice. Conviene advertir desde el principio que lo que sigue no es la calibración que pide el tercer objetivo específico, puesto que varios primitivos no provienen de ninguna fuente y quedan fijados por supuesto. Es una predicción bajo supuestos declarados, y esa condición acompaña a cada cifra que esta sección reporta.
+
+\subsection{Por qué el caso no instancia el mecanismo de la fuente}
+\label{c4:prediccion-topologia}
+
+El primer resultado del ejercicio apareció antes de correrlo y obligó a reformular cómo se corre. La capa de acoplamiento descrita en la Sección~\ref{c4:venegas-dual} no opera sobre la topología del caso, y conviene exponer las tres razones por separado, dado que son de naturaleza distinta.
+
+La primera es de dimensión. Esa capa supone que la red Alternativa no tiene restricción alguna, de modo que habilita los seis pares posibles entre los cuatro agentes, mientras que la red Alternativa del caso tiene un solo par, a saber el que une al banco con la MiPyME. Aplicarla sin ajuste asignaría contrato a cinco pares que no existen.
+
+La segunda es de incentivos. El supuesto de portafolio fijo establece que lo que un agente no ejecuta en una red lo ejecuta en la otra. Sin embargo, las dos contrapartes de la MiPyME son distintas entre redes, puesto que negocia con el intermediario en la red Tradicional y con el banco en la Alternativa, de manera que ambas posiciones quedan determinadas sin que medie optimización alguna. En esa configuración ni la fricción de acceso ni el beneficio de transparencia pueden mover el reparto, y el reparto deja de ser una decisión.
+
+La tercera es la decisiva y afecta al resultado central del trabajo que se continúa. La red Alternativa del caso no vuelve a conectar al par que la restricción separa. En dicha tesis el contrato prohibido entre los agentes uno y tres migra íntegro a la red Alternativa, con una posición de 1,033 que este trabajo reproduce en 1,033 según la Tabla~\ref{tab:reproduccion-escenarios}, y de esa migración proviene toda la recuperación de bienestar. En el programa, en cambio, el banco es una contraparte distinta y no una vía alternativa hacia CORFO, de modo que el contrato entre CORFO y la MiPyME permanece ausente en ambas redes. El mecanismo de recuperación no se traslada al caso, y ninguna cantidad de datos lo restituiría, puesto que lo que lo impide es la estructura de la red y no la escasez de observaciones.
+
+Esa diferencia obliga a acoplar ambas redes por otra vía. Si el reparto no puede provenir de una restricción de portafolio, proviene del riesgo, y el canal concreto es el término cruzado que aparece en el riesgo de la MiPyME al mantener posiciones simultáneas con sus dos contrapartes, es decir la covarianza entre el intermediario y el banco. Es una formulación que sigue acoplando ambas redes, aunque por un mecanismo distinto del de la fuente, y conviene declararla como tal y no presentarla como la misma capa.
+
+El cambio de mecanismo tiene una consecuencia medible y desfavorable. Recorrer la covarianza entre CORFO y la MiPyME mueve la cuota de la red Alternativa en 6,3 puntos porcentuales, mientras que recorrer la que vincula al intermediario con el banco la mueve en 23,2 puntos. La comparación usa un criterio de descarte que conviene declarar, puesto que de los siete puntos de cada barrido se retienen los siete del primero y solo cinco del segundo, por quedar los dos restantes con una posición negativa que no admite lectura como uso del canal. Sin ese descarte la segunda amplitud sube a 29,0 puntos, de manera que la cifra reportada es la conservadora. En cualquiera de las dos versiones la conclusión es la misma, y es que la única entrada de la matriz de covarianzas que la estructura bipartita permite identificar, según la Tabla~\ref{tab:comparacion-ocde-corfo}, no es la que gobierna el resultado.
+
+\subsection{Los supuestos que hubo que agregar y sus límites}
+\label{c4:prediccion-supuestos}
+
+Correr el modelo exigió fijar primitivos que ninguna fuente entrega. Conviene separarlos de los que sí tienen respaldo, porque de esa separación depende cuánto puede afirmarse.
+
+Tienen fuente en el Capítulo~\ref{c3} la tasa mayorista que CORFO cobra al intermediario, entre 4,23 y 4,73 por ciento anual, la tasa de mercado que enfrenta la MiPyME, entre 14 y 15,4 por ciento anual, la tasa subsidiada que el intermediario cobra a la MiPyME, declarada entre 3 y 6 por ciento, y el coeficiente de aversión al riesgo, fijado en uno para todos los agentes por el alcance del Capítulo~\ref{c1}.
+
+Quedan fijados por supuesto el retorno esperado del proyecto de la MiPyME, que determina el nivel de su columna de creencias, el margen del banco sobre su costo de fondo, la fricción de acceso de la red Alternativa, el beneficio de transparencia y la matriz de covarianzas completa. Los dos últimos se reportan únicamente por sensibilidad, dado que ninguna fuente los mide.
+
+La fricción de acceso merece una precisión, porque de ella dependen varias cifras de esta sección. El Capítulo~\ref{c3} la ancla de forma cualitativa mediante la evidencia de que la MiPyME enfrenta una tasa de rechazo del 15 por ciento frente al 3 por ciento de la empresa grande, y de que 111 de 1.018 empresas declaran autocensura, aunque no le asigna valor. La propuesta de cierre adoptada consiste en anclarla en la probabilidad de no obtener el crédito en el canal bancario, que combina ambos eventos sobre poblaciones disjuntas y da 0,243. Es una propuesta y no una medición, y su punto más frágil es que traducir una probabilidad a una penalización cuadrática no es una operación única, de modo que el factor de escala que esa traducción requiere queda fijado en uno por convención. Por eso el barrido acompaña siempre al valor propuesto.
+
+La matriz de covarianzas se reporta en dos versiones, puesto que no es estimable con la información disponible y elegir una sola escondería cuánto depende el resultado de esa elección. La primera es equicorrelada y asigna la misma correlación a todos los pares, de manera que no privilegia ninguna estructura y sirve de referencia. La segunda ordena las correlaciones por exposición al ciclo en tres bloques, con correlación alta entre el intermediario y el banco por ser ambos oferta de crédito privada, moderada entre la MiPyME y los oferentes de crédito por pertenecer al sector real, y negativa entre CORFO y los agentes privados, dado que un programa público de fomento se expande cuando el crédito privado se contrae.
+
+\subsection{El reparto de actividad predicho}
+\label{c4:prediccion-reparto}
+
+El barrido recorre 768 combinaciones de los intervalos declarados. De ellas resultan admisibles 312, bajo el doble criterio de que el margen del intermediario sea positivo, sin el cual el programa no opera, y de que la posición en la red Alternativa no sea negativa, sin lo cual la cuota no admite lectura como uso del canal.
+
+La cuota de la red Alternativa tiene mediana de 20,7 por ciento con la matriz equicorrelada y de 16,3 por ciento con la de ciclo, con rangos intercuartiles de 13,7 a 36,0 y de 8,8 a 31,8 puntos respectivamente, y un rango completo que va de 0,5 a 48,2 por ciento. Reportar un valor puntual sería engañoso, porque varios supuestos entran como intervalo y no como cifra, de modo que el resultado defendible es que el modelo predice una participación minoritaria de la red Alternativa, del orden de un quinto a un tercio de la actividad.
+
+El parámetro que más mueve esa predicción es el beneficio de transparencia, y conviene declarar que los dos barridos no tienen la misma amplitud, puesto que ese parámetro recorre el intervalo de cero a 0,20 mientras que la fricción de acceso recorre el de cero a cinco. Dentro de sus respectivos rangos, el primero mueve la cuota 52,9 puntos porcentuales con la matriz equicorrelada y 77,7 con la de ciclo, mientras que el segundo la mueve 16,5 y 0,3 puntos. El enunciado correcto no es que un parámetro sea más elástico que el otro, sino que dentro del rango que cada uno recorre el beneficio de transparencia domina el resultado. Llevar la cuota de la red Alternativa por sobre la mitad exige un beneficio del orden de diez puntos de tasa, magnitud comparable al subsidio completo, lo que constituye en sí mismo un hallazgo sobre cuán exigente resulta esa predicción.
+
+Queda una limitación del ejercicio que conviene dejar anotada. Con los supuestos declarados, el ingreso de CORFO y el costo del intermediario en el tramo mayorista son exactamente opuestos, de modo que el excedente conjunto de esa arista es nulo y nada en el modelo obliga al intermediario a tomar ese fondeo. La causa es que el modelo heredado no incorpora una restricción de balance que ate lo que el intermediario coloca con aquello de lo que se fondea. De las 312 combinaciones admisibles, 84 conservan alguna posición negativa en ese tramo, lo que confirma que no se trata de un caso de borde sino de una propiedad de la especificación.
+
+\subsection{El reparto observado en la Séptima Encuesta Longitudinal de Empresas}
+\label{c4:prediccion-ele7}
+
+La predicción anterior admite un contraste parcial, que no proviene de los registros de CORFO sino de la Séptima Encuesta Longitudinal de Empresas. Sus microdatos permiten establecer qué fuentes de financiamiento declara cada empresa, de modo que entregan la contraparte observada del reparto entre canales. El cálculo cubre 4.796 MiPyMEs que representan 395.852 empresas una vez aplicado el factor de expansión transversal, y la Tabla~\ref{tab:ele7-canales} lo resume por tramo de tamaño.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Uso de canales de financiamiento por las MiPyMEs]{Uso declarado de
+    canales de financiamiento por las MiPyMEs, en porcentaje de empresas
+    ponderado por el factor de expansión transversal de la Séptima Encuesta
+    Longitudinal de Empresas.}
+    \label{tab:ele7-canales}
+    \begin{tabular}{lrrrrr}
+        \toprule
+        Tramo & Usa banco & Canal del programa & Usa ambos & Solo banco & Ninguno \\
+        \midrule
+        Micro & 75,0 & 5,0 & 4,2 & 70,8 & 24,2 \\
+        Pequeña 1 & 85,8 & 5,2 & 5,0 & 80,8 & 14,1 \\
+        Pequeña 2 & 89,3 & 7,1 & 7,0 & 82,3 & 10,5 \\
+        Mediana & 93,5 & 10,5 & 10,4 & 83,1 & 6,4 \\
+        \midrule
+        MiPyME total & 82,6 & 6,0 & 5,6 & 77,0 & 17,0 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+De esa tabla se desprenden tres lecturas. La primera es que el canal de mercado es la norma y el del programa la excepción, puesto que el 82,6 por ciento de las MiPyMEs usa banco mientras que solo el 6,0 por ciento usa un canal del tipo que el programa provee. Eso invierte el sentido que los nombres sugieren, dado que la red denominada Alternativa es la que concentra la actividad observada.
+
+La segunda es que ambos canales coexisten casi siempre que el del programa está presente. De las empresas que usan un canal del tipo del programa, el 93,0 por ciento mantiene además un banco, y solo un 0,4 por ciento del total prescinde del banco. Entre las empresas con alguna deuda formal, el 99,5 por ciento usa banco. Por lo tanto la situación empírica no es la de una empresa que elige entre dos canales, sino la de una que mantiene el bancario y agrega el del programa, y esa coexistencia crece con el tamaño, desde el 4,2 por ciento en la microempresa hasta el 10,4 por ciento en la mediana.
+
+La tercera es una advertencia sobre la última columna. El 17,0 por ciento corresponde a las empresas que no usan ninguno de los tres canales de deuda formal considerados, a saber el bancario, el de instituciones no bancarias y el estatal, y no debe confundirse con la declaración de no usar fuente de financiamiento alguna, que alcanza al 7,34 por ciento. Son dos cantidades distintas y la primera incluye a empresas que se financian por vías que el modelo no representa.
+
+Este contraste tiene un límite que conviene declarar con precisión. La encuesta mide incidencia de uso de cada canal por empresa, mientras que la cuota que el modelo predice es una participación de volumen. Son unidades distintas y reconciliarlas exige el monto por fuente, que no se verificó si está disponible en los microdatos completos. Por lo tanto el contraste sostiene la dirección del reparto, es decir que la red Alternativa es mayoritaria en incidencia mientras el modelo la predice minoritaria en volumen, pero no permite todavía una comparación de magnitudes. Queda pendiente además verificar contra el cuestionario si la fuente estatal corresponde a crédito o incluye subsidios, puesto que de ello depende si esa columna pertenece al canal del programa.
+
+\subsection{El costo del mandato de segundo piso}
+\label{c4:prediccion-contrafactual}
+
+La Sección~\ref{c4:prediccion-topologia} establece que el caso no instancia el mecanismo de la fuente, porque la red Alternativa no restituye el contrato prohibido. Cabe entonces preguntar cuánto bienestar deja sobre la mesa esa prohibición, lo que exige construir de forma explícita la situación que el mandato de segundo piso impide. Esa situación es una rama contrafactual y no una descripción del programa, condición que acompaña a toda cifra de esta subsección.
+
+La rama se construye sobre tres agentes, a saber CORFO, el intermediario y la MiPyME, sin banco de mercado. La red Tradicional mantiene prohibida la arista entre CORFO y la MiPyME, mientras que la red Alternativa no tiene restricción, de modo que en ella CORFO sí puede prestar directo. A diferencia del caso principal, esta topología sí admite la capa de acoplamiento, precisamente porque la red Alternativa vuelve a conectar al par que la restricción separa. El barrido recorre 384 combinaciones, de las que 192 resultan admisibles bajo el mismo doble criterio de la Sección~\ref{c4:prediccion-reparto}.
+
+\paragraph{El costo del mandato.} Es la brecha entre el bienestar alcanzable sin restricción y el que logra la red Tradicional con la arista prohibida. No interviene la capa dual ni ningún parámetro no observable, lo que la convierte en la cifra más robusta del ejercicio. Su mediana sobre las combinaciones admisibles es de 49,5 por ciento del bienestar sin restricción con la matriz equicorrelada y de 54,3 por ciento con la de ciclo, con rangos estrechos que van de 44,8 a 58,9 y de 51,4 a 59,9 puntos. Es decir que, bajo estos supuestos, el mandato deja sobre la mesa del orden de la mitad del bienestar alcanzable, y esa mitad debe leerse como cota superior y no como valor, puesto que el cierre adoptado supone que CORFO puede originar crédito minorista al mismo costo que el mayorista, es decir sin costo de evaluación ni de cobranza, que es parte de aquello que el propio mandato justifica.
+
+\paragraph{La fracción del costo que la red Alternativa recupera.} Con fricción de acceso nula esa fracción vale exactamente cien por ciento, y ese valor no es un resultado sino la identidad algebraica que la Sección~\ref{c4:venegas-dual-tension} documenta, dado que con portafolio total fijo el bienestar depende solo de la posición de referencia, que no cambia entre escenarios, y vale cualquiera sea el conjunto de pares que la red Alternativa habilite. El resultado aparece al introducir la fricción. En el valor propuesto de 0,243, la recuperación es de 66,5 por ciento con la matriz equicorrelada y de 67,4 con la de ciclo, es decir dos tercios, y con rangos intercuartiles de apenas 2,5 y 2,0 puntos sobre las combinaciones admisibles, porque se trata de un cociente en el que el nivel de las tasas se cancela.
+
+Existe además una fricción de equilibrio, por sobre la cual sostener la red Alternativa cuesta más que el propio mandato, y que vale 0,787 con la matriz equicorrelada y 0,810 con la de ciclo. Conviene no leer el cociente entre ese umbral y el valor propuesto como un margen de seguridad calibrado, dado que comparar ambos exige la convención de escala declarada en la Sección~\ref{c4:prediccion-supuestos}, mientras que el umbral mismo es una propiedad del modelo e independiente de esa convención.
+
+Por sobre ese umbral la fracción recuperada se vuelve negativa, y corresponde precisar qué significa. No significa que la red Alternativa destruya bienestar por sí misma, sino que el contrato prohibido está forzado a ejecutarse en ella por factibilidad y no por conveniencia, de modo que a fricciones altas sostenerlo cuesta más de lo que aporta. Un agente con libertad para abstenerse simplemente no tomaría ese contrato, de manera que la región negativa describe el límite del supuesto de portafolio fijo y no una predicción de comportamiento.
+
+\paragraph{Con qué precisión el ejercicio aísla el mandato.} Como la red Alternativa de esta rama no tiene restricción, habilita los tres pares y no solo el del mandato, de modo que el cambio de bienestar no es atribuible por completo a que CORFO preste directo. El par del mandato concentra el 69,7 por ciento del volumen de la red Alternativa y el 82,1 por ciento de la desviación respecto del bienestar de referencia, de manera que el ejercicio lo aísla en torno a cuatro quintos. El resto se reparte entre el par que une al intermediario con la MiPyME, que esta red también habilita, y las posiciones propias de cada agente.
+
+\paragraph{El resultado principal de la rama.} Está en cómo varían ambas magnitudes con la covarianza entre CORFO y la MiPyME, que es la única entrada que la estructura bipartita identifica y por lo tanto el único resultado del trabajo que no descansa sobre un supuesto de covarianza. La Tabla~\ref{tab:contrafactual-sigma} la recorre en el punto central de los intervalos de tasas, condición que conviene retener, puesto que las medianas citadas antes se calculan en cambio sobre la grilla de combinaciones admisibles y por eso no coinciden con ninguna fila de la tabla.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Costo del mandato y fracción recuperada]{Costo del mandato de
+    segundo piso y fracción de ese costo que recupera la red Alternativa, según
+    la covarianza entre CORFO y la MiPyME, en el punto central de los
+    intervalos de tasas y con beneficio de transparencia nulo.}
+    \label{tab:contrafactual-sigma}
+    \begin{tabular}{rrrrr}
+        \toprule
+        & \multicolumn{2}{c}{Costo del mandato (\%)} & \multicolumn{2}{c}{Fracción recuperada (\%)} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+        $\Sigma_{\text{CORFO,MiPyME}}$ & equicorrelada & por ciclo & equicorrelada & por ciclo \\
+        \midrule
+        $-0{,}45$ & 38,7 & 54,6 & 55,1 & 60,4 \\
+        $-0{,}30$ & 39,7 & 54,2 & 65,4 & 65,9 \\
+        $-0{,}15$ & 41,5 & 55,1 & 69,6 & 67,8 \\
+        $0{,}00$ & 43,7 & 57,0 & 70,9 & 67,2 \\
+        $0{,}15$ & 46,5 & 60,0 & 70,0 & 63,8 \\
+        $0{,}30$ & 50,0 & 64,2 & 66,7 & 56,8 \\
+        $0{,}45$ & 54,3 & 69,9 & 60,2 & 42,7 \\
+        $0{,}60$ & 60,2 & 78,0 & 47,1 & 10,0 \\
+        $0{,}75$ & 68,8 & 89,5 & 16,2 & $-125{,}3$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Las dos columnas se comportan de forma distinta y esa diferencia es el hallazgo. El costo del mandato crece de manera monótona con la covarianza, desde 38,7 hasta 68,8 por ciento con la matriz equicorrelada, lo que resulta esperable, puesto que cuanto más se parecen las perspectivas de CORFO y de la MiPyME más valioso sería el contrato que la prohibición impide. La fracción recuperada, en cambio, no es monótona, sino que alcanza su máximo en torno a covarianza nula, con 70,9 por ciento, y cae hacia ambos extremos hasta 55,1 por ciento en el extremo negativo y 16,2 en el positivo.
+
+En el tramo positivo, que es el relevante si se acepta que las perspectivas de ambos agentes se mueven en el mismo sentido, las dos magnitudes apuntan en direcciones opuestas. Cuanto más cuesta el mandato, menos lo recupera la red Alternativa. La razón es que la misma covarianza que vuelve valioso el contrato directo encarece sostenerlo bajo la fricción de acceso, de modo que el canal alternativo sirve justamente menos en los casos en que la prohibición es más onerosa. Con la matriz por ciclo el efecto es más pronunciado y la fracción llega a ser fuertemente negativa en el extremo, lo que debe leerse con la precisión sobre participación forzada señalada más arriba.
+
+Este resultado es el que conviene retener de toda la sección, por dos motivos. El primero es que descansa sobre la única entrada de la matriz que los datos permitirían identificar, de modo que es el único enunciado del trabajo susceptible de contrastarse con la entrega de CORFO sin agregar supuestos de covarianza. El segundo es que matiza la lectura de política del mecanismo de la fuente, puesto que sugiere que un canal alternativo con fricciones de acceso no compensa la prohibición precisamente allí donde la prohibición más cuesta.
+
 \section{Alcance del análisis con la información disponible}
 \label{c4:alcance}
 
@@ -582,5 +740,43 @@ Hecha esa precisión, el contraste anterior permite ordenar el trabajo restante 
 \paragraph{Resultados que se desbloquean con la entrega de CORFO.} Con registros mensuales e intermediarios distinguidos uno a uno, el panel pasa a 107 diferencias y la red a $1+k+1$ nodos, lo que permite estimar las covarianzas entre pares de intermediarios y la covarianza entre CORFO y la MiPyME, que son precisamente las entradas que el cálculo de rango señala como recuperables en una red bipartita.
 
 \paragraph{Resultados que requieren fuentes externas a CORFO.} La identificación completa de $\Sigma$ exige dos aristas que deben levantarse simultáneamente, que son el fondeo bancario de los propios intermediarios, única de las dos que rompe la bipartición, y las líneas que CORFO coloca a través de bancos comerciales. La primera no pertenece al ámbito de CORFO y debe buscarse en la información de la CMF o en los estados financieros de los intermediarios.
+
+Ese ordenamiento por origen de la información admite una lectura complementaria,
+que es la que importa para juzgar si el trabajo puede cerrarse, y consiste en
+preguntar qué pregunta de investigación responde cada nivel.
+
+\paragraph{Primera pregunta, la recuperación de bienestar.} Exige una precisión
+previa antes que datos. El mecanismo por el cual dicha tesis obtiene la
+recuperación consiste en que la red Alternativa restituye el contrato que la
+restricción prohíbe, y ese mecanismo no está presente en el caso, dado que la red
+Alternativa incorpora al banco como contraparte distinta mientras el contrato
+entre CORFO y la MiPyME permanece ausente en ambas redes. Por lo tanto la
+pregunta no se responde trasladando la cifra de la fuente, sino estableciendo qué
+predice el modelo en una topología donde ese canal de recuperación no existe, lo
+que admite respuesta bajo los supuestos declarados en la
+Sección~\ref{c3:supuestos} y no requiere esperar la entrega de CORFO. Es lo que
+ejecuta la Sección~\ref{c4:prediccion}, cuya rama contrafactual cuantifica además
+cuánto bienestar deja sobre la mesa la prohibición.
+
+\paragraph{Segunda pregunta, el reparto de actividad entre redes.} La predicción
+está al alcance, aunque depende de una covarianza que el estimador no determina,
+a saber la que vincula a las dos contrapartes de la MiPyME, de modo que esa parte
+queda como supuesto declarado y no como cantidad estimada.
+La contraparte observada no puede provenir de los registros de CORFO, que cubren
+solo el canal del programa, aunque la Sección~\ref{c4:prediccion-ele7} establece
+que la Séptima Encuesta Longitudinal de Empresas sí permite un contraste parcial,
+limitado a la dirección del reparto y no a su magnitud, por medir incidencia de
+uso por empresa y no participación de volumen. Conviene notar además que
+las cifras de reparto de la fuente no son reproducibles, según la
+Sección~\ref{c4:venegas-dual}, por lo que el contraste debe hacerse contra la
+evidencia del caso y no contra los valores que dicha tesis publica.
+
+\paragraph{Tercera pregunta, el reparto de las ganancias entre agentes.} Es la
+más exigente de las tres, ya que las utilidades por agente dependen de toda la
+matriz y no solo de una entrada, y las varianzas propias junto con las
+covarianzas a lo largo de las aristas observadas son precisamente las que la
+estructura bipartita no determina. Por lo tanto esta pregunta admite respuesta
+bajo supuestos declarados, pero no una respuesta identificada a partir de los
+datos, y así corresponde reportarla.
 
 Mientras esas entregas no se concreten, el análisis que este capítulo habilita es de naturaleza comparativa y estructural, en el sentido de que establece qué exige el método, cuánto de eso cubre la información pública chilena y qué faltaría exactamente para cerrar la brecha, lo que constituye el punto de partida del análisis cuantitativo que podrá ejecutarse una vez que esa información esté disponible.
