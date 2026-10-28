@@ -27,7 +27,9 @@ code/
   caballero/                         # Implementación propia de la memoria (oct. 2026):
                                      # capa de acoplamiento T/A del modelo dual, motor
                                      # corregido, re-derivación de las objeciones a la
-                                     # especificación dual y sus 46 pruebas
+                                     # especificación dual, corrida del caso chileno,
+                                     # rama contrafactual del mandato de segundo piso,
+                                     # procesamiento de la ELE-7 y sus 62 pruebas
 ```
 
 La separación entre `audit/` y `caballero/` es deliberada. `audit/` documenta el código de
@@ -43,7 +45,8 @@ contiene implementación propia de la memoria en curso. Los módulos de `caballe
 # carpeta, porque una prueba lee ../Financial_Networks_Stability.qmd por ruta relativa.
 cd code/audit && python -m pytest test_venegas_model.py -v
 
-# Motor corregido (21) y capa de acoplamiento T/A (25), desde la raíz del repositorio.
+# Motor corregido (21), capa de acoplamiento T/A (25) y rama contrafactual (16),
+# desde la raíz del repositorio.
 python -m pytest code/caballero -v
 
 # Re-derivación algebraica de las objeciones a la especificación dual.

@@ -8,45 +8,17 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Añadido
-- `code/caballero/`: respaldo ejecutable de la Sección 4.5 del Capítulo 4. Hasta
-  ahora el documento afirmaba sus veintidós cifras sin que hubiera en el
-  repositorio código que las produjera, de modo que quien clonara no podía
-  comprobar ninguna. Versionar estos archivos **no compromete al autor con sus
-  cifras**: siguen abiertas la decisión sobre la restricción de balance y el
-  costo de originación minorista de CORFO, y si cambian hay que rehacer las
-  corridas. Lo que se gana es que lo ya afirmado pase a ser auditable.
-  - `caballero_caso_chileno.py` y `caballero_corrida_caso_chileno.py`: el caso
-    principal de cuatro agentes, con los primitivos chilenos, el diagnóstico de
-    por qué la capa de acoplamiento no corre sobre esa topología y los barridos.
-    Producen `caballero_caso_chileno_resultados.csv`, de donde salen las 768
-    combinaciones, las 312 admisibles, las medianas de adopción de 20,7 y 16,3
-    por ciento y el bloque `resumen_dominancia` con las amplitudes de 6,3 y 23,2
-    puntos filtradas y 29,0 sin filtrar.
-  - `caballero_contrafactual_mandato.py`, `caballero_corrida_contrafactual.py` y
-    `test_caballero_contrafactual.py`: la rama contrafactual del mandato de
-    segundo piso, tres agentes, donde la red Alternativa sí reconecta el par que
-    la restricción separa. Producen `caballero_contrafactual_resultados.csv`, de
-    donde salen el costo del mandato, la fracción recuperada, las dos fricciones
-    de equilibrio y la descomposición por coordenada. Las 16 pruebas fijan tanto
-    las cifras del informe como la identidad algebraica que hace que la
-    recuperación valga 100 por ciento sin fricción, para que el capítulo no la
-    cite como hallazgo.
-  - `caballero_ele7_canales.py`: reparto de canales de financiamiento de las
-    MiPyMEs en la ELE-7, ponderado por el factor de expansión. Reproduce la tabla
-    por tramo y las tres cifras derivadas que el capítulo comenta, con la
-    coexistencia en 93,00 por ciento, la participación bancaria entre empresas
-    con deuda formal en 99,49 y la declaración de no usar fuente alguna en 7,34.
-    El extracto de microdatos que toma como entrada no se versiona por su tamaño.
-  - `entorno.txt`: declaración de versiones del directorio, equivalente a la de
-    `code/audit/entorno.txt`, de la que **difiere** porque la auditoría se corrió
-    en un entorno posterior. Deja constancia además de que ninguna figura del
-    documento se construye dentro de `code/`.
-- `code/caballero/`: implementación propia de la capa de acoplamiento
-  Tradicional/Alternativa del modelo dual, separada de `code/audit/` porque
-  aquélla documenta el código de la tesis que se continúa y ésta es aporte de
-  esta memoria. Resuelve el hueco que la auditoría había dejado abierto, a
-  saber que el modelo dual tenía su álgebra derivada pero no su implementación
-  numérica.
+- `code/caballero/`: implementación propia de la memoria, separada de
+  `code/audit/` porque aquélla documenta el código de la tesis que se continúa y
+  ésta es aporte de esta memoria. Cierra dos huecos sucesivos, a saber que el
+  modelo dual tenía su álgebra derivada pero no su implementación numérica, y que
+  la Sección 4.5 del Capítulo 4 afirmaba sus cifras sin que hubiera en el
+  repositorio código que las produjera. Versionar ese respaldo **no compromete al
+  autor con sus cifras**, puesto que siguen abiertas la decisión sobre la
+  restricción de balance y el costo de originación minorista de CORFO, y si
+  cambian hay que rehacer las corridas; lo que se gana es que lo ya afirmado pase
+  a ser auditable. Las cifras que cada archivo produce viven en el capítulo y no
+  se repiten aquí. La batería del directorio pasa a 62 pruebas.
   - `caballero_dual.py`: la capa de acoplamiento. Reduce el reparto
     $w_i^T + w_i^A = w_i^*$ a una corrida del mismo Algorithm 1 ya auditado,
     con los primitivos transformados, de modo que no introduce un algoritmo de
@@ -73,6 +45,32 @@ repositorio.
   - `_ruta_audit.py` y `conftest.py`: resuelven en un único lugar la ruta a
     `code/audit`, desde la ubicación del archivo y no desde el directorio de
     trabajo, para que las baterías corran sin `PYTHONPATH`.
+  - `caballero_caso_chileno.py` y `caballero_corrida_caso_chileno.py`: el caso
+    principal de cuatro agentes, con los primitivos chilenos, el diagnóstico de
+    por qué la capa de acoplamiento no corre sobre esa topología y los barridos.
+    Producen `caballero_caso_chileno_resultados.csv`, de donde salen las 768
+    combinaciones, las 312 admisibles, las medianas de adopción de 20,7 y 16,3
+    por ciento y el bloque `resumen_dominancia` con las amplitudes de 6,3 y 23,2
+    puntos filtradas y 29,0 sin filtrar.
+  - `caballero_contrafactual_mandato.py`, `caballero_corrida_contrafactual.py` y
+    `test_caballero_contrafactual.py`: la rama contrafactual del mandato de
+    segundo piso, tres agentes, donde la red Alternativa sí reconecta el par que
+    la restricción separa. Producen `caballero_contrafactual_resultados.csv`, de
+    donde salen el costo del mandato, la fracción recuperada, las dos fricciones
+    de equilibrio y la descomposición por coordenada. Las 16 pruebas fijan tanto
+    las cifras del informe como la identidad algebraica que hace que la
+    recuperación valga 100 por ciento sin fricción, para que el capítulo no la
+    cite como hallazgo.
+  - `caballero_ele7_canales.py`: reparto de canales de financiamiento de las
+    MiPyMEs en la ELE-7, ponderado por el factor de expansión. Reproduce la tabla
+    por tramo y las tres cifras derivadas que el capítulo comenta, con la
+    coexistencia en 93,00 por ciento, la participación bancaria entre empresas
+    con deuda formal en 99,49 y la declaración de no usar fuente alguna en 7,34.
+    El extracto de microdatos que toma como entrada no se versiona por su tamaño.
+  - `entorno.txt`: declaración de versiones del directorio, equivalente a la de
+    `code/audit/entorno.txt`, de la que **difiere** porque la auditoría se corrió
+    en un entorno posterior. Deja constancia además de que ninguna figura del
+    documento se construye dentro de `code/`.
 - `.gitignore`: el repositorio no tenía uno. Cubre artefactos de Python, de
   LaTeX y de Quarto; las excepciones deliberadas están anotadas en el propio
   archivo.
