@@ -1,0 +1,66 @@
+# Entorno de code/caballero
+
+Declaración equivalente a la de code/audit/entorno.txt, para el código propio de
+esta memoria. Las dos NO coinciden, y eso importa: la auditoría se corrió en un
+entorno más nuevo. Ver "Diferencia con el entorno de la auditoría" al final.
+
+## Entorno de ejecución verificado
+python        3.11.16
+numpy         2.4.6
+pandas        2.3.3
+scipy         1.17.1
+sympy         1.14.0
+pytest        9.1.1
+plataforma    macOS-26.6.2-arm64-arm-64bit
+
+En este entorno pasan las 62 pruebas del directorio, repartidas en 21 del motor
+corregido, 25 de la capa de acoplamiento y 16 de la rama contrafactual, y las dos
+corridas se ejecutan desde la raíz del repositorio sin variables de entorno.
+
+## Para qué se usa cada biblioteca
+numpy     álgebra lineal densa de todo el núcleo numérico.
+pandas    sólo las corridas y el procesamiento de la encuesta, no el núcleo.
+scipy     sólo caballero_contrafactual_mandato.friccion_de_equilibrio, que busca
+          la raíz con optimize.brentq. Ninguna otra pieza la necesita.
+sympy     sólo las pruebas, para la verificación simbólica de la degeneración del
+          riesgo conjunto. El código de producción no la importa.
+pytest    las tres baterías.
+
+matplotlib NO aparece en este directorio, y conviene saber por qué: las dos
+figuras de la Sección 4.5 se construyeron fuera de los scripts, de modo que no
+son reproducibles desde el repositorio. Es el mismo punto que afecta a las cinco
+figuras del documento y queda para que lo decida el autor de una vez.
+
+## Cómo correr
+Desde la raíz del repositorio, sin PYTHONPATH, puesto que code/caballero/
+_ruta_audit.py resuelve la ruta a code/audit/ desde la ubicación del archivo:
+
+    python -m pytest code/caballero -q
+    python code/caballero/caballero_corrida_caso_chileno.py
+    python code/caballero/caballero_corrida_contrafactual.py
+
+El procesamiento de la encuesta recibe la ruta del extracto como argumento, que
+por omisión busca en el directorio actual:
+
+    python code/caballero/caballero_ele7_canales.py <ruta>/ele7_financiamiento_mipyme.csv
+
+Una prueba heredada de code/audit/test_venegas_model.py depende del directorio de
+trabajo por una ruta relativa, de modo que esa batería se corre desde code/audit/.
+Es una dependencia preexistente que no se corrigió, por la convención de no tocar
+los archivos que documentan el código de la fuente.
+
+## Datos de entrada que no se versionan
+ele7_financiamiento_mipyme.csv, extracto de los microdatos de la Séptima Encuesta
+Longitudinal de Empresas, 817 KB. Queda fuera del repositorio por su tamaño y se
+obtiene del sitio de la encuesta; el encabezado de caballero_ele7_canales.py
+declara las columnas que espera.
+
+## Diferencia con el entorno de la auditoría
+code/audit/entorno.txt declara python 3.13.15, numpy 2.5.3, pandas 3.0.5 y
+scipy 1.18.0, todas posteriores a las de aquí. No se verificó que este directorio
+corra en ese entorno ni al revés, de modo que quien necesite una sola instalación
+para ambos tiene que comprobarlo. No se detectó ningún efecto de versión dentro
+de este entorno, y la razón es la misma que da la auditoría para el suyo: el
+núcleo numérico usa sólo álgebra lineal densa determinista, sin RNG, salvo los
+generadores con semilla obligatoria de venegas_model_corregido, que no intervienen
+en ninguna cifra de la Sección 4.5.
