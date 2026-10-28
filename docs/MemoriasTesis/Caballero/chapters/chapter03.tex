@@ -108,8 +108,11 @@ sustenta.
 En consecuencia, el motor de red única puede emplearse con confianza para el
 caso de aplicación, mientras que la capa que acopla las redes Tradicional y
 Alternativa debía implementarse como parte de este trabajo. Esa implementación
-ya se realizó y se apoya en 25 pruebas automatizadas propias, todas las cuales
-se superan. La Sección~\ref{c4:venegas-dual} reporta lo que se obtuvo con ella.
+ya se realizó y se apoya en una batería propia de 62 pruebas automatizadas, todas
+las cuales se superan, repartidas en 25 de la capa de acoplamiento, 21 del núcleo
+numérico corregido en los puntos que esta misma auditoría marcó como bloqueantes
+para calibrar con datos externos y 16 de la rama contrafactual declarada en la
+Sección~\ref{c3:estructura}. La Sección~\ref{c4:venegas-dual} reporta lo que se obtuvo con ella.
 Las utilidades totales de los escenarios duales se reproducen al cuarto decimal,
 mientras que las cifras de reparto no se reproducen con los parámetros que la
 fuente declara, es decir la adopción de la red Alternativa, el volumen de cada
@@ -120,13 +123,9 @@ ganancia de bienestar artificial que aparece al fragmentar una exposición en do
 redes y cobrar el riesgo de cada parte por separado, y la incompatibilidad del
 supuesto de precio único con la presencia de una arista prohibida.
 
-Conviene precisar que nada de esto refuta dicha tesis, puesto que sus cifras de
-bienestar son correctas dentro de su propia contabilidad y el ejercicio resulta
-internamente coherente si se acepta su supuesto de portafolio total fijo. Lo que
-el diagnóstico establece es algo más preciso, a saber que la recuperación
-completa del bienestar es una propiedad de ese supuesto y no una predicción
-contrastable del modelo. Por esa razón, determinar si el mecanismo opera en un
-sistema real exige el contraste con datos que esta memoria se propone.
+Conviene precisar que nada de esto refuta dicha tesis, cuyas cifras son correctas
+dentro de su propia contabilidad, según se explica en la
+Sección~\ref{c4:venegas-dual-causa}.
 
 \section{Caso de aplicación. El programa Crédito Corfo Mipyme}
 \label{c3:caso}
@@ -188,6 +187,8 @@ El caso se modela como un sistema de cuatro agentes distribuidos en dos redes, s
 
 La elección de esta partición responde a dos criterios. Primero, la red Tradicional reproduce la restricción regulatoria que motiva el modelo dual, ya que el acceso al financiamiento subsidiado está mediado obligatoriamente por un intermediario autorizado. Segundo, la MiPyME resulta ser el único agente presente en ambas redes, mientras que CORFO y el IFNB participan solo en T y el banco tradicional solo en A. En consecuencia, la MiPyME es el único agente cuyo portafolio debe repartirse entre canales mediante la partición dual de la Ecuación~\eqref{eq:particion}, y por lo tanto el único que requiere resolver el sistema acoplado.
 
+Junto a esa partición, el Capítulo~\ref{c4} examina una rama contrafactual que corresponde declarar aquí, puesto que es una construcción metodológica y no una descripción del programa. Dicha rama conserva solo tres agentes, a saber CORFO, el intermediario y la MiPyME, de modo que prescinde del banco de mercado. En ella la arista entre CORFO y la MiPyME sigue prohibida en la red Tradicional, mientras que la red Alternativa la habilita, de manera que CORFO puede prestar de forma directa. Su propósito es medir cuánto bienestar deja sobre la mesa el mandato de segundo piso, y por lo tanto no representa ninguna configuración observable del programa. Las cifras que entrega se reportan en la Sección~\ref{c4:prediccion-contrafactual}.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{diagrama_redes.png}
@@ -214,6 +215,7 @@ No existe, hasta donde se ha buscado, una fuente pública que reporte esta arist
 Se utilizan dos fuentes públicas. La primera es la Dirección de Presupuestos (DIPRES), organismo dependiente del Ministerio de Hacienda que elabora el presupuesto del sector público y realiza el monitoreo y seguimiento de los programas públicos, entre ellos el programa Crédito Corfo Mipyme. Su Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
 
 
+Ninguna de estas dos fuentes se distribuye junto con el código que acompaña a este trabajo, tanto por su tamaño como por sus condiciones de uso, de modo que conviene dejar indicada la vía de obtención de cada una. Los microdatos de la ELE-7 se descargan como archivo único desde el sitio del Ministerio de Economía, Fomento y Turismo, mientras que el Informe de Monitoreo y el Informe de Detalle de Programas Sociales se obtienen desde la biblioteca digital de DIPRES. La dirección exacta de cada documento queda registrada en su entrada de la bibliografía.
 El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que aporta cada una.
 
 \section{Supuestos del modelo para las variables no observadas}
@@ -222,7 +224,11 @@ El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que apor
 \subsection[Supuesto para W23. Tasa subsidiada del canal Tradicional]{Supuesto para $W_{23}$. Tasa subsidiada del canal Tradicional}
 \label{c3:supuesto-w23}
 
-Se asume que la tasa de interés que los IFNB cobran a la MiPyME bajo el programa Crédito Corfo Mipyme se ubica entre 7 y 10 puntos porcentuales por debajo del benchmark de mercado (ACHEF/EFA), según reporta DIPRES en su Informe de Monitoreo 2021 del programa \cite{dipres_monitoreo_2021}. Tomando como benchmark de mercado la tasa mediana observada para empresas de menor tamaño (Sección~\ref{c3:tasa-mercado}), esto implica una tasa subsidiada implícita del orden de 3\%--6\% anual, cifra consistente en magnitud con la tasa mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual, según \citeA{dipres_detalle_2021}). Dado que ambas cifras coinciden en orden de magnitud, esta consistencia respalda el supuesto de que el IFNB traspasa el subsidio casi íntegro a la MiPyME, agregando solo un margen operativo menor, en línea con el rol de ``banca de segundo piso'' que describe CORFO para este programa.
+Se asume que la tasa de interés que los IFNB cobran a la MiPyME bajo el programa Crédito Corfo Mipyme se ubica entre 7 y 10 puntos porcentuales por debajo del benchmark de mercado (ACHEF/EFA), según reporta DIPRES en su Informe de Monitoreo 2021 del programa \cite{dipres_monitoreo_2021}. Tomando como benchmark de mercado la tasa mediana observada para empresas de menor tamaño, que va de 14\% a 15,4\% anual (Sección~\ref{c3:tasa-mercado}), ese descuento sitúa la tasa subsidiada entre 4\% y 8,4\% anual. Una segunda referencia, independiente de la anterior, es la tasa mayorista CORFO$\to$IFNB, que \citeA{dipres_detalle_2021} reporta entre 4,23\% y 4,73\% anual y que opera como piso, ya que el IFNB traspasa el subsidio casi íntegro a la MiPyME y agrega solo un margen operativo menor, en línea con el rol de ``banca de segundo piso'' que describe CORFO para este programa.
+
+Sobre esas dos referencias se adopta como supuesto de trabajo el rango de 3\% a 6\% anual, que es el que emplea la corrida de la Sección~\ref{c4:prediccion}. Corresponde declarar con precisión su estatus, dado que no se deduce de ninguna de las dos referencias sino que las resume de forma deliberadamente amplia, de modo que su extremo inferior queda por debajo de la tasa mayorista y su extremo superior por debajo del máximo que admite el descuento declarado.
+
+De esa amplitud se sigue una consecuencia que el supuesto debe hacer explícita. El margen del intermediario es la diferencia entre la tasa subsidiada y la mayorista, de manera que con los intervalos anteriores recorre desde $-1{,}73$ hasta $+1{,}77$ puntos porcentuales, y solo el 50,7\% de las combinaciones del rectángulo que forman ambos intervalos deja un margen positivo. En la mitad restante el modelo predice que el intermediario no coloca y que el programa no opera, situación que no describe al programa aquí representado. Por esa razón la corrida de la Sección~\ref{c4:prediccion-supuestos} descarta de forma explícita las combinaciones de margen negativo, descarte que forma parte del supuesto mientras no exista una fuente que reporte directamente la tasa cobrada a la MiPyME.
 
 \subsection[Supuesto para la red Alternativa. Tasa de mercado M34]{Supuesto para la red Alternativa. Tasa de mercado $M_{34}$}
 \label{c3:tasa-mercado}
@@ -272,7 +278,7 @@ $\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el p
 \subsection{Aplicación del Teorema 5 al caso de estudio}
 \label{c3:teorema5-aplicado}
 
-Con $n=4$ agentes (CORFO, Intermediario, MiPyME y Banco tradicional), la cota del Teorema 5 recogida en la Ecuación~\eqref{eq:teorema5} exige un mínimo de $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes para que la estimación de $\Sigma$ no degrade sustancialmente la convergencia del algoritmo de negociación bilateral. Sin embargo, según el levantamiento de la Sección~\ref{c3:panel-w12}, los años en que se dispone simultáneamente de $W_{12}$ y $W_{23}$ son 2019, 2020 y 2024, a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor. Esas tres observaciones quedan por debajo del mínimo de seis que exige la Ecuación~\eqref{eq:teorema5}. La restricción es aún más severa por la vía de la Proposición~1, que opera sobre las diferencias $\Delta W(t) = W(t+1)-W(t)$, ya que de esos tres años solo el par 2019--2020 es consecutivo y aporta, por lo tanto, una única diferencia utilizable frente a los seis parámetros libres de $\Sigma$ en la red Tradicional. Tomando las dos redes en conjunto, que es el sistema de cuatro agentes sobre el que está definida $\Sigma$, no hay ninguna diferencia disponible, puesto que ningún año dispone de todas sus aristas.
+Con $n=4$ agentes (CORFO, Intermediario, MiPyME y Banco tradicional), la cota del Teorema 5 recogida en la Ecuación~\eqref{eq:teorema5} exige un mínimo de $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes para que la estimación de $\Sigma$ no degrade sustancialmente la convergencia del algoritmo de negociación bilateral. Sin embargo, según el levantamiento de la Sección~\ref{c3:panel-w12}, los años en que se dispone simultáneamente de $W_{12}$ y $W_{23}$ son 2019, 2020 y 2024, a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor. Esas tres observaciones quedan por debajo del mínimo de seis que exige la Ecuación~\eqref{eq:teorema5}. La restricción es aún más severa por la vía de la Proposición~1, que opera sobre las diferencias $\Delta W(t) = W(t+1)-W(t)$, ya que de esos tres años solo el par 2019--2020 es consecutivo y aporta, por lo tanto, una única diferencia utilizable frente a los seis parámetros libres de $\Sigma$ en la red Tradicional. Tomando las dos redes en conjunto, que es el sistema de cuatro agentes sobre el que está definida $\Sigma$, no hay ninguna diferencia utilizable, puesto que ningún año dispone de todas sus aristas.
 
 \subsection[Identificabilidad de Sigma en la red del programa]{Identificabilidad de $\Sigma$ en la red del programa}
 \label{c3:identificabilidad}
