@@ -8,6 +8,11 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Añadido
+- `README.md`: subsección «Índice de reproducción», con el orden de ejecución, la
+  entrada y la salida de cada script y qué cifra del Capítulo 4 sustenta, más la
+  declaración explícita de los cuatro resultados que **no** tienen productor
+  versionado, a saber `tab:sensibilidad-sigma13`, `tab:reproduccion-escenarios`,
+  `tab:reproduccion-dual` y las cinco figuras del documento.
 - `code/caballero/`: implementación propia de la memoria, separada de
   `code/audit/` porque aquélla documenta el código de la tesis que se continúa y
   ésta es aporte de esta memoria. Cierra dos huecos sucesivos, a saber que el

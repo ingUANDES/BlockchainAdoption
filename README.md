@@ -53,6 +53,69 @@ python -m pytest code/caballero -v
 python code/caballero/caballero_verificacion_objeciones.py
 ```
 
+### Índice de reproducción
+
+Qué ejecutar, en qué orden, con qué entrada y qué cifra del Capítulo 4 sale de
+cada cosa. No explica qué hace cada módulo: eso está en su propio encabezado, que
+la columna del script enlaza.
+
+Los tres scripts escriben su salida **en el directorio actual**, no junto al
+módulo. Ejecutándolos desde la raíz, como indican los comandos, los archivos
+quedan en la raíz y no en `code/caballero/`, que es donde están las copias
+versionadas que el documento cita.
+
+| # | Script | Entrada | Escribe | Sustenta |
+|---|---|---|---|---|
+| 1 | [`caballero_verificacion_objeciones.py`](code/caballero/caballero_verificacion_objeciones.py) | ninguna | nada, sólo imprime | los hallazgos C1 a C4 sobre la especificación dual |
+| 2 | [`caballero_corrida_caso_chileno.py`](code/caballero/caballero_corrida_caso_chileno.py) | ninguna | `caballero_caso_chileno_resultados.csv` | Sección 4.5.3: las 768 combinaciones, las 312 admisibles, las medianas de adopción y las amplitudes de dominancia |
+| 3 | [`caballero_corrida_contrafactual.py`](code/caballero/caballero_corrida_contrafactual.py) | ninguna | `caballero_contrafactual_resultados.csv` | `tab:contrafactual-sigma`, más el costo del mandato, la fracción recuperada y las dos fricciones de equilibrio |
+| 4 | [`caballero_ele7_canales.py`](code/caballero/caballero_ele7_canales.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `ele7_reparto_canales_mipyme.csv` | `tab:ele7-canales` y las tres cifras derivadas del texto |
+
+El orden es de dependencia conceptual y no de ejecución: los cuatro son
+independientes entre sí y pueden correrse en cualquier orden. El primero no
+produce archivo y conviene correrlo antes porque establece bajo qué
+especificación son válidos los otros dos.
+
+```bash
+python code/caballero/caballero_verificacion_objeciones.py
+python code/caballero/caballero_corrida_caso_chileno.py
+python code/caballero/caballero_corrida_contrafactual.py
+python code/caballero/caballero_ele7_canales.py <ruta>/ele7_financiamiento_mipyme.csv
+```
+
+Las versiones con las que se verificó están en
+[`code/caballero/entorno.txt`](code/caballero/entorno.txt), que **no** coinciden
+con las de [`code/audit/entorno.txt`](code/audit/entorno.txt).
+
+#### Qué no tiene productor versionado
+
+Cuatro resultados del Capítulo 4 no se reproducen con lo que hay en el
+repositorio. Se declara aquí en vez de dejarlo implícito.
+
+- **`tab:sensibilidad-sigma13`**. Ningún archivo de `code/` menciona esa
+  sensibilidad ni hay planilla suya versionada, de modo que su dato vive
+  enteramente fuera del repositorio.
+- **`tab:reproduccion-escenarios`**, los cuatro escenarios de referencia. Sus
+  planillas `tabla_baseline_cap4.csv` y `escenario_4firmas_cap4.csv` sí están
+  versionadas en `code/audit/`, pero ningún `.py` del repositorio las escribe:
+  las únicas escrituras a CSV son las tres de la tabla de arriba. Lo mismo vale
+  para las otras seis planillas de `code/audit/`, a saber `barrido_eta.csv`,
+  `barrido_umbral.csv`, `cobertura_resultados.csv`, `ejemplo5_resultados.csv`,
+  `iterados_tesis.csv` y `traza_convergencia.csv`.
+- **`tab:reproduccion-dual`**. [`caballero_dual.py`](code/caballero/caballero_dual.py)
+  la sustenta, y sus cifras están fijadas en `test_caballero_dual.py`, pero el
+  módulo no deja planilla, de modo que hoy se reproduce ejecutándolo a mano o
+  leyendo la suite.
+- **Las cinco figuras del documento.** No hay ningún `savefig` activo en `code/`:
+  las cuatro apariciones en `Financial_Networks_Stability.qmd` están comentadas.
+  Las dos figuras de la Sección 4.5 se construyeron fuera de los scripts, así que
+  los `.png` del documento no tienen origen reproducible, aunque las cifras que
+  muestran sí salen de los CSV de la tabla de arriba.
+
+No proceden de código, por su naturaleza, `tab:venegas-escenarios`, que es de la
+fuente, ni `tab:comparacion-venegas` y `tab:comparacion-ocde-corfo`, que son del
+levantamiento documental.
+
 Cada carpeta de memoria/tesis sigue la plantilla estándar de Ingeniería UAndes: `core/`
 (preámbulo y primeras páginas), `chapters/` (capítulos), `attachments/` (anexos),
 `referencias.bib` y un archivo principal (`memoria.tex` o `<Apellido>.tex`) que hace
