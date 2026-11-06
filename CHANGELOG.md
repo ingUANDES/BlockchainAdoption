@@ -8,6 +8,11 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Añadido
+- `code/caballero/caballero_verificacion_tasas.py`: recálculo independiente de
+  las tasas que declara el Capítulo 3. Confirma las cinco medianas y sus $n$,
+  infiere por inversión que la anualización fue compuesta, y determina que el
+  intervalo subsidiado 3–6 % se reproduce sólo con un benchmark puntual de
+  13,0 %, que el documento no reporta y que no se deriva de la encuesta.
 - `README.md`: subsección «Índice de reproducción», con el orden de ejecución, la
   entrada y la salida de cada script y qué cifra del Capítulo 4 sustenta, más la
   declaración explícita de los cuatro resultados que **no** tienen productor
