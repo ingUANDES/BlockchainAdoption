@@ -127,8 +127,10 @@ def main():
     print(f"  r_m = {cc.R_M}   mercado Banco->MiPyME        [verificado, ELE-7]")
     print(f"  r_s = {cc.R_S_DECLARADO}   declarado por el cap. 3")
     print(f"        {tuple(round(x, 4) for x in cc.r_s_derivado())}   "
-          f"derivado de su propia aritmética (r_m menos 7-10 pp)")
-    print("  Los dos intervalos NO coinciden. Se usa el declarado.")
+          f"derivado de la mediana MiPyME AGRUPADA menos 7-10 pp")
+    print("  Queda un residuo de 0,32 pp en ambos extremos. El unico benchmark que")
+    print("  reproduce 3 a 6 exacto es uno puntual de 13,0%, que el cap. 3 no reporta.")
+    print("  Se usa el declarado, ver DERIVACION_R_S.")
 
     ra = cc.region_admisible()
     print(f"\n  Margen del IFNB = r_s - r_w, entre {ra['margen_min']:+.4f} y "

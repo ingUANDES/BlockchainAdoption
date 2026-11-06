@@ -173,7 +173,7 @@ def test_topologia_el_par_del_mandato_carga_el_volumen(M, sigmas):
 
 def test_cifras_costo_del_mandato(M, sigmas):
     """El costo del mandato en los valores centrales de cada intervalo."""
-    esperado = {"equicorrelada": 0.499, "por ciclo": 0.547}
+    esperado = {"equicorrelada": 0.5047, "por ciclo": 0.5499}
     for nom, S in sigmas.items():
         c = cm.costo_del_mandato(S, M)
         assert c["brecha_relativa"] == pytest.approx(esperado[nom], abs=2e-3)
@@ -181,7 +181,7 @@ def test_cifras_costo_del_mandato(M, sigmas):
 
 def test_cifras_fraccion_recuperada_al_lambda_propuesto(M, sigmas):
     """Punto central de los intervalos, que es lo que alimenta la figura."""
-    esperado = {"equicorrelada": 0.667, "por ciclo": 0.675}
+    esperado = {"equicorrelada": 0.6685, "por ciclo": 0.6758}
     for nom, S in sigmas.items():
         r = cm.fraccion_recuperada(S, M, cc.LAMBDA_A_PROPUESTO, 0.0)
         assert r["fraccion"] == pytest.approx(esperado[nom], abs=2e-3)
@@ -199,8 +199,8 @@ def test_cifras_cuartiles_de_la_fraccion_sobre_la_rejilla(sigmas):
     la tabla agrega, es decir con lambda_A y tau fijos, de manera que son 16
     combinaciones por matriz y no hace falta regenerar el barrido completo.
     """
-    esperado = {"equicorrelada": (0.654, 0.665, 0.679),
-                "por ciclo": (0.665, 0.674, 0.685)}
+    esperado = {"equicorrelada": (0.6540, 0.6661, 0.6812),
+                "por ciclo": (0.6654, 0.6745, 0.6866)}
     for nom, S in sigmas.items():
         fracs = []
         for r_w in cm.REJILLA["r_w"]:
@@ -228,7 +228,7 @@ def test_cifras_friccion_de_equilibrio(M, sigmas):
     El informe las reportaba como un único valor aproximado de 0,79, que es sólo
     el de la matriz equicorrelada.
     """
-    esperado = {"equicorrelada": 0.787, "por ciclo": 0.810}
+    esperado = {"equicorrelada": 0.7889, "por ciclo": 0.8114}
     for nom, S in sigmas.items():
         lam = cm.friccion_de_equilibrio(S, M)
         assert lam == pytest.approx(esperado[nom], abs=1e-3)

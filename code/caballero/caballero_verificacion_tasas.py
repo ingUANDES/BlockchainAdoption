@@ -65,6 +65,9 @@ DECLARADO = {
 TOTAL_DECLARADO = 1252
 
 #: Intervalos que el capítulo adopta, en decimal anual.
+#: R_M se actualizó a la mediana PONDERADA de Micro y Pequeña 1 el 06-nov-2026;
+#: el valor sin ponderar era (0.1400, 0.1540).
+R_M_PONDERADO = (0.126825, 0.140286)
 R_W_DECLARADO = (0.0423, 0.0473)   # mayorista, DIPRES, no recalculable
 R_S_DECLARADO = (0.03, 0.06)       # subsidiada, supuesto de trabajo
 R_M_DECLARADO = (0.14, 0.154)      # mercado, de la encuesta
@@ -76,11 +79,38 @@ AUTOCENSURA_NUM, AUTOCENSURA_DEN = 111, 1018
 LAMBDA_A_DECLARADO = 0.2427
 
 
-def mediana_ponderada(valores, pesos):
-    """Mediana ponderada por corte en el 50 por ciento del peso acumulado."""
+def mediana_ponderada(valores, pesos, conv="corte"):
+    """Mediana ponderada, en las dos convenciones que dan resultados distintos.
+
+    ``corte``  el primer valor cuyo peso acumulado alcanza el 50 por ciento.
+    ``interp`` interpolación lineal sobre el peso acumulado centrado.
+
+    La convención importa más de lo normal con estos datos: la distribución
+    tiene puntos de masa, de modo que las dos convenciones pueden caer en
+    valores distintos. Ver ``puntos_de_masa``. La adoptada por defecto es
+    ``corte``, por ser la que no inventa valores que nadie declaró.
+    """
     orden = np.argsort(valores)
     v, w = np.asarray(valores)[orden], np.asarray(pesos)[orden]
-    return float(v[np.searchsorted(np.cumsum(w), 0.5 * w.sum())])
+    if conv == "corte":
+        return float(v[np.searchsorted(np.cumsum(w), 0.5 * w.sum())])
+    if conv == "interp":
+        return float(np.interp(0.5, (np.cumsum(w) - 0.5 * w) / w.sum(), v))
+    raise ValueError(f"convención desconocida: {conv!r}")
+
+
+def puntos_de_masa(t, k=6):
+    """Valores más frecuentes de la tasa anual, con su mensual implícita.
+
+    Las empresas declaran tasas mensuales redondas que al capitalizarse
+    producen valores anuales repetidos. Por eso las medianas no se apoyan en
+    una distribución suave sino en puntos de masa, y un intervalo que parece
+    medido a dos decimales en realidad está eligiendo entre puntos contiguos.
+    """
+    vc = t["tasa_anual_pct"].round(4).value_counts().head(k)
+    return [dict(anual=float(a), n=int(n), cuota_pct=100 * n / len(t),
+                 mensual_implicita=float(((1 + a / 100) ** (1 / 12) - 1) * 100))
+            for a, n in vc.items()]
 
 
 def cargar(ruta):
@@ -98,10 +128,13 @@ def medianas(t):
         med_dec, n_dec = DECLARADO[tramo]
         filas.append(dict(
             tramo=tramo, n=len(s), n_sin_ambiguos=len(sin_amb),
-            mediana=float(s["tasa_anual_pct"].median()),
-            mediana_ponderada=mediana_ponderada(s["tasa_anual_pct"].values,
-                                                s["fe_transversal"].values),
-            mediana_sin_ambiguos=float(sin_amb["tasa_anual_pct"].median()),
+            ponderada=mediana_ponderada(s["tasa_anual_pct"].values,
+                                        s["fe_transversal"].values),
+            ponderada_interp=mediana_ponderada(s["tasa_anual_pct"].values,
+                                               s["fe_transversal"].values, "interp"),
+            ponderada_sin_amb=mediana_ponderada(sin_amb["tasa_anual_pct"].values,
+                                                sin_amb["fe_transversal"].values),
+            sin_ponderar=float(s["tasa_anual_pct"].median()),
             mediana_declarada=med_dec, n_declarado=n_dec,
         ))
     return pd.DataFrame(filas), ambiguos
@@ -142,6 +175,7 @@ def benchmark_implicito():
         benchmark=b_desde_inferior,
         aplicado_al_intervalo=(R_M_DECLARADO[0] * 100 - DESCUENTO_PP[1],
                                R_M_DECLARADO[1] * 100 - DESCUENTO_PP[0]),
+        desde_mediana_agrupada=(12.6825 - DESCUENTO_PP[1], 12.6825 - DESCUENTO_PP[0]),
     )
 
 
@@ -178,12 +212,19 @@ def main(ruta):
     t, n_total = cargar(ruta)
     tabla, ambiguos = medianas(t)
     print("=" * 78)
-    print("1. MEDIANAS POR TRAMO  (contra el extracto, NO contra el microdato)")
+    print("1. MEDIANAS POR TRAMO, PONDERADAS  (contra el extracto, no el microdato)")
     print("=" * 78)
     print(tabla.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
     print(f"\n  casos con tasa: {len(t)} de {n_total} (declarado {TOTAL_DECLARADO}); "
           f"sin dato: {n_total - len(t)}")
     print(f"  periodicidad ambigua: {len(ambiguos)} casos, tratados como anuales")
+
+    print("\n  Puntos de masa de la distribución, que es sobre lo que caen las medianas:")
+    for pm in puntos_de_masa(t):
+        print(f"    {pm['anual']:9.4f} % anual  n={pm['n']:4d} ({pm['cuota_pct']:4.1f} %)"
+              f"   <- {pm['mensual_implicita']:.4f} % mensual capitalizado")
+    print("  Por eso la precisión aparente de dos decimales es engañosa: las medianas")
+    print("  saltan entre puntos de masa contiguos, no se mueven de forma continua.")
 
     r = regla_de_anualizacion(t)
     print("\n" + "=" * 78)
@@ -200,6 +241,9 @@ def main(ruta):
     print("=" * 78)
     print(f"  descuento aplicado al intervalo de mercado -> "
           f"{b['aplicado_al_intervalo'][0]:.1f} a {b['aplicado_al_intervalo'][1]:.1f} %")
+    print(f"  descuento sobre la mediana MiPyME AGRUPADA -> "
+          f"{b['desde_mediana_agrupada'][0]:.2f} a {b['desde_mediana_agrupada'][1]:.2f} % "
+          "  <- la derivación correcta, deja 0,32 pp de residuo")
     print(f"  benchmark puntual que reproduce 3 a 6      -> {b['benchmark']:.1f} % "
           f"(único: {b['unico']})")
 

@@ -7,6 +7,18 @@ repositorio.
 
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
+### Cambiado
+- `R_M` pasa a la mediana **ponderada por factor de expansión** de los tramos
+  Micro y Pequeña 1 de la ELE-7, de (0,1400, 0,1540) a (0,126825, 0,140286),
+  adoptando la ponderación como convención única para todo lo que provenga de
+  esa encuesta. Se regeneran las dos corridas y se actualizan cuatro valores
+  fijados en `test_caballero_contrafactual.py`. `R_W`, `R_S_DECLARADO` y
+  `LAMBDA_A_PROPUESTO` no cambian; la mediana MiPyME agrupada es 12,6825 bajo
+  las cuatro convenciones probadas, de modo que `r_s` no se mueve.
+- `INCONSISTENCIA_R_S` se renombra a `DERIVACION_R_S`: comparar el 3–6 % contra
+  el intervalo por tramo era la comparación equivocada. La correcta, contra la
+  mediana agrupada, deja 0,32 pp de residuo en ambos extremos.
+
 ### Añadido
 - `code/caballero/caballero_verificacion_tasas.py`: recálculo independiente de
   las tasas que declara el Capítulo 3. Confirma las cinco medianas y sus $n$,

@@ -80,10 +80,11 @@ ESTADO DE CADA PARÁMETRO
 
 VERIFICADO, con fuente en el capítulo 3
   r_w   tasa mayorista CORFO hacia IFNB, 4,23 a 4,73 por ciento anual.
-  r_m   tasa de mercado que enfrenta la MiPyME, 14 a 15,4 por ciento anual.
+  r_m   tasa de mercado que enfrenta la MiPyME, 12,68 a 14,03 por ciento anual,
+        mediana ponderada por factor de expansion de Micro y Pequena 1.
   r_s   tasa subsidiada IFNB hacia MiPyME. El capítulo declara 3 a 6 por
-        ciento, pero su propia derivación da otro intervalo, ver
-        ``INCONSISTENCIA_R_S`` más abajo.
+        ciento; derivarlo de la mediana MiPyME agrupada deja un residuo de
+        0,32 puntos, ver ``DERIVACION_R_S`` más abajo.
   gamma aversión al riesgo igual a uno para todos, por alcance del capítulo 1.
 
 SUPUESTO EN ESTE MÓDULO, porque el capítulo 3 no lo fija
@@ -123,23 +124,54 @@ PROHIBIDAS = [(CORFO, MIPYME), (CORFO, BANCO), (IFNB, BANCO)]
 
 # ------------------------------------------------------------------ parámetros
 R_W = (0.0423, 0.0473)      # mayorista CORFO -> IFNB        [DIPRES, verificado]
-R_M = (0.1400, 0.1540)      # mercado Banco -> MiPyME        [ELE-7,  verificado]
+#: Mercado Banco -> MiPyME. Medianas de los tramos Micro y Pequeña 1 de la ELE-7,
+#: PONDERADAS por el factor de expansión ``fe_transversal``, que es la convención
+#: única que esta memoria aplica a todo lo que provenga de esa encuesta. Sin
+#: ponderar el intervalo sería (0.1400, 0.1540); ver el encabezado de
+#: ``caballero_verificacion_tasas.py`` para las dos convenciones de mediana
+#: ponderada y el tratamiento de los 44 casos de periodicidad ambigua.
+R_M = (0.126825, 0.140286)
 R_S_DECLARADO = (0.03, 0.06)  # subsidiada IFNB -> MiPyME, cifra que declara el cap. 3
 DESCUENTO_PP = (0.07, 0.10)   # puntos bajo el benchmark, cifra que declara el cap. 3
 
-#: El capítulo 3 declara r_s entre 3 y 6 por ciento, pero lo deriva restando un
-#: descuento de 7 a 10 puntos al benchmark de mercado de 14 a 15,4 por ciento,
-#: lo que da 4 a 8,4 por ciento. Los dos intervalos no coinciden. Se reportan
-#: ambos y se usa el declarado como base, por ser el que el documento afirma.
-INCONSISTENCIA_R_S = dict(
+#: Mediana de la ELE-7 sobre los cuatro tramos MiPyME AGRUPADOS, ponderada. Vale
+#: 12,6825 por ciento bajo las cuatro convenciones probadas, con y sin ponderar y
+#: con y sin los casos ambiguos, porque cae sobre un punto de masa de la
+#: distribución, a saber el 1,0 por ciento mensual capitalizado a doce meses.
+R_MIPYME_AGRUPADA = 0.126825
+
+#: De dónde sale r_s, y qué residuo queda sin explicar.
+#:
+#: El 3 a 6 por ciento NO se obtiene del intervalo por tramo ``R_M``, que
+#: responde otra pregunta: ése es la tasa que enfrenta una MiPyME según su
+#: tramo, mientras que r_s se deriva de la mediana AGRUPADA. Son dos cifras
+#: distintas por construcción y no una inconsistencia aritmética, que es lo que
+#: una versión anterior de este bloque afirmaba.
+#:
+#: Dicho eso, la derivación correcta tampoco reproduce el 3 a 6 de forma exacta.
+#: Restar el descuento DIPRES a la mediana agrupada da 2,68 a 5,68, de modo que
+#: queda un residuo de 0,32 puntos en ambos extremos. El único benchmark que
+#: reproduce 3 a 6 exactamente es uno PUNTUAL de 13,0 por ciento, solución única
+#: porque 13 menos 10 da 3 y 13 menos 7 da 6, que el documento no reporta y que
+#: ningún agregado de la encuesta produce. Es consistente con el benchmark
+#: ACHEF/EFA de factoring contra el que DIPRES mide el descuento, cuyo nivel el
+#: capítulo 3 no declara. Se mantiene el intervalo declarado como base por ser
+#: el que el documento afirma, y el residuo queda registrado aquí.
+DERIVACION_R_S = dict(
     declarado=R_S_DECLARADO,
-    derivado=(R_M[0] - DESCUENTO_PP[1], R_M[1] - DESCUENTO_PP[0]),
+    desde_mediana_agrupada=(R_MIPYME_AGRUPADA - DESCUENTO_PP[1],
+                            R_MIPYME_AGRUPADA - DESCUENTO_PP[0]),
+    benchmark_que_lo_reproduce_exacto=0.13,
 )
 
 
 def r_s_derivado():
-    """Intervalo de r_s que se obtiene de la propia aritmética del capítulo 3."""
-    return INCONSISTENCIA_R_S["derivado"]
+    """Intervalo de r_s que se sigue de la mediana MiPyME agrupada de la ELE-7.
+
+    No coincide exactamente con el declarado: deja 0,32 puntos de residuo en
+    ambos extremos. Ver ``DERIVACION_R_S``.
+    """
+    return DERIVACION_R_S["desde_mediana_agrupada"]
 
 
 def margen_ifnb(r_s, r_w):
