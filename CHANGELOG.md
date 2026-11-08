@@ -8,6 +8,12 @@ repositorio.
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
 ### Cambiado
+- El `\resumen` de
+  [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
+  pasa a reportar los resultados del Capítulo 4, esto es el mecanismo que no se
+  traslada al caso, el reparto predicho frente al observado en la ELE-7 y la
+  rama contrafactual, en lugar del diagnóstico de identificabilidad, que queda
+  como frase de cierre. Se mantiene el máximo de 200 palabras (`077b19f`).
 - `R_M` pasa a la mediana **ponderada por factor de expansión** de los tramos
   Micro y Pequeña 1 de la ELE-7, de (0,1400, 0,1540) a (0,126825, 0,140286),
   adoptando la ponderación como convención única para todo lo que provenga de
