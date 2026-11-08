@@ -59,7 +59,7 @@ Qué ejecutar, en qué orden, con qué entrada y qué cifra del Capítulo 4 sale
 cada cosa. No explica qué hace cada módulo: eso está en su propio encabezado, que
 la columna del script enlaza.
 
-Los tres scripts escriben su salida **en el directorio actual**, no junto al
+Los scripts que escriben archivos lo hacen **en el directorio actual**, no junto al
 módulo. Ejecutándolos desde la raíz, como indican los comandos, los archivos
 quedan en la raíz y no en `code/caballero/`, que es donde están las copias
 versionadas que el documento cita.
@@ -70,17 +70,22 @@ versionadas que el documento cita.
 | 2 | [`caballero_corrida_caso_chileno.py`](code/caballero/caballero_corrida_caso_chileno.py) | ninguna | `caballero_caso_chileno_resultados.csv` | Sección 4.5.3: las 768 combinaciones, las 312 admisibles, las medianas de adopción y las amplitudes de dominancia |
 | 3 | [`caballero_corrida_contrafactual.py`](code/caballero/caballero_corrida_contrafactual.py) | ninguna | `caballero_contrafactual_resultados.csv` | `tab:contrafactual-sigma`, más el costo del mandato, la fracción recuperada y las dos fricciones de equilibrio |
 | 4 | [`caballero_ele7_canales.py`](code/caballero/caballero_ele7_canales.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `ele7_reparto_canales_mipyme.csv` | `tab:ele7-canales` y las tres cifras derivadas del texto |
+| 5 | [`caballero_verificacion_tasas.py`](code/caballero/caballero_verificacion_tasas.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | nada, sólo imprime | el recálculo independiente de `tab:ele7-tasas`, la regla de anualización y la derivación del 3–6 % |
+| 6 | [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `fig_ele7_distribucion_tasas.png` | `fig:ele7-distribucion` y las medias, asimetrías y medias recortadas que cita el Capítulo 3 |
 
-El orden es de dependencia conceptual y no de ejecución: los cuatro son
+El orden es de dependencia conceptual y no de ejecución: los seis son
 independientes entre sí y pueden correrse en cualquier orden. El primero no
 produce archivo y conviene correrlo antes porque establece bajo qué
-especificación son válidos los otros dos.
+especificación son válidos los demás.
 
 ```bash
 python code/caballero/caballero_verificacion_objeciones.py
 python code/caballero/caballero_corrida_caso_chileno.py
 python code/caballero/caballero_corrida_contrafactual.py
 python code/caballero/caballero_ele7_canales.py <ruta>/ele7_financiamiento_mipyme.csv
+python code/caballero/caballero_verificacion_tasas.py <ruta>/ele7_financiamiento_mipyme.csv
+python code/caballero/caballero_figura_ele7.py <ruta>/ele7_financiamiento_mipyme.csv \
+    docs/MemoriasTesis/Caballero/fig_ele7_distribucion_tasas.png
 ```
 
 Las versiones con las que se verificó están en
@@ -106,11 +111,13 @@ repositorio. Se declara aquí en vez de dejarlo implícito.
   la sustenta, y sus cifras están fijadas en `test_caballero_dual.py`, pero el
   módulo no deja planilla, de modo que hoy se reproduce ejecutándolo a mano o
   leyendo la suite.
-- **Las cinco figuras del documento.** No hay ningún `savefig` activo en `code/`:
+- **Cuatro de las cinco figuras del documento.** La excepción es
+  `fig_ele7_distribucion_tasas.png`, que sí tiene productor versionado desde que
+  se agregó [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py).
+  Las otras cuatro, a saber `diagrama_redes.png`, `fig_cadena_corfo.png`,
+  `fig_jalan_ocde_resultados.png` y `fig_panel_ocde_vs_corfo.png`, se
+  construyeron fuera de los scripts: no hay ningún `savefig` que las produzca y
   las cuatro apariciones en `Financial_Networks_Stability.qmd` están comentadas.
-  Las dos figuras de la Sección 4.5 se construyeron fuera de los scripts, así que
-  los `.png` del documento no tienen origen reproducible, aunque las cifras que
-  muestran sí salen de los CSV de la tabla de arriba.
 
 No proceden de código, por su naturaleza, `tab:venegas-escenarios`, que es de la
 fuente, ni `tab:comparacion-venegas` y `tab:comparacion-ocde-corfo`, que son del

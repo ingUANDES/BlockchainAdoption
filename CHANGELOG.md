@@ -20,6 +20,11 @@ repositorio.
   mediana agrupada, deja 0,32 pp de residuo en ambos extremos.
 
 ### Añadido
+- `code/caballero/caballero_figura_ele7.py`: productor versionado de
+  `fig_ele7_distribucion_tasas.png`. Pondera por `fe_transversal` todas las
+  síntesis del panel (b) y los cuartiles del panel (a), de modo que la figura
+  deja de contradecir a `tab:ele7-tasas`. Cierra el único hueco de figura del
+  Capítulo 3 y se suma al índice de reproducción del README.
 - `code/caballero/caballero_verificacion_tasas.py`: recálculo independiente de
   las tasas que declara el Capítulo 3. Confirma las cinco medianas y sus $n$,
   infiere por inversión que la anualización fue compuesta, y determina que el

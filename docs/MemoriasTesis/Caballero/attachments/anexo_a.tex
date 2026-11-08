@@ -261,14 +261,14 @@ objeto se evalúa el término de riesgo de la utilidad.
 Si el riesgo se evalúa por separado en cada red, la utilidad del agente incluye
 los dos términos $w_i^{T\top}\Sigma_i w_i^{T}$ y $w_i^{A\top}\Sigma_i w_i^{A}$.
 En ese caso el problema del agente es estrictamente cóncavo en $w_i^{T}$, su
-Hessiano es $H_i = 2\gamma_i\Sigma_i + \lambda_A I$ y existe un óptimo interior,
+Hessiano es $H_i = 4\gamma_i\Sigma_i + 2\lambda_A I$ y existe un óptimo interior,
 que con transparencia y fricción nulas entrega $w_i^{T} = \tfrac{1}{2}w_i^{*}$,
 es decir el reparto por mitades que la fuente publica.
 
 Si en cambio el riesgo se evalúa sobre la exposición combinada, el término
 cuadrático es $w_i^{*\top}\Sigma_i w_i^{*}$, que no depende del reparto porque
 $w_i^{*}$ está fijo por supuesto. El Hessiano colapsa entonces a
-$H_i = \lambda_A I$, sin intervención de $\Sigma_i$, y con $\lambda_A = 0$, que
+$H_i = 2\lambda_A I$, sin intervención de $\Sigma_i$, y con $\lambda_A = 0$, que
 es el valor declarado para los escenarios de validación, el problema pasa a ser
 lineal en $w_i^{T}$. Un problema lineal sin cotas no tiene óptimo interior, de
 modo que el agente resulta indiferente entre todos los repartos y la cifra de
