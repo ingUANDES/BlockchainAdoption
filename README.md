@@ -17,10 +17,111 @@ docs/
     Caballero/    # Memoria de pregrado de Eduardo Caballero (en curso, 2026)
   Diapos/         # Presentaciones de avance y de defensa
 code/
-  Financial_Networks_Stability.qmd   # Notebook Quarto/Python con los ejemplos numéricos
-                                      # (Ejemplo 1, Ejemplo 5, redes 3F/4F con y sin
-                                      # restricción) que sustentan los resultados de Venegas
+  Financial_Networks_Stability.qmd   # Notebook Quarto/Python: núcleo numérico del modelo
+                                     # (cartera óptima, restricciones de arista, dinámica
+                                     # de precios) y réplica del Ejemplo 5 de Jalan &
+                                     # Chakrabarti. Ver nota de estado más abajo.
+  audit/                             # Auditoría del código de Venegas (sept. 2026):
+                                     # informe, módulo extraído, verificación algebraica,
+                                     # inventario de cobertura y suite de 30 pruebas
+  caballero/                         # Implementación propia de la memoria (oct. 2026):
+                                     # capa de acoplamiento T/A del modelo dual, motor
+                                     # corregido, re-derivación de las objeciones a la
+                                     # especificación dual, corrida del caso chileno,
+                                     # rama contrafactual del mandato de segundo piso,
+                                     # procesamiento de la ELE-7 y sus 62 pruebas
 ```
+
+La separación entre `audit/` y `caballero/` es deliberada. `audit/` documenta el código de
+la tesis que se continúa y preserva su evidencia sin modificarla, mientras que `caballero/`
+contiene implementación propia de la memoria en curso. Los módulos de `caballero/` importan
+`venegas_model.py` y `metricas_tesis.py` desde `audit/`, resolviendo la ruta en
+`code/caballero/_ruta_audit.py`, de modo que no hace falta `PYTHONPATH`.
+
+### Baterías de pruebas
+
+```bash
+# Auditoría del motor original (30 pruebas). Debe correrse desde su propia
+# carpeta, porque una prueba lee ../Financial_Networks_Stability.qmd por ruta relativa.
+cd code/audit && python -m pytest test_venegas_model.py -v
+
+# Motor corregido (21), capa de acoplamiento T/A (25) y rama contrafactual (16),
+# desde la raíz del repositorio.
+python -m pytest code/caballero -v
+
+# Re-derivación algebraica de las objeciones a la especificación dual.
+python code/caballero/caballero_verificacion_objeciones.py
+```
+
+### Índice de reproducción
+
+Qué ejecutar, en qué orden, con qué entrada y qué cifra del Capítulo 4 sale de
+cada cosa. No explica qué hace cada módulo: eso está en su propio encabezado, que
+la columna del script enlaza.
+
+Los scripts que escriben archivos lo hacen **en el directorio actual**, no junto al
+módulo. Ejecutándolos desde la raíz, como indican los comandos, los archivos
+quedan en la raíz y no en `code/caballero/`, que es donde están las copias
+versionadas que el documento cita.
+
+| # | Script | Entrada | Escribe | Sustenta |
+|---|---|---|---|---|
+| 1 | [`caballero_verificacion_objeciones.py`](code/caballero/caballero_verificacion_objeciones.py) | ninguna | nada, sólo imprime | los hallazgos C1 a C4 sobre la especificación dual |
+| 2 | [`caballero_corrida_caso_chileno.py`](code/caballero/caballero_corrida_caso_chileno.py) | ninguna | `caballero_caso_chileno_resultados.csv` | Sección 4.5.3: las 768 combinaciones, las 312 admisibles, las medianas de adopción y las amplitudes de dominancia |
+| 3 | [`caballero_corrida_contrafactual.py`](code/caballero/caballero_corrida_contrafactual.py) | ninguna | `caballero_contrafactual_resultados.csv` | `tab:contrafactual-sigma`, más el costo del mandato, la fracción recuperada y las dos fricciones de equilibrio |
+| 4 | [`caballero_ele7_canales.py`](code/caballero/caballero_ele7_canales.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `ele7_reparto_canales_mipyme.csv` | `tab:ele7-canales` y las tres cifras derivadas del texto |
+| 5 | [`caballero_verificacion_tasas.py`](code/caballero/caballero_verificacion_tasas.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | nada, sólo imprime | el recálculo independiente de `tab:ele7-tasas`, la regla de anualización y la derivación del 3–6 % |
+| 6 | [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `fig_ele7_distribucion_tasas.png` | `fig:ele7-distribucion` y las medias, asimetrías y medias recortadas que cita el Capítulo 3 |
+
+El orden es de dependencia conceptual y no de ejecución: los seis son
+independientes entre sí y pueden correrse en cualquier orden. El primero no
+produce archivo y conviene correrlo antes porque establece bajo qué
+especificación son válidos los demás.
+
+```bash
+python code/caballero/caballero_verificacion_objeciones.py
+python code/caballero/caballero_corrida_caso_chileno.py
+python code/caballero/caballero_corrida_contrafactual.py
+python code/caballero/caballero_ele7_canales.py <ruta>/ele7_financiamiento_mipyme.csv
+python code/caballero/caballero_verificacion_tasas.py <ruta>/ele7_financiamiento_mipyme.csv
+python code/caballero/caballero_figura_ele7.py <ruta>/ele7_financiamiento_mipyme.csv \
+    docs/MemoriasTesis/Caballero/fig_ele7_distribucion_tasas.png
+```
+
+Las versiones con las que se verificó están en
+[`code/caballero/entorno.txt`](code/caballero/entorno.txt), que **no** coinciden
+con las de [`code/audit/entorno.txt`](code/audit/entorno.txt).
+
+#### Qué no tiene productor versionado
+
+Cuatro resultados del Capítulo 4 no se reproducen con lo que hay en el
+repositorio. Se declara aquí en vez de dejarlo implícito.
+
+- **`tab:sensibilidad-sigma13`**. Ningún archivo de `code/` menciona esa
+  sensibilidad ni hay planilla suya versionada, de modo que su dato vive
+  enteramente fuera del repositorio.
+- **`tab:reproduccion-escenarios`**, los cuatro escenarios de referencia. Sus
+  planillas `tabla_baseline_cap4.csv` y `escenario_4firmas_cap4.csv` sí están
+  versionadas en `code/audit/`, pero ningún `.py` del repositorio las escribe:
+  las únicas escrituras a CSV son las tres de la tabla de arriba. Lo mismo vale
+  para las otras seis planillas de `code/audit/`, a saber `barrido_eta.csv`,
+  `barrido_umbral.csv`, `cobertura_resultados.csv`, `ejemplo5_resultados.csv`,
+  `iterados_tesis.csv` y `traza_convergencia.csv`.
+- **`tab:reproduccion-dual`**. [`caballero_dual.py`](code/caballero/caballero_dual.py)
+  la sustenta, y sus cifras están fijadas en `test_caballero_dual.py`, pero el
+  módulo no deja planilla, de modo que hoy se reproduce ejecutándolo a mano o
+  leyendo la suite.
+- **Cuatro de las cinco figuras del documento.** La excepción es
+  `fig_ele7_distribucion_tasas.png`, que sí tiene productor versionado desde que
+  se agregó [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py).
+  Las otras cuatro, a saber `diagrama_redes.png`, `fig_cadena_corfo.png`,
+  `fig_jalan_ocde_resultados.png` y `fig_panel_ocde_vs_corfo.png`, se
+  construyeron fuera de los scripts: no hay ningún `savefig` que las produzca y
+  las cuatro apariciones en `Financial_Networks_Stability.qmd` están comentadas.
+
+No proceden de código, por su naturaleza, `tab:venegas-escenarios`, que es de la
+fuente, ni `tab:comparacion-venegas` y `tab:comparacion-ocde-corfo`, que son del
+levantamiento documental.
 
 Cada carpeta de memoria/tesis sigue la plantilla estándar de Ingeniería UAndes: `core/`
 (preámbulo y primeras páginas), `chapters/` (capítulos), `attachments/` (anexos),
@@ -43,8 +144,33 @@ Local, Firma Local) con una restricción regulatoria que prohíbe el contrato di
 Banco Nacional–Firma Local: la restricción destruye el 50,8% del bienestar potencial; la
 competencia entre intermediarios (agregando una Fintech) recupera solo el 46,5% de esa
 pérdida, dejando un *gap* de 27,9%; habilitar una red alternativa recupera el **100%** del
-bienestar del benchmark sin restricción. El código que reproduce estos escenarios
-(3F-WITH/WITHOUT, 4F-WITH/WITHOUT, dual-network) vive en `code/Financial_Networks_Stability.qmd`.
+bienestar del benchmark sin restricción.
+
+> **Estado del código (auditoría de septiembre 2026).** `code/Financial_Networks_Stability.qmd`
+> contiene el **núcleo numérico** del modelo de Jalan & Chakrabarti (optimización de cartera,
+> restricciones de arista y dinámica de precios bilateral) y reproduce el Ejemplo 5 del paper,
+> pero **no** contiene el modelo dual, ni la capa de métricas (utilidad, bienestar, volumen), ni
+> los scripts de los escenarios 3F/4F, ni el código que genera las figuras del capítulo 4. Las
+> derivaciones simbólicas del modelo dual sí existen y están verificadas, pero quedaron en
+> `code/.ipynb_checkpoints/`. De los tres números citados arriba, 50,8%, 46,5% y 27,9% son
+> reproducibles con el código versionado. Informe completo, inventario unidad por unidad
+> y suite de pruebas en [`code/audit/`](code/audit/AUDITORIA_VENEGAS.md).
+
+> **Implementación de la capa dual (octubre 2026).** El **100%** de recuperación de
+> bienestar ya no depende de una implementación inexistente: la capa de acoplamiento T/A
+> está implementada en [`code/caballero/caballero_dual.py`](code/caballero/caballero_dual.py)
+> y reproduce las utilidades totales publicadas, con 1,4339 frente a 1,434 en el escenario
+> de tres agentes y 1,7417 frente a 1,741 en el de cuatro. La reproducción, sin embargo, es
+> parcial y de un modo que importa. Se reproducen exactamente las cifras que no dependen del
+> reparto entre redes, y ninguna de las que sí dependen de él, ya que las tasas de adopción
+> dan 81,6% y 75,0% frente a los 72,4% y 47,9% publicados. La re-derivación algebraica de la
+> especificación dual, en
+> [`caballero_verificacion_objeciones.py`](code/caballero/caballero_verificacion_objeciones.py),
+> muestra por qué, dado que las utilidades totales dependen únicamente de la exposición total
+> del agente, que está fija por supuesto y no cambia entre escenarios. Las cifras no
+> reproducidas quedan fijadas como regresión en el grupo `test_discrepancia_*` de
+> [`test_caballero_dual.py`](code/caballero/test_caballero_dual.py), en vez de quedar fuera
+> de la batería.
 
 El propio Venegas identifica en la sección 5.3.3 de su tesis dos supuestos simplificadores
 que dejan las estimaciones de recuperación de bienestar en un piso conservador: aversión al

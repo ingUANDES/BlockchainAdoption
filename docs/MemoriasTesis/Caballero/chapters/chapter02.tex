@@ -175,7 +175,7 @@ Estos mismos autores advierten que estas propiedades introducen nuevas disyuntiv
 objetivos, como privacidad o flexibilidad contractual que no están presentes en
 las redes tradicionales.
 
-La evidencia empírica sobre blockchain como infraestructura alternativa es
+La evidencia empírica sobre \textit{blockchain} como infraestructura alternativa es
 mixta. \citeA{makarov_blockchain_2021}, en un análisis extenso del mercado de
 Bitcoin, documentan que la transparencia transaccional reduce ciertas asimetrías
 de información. Los participantes sofisticados pueden observar patrones de flujo
@@ -224,13 +224,13 @@ asignación óptima $w_i^{A*}$ es, en general, estrictamente interior
 ($0 < w_i^{A*} < w_i^*$) y no una migración completa hacia la red Alternativa.
 
 \section{Un modelo de redes duales}
+\label{c24}
 
-El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $N$
-agentes que negocian contratos bilaterales bajo una función de utilidad
-media-varianza. Cada agente $i$ posee un vector de creencias $\mu_i$ sobre los
-retornos esperados, una matriz de covarianzas $\Sigma_i$ y un coeficiente de
-aversión al riesgo $\gamma_i$. La utilidad de un agente $i$ toma la forma
+Esta sección presenta el modelo base de \citeA{jalan_incentive-aware_2024}, la extensión dual de \citeA{venegas_dual_network_2024} y los resultados formales de ambos marcos que sostienen la aplicación empírica desarrollada en el Capítulo~\ref{c3}. La notación empleada en el resto del documento se resume en la Tabla~\ref{tab:notacion} del Anexo~\ref{anexo:notacion}. De los resultados de \citeA{jalan_incentive-aware_2024} se recogen aquí los que sostienen la calibración empírica, quedando fuera los de su Sección 3, relativos a fricciones, estática comparativa y detección de la fuente de un cambio en la red, por no tener relación directa con ese ejercicio.
+
+El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $n$ agentes que negocian contratos bilaterales bajo una función de utilidad media-varianza. Cada agente $i$ posee un vector de creencias $\mu_i$ sobre los retornos esperados, una matriz de covarianzas $\Sigma_i$ y un coeficiente de aversión al riesgo $\gamma_i$. La utilidad de un agente $i$ toma la forma
 \begin{equation}
+\label{eq:utilidad}
     g_i(W, P) = w_i^\top (\mu_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i,
 \end{equation}
 sujeta a una restricción regulatoria capturada por una matriz de proyección
@@ -245,8 +245,9 @@ Cada agente reparte su exposición total entre ambas, $w_i^* = w_i^T + w_i^A$, y
 la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red
 alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$:
 \begin{equation}
+\label{eq:utilidad-dual}
     g_i(W, P) = w_i^\top (\mu_i + \tau e^A_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i
-    - \lambda_A \|w^A_i\|^2.
+    - \lambda_A \|w^A_i\|^2 .
 \end{equation}
 El modelo dual es consistente con el modelo base de Jalan y Chakrabarti en tres
 casos límite. Cuando $\lambda_A \to 0$ y $\tau = 0$, cuando $\Psi^A$ desactiva
@@ -267,6 +268,7 @@ enteramente a través de $A$. Este resultado establece la red alternativa como e
 que recupera eficiencia.
 
 \subsection{Oportunidades de mejora identificadas}
+\label{c24:oportunidades}
 
 El modelo de \citeA{venegas_reyes_financial_2025} obtiene su resultado de bienestar
 bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para

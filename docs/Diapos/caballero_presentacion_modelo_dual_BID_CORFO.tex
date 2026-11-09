@@ -1,0 +1,666 @@
+\documentclass[aspectratio=169]{beamer}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes, fit, calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{appendixnumberbeamer} % evita que las láminas del anexo infeccionen el contador X/Y del pie de página
+
+% --- TEMA Y ESTILO ---
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% Definición de colores
+\definecolor{MainRed}{RGB}{189,39,38}
+\definecolor{AlertRed}{RGB}{204,0,0}
+\definecolor{SafeGreen}{RGB}{0,100,0}
+\definecolor{OrangeAccent}{RGB}{230,126,34}
+
+% Recolorear el tema completo (barras, títulos, viñetas) al rojo institucional en vez del azul por defecto
+\usecolortheme[named=MainRed]{structure}
+
+% --- METADATA ---
+\title[Redes Duales BID/CORFO]{Redes de Financiamiento Duales: \\ Aplicando el Modelo de Jalan et al. (2024) \\ al Caso BID/CORFO}
+\subtitle{Validación empírica del modelo dual de Venegas (2024)}
+\author[Eduardo Caballero]{Eduardo Caballero \\ \small{Profesor Guía: Sebastián Cea}}
+\institute{Universidad de Los Andes}
+\date{\today}
+
+\begin{document}
+
+% ===================================================================
+% PORTADA
+% ===================================================================
+\frame{\titlepage}
+
+% ===================================================================
+% RESUMEN GENERAL (5 láminas, para lectura directa)
+% ===================================================================
+\begin{frame}{El problema y la pregunta de investigación}
+\textbf{Contexto:}
+\begin{itemize}
+    \item Desde 2016, con apoyo de un préstamo del BID (US\$120 millones), CORFO opera el programa \textbf{Crédito Corfo Mipyme}, que actúa como banca de segundo piso a través de intermediarios financieros no bancarios (IFNB).
+    \item La MiPyME \textbf{no accede directamente} a los fondos CORFO/BID, ya que debe pasar por un intermediario.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Pregunta:} ¿cómo coexiste este canal público-regulado con el canal bancario tradicional para financiar a la MiPyME, y qué ocurre con el bienestar agregado cuando el acceso directo está bloqueado?
+
+\vspace{0.3cm}
+\alert{Enfoque:} modelar el sistema como una \textbf{red financiera} en la que cada institución elige su cartera de contratos para maximizar utilidad, sujeta a restricciones regulatorias.
+\end{frame}
+
+\begin{frame}{El modelo: maximización de utilidad sujeta a restricciones}
+Cada agente $i$ (CORFO, Intermediario, MiPyME o Banco) resuelve
+\begin{equation*}
+\max_{w_i} \; g_i(w_i,P) = w_i^\top(\mu_i - Pe_i) - \gamma_i\, w_i^\top \Sigma_i w_i \quad \text{s.a. } \Psi_i w_i = w_i
+\end{equation*}
+donde $w_i$ es su cartera de contratos, $\mu_i$ el retorno esperado, $\Sigma_i$ el riesgo percibido, $\gamma_i$ la aversión al riesgo, y $\Psi_i$ las restricciones regulatorias (p.ej. MiPyME sin acceso directo a CORFO).
+
+\vspace{0.3cm}
+Como la MiPyME puede financiarse por dos vías, resuelve además un problema conjunto sujeto a que su cartera total se reparte entre ambas
+\begin{equation*}
+\max_{w_3^T,\, w_3^A} \; g_3^T(w_3^T,P^T) + g_3^A(w_3^A,P^A) \quad \text{s.a. } w_3^T + w_3^A = w_3^*
+\end{equation*}
+
+\vspace{0.2cm}
+\footnotesize{Ambos problemas tienen solución cerrada (ver derivación completa en el Anexo).}
+\end{frame}
+
+\begin{frame}{Las dos redes del caso BID/CORFO}
+\begin{columns}[T]
+    \column{0.48\textwidth}
+    \centering
+    \textbf{Red 1 (Tradicional)}\\
+    \small{CORFO -- Intermediario -- MiPyME}
+    \begin{tikzpicture}[scale=0.62, transform shape]
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (C) at (0,3) {\textbf{CORFO}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (M) at (5,3) {\textbf{MiPyME}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=gray!20] (I) at (2.5,0.3) {\textbf{Interm.}};
+        \draw[AlertRed, line width=2.2pt, dashed] (C) -- (M) node[midway, above, font=\small, text=AlertRed] {Prohibido};
+        \draw[->, line width=2pt, MainRed] (C) -- (I) node[midway, left, font=\scriptsize] {$W_{12}$};
+        \draw[->, line width=2pt, MainRed] (I) -- (M) node[midway, right, font=\scriptsize] {$W_{23}$};
+    \end{tikzpicture}
+    \column{0.48\textwidth}
+    \centering
+    \textbf{Red 2 (Alternativa)}\\
+    \small{Banco -- MiPyME}
+    \begin{tikzpicture}[scale=0.62, transform shape]
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (B) at (0,1.8) {\textbf{Banco}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (M2) at (5,1.8) {\textbf{MiPyME}};
+        \draw[->, line width=2pt, SafeGreen] (B) -- (M2) node[midway, above, font=\scriptsize] {$W_{4}=W_{43}$};
+    \end{tikzpicture}
+\end{columns}
+
+\vspace{0.3cm}
+La \textbf{MiPyME es el único agente presente en ambas redes}, y por eso el único que reparte su cartera entre las dos.
+
+\vspace{0.1cm}
+\footnotesize{Detalle de restricciones, mapeo institucional y notación en el Anexo.}
+\end{frame}
+
+% ---- Beneficio mutuo ----
+\begin{frame}{Cómo nos podemos ayudar mutuamente}
+\begin{columns}[T]
+    \column{0.48\textwidth}
+    \textbf{Lo que el estudio aporta}
+    \begin{itemize}
+        \item ¿El programa y la banca son \textbf{complementarios o sustitutos}?
+        \item ¿Pasar por un intermediario le cuesta bienestar a la MiPyME?
+        \item Herramienta para evaluar \textbf{ajustes futuros}: tasas, garantías, nuevos intermediarios.
+        \item Evidencia propia para la rendición ante el BID.
+    \end{itemize}
+
+    \column{0.48\textwidth}
+    \textbf{Lo que necesitamos}
+    \begin{itemize}
+        \item Montos y tasas \textbf{por intermediario y por mes}.
+        \item Es un extracto de lo que los intermediarios \textbf{ya reportan}.
+        \item Sin identidades: ni de los intermediarios ni de las MiPyMEs.
+    \end{itemize}
+\end{columns}
+
+\vfill
+\begin{block}{}
+\centering Con datos anuales agregados el modelo no se puede calibrar. Con el detalle mensual que CORFO ya recibe, sí.
+\end{block}
+\end{frame}
+
+% ---- Solicitud: encuadre ----
+\begin{frame}{Qué le solicitamos a CORFO}
+\begin{block}{La solicitud, en una frase}
+Extracto de las rendiciones mensuales del numeral 19 del programa Crédito Corfo Mipyme, período \textbf{enero 2016 -- diciembre 2024}, con el RUT del beneficiario reemplazado por un identificador seudonimizado estable, en un único archivo CSV o Excel con \textbf{una fila por (período, operación)}.
+\end{block}
+
+\vspace{0.2cm}
+\begin{itemize}
+    \item El \textbf{numeral 19} de las Normas del Programa (``Justificación de la utilización de los préstamos otorgados a los IFNB'') ya obliga a cada intermediario a rendir \textbf{mensualmente}, operación por operación: monto, tasa de interés, plazo, saldo de capital, saldo anterior, mora y estado.
+    \item Pedimos \textbf{dos tablas}. La segunda es un extracto directo de esa rendición: \textbf{11 de sus 12 columnas} están explícitamente exigidas por el numeral 19 y el Anexo N$^\circ$4, y la restante se deriva de ellas. La primera, más corta (8 columnas), proviene de los registros propios de CORFO sobre el préstamo a cada intermediario.
+    \item \alert{No pedimos construir un dataset nuevo}, sino un extracto de información que CORFO ya recibe todos los meses.
+\end{itemize}
+\end{frame}
+
+% ---- Tabla 1 ----
+\begin{frame}{Tabla 1: el giro de CORFO a cada intermediario}
+\textbf{Una fila por (mes, intermediario, tipo de operación).} Es el tramo CORFO $\to$ IFNB ($W_{12}$).
+
+\vspace{0.25cm}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{@{}llllrrrr@{}}
+\toprule
+\texttt{PERIODO} & \texttt{ID\_IFNB} & \texttt{TIPO\_IFNB} & \texttt{TIPO\_OPER.} & \texttt{DESEMB\_NUEVO} & \texttt{SALDO\_CAPITAL} & \texttt{TASA} & \texttt{PLAZO} \\
+\midrule
+2020-03 & IFNB\_01 & Factoring   & Factoring & 1.250 & 4.800 & 4,73 & 60 \\
+2020-03 & IFNB\_02 & Leasing     & Leasing   &     0 &   980 & 4,23 & 60 \\
+2020-03 & IFNB\_03 & Cooperativa & Crédito   & 2.100 & 7.350 & 4,23 & 60 \\
+2020-04 & IFNB\_01 & Factoring   & Factoring &   900 & 5.300 & 4,73 & 60 \\
+2020-04 & IFNB\_02 & Leasing     & Leasing   &   450 & 1.380 & 4,23 & 60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\footnotesize
+\begin{itemize}\footnotesize
+    \item \texttt{DESEMB\_NUEVO}: monto girado nuevo en el mes (flujo). \texttt{SALDO\_CAPITAL}: saldo al cierre del mes (stock). \alert{Necesitamos los dos}: hoy las cifras públicas los mezclan y no son comparables entre años.
+    \item \texttt{TASA}: tasa anual CORFO $\to$ IFNB. \texttt{PLAZO}: en meses.
+    \item Montos en millones de pesos. \emph{Los valores de la tabla son ilustrativos del formato, no cifras reales.}
+\end{itemize}
+\end{frame}
+
+% ---- Tabla 2 ----
+\begin{frame}{Tabla 2: la rendición mensual de cada intermediario}
+\textbf{Una fila por (mes, operación).} Es el tramo IFNB $\to$ MiPyME ($W_{23}$), y es el extracto del numeral 19.
+
+\vspace{0.25cm}
+\begin{table}
+\centering
+\tiny
+\begin{tabular}{@{}lllrrrrrrr@{}}
+\toprule
+\texttt{PERIODO} & \texttt{ID\_IFNB} & \texttt{ID\_MIPYME} & \texttt{TIPO\_OPER.} & \texttt{MONTO\_ORIG} & \texttt{SALDO\_CAPITAL} & \texttt{SALDO\_ANT} & \texttt{TASA\_OPER} & \texttt{MORA\_DIAS} & \texttt{VENTAS\_UF} \\
+\midrule
+2020-03 & IFNB\_01 & E-004871 & Factoring & 18,4 & 12,1 & 15,0 & 18,5 &  0 &  9.400 \\
+2020-03 & IFNB\_01 & E-011250 & Factoring &  6,2 &  6,2 &  0,0 & 21,0 &  0 &  2.150 \\
+2020-03 & IFNB\_03 & E-004871 & Crédito   & 45,0 & 41,8 & 43,5 & 14,2 & 31 &  9.400 \\
+2020-04 & IFNB\_01 & E-004871 & Factoring & 18,4 &  9,0 & 12,1 & 18,5 &  0 &  9.400 \\
+2020-04 & IFNB\_02 & E-007733 & Leasing   & 32,0 & 31,1 & 32,0 & 16,8 &  0 & 24.800 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\begin{itemize}\footnotesize
+    \item \texttt{ID\_MIPYME}: \alert{no necesitamos el RUT}. Basta un código seudonimizado que sea \textbf{el mismo para la misma empresa en todos los meses}, para poder seguir la operación en el tiempo.
+    \item \texttt{TASA\_OPER}: tasa anual de la operación al cliente final. \texttt{VENTAS\_UF}: ya está en el Anexo N$^\circ$4 de la rendición; permite distinguir micro, pequeña y mediana.
+    \item También sirve la tabla \textbf{agregada} por (mes, intermediario, tipo de operación), con monto total, tasa promedio ponderada y número de operaciones, si el detalle por operación no es compartible.
+    \item Montos en millones de pesos. \emph{Los valores de la tabla son ilustrativos del formato, no cifras reales.}
+\end{itemize}
+\end{frame}
+
+% ---- Dos precisiones ----
+\begin{frame}{Dos precisiones que deciden si el ejercicio es viable}
+\begin{block}{1. La periodicidad debe ser mensual, no anual}
+El método estima el riesgo percibido a partir de \textbf{cómo cambia la red de un período al siguiente}, de modo que el número de períodos es el insumo crítico. Con datos anuales el panel tiene del orden de \textbf{6 observaciones}; con el detalle mensual que la rendición ya genera, \textbf{alrededor de 108} (enero 2016 -- diciembre 2024). Es la diferencia entre no poder calibrar y poder calibrar.
+\end{block}
+
+\vspace{0.2cm}
+\begin{block}{2. Los intermediarios deben venir distinguidos uno a uno}
+Necesitamos poder \textbf{separar} a cada intermediario (al menos tres, idealmente todos los del programa), pero \textbf{no necesitamos saber cuál es cuál}: un código estable como \texttt{IFNB\_01} es suficiente. Si las cifras vienen sumadas en una sola categoría, o agrupadas en dos, se pierde la posibilidad de estimar el riesgo percibido por agente.
+\end{block}
+
+\vspace{0.2cm}
+\footnotesize Especificación campo por campo, con prioridad y respaldo normativo de cada uno, en el Anexo.
+\end{frame}
+
+% ---- Cierre ----
+\begin{frame}{}
+\vfill
+\centering
+\Large{¡Gracias!}
+
+\vspace{0.4cm}
+\normalsize Preguntas y comentarios son bienvenidos.
+\vfill
+\end{frame}
+
+% ===================================================================
+% ANEXO: DETALLE TÉCNICO
+% ===================================================================
+\appendix
+
+\begin{frame}{Índice del Anexo}
+\tableofcontents
+\end{frame}
+
+% ---- Motivación ----
+\section{Motivación}
+
+\begin{frame}{El problema: financiamiento a MiPyMEs en Chile}
+\textbf{Contexto:}
+\begin{itemize}
+    \item Las micro y pequeñas empresas (MiPyMEs) enfrentan restricciones de acceso al crédito bancario tradicional.
+    \item Desde 2016, con apoyo de un préstamo del \textcolor{blue}{BID (US\$120 millones)}, CORFO opera el programa \textbf{Crédito Corfo Mipyme}: banca de segundo piso a través de intermediarios financieros no bancarios (IFNB).
+    \item La MiPyME \textbf{no puede acceder directamente} a los fondos CORFO/BID: debe pasar por un intermediario (cooperativa, leasing, factoring).
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Pregunta:} ¿Cómo compite este canal público-regulado con el canal bancario tradicional por el financiamiento de la MiPyME, y qué le ocurre al bienestar agregado cuando el acceso directo está bloqueado?
+
+\vspace{0.3cm}
+\alert{Enfoque:} modelar el sistema como una \textbf{red financiera} en la que cada institución elige su cartera de contratos para maximizar utilidad, sujeta a restricciones regulatorias.
+\end{frame}
+
+\begin{frame}{Por qué un modelo de redes financieras}
+\begin{itemize}
+    \item La intermediación obligatoria (CORFO $\not\to$ MiPyME directo) es exactamente el tipo de \textcolor{blue}{restricción de red} que estudian Jalan, Chakrabarti \& Sarkar (2024).
+    \item Venegas (2024) extiende ese modelo a \textbf{dos redes en competencia} (tradicional vs. alternativa) para estudiar la emergencia de infraestructuras de financiamiento no tradicionales.
+    \item Este trabajo toma esa extensión dual y la \textbf{lleva a datos reales} del caso BID/CORFO, en vez de parámetros ilustrativos.
+\end{itemize}
+
+\vspace{0.4cm}
+\begin{block}{Objetivo del trabajo de título}
+Calibrar y validar el modelo dual de Venegas con datos públicos de CORFO/BID, la banca tradicional (CMF) y encuestas de empresas (INE), para obtener contratos, precios y reparto de bienestar consistentes con el caso chileno.
+\end{block}
+\end{frame}
+
+% ---- Modelo Base (Jalan et al., 2024) ----
+\section{Modelo Base (Jalan et al., 2024)}
+
+\begin{frame}{Estructura de la red}
+\textbf{Representación:} $n$ agentes conectados por una red ponderada $W \in \mathbb{R}^{n\times n}$.
+
+\vspace{0.3cm}
+\begin{itemize}
+    \item \textbf{Tamaño de contrato:} $W_{ij}$ = monto acordado entre agentes $i$ y $j$.
+    \begin{itemize}
+        \item Simétrico: $W_{ij}=W_{ji}$ (requiere acuerdo mutuo).
+    \end{itemize}
+    \item \textbf{Precio del contrato:} $P_{ji}=-P_{ij}$ (suma cero, pagos entre partes).
+\end{itemize}
+
+\vspace{0.3cm}
+Los contratos \textbf{emergen endógenamente} de la interacción de los agentes; no se imponen de forma exógena.
+\end{frame}
+
+\begin{frame}{Características de cada agente}
+\textbf{Cada agente $i$ se caracteriza por:}
+\begin{itemize}
+    \item \textbf{Creencias subjetivas:} $\mu_i \in \mathbb{R}^n$, que representa el retorno esperado de contratar con cada agente de la red (columna $i$ de la matriz $M$).
+    \item \textbf{Riesgo percibido:} $\Sigma_i \succ 0$, la matriz de covarianza de los riesgos percibidos.
+    \item \textbf{Aversión al riesgo:} $\gamma_i > 0$.
+    \item \textbf{Restricciones regulatorias:} $\Psi_i \in \{0,1\}^{|J_i|\times n}$, donde $J_i \subseteq [n]$ es el conjunto de agentes con quienes $i$ \textbf{puede} contratar.
+\end{itemize}
+
+\vspace{0.3cm}
+\footnotesize{En nuestro caso, $\Psi_i$ codifica la regla: \emph{la MiPyME no puede contratar directamente con CORFO/BID}.}
+\end{frame}
+
+\begin{frame}{El problema del agente: maximización sujeta a restricciones}
+\textbf{Cada agente $i$ resuelve:}
+\begin{equation}
+\boxed{\max_{w_i \in \mathbb{R}^n} \; g_i(w_i,P) = w_i^\top(\mu_i - Pe_i) - \gamma_i\, w_i^\top \Sigma_i w_i \quad \text{s.a. } \; \Psi_i w_i = w_i}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{Interpretación económica:}
+\begin{itemize}
+    \item \textbf{Retorno esperado:} $w_i^\top(\mu_i - Pe_i)$, con $w_i$ el vector de portafolio (contratos) del agente.
+    \item \textbf{Penalización por riesgo:} $\gamma_i\, w_i^\top \Sigma_i w_i$, donde un $\gamma_i$ mayor implica un agente más averso al riesgo.
+    \item \textbf{Restricción:} $\Psi_i w_i = w_i$ fuerza a cero los contratos prohibidos (p.ej. MiPyME$\leftrightarrow$CORFO).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solución óptima y red estable}
+\textbf{Portafolio óptimo (Teorema 1, Jalan et al. 2024):}
+$$w_i^* = Q_i(\mu_i - Pe_i), \qquad Q_i = \Psi_i^\top\left(2\gamma_i \Psi_i \Sigma_i \Psi_i^\top\right)^{-1}\Psi_i$$
+
+\vspace{0.3cm}
+\textbf{Condiciones de estabilidad:}
+\begin{itemize}
+    \item \textbf{Factibilidad:} $W=W^\top$, $P=-P^\top$, se respetan las restricciones $\Psi_i$.
+    \item \textbf{Estabilidad:} cada agente maximiza su utilidad dado un $(W,P)$ factible.
+\end{itemize}
+
+\vspace{0.3cm}
+La red se alcanza mediante un \textbf{algoritmo de negociación bilateral iterativa} (Algorithm 1) que actualiza los precios $P(t)$ hasta convergencia, con parámetro de amortiguación $\eta$.
+\end{frame}
+
+% ---- Extensión Dual (Venegas, 2024) ----
+\section{Extensión Dual (Venegas, 2024)}
+
+\begin{frame}{La extensión: dos redes en competencia}
+Venegas (2024) extiende el modelo agregando una \textbf{segunda red} hacia la que los agentes pueden reasignar su portafolio.
+
+\vspace{0.3cm}
+\textbf{Idea central:} el portafolio total de cada agente es \textbf{fijo} y se reparte entre la red Tradicional (T) y la red Alternativa (A):
+\begin{equation}
+\boxed{w_i^* = w_i^T + w_i^A}
+\end{equation}
+
+\vspace{0.2cm}
+\begin{itemize}
+    \item Fija la exposición total, aislando el efecto de competir por infraestructura.
+    \item Refleja restricciones de capital (reasignación, no expansión ilimitada).
+    \item Reduce el problema a una única variable de optimización por agente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Maximización sujeta a restricciones: caso dual}
+\textbf{Cada agente $i$ resuelve conjuntamente sobre ambas redes:}
+\begin{equation}
+\boxed{\max_{w_i^T,\, w_i^A} \; g_i^T(w_i^T,P^T) + g_i^A(w_i^A,P^A) \quad \text{s.a. } \; w_i^T + w_i^A = w_i^*,\;\; \Psi_i^T w_i^T = w_i^T,\;\; \Psi_i^A w_i^A = w_i^A}
+\end{equation}
+
+\vspace{0.2cm}
+\textbf{Utilidad Tradicional:}
+$$g_i^T = (w_i^T)^\top(\mu_i - Pe_i) - \gamma_i (w_i^T)^\top\Sigma_i w_i^T$$
+
+\textbf{Utilidad Alternativa} (con beneficio $\tau$ y fricción cuadrática $\lambda_A$):
+$$g_i^A = (w_i^A)^\top(\mu_i + \textcolor{SafeGreen}{\tau\mathbf{1}} - Pe_i) - \gamma_i(w_i^A)^\top\Sigma_i w_i^A - \textcolor{AlertRed}{\lambda_A\|w_i^A\|^2}$$
+\end{frame}
+
+\begin{frame}{Solución óptima del problema dual}
+Resolviendo el problema anterior se obtiene la asignación a la red Tradicional:
+\begin{equation}
+\boxed{w_i^{T*} = Q_i^{\text{dual}}\cdot a_i}
+\end{equation}
+
+\vspace{0.2cm}
+\begin{columns}[T]
+    \column{0.5\textwidth}
+    \textbf{Matriz Q dual:}
+    $$Q_i^{\text{dual}} = \left(2\gamma_i\Sigma_i + \textcolor{AlertRed}{\lambda_A I}\right)^{-1}$$
+    \footnotesize{(caso simplificado $\Psi^T=I_n$)}
+
+    \column{0.5\textwidth}
+    \textbf{Vector de offset:}
+    $$a_i = -\tau\mathbf{1} + 2\gamma_i\Sigma_i w_i^* + 2\lambda_A w_i^*$$
+\end{columns}
+
+\vspace{0.3cm}
+$w_i^{A*} = w_i^* - w_i^{T*}$ se obtiene como residuo. \\
+\footnotesize{Validado numéricamente contra el benchmark de Venegas: recuperación de bienestar del 100\% frente al caso sin restricciones.}
+\end{frame}
+
+% ---- Caso de Aplicación: BID/CORFO ----
+\section{Caso de Aplicación: BID/CORFO}
+
+\begin{frame}{Mapeo institucional: 4 agentes, 2 redes}
+\textbf{Estructura del caso real:}
+\begin{itemize}
+    \item[1] \textbf{CORFO/BID}, que actúa como banca de segundo piso.
+    \item[2] \textbf{Intermediario financiero (IFNB)}, ya sea cooperativa, leasing o factoring.
+    \item[3] \textbf{MiPyME}, el beneficiario final.
+    \item[4] \textbf{Banco tradicional}, el canal de crédito comercial estándar.
+\end{itemize}
+
+\vspace{0.3cm}
+\begin{block}{Punto clave}
+La \textbf{MiPyME (agente 3) es el único agente presente en ambas redes}, y por tanto el único que resuelve el problema dual $w_3^T+w_3^A=w_3^*$. Los agentes 1, 2 y 4 participan en una sola red cada uno.
+\end{block}
+\end{frame}
+
+\begin{frame}{Red 1 (Tradicional, T): CORFO -- Intermediario -- MiPyME}
+\begin{columns}[T]
+    \column{0.55\textwidth}
+    \textbf{Estructura} (idéntica al Example 5 de Jalan et al.):
+    \begin{itemize}
+        \item Agentes: CORFO (1), Intermediario (2), MiPyME (3).
+        \item Arista \textbf{CORFO -- MiPyME prohibida}: $\Psi_1, \Psi_3$ excluyen ese contrato.
+        \item El Intermediario (2) es el único agente sin restricciones ($\Psi_2=I_3$): actúa como \textbf{cuello de botella obligado}.
+    \end{itemize}
+    \column{0.4\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8, transform shape]
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (C) at (0,3) {\textbf{CORFO}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (M) at (5,3) {\textbf{MiPyME}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=gray!20] (I) at (2.5,0.3) {\textbf{Interm.}};
+        \draw[AlertRed, line width=2.2pt, dashed] (C) -- (M) node[midway, above, font=\small, text=AlertRed] {Prohibido};
+        \draw[->, line width=2pt, MainRed] (C) -- (I) node[midway, left, font=\scriptsize] {$W_{12}$};
+        \draw[->, line width=2pt, MainRed] (I) -- (M) node[midway, right, font=\scriptsize] {$W_{23}$};
+    \end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Red 2 (Alternativa, A): Banco -- MiPyME}
+\begin{columns}[T]
+    \column{0.55\textwidth}
+    \textbf{Estructura} (caso simple de 2 firmas, análogo al Example 4 de Jalan et al.):
+    \begin{itemize}
+        \item Agentes: Banco tradicional (4), MiPyME (3).
+        \item \textbf{Un solo par, sin restricciones}: $\Psi_4=\Psi_3^A=I$.
+        \item Canal directo: la MiPyME accede a crédito bancario \textbf{sin pasar por un intermediario regulado}.
+    \end{itemize}
+    \column{0.4\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8, transform shape]
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (B) at (0,1.5) {\textbf{Banco}};
+        \node[circle, draw=MainRed, very thick, minimum size=1.3cm, fill=white] (M) at (5,1.5) {\textbf{MiPyME}};
+        \draw[->, line width=2pt, SafeGreen] (B) -- (M) node[midway, above, font=\scriptsize] {$W_{4}=W_{43}$};
+    \end{tikzpicture}
+\end{columns}
+
+\vspace{0.4cm}
+\footnotesize{Nota de nomenclatura: en la terminología T/A del modelo, ``Alternativa'' no implica informal ni no regulada: aquí distingue el canal de mercado (Banco) del canal público-subsidiado (CORFO--Intermediario).}
+\end{frame}
+
+\begin{frame}{El problema de maximización aplicado al caso}
+Sólo la MiPyME (agente 3) resuelve el problema dual completo:
+\begin{equation}
+\max_{w_3^T,\, w_3^A} \;\; g_3^T(w_3^T, P^T) + g_3^A(w_3^A, P^A) \quad \text{s.a.} \quad w_3^T + w_3^A = w_3^*
+\end{equation}
+sujeto a $\Psi_3^T$ (excluye a CORFO) y $\Psi_3^A=I$ (sin restricción con el Banco).
+
+\vspace{0.3cm}
+Los agentes 1 (CORFO), 2 (Intermediario) y 4 (Banco) resuelven el problema \textbf{estándar de red única} (Teorema 1), cada uno sobre su propia red:
+$$w_1^* = Q_1(\mu_1-P^Te_1), \quad w_2^*=Q_2(\mu_2-P^Te_2), \quad w_4^*=Q_4(\mu_4-P^Ae_4)$$
+
+\vspace{0.2cm}
+\footnotesize{Consecuencia práctica: la capa de acoplamiento T/A del modelo dual sólo necesita resolverse para un agente, simplificando la calibración numérica.}
+\end{frame}
+
+% ---- Datos y Fuentes ----
+\section{Datos y Fuentes}
+
+\begin{frame}{Qué necesita el modelo}
+\begin{table}
+\centering
+\small
+\begin{tabular}{@{}p{2.6cm}p{4.6cm}p{4.4cm}@{}}
+\toprule
+\textbf{Primitivo} & \textbf{Variable observable} & \textbf{Fuente} \\
+\midrule
+$\mu_i$ (creencias) & Tasa de interés del programa vs. tasa de mercado (spread) & CORFO (tasa programa) + CMF (tasa mercado) \\
+$\Sigma_i$ (riesgo) & Índice de morosidad (NPL) por cartera/región; atrasos en pago & CMF, ELE (módulo Contabilidad y Finanzas) \\
+$\gamma_i$ (aversión al riesgo) & Proxy por tamaño/sector de la firma & ELE, literatura de finanzas corporativas \\
+$W_{ij}(t)$ (contratos) & Desembolsos CORFO$\to$Interm. ($W_{12}$), Interm.$\to$MiPyME ($W_{23}$), Banco$\to$MiPyME ($W_{4}$) & CORFO/BID; CMF \\
+$\Psi_i$ (restricciones) & MiPyME no accede directo a fondos CORFO & Diseño normativo del programa \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Fuente 1: CORFO / BID (Red Tradicional)}
+\begin{itemize}
+    \item \textbf{Cuentas Públicas Participativas CORFO} (2014--2024): panel público construido con 6 años de cobertura (2016, 2019, 2020, 2021, 2023, 2024).
+    \item Reporta $W_{12}$ (CORFO $\to$ IFNB) y $W_{23}$ (IFNB $\to$ MiPyME) en montos anuales y número de beneficiarios.
+    \item \textbf{Solicitud formal a CORFO en curso}, tras la reunión sostenida con la institución (detalle en la siguiente lámina).
+    \item Antecedente institucional: préstamo BID de US\$120 millones a CORFO (2016) dirigido específicamente a intermediarios financieros no bancarios.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Respaldo normativo de la solicitud}
+\begin{itemize}
+    \item Las Normas del Programa (aprobadas por la Contraloría General de la República, Toma de Razón 28-05-2026) obligan a cada IFNB a enviar una \textbf{rendición mensual} con el detalle de cada operación de crédito, leasing, leaseback o factoring financiada con recursos de CORFO.
+    \item El \textbf{numeral 19}, ``Justificación de la utilización de los préstamos otorgados a los IFNB'', especifica los campos: RUT del beneficiario, tasa de interés de la operación, monto original, saldo anterior de capital, saldo de capital, plazo, mora y estado. El \textbf{Anexo N$^\circ$4} identifica a la empresa beneficiaria incluyendo sus ventas anuales en UF.
+    \item Es decir, la información existe a nivel de operación individual y con frecuencia mensual desde el inicio del programa. La solicitud es de \textbf{acceso a un extracto}, no de levantamiento de información nueva.
+\end{itemize}
+
+\vspace{0.2cm}
+\footnotesize El período solicitado es enero 2016 -- diciembre 2024: el programa Crédito Corfo Mipyme inicia en 2016, de modo que no hay rendiciones anteriores que solicitar.
+\end{frame}
+
+\begin{frame}{Especificación de la Tabla 1 (lado CORFO)}
+\textbf{Una fila por (mes, intermediario, tipo de operación).}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{2.9cm}p{5.2cm}p{1.5cm}p{2.3cm}@{}}
+\toprule
+\textbf{Campo} & \textbf{Contenido} & \textbf{Prioridad} & \textbf{Origen} \\
+\midrule
+\texttt{PERIODO} & Mes (AAAA-MM), malla uniforme sin huecos & Crítica & Registro CORFO \\
+\texttt{ID\_IFNB} & Código estable del intermediario (puede ser seudónimo) & Crítica & Registro CORFO \\
+\texttt{TIPO\_IFNB} & Cooperativa, factoring, leasing o financiera & Alta & Registro CORFO \\
+\texttt{TIPO\_OPERACION} & Crédito, leasing, leaseback o factoring & Crítica & Numeral 19 \\
+\texttt{DESEMBOLSO\_NUEVO} & Monto girado nuevo en el mes (flujo) & Crítica & Registro CORFO \\
+\texttt{SALDO\_CAPITAL} & Saldo del préstamo CORFO $\to$ IFNB al cierre del mes & Crítica & Registro CORFO \\
+\texttt{TASA} & Tasa anual fijada por el Comité Ejecutivo de Créditos & Alta & Registro CORFO \\
+\texttt{PLAZO} & Plazo en meses & Media & Registro CORFO \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.1cm}
+\footnotesize Es el único bloque que no proviene de la rendición de los intermediarios, sino de los registros propios de CORFO.
+\end{frame}
+
+\begin{frame}{Especificación de la Tabla 2 (rendición del numeral 19)}
+\textbf{Una fila por (mes, operación).} Todos los campos salvo uno están ya exigidos por la normativa.
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{@{}p{3.1cm}p{5.1cm}p{1.4cm}p{2.2cm}@{}}
+\toprule
+\textbf{Campo} & \textbf{Contenido} & \textbf{Prioridad} & \textbf{Origen} \\
+\midrule
+\texttt{PERIODO} & Mes de la operación o del corte de saldo & Crítica & Rendición mensual \\
+\texttt{ID\_IFNB} & Código estable del intermediario & Crítica & Numeral 19 \\
+\texttt{ID\_MIPYME} & Identificador seudonimizado estable, \textbf{no el RUT} & Media & Numeral 19 (RUT) \\
+\texttt{TIPO\_OPERACION} & Crédito, leasing, leaseback o factoring & Crítica & Numeral 19 \\
+\texttt{MONTO\_ORIGINAL} & Monto pactado de la operación & Media & Numeral 19 \\
+\texttt{DESEMBOLSO\_NUEVO} & Monto girado nuevo en el mes (flujo) & Crítica & Derivable \\
+\texttt{SALDO\_CAPITAL} & Saldo de capital al cierre del mes (stock) & Crítica & Numeral 19 \\
+\texttt{SALDO\_ANTERIOR} & Saldo de capital del mes previo & Alta & Numeral 19 \\
+\texttt{TASA\_OPERACION} & Tasa anual al cliente final & Alta & Numeral 19 \\
+\texttt{PLAZO} & Plazo en meses & Media & Numeral 19 \\
+\texttt{MORA\_DIAS}, \texttt{ESTADO} & Días de mora y estado de la operación & Media & Numeral 19 \\
+\texttt{VENTAS\_UF} & Ventas anuales en UF, o tramo de tamaño & Alta & Anexo N$^\circ$4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}{Por qué pedimos los intermediarios distinguidos uno a uno}
+\textbf{No es una preferencia de granularidad: cambia lo que se puede estimar.}
+
+\vspace{0.3cm}
+\begin{table}
+\centering
+\small
+\begin{tabular}{@{}p{6.2cm}p{6.2cm}@{}}
+\toprule
+\textbf{Si las cifras vienen agregadas} & \textbf{Si vienen separadas por intermediario ($\geq 3$)} \\
+\midrule
+El riesgo percibido se reduce a \textbf{un único parámetro común} a todos los agentes del programa. & Se puede estimar \textbf{una varianza de riesgo percibido por agente}, es decir, cuánto riesgo percibe cada intermediario. \\
+\addlinespace
+No permite distinguir si un intermediario de factoring percibe más riesgo que una cooperativa. & Permite contrastar ese perfil entre tipos de intermediario, y contra la mora efectivamente observada. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+\begin{itemize}\small
+    \item Verificado numéricamente sobre la topología del programa: con dos intermediarios el parámetro por agente aún no queda determinado; \textbf{a partir de tres sí}.
+    \item Insistimos en que esto \textbf{no requiere revelar identidades}: basta que el código de cada intermediario sea estable en el tiempo.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Qué le solicitamos a CORFO: información complementaria}
+\textbf{Información adicional (prioridad media)}
+\begin{itemize}
+    \item Tasas de interés y spread por tramo del programa.
+    \item Tasas de morosidad (NPL) por intermediario.
+    \item Cronograma real de desembolsos del préstamo BID de US\$120 millones a CORFO.
+    \item Número de beneficiarios y monto promedio de crédito por MiPyME, por período.
+    \item Líneas y coberturas que CORFO coloca a través de \textbf{bancos comerciales} (no IFNB), por período, para contrastar ambos canales de colocación.
+\end{itemize}
+
+\vspace{0.3cm}
+\footnotesize{El formato solicitado es un único archivo estructurado (Excel o CSV) con una fila por período, en lugar de los reportes en PDF de la Cuenta Pública, cuyo formato cambia año a año y que en algunos años se publican escaneados.}
+\end{frame}
+
+\begin{frame}{Fuente 2: CMF (Red Alternativa)}
+\textbf{Comisión para el Mercado Financiero}, fuente de datos del canal bancario tradicional:
+\begin{itemize}
+    \item \textbf{Colocaciones comerciales}, cartera grupal segmento MiPyme (portal BEST) $\to$ proxy de $W_4$.
+    \item \textbf{Tasas de interés por segmento}: diferencial entre tasa de mercado y tasa subsidiada del Crédito Corfo Mipyme $\to$ proxy de $\mu_4$ y del spread $\tau$.
+    \item \textbf{Índice de morosidad} por cartera y región, serie mensual desde 2008 $\to$ candidato para estimar $\Sigma$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fuente 3: Encuesta Longitudinal de Empresas (ELE, INE)}
+\begin{itemize}
+    \item Encuesta \textbf{bienal} del INE/Ministerio de Economía, última ola publicada: \textbf{ELE-7} (período de referencia 2020--2022).
+    \item Su módulo de \textbf{Contabilidad y Finanzas} pregunta, a nivel de empresa individual. Préstamos/crédito obtenidos, tasa de interés nominal del crédito de mayor monto, atrasos en pago (mora) y garantías exigidas.
+    \item Permite aproximar $\Sigma_3$ y $\mu_3$ (lado MiPyME) sin depender de datos de empresa que CORFO probablemente no compartiría por confidencialidad.
+\end{itemize}
+
+\vspace{0.3cm}
+\begin{alertblock}{Limitaciones}
+No identifica si el crédito proviene específicamente del programa BID/CORFO (sólo categorías generales de fuente); cubre sólo empresas formales con ventas $>$800 UF; periodicidad bienal (menor densidad temporal que la ideal).
+\end{alertblock}
+\end{frame}
+
+% ---- Diagnóstico de Identificación ----
+\section{Diagnóstico de Identificación}
+
+\begin{frame}{¿Cuántos datos se necesitan? (Teorema 5, Jalan et al.)}
+\begin{block}{Teorema 5 --- Tamaños de muestra pequeños bastan}
+Si cada agente estima $\hat\Sigma_i$ a partir de $m$ observaciones independientes con $m=\lceil n\log n\rceil$, el umbral de amortiguación estimado $\hat\eta^*$ converge al $\eta^*$ verdadero con alta probabilidad.
+\end{block}
+
+\vspace{0.3cm}
+Para la Red Tradicional ($n=3$ agentes): $m=4$ (log natural) o $m=5$ (log base 2) observaciones \textbf{conjuntas} por agente.
+
+\vspace{0.2cm}
+
+\end{frame}
+
+\begin{frame}{Diagnóstico del panel actual}
+\begin{itemize}
+    \item El panel público CORFO cubre \textbf{6 años} (2016--2024), pero sólo \textbf{3} tienen observación conjunta de $W_{12}$ y $W_{23}$ en el mismo año (2019, 2020, 2024).
+    \item De esos 3, sólo \textbf{2 años (2019, 2020)} están libres de la mezcla flujo/stock detectada en $W_{23}$ (que incluye cartera rotativa de años previos, no sólo desembolso nuevo).
+\end{itemize}
+
+\vspace{0.4cm}
+\begin{table}
+\centering
+\begin{tabular}{lcc}
+\toprule
+& \textbf{Observado} & \textbf{Mínimo teórico (Teorema 5)} \\
+\midrule
+Años con $W_{12}$ y $W_{23}$ conjuntos & 3 & \multirow{2}{*}{4--5} \\
+Años libres de mezcla flujo/stock & 2 & \\
+\bottomrule
+\end{tabular}
+\end{table}
+\centering
+\textcolor{OrangeAccent}{\textbf{Cobertura: 50\%--75\% del mínimo teórico}}, lo que motiva la solicitud formal de datos a CORFO.
+\end{frame}
+
+\end{document}

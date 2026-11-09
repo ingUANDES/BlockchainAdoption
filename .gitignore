@@ -1,0 +1,49 @@
+# Artefactos de ejecución y de compilación. Se verificó que ninguno de estos
+# patrones coincide con archivos ya versionados, salvo donde se indica.
+
+# --- Python (code/audit, code/caballero) ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Cuadernos Jupyter y Quarto.
+# NOTA: code/.ipynb_checkpoints/ SÍ está versionado a propósito, porque ahí
+# quedó la derivación simbólica del modelo dual de la tesis que se continúa,
+# rescatada durante la auditoría. Este patrón no lo afecta, dado que .gitignore
+# no deja de seguir archivos que ya están versionados; sirve para que no se
+# agreguen checkpoints nuevos.
+.ipynb_checkpoints/
+.quarto/
+# Las carpetas *_files/ de Quarto NO se ignoran: contienen las figuras del
+# notebook del modelo, que están versionadas de forma deliberada.
+
+# --- LaTeX (docs/MemoriasTesis, docs/Diapos) ---
+# Los .pdf no se ignoran, porque el repositorio versiona algunos a propósito.
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.idx
+*.ind
+*.ilg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.dvi
+# Beamer, para las presentaciones de avance y de defensa.
+*.nav
+*.snm
+*.vrb
+
+# --- Sistema operativo y editores ---
+.DS_Store
+Thumbs.db

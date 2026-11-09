@@ -1,10 +1,364 @@
 % anexo_a.tex
 
 \chapter{Anexos}
-\label{}
+\label{anexos}
 
+\section{Notación del modelo}
+\label{anexo:notacion}
 
+La Tabla~\ref{tab:notacion} reúne los símbolos empleados en el Capítulo~\ref{c2}
+y en el Capítulo~\ref{c3}, con el significado que cada uno tiene en el modelo de
+\citeA{jalan_incentive-aware_2024} y en su extensión dual de
+\citeA{venegas_dual_network_2024}.
 
-\section{Ejemplo Suma ponderada}\label{ej:sumapond}
+\begin{table}[htbp]
+\centering
+\caption[Notación del modelo de redes duales]{Notación empleada en el documento para el modelo de redes duales y su calibración empírica.}
+\label{tab:notacion}
+\small
+\begin{tabular}{ll}
+\hline
+Símbolo & Significado \\
+\hline
+$W$ & Matriz simétrica de tamaños de contrato. $W_{ij}$ es el contrato vigente entre $i$ y $j$ \\
+$P$ & Matriz antisimétrica de precios o pagos laterales entre pares de agentes \\
+$M$ & Matriz de creencias de retorno esperado. $\mu_i = Me_i$ es el vector de creencias de $i$ \\
+$\Sigma_i$ & Matriz de covarianza de retornos percibida por el agente $i$ \\
+$\gamma_i$ & Coeficiente de aversión al riesgo del agente $i$ \\
+$\Gamma$ & Matriz diagonal que agrupa los $\gamma_i$ de todos los agentes \\
+$\Psi_i$ & Matriz que codifica qué contrapartes tiene permitidas el agente $i$ \\
+$Q_i$ & Matriz de sensibilidad del agente $i$, definida en la Ecuación~\eqref{eq:optimo} \\
+$F$ & Conjunto de pares $(i,j)$ con $i<j$ donde el precio $P_{ij}$ puede ser no nulo \\
+$Z_F$ & Matriz de coeficientes del sistema de precios de la Ecuación~\eqref{eq:teorema1} \\
+$\eta$ & Factor de amortiguación del algoritmo de negociación bilateral, Ecuación~\eqref{eq:eta} \\
+$\lambda_A$ & Parámetro de fricción de acceso a la red Alternativa (modelo dual) \\
+$\tau$ & Parámetro de transparencia o fricción del modelo dual \\
+$m$ & Número de observaciones históricas por agente para estimar $\Sigma_i$ \\
+$n$ & Número de agentes de la red. En el caso de aplicación, $n=4$ \\
+\hline
+\end{tabular}
+\end{table}
 
+\section{Fuentes de datos consultadas}
+\label{anexo:fuentes}
 
+La Tabla~\ref{tab:fuentes} detalla las fuentes revisadas durante el
+levantamiento descrito en la Sección~\ref{c3:datos}, el régimen de acceso de
+cada una y el insumo que aporta a la calibración del modelo.
+
+\begin{table}[htbp]
+\centering
+\caption[Fuentes de datos consultadas para la calibración empírica]{Fuentes de datos consultadas, régimen de acceso e insumo que aporta cada una a la calibración del caso CORFO--Intermediario--MiPyME--Banco.}
+\label{tab:fuentes}
+\small
+\begin{tabular}{p{0.26\textwidth}p{0.12\textwidth}p{0.50\textwidth}}
+\hline
+Fuente & Acceso & Insumo que aporta \\
+\hline
+Cuentas Públicas Participativas de CORFO, colección 2014--2024 & Público &
+Monto de préstamos de CORFO a los IFNB ($W_{12}$) para 2019, 2020 y 2024, y
+cifra de colocaciones del programa antecesor Microcrédito para 2016 \\
+DIPRES, Informe de Detalle de Programas Sociales, cierre 2021 & Público &
+Tasa de interés mayorista CORFO$\to$IFNB, de 4,23\% a 4,73\% anual \\
+DIPRES, ficha de Monitoreo 2021 del programa & Público &
+Spread de la tasa a cliente final respecto del benchmark de mercado ACHEF/EFA \\
+ELE-7, microdatos \texttt{ele7-full.csv} & Público &
+Tasa de interés anualizada del crédito de mayor monto aprobado en 2022, por
+tamaño de empresa, empleada como aproximación de $M_{34}$ \\
+ELE-7, informe oficial de resultados & Público &
+Tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa,
+empleada como ancla del supuesto sobre $\lambda_A$ \\
+Reglamento operativo del programa Crédito Corfo Mipyme, Texto Refundido, punto 19 & Público &
+Establece que los intermediarios rinden mensualmente a CORFO la tasa de interés y
+el saldo de capital vigente por operación, información que no es pública y que
+resolvería directamente el vacío de $W_{23}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Entradas de $\Sigma$ recuperables por el estimador}
+\label{anexo:entradas}
+
+La Tabla~\ref{tab:entradas-sigma} clasifica las entradas de $\Sigma$ según su tipo y si el estimador de la Proposición~1 las determina, para las dos topologías de la red de registros de CORFO que se evaluaron en la Sección~\ref{c3:identificabilidad}. Una entrada se considera determinada cuando ninguna dirección del núcleo del mapa lineal tiene componente en ella.
+
+\begin{table}[htbp]
+\centering
+\caption[Entradas de Sigma determinadas por el estimador]{Número de entradas de $\Sigma$ por tipo y estado de identificación. Elaboración propia.}
+\label{tab:entradas-sigma}
+\small
+\begin{tabular}{lcccc}
+\hline
+Tipo de entrada & Cadena ($k=1$) & Determinadas & Tres intermediarios ($k=3$) & Determinadas \\
+\hline
+Varianzas propias                        & 3 & 0 & 5 & 0 \\
+Covarianzas sobre aristas observadas     & 2 & 0 & 6 & 0 \\
+Covarianzas entre agentes sin contrato   & 1 & 1 & 4 & 4 \\
+\hline
+Total                                    & 6 & 1 & 15 & 4 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Auditoría del estimador de la Proposición 1}
+\label{anexo:auditoria}
+
+Este anexo desarrolla la auditoría numérica del estimador de $\Sigma$ que se
+resume en la Sección~\ref{c4:ocde-procedimiento}. El motivo de auditarlo es que
+la calibración que este trabajo persigue necesita una estimación puntual de
+$\Sigma$, mientras que los dos análisis del artículo de referencia solo
+requieren su espectro y una tasa de acierto relativa, de modo que el estimador
+nunca fue evaluado para el uso que aquí se le quiere dar.
+
+\subsection{Diseño del experimento}
+\label{anexo:auditoria-diseno}
+
+La auditoría evalúa el estimador en la condición más favorable posible, que es
+aquella en que los datos provienen exactamente del proceso que el método supone.
+Se generan paneles sintéticos bajo el Supuesto~1 del artículo, es decir con
+aversión al riesgo unitaria, una matriz de covarianzas constante en el tiempo y
+cada entrada de la matriz de creencias evolucionando como un movimiento
+browniano independiente. Para cada período se resuelve el punto estable exacto
+mediante la condición de estabilidad, lo que entrega la red $W(t)$ que el
+estimador recibe como dato.
+
+La red elegida es completa y de cuatro agentes, condición necesaria para que el
+ejercicio tenga sentido, puesto que el diagnóstico de identificabilidad de la
+Sección~\ref{c3:identificabilidad} muestra que en una red con aristas prohibidas
+una parte de $\Sigma$ no es recuperable por ningún estimador y el experimento
+confundiría ese límite estructural con un defecto del método. En la red completa
+de cuatro agentes el rango de la información iguala los diez grados de libertad
+de $\Sigma$, de manera que cualquier error remanente es atribuible al estimador
+y no a la topología. La matriz verdadera se construye definida positiva y se
+normaliza a traza unitaria, igual que la solución del programa semidefinido, y
+el error se mide como la norma de Frobenius de la diferencia entre la matriz
+estimada y la verdadera, dividida por la norma de esta última.
+
+\subsection{Resultado}
+\label{anexo:auditoria-resultado}
+
+La Tabla~\ref{tab:auditoria-estimador} reporta la mediana del error relativo
+sobre cinco semillas para cada largo de panel, tanto para el programa
+semidefinido publicado como para el estimador corregido que se describe más
+abajo.
+
+\begin{table}[htbp]
+\centering
+\caption[Error relativo del estimador de Sigma segun el largo del panel]{Error
+relativo de la matriz estimada respecto de la verdadera, en función del número de
+períodos observados. Mediana sobre cinco semillas, con el rango observado entre
+paréntesis. Elaboración propia sobre paneles sintéticos generados bajo el
+Supuesto~1 en una red completa de cuatro agentes.}
+\label{tab:auditoria-estimador}
+\small
+\begin{tabular}{rcc}
+\hline
+Períodos $T$ & Programa semidefinido publicado & Estimador corregido \\
+\hline
+5   & 0,92 \ (0,75 a 1,21) & 0,62 \ (0,49 a 0,71) \\
+20  & 0,71 \ (0,58 a 0,84) & 0,38 \ (0,33 a 0,44) \\
+40  & 0,50 \ (0,42 a 0,63) & 0,26 \ (0,21 a 0,35) \\
+80  & 0,41 \ (0,34 a 0,50) & 0,16 \ (0,07 a 0,20) \\
+160 & 0,39 \ (0,29 a 0,48) & 0,12 \ (0,09 a 0,15) \\
+\hline
+\end{tabular}
+\end{table}
+
+El patrón distingue con claridad los dos comportamientos. El estimador publicado
+desciende mientras el panel es corto y luego se detiene alrededor de $0{,}39$,
+sin que duplicar el número de períodos de 80 a 160 produzca una mejora
+apreciable. El estimador corregido, en cambio, sigue descendiendo en todo el
+rango explorado y llega a $0{,}12$, comportamiento propio de un estimador que
+converge.
+
+\subsection{Por qué se trata de un sesgo del criterio}
+\label{anexo:auditoria-causa}
+
+Un estancamiento del error admite dos explicaciones, a saber, que el
+solucionador numérico no alcance el mínimo del problema o que el mínimo del
+problema no esté en la matriz verdadera. Ambas se distinguen evaluando la propia
+función objetivo del programa semidefinido en las dos matrices. Con un panel de
+160 períodos, el objetivo vale $871{,}13$ en la matriz estimada y $939{,}02$ en
+la verdadera. Como la matriz estimada alcanza un valor estrictamente menor, el
+solucionador no está fallando, sino resolviendo correctamente un problema cuyo
+óptimo no coincide con la respuesta buscada. El defecto está, por lo tanto, en
+el criterio y no en su implementación.
+
+El origen del problema se localiza en la derivación del Apéndice A.11 del
+artículo, que llega al programa semidefinido en dos pasos. El primero establece
+que, bajo el Supuesto~1, la trayectoria de creencias más probable dadas las
+redes observadas es la que minimiza la suma de los cambios cuadráticos
+$\sum_t \|M(t+1)-M(t)\|_F^2$, resultado que se obtiene maximizando la densidad
+posterior de $M(1),\dots,M(T)$ condicional en $W(1),\dots,W(T)$ y en $\Sigma$. En
+esa posterior, el factor que vincula las redes con las creencias aparece como
+función indicadora de la condición de punto estable, es decir, vale uno cuando la
+condición se cumple y cero en caso contrario. El segundo paso despeja
+$M(t)+M(t)^\top$ en función de $W(t)$ y de $\Sigma$ mediante esa misma condición
+y lo sustituye en el objetivo, con lo que se obtiene un programa expresado en
+$\Sigma$.
+
+La dificultad está en que el criterio así obtenido es el que selecciona la
+trayectoria de creencias más probable para una $\Sigma$ dada, y no la $\Sigma$
+más probable dadas las redes. Convertir el primero en el segundo exige el cambio
+de variable que lleva de $M$ a $W$, cuyo jacobiano depende de $\Sigma$, puesto
+que la relación entre ambas es lineal con matriz $\Sigma\otimes I + I\otimes\Sigma$.
+Ese factor no aparece en la derivación. Su omisión no es inocua, dado que el
+objetivo publicado puede reducirse encogiendo $\Sigma$ en las direcciones que
+más pesan en el residuo, y la restricción de traza unitaria no lo impide porque
+fija únicamente la escala global y no la forma de la matriz. De ahí que la
+estimación resulte sistemáticamente contraída hacia esas direcciones.
+
+\subsection{El estimador corregido}
+\label{anexo:auditoria-correccion}
+
+La corrección consiste en reponer el término omitido. Denotando por
+$B_\Sigma$ la matriz del mapa lineal que lleva las diferencias de red a los
+residuos sobre los pares permitidos, y por $Q(\Sigma)=\sum_t \|B_\Sigma\,
+\Delta W(t)\|^2$ el residuo acumulado, la verosimilitud perfilada conduce a
+minimizar
+\begin{equation}
+\label{eq:mle-corregido}
+    \frac{|F|}{2}\,\log Q(\Sigma) \;-\; \log\left|\det B_\Sigma\right| ,
+\end{equation}
+donde $|F|$ es el número de pares permitidos. El primer término reproduce el
+criterio publicado en escala logarítmica y el segundo es el jacobiano ausente.
+El objetivo de la Ecuación~\eqref{eq:mle-corregido} resulta invariante a la
+escala de $\Sigma$, de modo que la normalización de traza unitaria deja de
+cumplir un papel sustantivo y pasa a ser una convención de presentación. Los
+valores de la columna derecha de la Tabla~\ref{tab:auditoria-estimador}
+corresponden a minimizar esta expresión.
+
+\subsection{Alcance del hallazgo}
+\label{anexo:auditoria-alcance}
+
+Esta auditoría no invalida ningún resultado del artículo de referencia. Los dos
+análisis que sus autores construyen sobre la matriz estimada, que son el estudio
+de su espectro y el problema de detección de la fuente de un cambio en las
+creencias, dependen de propiedades relativas y no de su exactitud puntual, por
+lo que un sesgo de contracción no los compromete. La corrección es necesaria
+únicamente para el uso que este trabajo le da al estimador, que es obtener una
+$\Sigma$ con la cual calcular niveles de bienestar y contrafactuales, donde la
+diferencia entre un error de $0{,}39$ y uno de $0{,}12$ sí incide en las
+magnitudes que se reportan.
+
+\section{Diagnóstico de la especificación dual}
+\label{anexo:dual}
+
+Este anexo desarrolla los tres puntos que la Sección~\ref{c4:venegas-dual}
+resume, a saber la tensión entre las dos contabilidades del riesgo, la brecha
+que produce fragmentar una exposición en dos redes y la incompatibilidad del
+supuesto de precio único con la presencia de una arista prohibida. Todos se
+obtuvieron al implementar la capa de acoplamiento que la tesis de
+\citeA{venegas_dual_network_2024} no acompaña con código.
+
+\subsection{Las dos contabilidades del riesgo}
+\label{anexo:dual-contabilidades}
+
+En el modelo dual cada agente reparte un portafolio total $w_i^{*}$, dado de
+antemano, entre la red Tradicional y la Alternativa, de manera que
+$w_i^{*} = w_i^{T} + w_i^{A}$. La pregunta que decide todo lo demás es sobre qué
+objeto se evalúa el término de riesgo de la utilidad.
+
+Si el riesgo se evalúa por separado en cada red, la utilidad del agente incluye
+los dos términos $w_i^{T\top}\Sigma_i w_i^{T}$ y $w_i^{A\top}\Sigma_i w_i^{A}$.
+En ese caso el problema del agente es estrictamente cóncavo en $w_i^{T}$, su
+Hessiano es $H_i = 4\gamma_i\Sigma_i + 2\lambda_A I$ y existe un óptimo interior,
+que con transparencia y fricción nulas entrega $w_i^{T} = \tfrac{1}{2}w_i^{*}$,
+es decir el reparto por mitades que la fuente publica.
+
+Si en cambio el riesgo se evalúa sobre la exposición combinada, el término
+cuadrático es $w_i^{*\top}\Sigma_i w_i^{*}$, que no depende del reparto porque
+$w_i^{*}$ está fijo por supuesto. El Hessiano colapsa entonces a
+$H_i = 2\lambda_A I$, sin intervención de $\Sigma_i$, y con $\lambda_A = 0$, que
+es el valor declarado para los escenarios de validación, el problema pasa a ser
+lineal en $w_i^{T}$. Un problema lineal sin cotas no tiene óptimo interior, de
+modo que el agente resulta indiferente entre todos los repartos y la cifra de
+adopción deja de estar determinada por el modelo.
+
+La dificultad es que la primera contabilidad no reproduce el bienestar publicado
+y la segunda sí. Bajo riesgo separado el bienestar total del escenario simétrico
+asciende a $2,1507$ y cae a $1,7869$ al activarse la restricción, mientras que
+bajo riesgo combinado vale $1,4339$ en ambos casos, que es la cifra que la fuente
+reporta. Por lo tanto el reparto por mitades proviene de una contabilidad y la
+igualdad del bienestar con la referencia de red única proviene de la otra, sin
+que ninguna de las dos produzca ambos resultados.
+
+\subsection{La brecha de fragmentación}
+\label{anexo:dual-brecha}
+
+La diferencia entre ambas contabilidades admite forma cerrada. Escribiendo el
+reparto como $w_i^{T} = f\,w_i^{*}$ con $f\in[0,1]$, de modo que
+$w_i^{A} = (1-f)\,w_i^{*}$, la diferencia entre evaluar el riesgo por separado y
+evaluarlo sobre la exposición combinada es
+\begin{equation}
+\label{eq:brecha-fragmentacion}
+    \text{brecha}(f) = 2f(1-f)\sum_i \gamma_i\, w_i^{*\top}\Sigma_i\, w_i^{*}.
+\end{equation}
+La derivada de la Ecuación~\eqref{eq:brecha-fragmentacion} respecto de $f$ se
+anula únicamente en $f = \tfrac{1}{2}$, que es un máximo, de manera que la
+sobreestimación crece de forma monótona a medida que el reparto se empareja y
+alcanza su valor mayor exactamente en el reparto que la condición de primer orden
+elige cuando la transparencia y la fricción son nulas. En el escenario simétrico
+de tres agentes la expresión entrega $0,7169$, cifra que coincide con la
+diferencia observada entre $2,1507$ y $1,4339$.
+
+La lectura económica de la Ecuación~\eqref{eq:brecha-fragmentacion} es directa.
+Al partir una exposición en dos y cobrarle riesgo a cada parte por separado se
+omite el término cruzado, que es el que recoge que ambas partes están expuestas
+al mismo riesgo subyacente. Esa omisión aparece como una ganancia de bienestar
+que no proviene de ninguna mejora en la asignación sino de la mera división del
+portafolio.
+
+\subsection{El supuesto de precio único bajo restricción}
+\label{anexo:dual-precio}
+
+La definición de asignación factible del modelo dual exige que una misma arista
+tenga el mismo precio en ambas redes. Bajo ese supuesto el término lineal del
+problema del agente deja de depender del precio, de modo que cada agente resuelve
+su reparto de forma aislada y no queda instrumento alguno con el cual conciliar
+las dos puntas de una arista.
+
+Sin restricción eso es inocuo, porque el reparto hereda la simetría del
+portafolio total. Con la restricción activa en la red Tradicional, en cambio, la
+matriz de acceso $\Psi_i$ es distinta para cada agente y el resultado deja de ser
+simétrico. La Tabla~\ref{tab:dual-simetria} recoge la asimetría máxima de la
+matriz de contratos de la red Tradicional en ambos casos, medida contra la
+tolerancia de convergencia del propio motor, que es de $7{,}72\times10^{-4}$ y se
+obtiene sobre el portafolio total.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption[Simetría de la red Tradicional bajo precio único]{Asimetría máxima
+    de la matriz de contratos de la red Tradicional, según se permita o no que el
+    precio difiera entre redes. El punto estable del modelo exige que ambas partes
+    acuerden la misma cantidad, de modo que una asimetría muy superior a la
+    tolerancia numérica indica que la asignación no es factible. Elaboración
+    propia.}
+    \label{tab:dual-simetria}
+    \begin{tabular}{lcc}
+        \toprule
+        Escenario & Precio único & Precio distinto por red \\
+        \midrule
+        Sin restricción & $3{,}86\times10^{-4}$ & $3{,}86\times10^{-4}$ \\
+        Con restricción en la red Tradicional & $2{,}27\times10^{-1}$ & $2{,}45\times10^{-4}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+La asimetría bajo precio único es dos órdenes de magnitud mayor que la tolerancia,
+y se traduce en que una misma arista recibe dos cantidades distintas según desde
+qué extremo se la observe. Permitir que el precio difiera entre redes la devuelve
+al nivel del ruido numérico, lo que identifica al diferencial de precio entre
+redes como el único instrumento que restaura la factibilidad.
+
+\subsection{Un error de transcripción sin consecuencia numérica}
+\label{anexo:dual-transcripcion}
+
+Corresponde dejar constancia de un punto menor, detectado al verificar las
+derivaciones. La expresión que la tesis imprime para la matriz que resuelve el
+problema restringido no satisface la condición de estacionariedad proyectada y,
+al evaluarla en el caso sin restricciones, contradice la simplificación que el
+propio enunciado declara dos líneas después. La forma que sí resuelve el problema
+es análoga a la del artículo base. El punto no afecta ninguna cifra, puesto que
+la implementación publicada emplea la forma correcta, de modo que se trata de un
+error de redacción y no de cálculo.
