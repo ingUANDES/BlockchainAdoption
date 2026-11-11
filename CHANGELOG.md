@@ -10,6 +10,13 @@ repositorio.
 ### Cambiado
 - El `\resumen` de
   [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
+  se reescribe para un lector que no conoce las fuentes, de modo que presenta la
+  motivación, lo desarrollado y los resultados sin vocabulario heredado. En el
+  mismo commit se elimina del preámbulo un índice general y cinco líneas `edit`
+  que el merge `67a8f7a` de Overleaf dejó entre las definiciones de símbolos, y
+  que impedían compilar (`b9cb837`).
+- El `\resumen` de
+  [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
   pasa a reportar los resultados del Capítulo 4, esto es el mecanismo que no se
   traslada al caso, el reparto predicho frente al observado en la ELE-7 y la
   rama contrafactual, en lugar del diagnóstico de identificabilidad, que queda
