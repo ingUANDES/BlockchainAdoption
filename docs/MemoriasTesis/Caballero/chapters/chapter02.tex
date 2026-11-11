@@ -26,7 +26,7 @@ modelos de referencia:
 
     \item \textbf{\citeA{jalan_incentive-aware_2024}:} Introducen una matriz cuadrada para representar origen-destino junto con otra matriz $Q$, simétrica y semidefinida positiva, que captura la estructura de costos y
     beneficios entre pares de agentes. Además utiliza una función de utilidad media-varianza que permite modelar decisiones óptimas de contratación bilateral en un equilibrio \textit{pairwise stable}. Es el modelo base sobre
-    el cual se construye la tesis de \citeA{venegas_reyes_financial_2025}, que este
+    el cual se construye la tesis de \citeA{venegas_dual_network_2024}, que este
     trabajo extiende.
 \end{itemize}
 
@@ -73,7 +73,7 @@ riesgo. Por otra parte, también puede generar congestión operacional y mayores
 
 \section{Competencia entre infraestructuras financieras}\label{c23}
 
-La competencia entre redes Tradicional y Alternativa que este trabajo analiza, que \citeA{venegas_reyes_financial_2025} modela formalmente, se apoya en dos
+La competencia entre redes Tradicional y Alternativa que este trabajo analiza, que \citeA{venegas_dual_network_2024} modela formalmente, se apoya en dos
 cuerpos de literatura complementarios. El primero, la teoría de plataformas y mercados de
 dos lados que explica cómo compiten infraestructuras con efectos de red. Segundo, el arbitraje regulatorio que explica por qué surgen infraestructuras alternativas.
 
@@ -100,7 +100,7 @@ multi-afilia. El resultado central de Armstrong es que la coexistencia de
 infraestructuras es viable cuando el costo de multi-homing es moderado y las
 plataformas se diferencian. Ya que, si el costo es muy alto, el mercado tiende a concentrarse en una sola infraestructura.
 
-Este marco aplica directamente al modelo dual de \citeA{venegas_reyes_financial_2025}
+Este marco aplica directamente al modelo dual de \citeA{venegas_dual_network_2024}
 la variable de decisión $(w_i^T, w_i^A)$. Que es finalmente, una decisión de
 multi-homing entre la red Tradicional y la Alternativa. El parámetro de
 fricción $\lambda_A$ representa el costo de ese multi-homing. \citeA{caillaud_chicken_2003} muestran que la diferenciación entre plataformas actúa como un mecanismo que suaviza la competencia directa. Esta diferenciación puede darse por ejemplo en la transapencia o en el tipo de contratos que cada red permite. De esta forma se sostiene la coexistencia entre plataformas, en lugar de forzar un resultado de dominancia total de una infraestructura sobre la otra.
@@ -233,49 +233,170 @@ El modelo base de \citeA{jalan_incentive-aware_2024} considera una red de $n$ ag
 \label{eq:utilidad}
     g_i(W, P) = w_i^\top (\mu_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i,
 \end{equation}
-sujeta a una restricción regulatoria capturada por una matriz de proyección
-$\Psi_i$. La solución óptima admite la forma cerrada $w_i^* = Q_i(\mu_i - Pe_i)$,
-y una asignación $(W,P)$ es \textit{pairwise stable} si ningún par de agentes
-puede mejorar simultáneamente desviándose unilateralmente de ella.
+sujeta a una restricción regulatoria capturada por una matriz de proyección $\Psi_i$. La solución óptima de la Ecuación~\eqref{eq:utilidad} admite la forma cerrada
+\begin{equation}
+\label{eq:optimo}
+    w_i^* = Q_i(\mu_i - P e_i),
+    \qquad
+    Q_i = \Psi_i^\top \left( 2\gamma_i\, \Psi_i \Sigma_i \Psi_i^\top \right)^{-1} \Psi_i ,
+\end{equation}
+donde $Q_i$ es la matriz de sensibilidad del agente $i$. Una asignación $(W,P)$ es \textit{pairwise stable} si ningún par de agentes puede mejorar simultáneamente desviándose unilateralmente de ella.
 
-\citeA{venegas_reyes_financial_2025} extiende este marco introduciendo dos
-infraestructuras paralelas. Primero, una red Tradicional ($T$) con restricción
-regulatoria $\Psi_i^T$. Segundo, una red Alternativa ($A$) con restricción $\Psi_i^A$.
-Cada agente reparte su exposición total entre ambas, $w_i^* = w_i^T + w_i^A$, y
-la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red
-alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$:
+\citeA{venegas_dual_network_2024} extiende este marco introduciendo dos infraestructuras paralelas. Primero, una red Tradicional ($T$) con restricción regulatoria $\Psi_i^T$. Segundo, una red Alternativa ($A$) con restricción $\Psi_i^A$. Cada agente reparte su exposición total entre ambas según la partición
+\begin{equation}
+\label{eq:particion}
+    w_i^* = w_i^T + w_i^A ,
+\end{equation}
+y la utilidad incorpora un beneficio de transparencia $\tau \geq 0$ de la red alternativa y un costo friccional cuadrático $\lambda_A \geq 0$ sobre $w_i^A$,
 \begin{equation}
 \label{eq:utilidad-dual}
     g_i(W, P) = w_i^\top (\mu_i + \tau e^A_i - P e_i) - \gamma_i\, w_i^\top \Sigma_i\, w_i
     - \lambda_A \|w^A_i\|^2 .
 \end{equation}
-El modelo dual es consistente con el modelo base de Jalan y Chakrabarti en tres
-casos límite. Cuando $\lambda_A \to 0$ y $\tau = 0$, cuando $\Psi^A$ desactiva
-todos los contratos y finalmente cuando $\Psi^T = \Psi^A$.
+El modelo dual es consistente con el modelo base de Jalan, Chakrabarti y Sarkar en tres casos límite. Cuando $\lambda_A \to 0$ y $\tau = 0$, cuando $\Psi^A$ desactiva todos los contratos y finalmente cuando $\Psi^T = \Psi^A$.
+
+\subsection{Factibilidad y estabilidad de una asignación}
+\label{c24:estabilidad}
+
+Las Definiciones 2 y 3 de \citeA{jalan_incentive-aware_2024} precisan qué
+significa formalmente un punto de equilibrio de la red. Una tupla $(W,P)$ es factible si $W=W^\top$, $P=-P^\top$, y ambas obedecen las restricciones de red codificadas en $(\Psi_i)_{i\in[n]}$. Es estable si, además, cada agente $i$ maximiza su utilidad $g_i(W,P)$ dado $P$, sobre todas las alternativas factibles $W'$ que solo modifican su propia fila y columna. En consecuencia, $(W,P)$ es estable cuando ningún agente puede mejorar unilateralmente su utilidad renegociando sus contratos vigentes, que es el sentido en que se interpreta el equilibrio de la red del caso de aplicación del Capítulo~\ref{c3}.
+
+\subsection{Existencia y unicidad del punto estable}
+\label{c24:teorema1}
+
+El Teorema 1 de \citeA{jalan_incentive-aware_2024} establece que el punto estable se obtiene resolviendo el sistema lineal
+\begin{equation}
+\label{eq:teorema1}
+    Z_F \cdot \mathrm{uvec}(P)_F = \mathrm{uvec}(A-A^\top)_F ,
+\end{equation}
+donde $F$ es el conjunto de pares $i<j$ cuya arista está permitida y $\mathrm{uvec}(X)_F$ apila las entradas $X_{ij}$ de una matriz $X$ para esos pares.
+
+Las dos matrices que intervienen en la Ecuación~\eqref{eq:teorema1} se definen a partir de las matrices de sensibilidad $Q_i$ de la Ecuación~\eqref{eq:optimo}. La matriz $A$ tiene por entradas
+\begin{equation}
+\label{eq:matrizA}
+    A_{ij} = e_i^\top Q_j M e_j ,
+\end{equation}
+La Ecuación~\eqref{eq:matrizA} admite una lectura económica directa, ya que $A_{ij}$ es el tamaño de contrato que el agente $j$ querría mantener con el agente $i$ si no hubiese pagos, lo que se obtiene de evaluar la Ecuación~\eqref{eq:optimo} en $P=0$. En consecuencia, la entrada $(A-A^\top)_{ij}$ mide el desacuerdo entre las dos partes de la arista $(i,j)$ sobre el tamaño del contrato que cada una preferiría, y es ese desacuerdo el que el precio $P_{ij}$ debe reconciliar. Por su parte, $Z_F$ recoge la sensibilidad de ese desacuerdo ante cambios en los precios y se construye a partir de las matrices $B^{(i,j)} = e_i e_j^\top Q_i$ y $C^{(i,j)} = (B^{(i,j)} - B^{(j,i)}) - (B^{(i,j)} - B^{(j,i)})^\top$, tomando como filas de $Z_F$ los vectores $\mathrm{uvec}(C^{(i,j)})_F$ para cada par $(i,j) \in F$.
+
+El Teorema 1 muestra que existe un punto estable si y solo si $\mathrm{uvec}(A-A^\top)_F$ pertenece al espacio columna de $Z_F$. Cuando $Z_F$ tiene rango completo esa condición se satisface y la solución del sistema es única, lo que entrega un único punto estable. La Ecuación~\eqref{eq:teorema1} es, por lo tanto, el mecanismo que, dado un conjunto de creencias $(M,\Gamma,\Sigma)$, entrega el tamaño de contrato predicho por el modelo para cada par de agentes, y es el resultado que articula la calibración empírica desarrollada en el Capítulo~\ref{c3}.
+
+\subsection{Negociaciones bilaterales y convergencia}
+\label{c24:algoritmo1}
+
+El Teorema 1 entrega el punto estable de forma centralizada, ya que resolver el sistema de la Ecuación~\eqref{eq:teorema1} exige conocer las creencias de todos los agentes de la red. En la práctica los contratos no se fijan así, sino que surgen de negociaciones sucesivas entre pares de agentes. El Algoritmo~\ref{alg:negociaciones}, que corresponde al Algoritmo 1 de \citeA{jalan_incentive-aware_2024}, formaliza ese proceso descentralizado.
+
+\begin{algorithm}[Negociaciones bilaterales]
+\label{alg:negociaciones}
+\normalfont
+\textbf{Entrada.} Factor de amortiguación $\eta$. \\
+$t \leftarrow 0$ \\
+$P(0) \leftarrow$ cualquier matriz antisimétrica \\
+\bfWHILE $P(t)$ no haya convergido \bfDO \\
+\tab \bfFOR todo par permitido $(i,j) \in F$ \bfDO \\
+\tab \tab $P'_{ij} \leftarrow$ precio que iguala el contrato óptimo de $i$ con $j$ \\
+\tab \tab \hspace*{1.6em} y el de $j$ con $i$, manteniendo fijo $P(t)$ en el resto de la red \\
+\tab \bfEND \bfFOR \\
+\tab $P(t+1) \leftarrow (1-\eta)\,P(t) + \eta\,P'$ \\
+\tab $t \leftarrow t+1$ \\
+\bfEND \bfWHILE \\
+\textbf{Salida.} El punto estable $P^\star$ al que converge la sucesión $P(t)$.
+\end{algorithm}
+
+Tres rasgos del Algoritmo~\ref{alg:negociaciones} importan para este trabajo. Primero, las actualizaciones son simultáneas, puesto que todos los pares calculan su precio $P'_{ij}$ usando la misma matriz $P(t)$ de la ronda anterior y no los precios recién revisados por sus vecinos. Segundo, cada par negocia bajo el supuesto de que el resto de la red permanece congelado, supuesto que deja de cumplirse apenas todos los pares se mueven a la vez, y es ese desajuste residual el que obliga a iterar hasta que desaparece en el punto fijo. Tercero, la información de la red completa alcanza a cada par con un retardo de exactamente una ronda, lo que explica que el procedimiento converja al mismo punto estable que resuelve el sistema centralizado del Teorema 1 sin que ningún agente necesite conocer las creencias de terceros.
+
+El factor $\eta$ controla cuánto se avanza hacia el precio negociado en cada ronda y no altera el punto al que se converge, sino la velocidad con que se llega a él y, por sobre cierto umbral, la posibilidad misma de converger. El Teorema 4 establece que la convergencia está garantizada para
+\begin{equation}
+\label{eq:eta}
+    \eta < \eta^* = \frac{2}{\lambda_{\max}} ,
+\end{equation}
+donde $\lambda_{\max}$ es el autovalor máximo de la matriz $(L^\dagger K)|_R$ construida a partir de las mismas matrices $Q_i$. Por debajo de ese umbral la convergencia es exponencial en el número de rondas, mientras que por encima el error de precio se amplifica en cada iteración y la negociación diverge.
+
+\subsection[La red de referencia de tres agentes]{La red de referencia de tres agentes (Ejemplo 5)}
+\label{c24:ejemplo5}
+
+El Ejemplo 5 de \citeA{jalan_incentive-aware_2024}, titulado \textit{pairwise negotiations for loan contracts}, introduce la red de referencia sobre la que se construyen tanto el escenario base de la extensión dual como el caso de aplicación de este trabajo. Documentarlo aquí es necesario porque fija la topología que el resto del documento reutiliza.
+
+El ejemplo considera una única red de tres firmas que negocian contratos de crédito. La firma 1 es un banco nacional, la firma 2 es un banco local y la firma 3 es una empresa local. El supuesto que define la estructura es que la empresa local no tiene acceso al banco nacional, de modo que la arista entre las firmas 1 y 3 está prohibida y el banco local queda como intermediario obligado entre ambas. Esa prohibición se codifica mediante la matriz de proyección $\Psi_1$, que elimina la columna correspondiente a la firma 3, y de forma simétrica mediante $\Psi_3$.
+
+Los agentes son homogéneos tanto en aversión al riesgo, con $\gamma_1=\gamma_2=\gamma_3=1$, como en la covarianza percibida, con $\Sigma_1=\Sigma_2=\Sigma_3=\Sigma$. Los parámetros del ejemplo son
+\begin{equation}
+\label{eq:ejemplo5-parametros}
+    \Sigma = \begin{pmatrix}
+        1 & 0{,}25 & 0{,}75 \\
+        0{,}25 & 1 & 0{,}6 \\
+        0{,}75 & 0{,}6 & 1
+    \end{pmatrix},
+    \qquad
+    M = \begin{pmatrix}
+        0 & 0{,}9 & 0{,}9 \\
+        0{,}75 & 0 & 0{,}95 \\
+        0{,}5 & 0{,}8 & 0
+    \end{pmatrix}.
+\end{equation}
+
+Con estos valores, el conjunto de aristas permitidas es $F=\{(1,2),(2,3)\}$ y la matriz $Z_F$ resulta de rango completo, de modo que el sistema de la Ecuación~\eqref{eq:teorema1} tiene solución única y el punto estable existe y es único. Al resolverlo se obtienen los precios $P_{12}=-0{,}262$ y $P_{23}=0{,}231$, y los tamaños de contrato $W_{12}=0{,}260$ y $W_{23}=0{,}562$, con $W_{13}=0$ por la prohibición regulatoria. La Tabla~\ref{tab:ejemplo5} reúne estos resultados.
+
+\begin{table}[H]
+\centering
+\caption[Punto estable del Ejemplo 5 de Jalan, Chakrabarti y Sarkar]{Punto estable de la red de tres agentes del Ejemplo 5 de \citeA{jalan_incentive-aware_2024}, obtenido al resolver el sistema de la Ecuación~\eqref{eq:teorema1} con los parámetros de la Ecuación~\eqref{eq:ejemplo5-parametros}. El contrato entre el banco nacional y la empresa local es nulo por prohibición regulatoria y no por decisión de los agentes.}
+\label{tab:ejemplo5}
+\small
+\begin{tabular}{llrr}
+\hline
+Arista & Partes & Precio $P_{ij}$ & Contrato $W_{ij}$ \\
+\hline
+$(1,2)$ & Banco nacional y banco local   & $-0{,}262$ & $0{,}260$ \\
+$(2,3)$ & Banco local y empresa local     & $0{,}231$  & $0{,}562$ \\
+$(1,3)$ & Banco nacional y empresa local  & \multicolumn{2}{c}{arista prohibida} \\
+\hline
+\end{tabular}
+\end{table}
+
+Sobre esta misma red, \citeA{jalan_incentive-aware_2024} ilustran la convergencia del Algoritmo~1 de la Sección~\ref{c24:algoritmo1} con un factor de amortiguación $\eta=0{,}5$, que alcanza el punto estable en pocas rondas de negociación. Ese valor es holgadamente admisible, ya que el umbral de la Ecuación~\eqref{eq:eta} para esta red es $\eta^*=1{,}288$, calculado a partir de un autovalor máximo $\lambda_{\max}=1{,}553$.
+
+La relevancia de este ejemplo para el presente trabajo es doble. Primero, es la red que \citeA{venegas_dual_network_2024} retoma como escenario de referencia para su extensión dual, según se expone en la Sección~\ref{c24:resultado}. Segundo, su topología es la misma que presenta el programa Crédito Corfo Mipyme, en que la MiPyME no puede acceder de forma directa a los recursos de CORFO y debe hacerlo a través de un intermediario financiero habilitado, lo que permite aplicar el modelo al caso real sin forzar su estructura.
 
 \subsection{Resultado central}
+\label{c24:resultado}
 
-Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa
-Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$,
-\citeA{venegas_reyes_financial_2025} muestra que la sola competencia entre
-intermediarios habilitados (incorporando una cuarta firma que compite con $L$)
-recupera solo parcialmente el bienestar perdido por la restricción. Esta deja un
-\textit{gap} de $27{,}9\%$ respecto del benchmark sin restricción. En cambio,
-habilitar una red alternativa $A$ que sí permite el contrato $N$--$F$ logra una
-recuperación completa del bienestar. La utilidad agregada del sistema iguala
-exactamente al benchmark sin restricción, con el contrato $N$--$F$ transando casi
-enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural
-que recupera eficiencia.
+Sobre una red de tres agentes, Banco Nacional ($N$), Banco Local ($L$) y Empresa Local ($F$), donde la regulación prohíbe el contrato directo $N$--$F$, \citeA{venegas_dual_network_2024} muestra que la sola competencia entre intermediarios habilitados (incorporando una cuarta firma que compite con $L$) recupera solo parcialmente el bienestar perdido por la restricción. Esta deja un \textit{gap} de $27{,}9\%$ respecto del \textit{benchmark} sin restricción. En cambio, habilitar una red alternativa $A$ que sí permite el contrato $N$--$F$ logra una recuperación completa del bienestar. La utilidad agregada del sistema iguala exactamente al \textit{benchmark} sin restricción, con el contrato $N$--$F$ transando casi enteramente a través de $A$. Este resultado establece la red alternativa como el mecanismo estructural que recupera eficiencia.
+
+\subsection{Identificación y estimación desde datos}
+\label{c24:identificacion}
+
+El objetivo específico 1 de este trabajo (Capítulo~\ref{c1}) es evaluar la factibilidad de calibrar $\mu_i$, $\Sigma_i$ y $\gamma_i$ con datos reales. La extensión dual no aborda esta pregunta, ya que trabaja con esos primitivos dados como parámetros ilustrativos, nunca estimados. El modelo base de \citeA{jalan_incentive-aware_2024}, en cambio, sí ofrece resultados formales sobre qué tan factible es estimar estos primitivos desde datos y bajo qué condiciones, los que no son retomados por la extensión dual pero constituyen el respaldo teórico directo de la validación empírica de este trabajo.
+
+\paragraph{Estimación de la covarianza desde retornos históricos.}
+Un primer enfoque estima $\Sigma_i$ a partir del historial de retornos observado por cada agente. Si el agente $i$ observa $m$ muestras independientes de los retornos de contratos unitarios con los $n$ agentes de la red, recogidas en una matriz $X_i \in \mathbb{R}^{n \times m}$, la covarianza muestral $\hat\Sigma_i$ converge en probabilidad a la covarianza poblacional $\Sigma$, pero con muestras finitas cada agente puede terminar con una $\hat\Sigma_i$ distinta, lo que degrada el factor de amortiguación seguro $\eta^*$ de la Ecuación~\eqref{eq:eta} y con ello la velocidad de convergencia del Algoritmo~1 presentado en la Sección~\ref{c24:algoritmo1}. \citeA{jalan_incentive-aware_2024} acotan qué tan severa es esa degradación. Bajo condiciones de regularidad estándar sobre $\Sigma$ y $\Gamma$, es decir, con las normas de $\Sigma$, $\Sigma^{-1}$, $\Gamma$ y $\Gamma^{-1}$ acotadas independientemente de $n$ y sin aristas prohibidas, si cada agente estima su covarianza con
+\begin{equation}
+\label{eq:teorema5}
+    m \geq \lceil n \log n \rceil
+\end{equation}
+muestras independientes, el factor de amortiguación estimado $\hat\eta^*$ se mantiene arbitrariamente cerca del valor verdadero $\eta^*$ con probabilidad que tiende a uno exponencialmente en $n$. La cota admite tamaños de muestra heterogéneos entre agentes, $m_1,\dots,m_n$, ya que basta con que el menor de ellos satisfaga $\min_i m_i \geq \lceil n \log n \rceil$, lo que permite a instituciones con distinto historial disponible usar ventanas de estimación de largo distinto.
+
+La lectura correcta de este resultado no es que el requisito de datos disminuya al crecer $n$, puesto que $\lceil n \log n \rceil$ sí crece con $n$ aunque moderadamente, sino que crece muy poco comparado con lo que exigiría estimar sin estructura una matriz de covarianza $n \times n$ completa, que tiene $n(n+1)/2$ entradas libres. En efecto, la cota mínima teórica conocida para ese problema general es de orden $n$ muestras, de modo que $n \log n$ queda solo un factor logarítmico por encima del óptimo. Para la red de $n=4$ agentes del caso de aplicación de este trabajo (Capítulo~\ref{c3}), la Ecuación~\eqref{eq:teorema5} se traduce en entre $6$ y $8$ periodos históricos por agente según la base del logaritmo, un requisito de datos modesto y no las decenas o cientos que una estimación sin estructura podría sugerir.
+
+\paragraph{Inferir creencias a partir de la estructura de la red.}
+Un obstáculo anterior a la pregunta de cuántos datos bastan es de identificabilidad. \citeA{jalan_incentive-aware_2024} muestran que, dado un único corte transversal de la red observada $W$ en su punto estable, $(M,\Gamma,\Sigma)$ no pueden recuperarse de forma única, ni siquiera fijando una escala mediante $\operatorname{tr}(\Gamma)=\operatorname{tr}(\Sigma)=1$, porque para cualquier elección válida de $\Gamma$ y $\Sigma$ existe una $M$ correspondiente consistente con la misma $W$. Observar varias redes generadas con la misma $\Sigma$ y $\Gamma$ pero distinta $M$ tampoco resuelve el problema. La consecuencia práctica es directa, ya que una sola observación de la red del caso de aplicación, por completa que sea, nunca bastaría para calibrar el modelo. El dato requerido es necesariamente longitudinal, una secuencia $W(t)$ observada en $T$ periodos distintos, no un corte transversal.
+
+Para hacer tratable la inferencia sobre esa secuencia, \citeA{jalan_incentive-aware_2024} introducen el Supuesto~1, que consta de tres partes. La primera establece que $\Gamma(t)=I$ y $\Sigma_i(t)=\Sigma$ para todo $t\in[T]$, es decir, aversión al riesgo y covarianza homogéneas y constantes en el periodo. La segunda establece que cada entrada $M_{ij}(t)$ evoluciona de forma independiente según un movimiento browniano con los mismos parámetros para todos los pares $(i,j)$. La tercera fija $\operatorname{tr}(\Sigma)=1$ como normalización de escala. El supuesto (a) se motiva en la literatura de teoría de portafolios, donde los errores de estimación de la media suelen dominar sobre los de la covarianza, de modo que fijar $\Gamma=I$ y una $\Sigma$ constante concentra el problema de estimación en $M$, que es lo que efectivamente varía en el tiempo. Cabe notar que $\Gamma=I$ es, a la vez, el supuesto de homogeneidad de \citeA{venegas_dual_network_2024} y la condición que \citeA{jalan_incentive-aware_2024} necesitan para que la inferencia de $\Sigma$ sea tratable, lo cual es compatible con la decisión de alcance de este trabajo (Capítulo~\ref{c1}) de no abordar heterogeneidad en
+$\gamma_i$ por ahora.
+
+\paragraph{Proposición 1, estimar $\Sigma$ desde incrementos de la red, no contrato por contrato.}
+Bajo el Supuesto~1, \citeA{jalan_incentive-aware_2024} muestran que el estimador de máxima verosimilitud de $\Sigma$ no requiere observar los retornos subyacentes de cada agente (la ruta del Teorema~5), sino que se recupera enteramente a partir de cómo cambia la red observada $W(t)$ de un periodo al siguiente. La Proposición~1 reduce el problema a un programa semidefinido (SDP),
+\begin{equation}
+\label{eq:prop1}
+    \min_{\Sigma} \sum_{t=1}^{T-1} \left\| \Sigma\big(W(t+1)-W(t)\big) + \big(W(t+1)-W(t)\big)\Sigma \right\|_F^2
+    \quad \text{sujeto a } \Sigma \succeq 0,\ \operatorname{tr}(\Sigma)=1.
+\end{equation}
+La razón por la que este resultado es más relevante que el Teorema~5 para la aplicación a datos de BID/CORFO es que la variable de entrada del problema es directamente la secuencia de incrementos $\Delta W(t) = W(t+1)-W(t)$ del propio contrato observado, es decir, los montos de financiamiento entre CORFO, el intermediario financiero y la MiPyME año a año, no una serie de retornos internos de cada institución que en la práctica no está disponible públicamente. En vez de estimar $\Sigma_i$ contrato por contrato a partir de datos que las instituciones normalmente no publican, la Proposición~1 solo exige la misma serie de flujos de financiamiento $W(t)$ que ya es el objeto de interés de la validación empírica de este trabajo. El Remark~2 del paper generaliza además la Proposición~1 a una $\Sigma$ que varía en el tiempo, agregando un regularizador $\nu\sum_j \|\Sigma_{(j+1)}-\Sigma_{(j)}\|$ al objetivo del SDP que preserva la convexidad del problema, lo cual sería relevante si el perfil de riesgo del programa cambió estructuralmente durante 2016--2024 (p.ej. tras 2020).
+
+\paragraph{Una limitación no resuelta por la literatura, relevante para redes reguladas.}
+Ni el Teorema~5 ni la Proposición~1 discuten qué ocurre cuando la red tiene aristas prohibidas por regulación, precisamente el caso de este trabajo, donde el contrato directo CORFO--MiPyME está excluido por diseño. Un análisis del rango de la información del estimador de la Proposición~1, realizado en el marco de este trabajo, muestra que en esa situación $\Sigma$ no puede recuperarse por completo. Sobre la cadena de tres agentes CORFO--Intermediario--MiPyME, con la arista 1--3 prohibida, el rango es 3 de 6 grados de libertad. Quedan determinadas las covarianzas entre agentes que no contratan entre sí, en particular $\Sigma_{13}$, ya que esa entrada interviene en el residuo a través de los flujos de las aristas vecinas aunque $W_{13}(t)\equiv 0$. En cambio, no quedan determinadas ni las varianzas propias ni las covarianzas a lo largo de las aristas observadas.
+
+La misma estructura se mantiene al agregar intermediarios. La red CORFO, intermediarios y MiPyME es bipartita, de modo que con tres intermediarios el rango es 8 de 15 y el déficit crece con el número de intermediarios, sin que aumentar el número de periodos observados $T$ lo repare. Esta es una limitación propia de la aplicación de este trabajo, no señalada por \citeA{jalan_incentive-aware_2024}, cuyos resultados de identificación se enuncian para redes sin restricciones de arista, y se retoma como hallazgo de factibilidad en la Sección~\ref{c3:diagnostico}.
 
 \subsection{Oportunidades de mejora identificadas}
 \label{c24:oportunidades}
 
-El modelo de \citeA{venegas_reyes_financial_2025} obtiene su resultado de bienestar
-bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para
-sostener los experimentos numéricos, no estimados de datos reales. Ademas trabaja bajo dos
-supuestos de homogeneidad entre agentes, con $\gamma_i = 1$ para todo agente y
-$\mu_i = \mu_j$. El propio autor lo reconoce como limitaciones. De las
-oportunidades de mejora identificadas, calibración empírica de los
-primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e
-incorporación de riesgo sistémico y contagio, este trabajo retoma la primera.
-Calibrar el modelo con datos reales, como se detalla en el Capítulo~\ref{MCP:subastador}. 
+El modelo de \citeA{venegas_dual_network_2024} obtiene su resultado de bienestar bajo parámetros ilustrativos para $\mu_i$, $\Sigma_i$, $\gamma_i$ elegidos para sostener los experimentos numéricos, no estimados de datos reales. Además, trabaja bajo dos supuestos de homogeneidad entre agentes, con $\gamma_i = 1$ para todo agente y $\mu_i = \mu_j$, que el propio autor reconoce como limitaciones. De las oportunidades de mejora identificadas (calibración empírica de los primitivos del modelo, incorporación de dinámica y dependencia de trayectoria, e incorporación de riesgo sistémico y contagio), este trabajo retoma la primera, es decir, calibrar el modelo con datos reales, según se detalla en el Capítulo~\ref{c3}.
