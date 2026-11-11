@@ -7,6 +7,19 @@ repositorio.
 
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
+### Corregido
+- El merge `67a8f7a` del PR #9 (rama `overleaf-2026-09-09-1613`) resolvió
+  [`chapters/chapter02.tex`](docs/MemoriasTesis/Caballero/chapters/chapter02.tex)
+  tomando una base de septiembre y revirtió la Sección 2.4 a un borrador
+  anterior, con la pérdida de las subsecciones Factibilidad y estabilidad,
+  Existencia y unicidad del punto estable, Negociaciones bilaterales y
+  convergencia, la red de referencia de tres agentes (Ejemplo 5) e
+  Identificación y estimación desde datos, y de los 16 `\label` que los
+  capítulos 1, 3 y 4 y el Anexo A referencian. Se restaura la Sección 2.4 desde
+  `f75df74` conservando las ediciones de Overleaf en las secciones 2.1 a 2.3.
+  Tras la restauración no quedan claves de cita sin entrada en `referencias.bib`
+  ni referencias cruzadas rotas (`ed9dacd`).
+
 ### Cambiado
 - El `\resumen` de
   [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
