@@ -1,0 +1,148 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{booktabs}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\definecolor{MainRed}{RGB}{189,39,38}
+\definecolor{AlertRed}{RGB}{204,0,0}
+\definecolor{SafeGreen}{RGB}{0,100,0}
+\usecolortheme[named=MainRed]{structure}
+\setbeamertemplate{navigation symbols}{}
+
+\title[Autoevaluación Hito 2]{Autoevaluación del documento de memoria}
+\subtitle{Hito 2}
+\author[Eduardo Caballero]{Eduardo Caballero \\ \small{Profesor Guía: Sebastián Cea}}
+\institute{Universidad de los Andes}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+% ===================================================================
+\begin{frame}{Puntaje contra la rúbrica}
+
+\begin{table}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Indicador & Peso & Hito 1 & \textbf{Hito 2} \\
+\midrule
+Presentación y expresión escrita & 10\,\% & 4 & \textbf{5} \\
+Resumen                          & 5\,\%  & 3 & \textbf{5} \\
+Introducción y motivación        & 15\,\% & 4 & 4 \\
+Desarrollo                       & 20\,\% & 3 & \textbf{4} \\
+Análisis y conclusiones          & 30\,\% & --- & 3 \\
+Referencias                      & 5\,\%  & 4 & \textbf{5} \\
+Relevancia, alcance y novedad    & 15\,\% & 5 & \textbf{5} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vfill
+\begin{block}{}
+\centering
+Nota hoy: \textbf{\textcolor{SafeGreen}{5,6}} \quad (4,05 de 5,0)
+\end{block}
+
+\end{frame}
+
+% ===================================================================
+\begin{frame}{Dónde está el punto 1 de la evaluación del Hito 2}
+
+\footnotesize
+\textbf{Punto 1.} Resultados empíricos de aplicar el modelo al caso real.
+
+\vspace{0.3cm}
+\begin{table}
+\centering
+\footnotesize
+\begin{tabular}{p{5.3cm}p{6.4cm}}
+\toprule
+Qué pide & Dónde está \\
+\midrule
+El mecanismo de bienestar del modelo en el caso & Sección 4.5.1, ``Por qué el caso no instancia el mecanismo de la fuente'' \\
+Los supuestos con que se corre & Sección 4.5.2, ``Los supuestos que hubo que agregar y sus límites'' \\
+Actividad por red y reparto predicho & Sección 4.5.3, ``El reparto de actividad predicho'' \\
+Contraste con el reparto observado & Sección 4.5.4, ``El reparto observado en la Séptima Encuesta Longitudinal de Empresas'' \\
+Recuperación y pérdida de bienestar & Sección 4.5.5, ``El costo del mandato de segundo piso'', con su tabla por covarianza \\
+Qué se puede afirmar con esa información & Sección 4.6, ``Alcance del análisis con la información disponible'' \\
+\midrule
+Respaldo numérico & \texttt{caballero\_caso\_chileno\_resultados.csv} y \texttt{caballero\_contrafactual\_resultados.csv} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% ===================================================================
+\begin{frame}{Dónde está el punto 2 de la evaluación del Hito 2}
+
+\scriptsize
+\textbf{Punto 2.} Comparación con el benchmark ilustrativo de Venegas (2024) y análisis de robustez frente a las limitaciones de datos del Hito I.
+
+\vspace{0.25cm}
+\begin{table}
+\centering
+\scriptsize
+\begin{tabular}{p{5.2cm}p{6.5cm}}
+\toprule
+Qué pide & Dónde está \\
+\midrule
+\multicolumn{2}{l}{\textit{Comparación con el benchmark}} \\
+Los escenarios de la fuente y su reproducción & Sección 4.2.4, con las tablas de escenarios publicados y de reproducción \\
+La reproducción de los escenarios duales & Sección 4.2.5, con su tabla de reproducción dual \\
+Qué cambia al usar datos en vez de los parámetros ilustrativos & Sección 4.2.6, con la tabla de comparación \\
+Contraste con el ejercicio empírico de referencia & Sección 4.4, con su tabla de comparación \\
+\midrule
+\multicolumn{2}{l}{\textit{Robustez frente a las limitaciones del Hito I}} \\
+Las limitaciones, enunciadas & Secciones 3.7 y 3.9 \\
+Los supuestos agregados y sus límites & Sección 4.5.2 \\
+El barrido completo y los dos parámetros no observables & Sección 4.5.3 \\
+Sensibilidad a la entrada identificable de la covarianza & Sección 4.2.6, con su tabla de sensibilidad \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+% ===================================================================
+\begin{frame}{Qué cambió desde el Hito 1}
+
+\begin{itemize}
+  \item El documento pasó de 8.049 a \textbf{23.412 palabras}.
+  \item El Capítulo 4 pasó de 4 palabras a \textbf{11.302}, con 768 escenarios y una rama contrafactual.
+  \item De 2 a \textbf{17 tablas} y de 1 a \textbf{5 figuras}.
+  \item De 34 a \textbf{45 referencias}, sin citas huérfanas.
+  \item El resumen \textbf{ya no es provisional}.
+  \item \textbf{62 pruebas} respaldan las cifras del documento.
+\end{itemize}
+
+\vfill
+\begin{block}{}
+\centering
+Las cuatro tareas que el Hito 1 dejó pendientes están hechas.
+\end{block}
+
+\end{frame}
+
+% ===================================================================
+\begin{frame}{Qué falta}
+
+\begin{itemize}
+  \item \textbf{El Capítulo 5 está vacío.} Es el 30\,\% de la rúbrica y el único indicador bajo 4.
+  \item \textbf{Las tres preguntas de investigación} siguen pidiendo una calibración que el propio trabajo muestra inviable. Se arregla reescribiéndolas.
+\end{itemize}
+
+\vfill
+\begin{block}{}
+\centering
+Con el Capítulo 5 escrito, la nota sube a \textbf{entre 6,0 y 6,5}.
+\end{block}
+
+\end{frame}
+
+\end{document}
