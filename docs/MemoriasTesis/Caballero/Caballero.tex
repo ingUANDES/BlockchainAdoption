@@ -13,7 +13,7 @@
 
 %%%%%%%%%%Aqui se escribe el resumen%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\resumen}{
-Este trabajo evalúa si el modelo de redes financieras duales de Venegas, que extiende el marco de negociación bilateral de Jalan, Chakrabarti y Sarkar, puede validarse con datos reales. El caso es el programa Crédito Corfo Mipyme, con un panel reconstruido desde fuentes públicas. Se audita la implementación heredada y se implementa la capa que acopla ambas redes, que la fuente no publica. El hallazgo central es que el caso no instancia el mecanismo del modelo, puesto que la red Alternativa no vuelve a conectar al par que la prohibición separa, de modo que la recuperación de bienestar no se traslada y ninguna cantidad de datos la restituiría. Bajo supuestos declarados el modelo predice una participación minoritaria de dicha red, cercana a un quinto, mientras que en la Séptima Encuesta Longitudinal de Empresas el canal bancario es mayoritario y lo usa el 82,6~\% de las MiPyMEs. Una rama contrafactual cifra el costo del mandato de segundo piso en torno a la mitad del bienestar alcanzable y muestra que el canal alternativo recupera dos tercios de ese costo, aunque recupera menos donde la prohibición más cuesta. Ese resultado descansa en la única entrada de la covarianza que la red bipartita identifica.
+CORFO no presta de forma directa a las empresas de menor tamaño, sino a través de intermediarios financieros, de modo que el contrato entre el Estado y la empresa queda prohibido por diseño. Un modelo de redes de crédito propuesto por Venegas, en que cada contrato nace de una negociación bilateral según el riesgo percibido, sostiene que habilitar un segundo canal donde ese contrato prohibido sí pueda ejecutarse recupera por completo el bienestar perdido. Ese resultado se obtuvo con parámetros supuestos, sin datos. Este trabajo lo lleva al programa Crédito Corfo Mipyme, reconstruye su red con fuentes públicas y programa la parte del modelo que sus autores no publicaron. El caso no reproduce ese mecanismo, puesto que el segundo canal del programa es la banca comercial, que no sustituye al crédito directo del Estado. El modelo predice que dicho canal sería minoritario, mientras que la Séptima Encuesta Longitudinal de Empresas muestra que lo usa el 82,6~\% de esas empresas. Prohibir el crédito directo cuesta cerca de la mitad del bienestar y el canal alternativo recupera dos tercios, menos cuanto más cuesta la prohibición. La recuperación prometida depende de cómo esté conectada la red y no de la cantidad de datos.
 }
 
 \newcommand{\agradecimientos}{
@@ -29,43 +29,6 @@ ok..
 % Por favor coloque todas las definiciones de simbolos a continuacion
 % y no en los archivos de capitulos. Esto evitara la  existencia de
 % multiples definiciones para las mismas palabras.
-edit
-edit
-edit
-edit
-edit
-
-
-/ 27
-Índice general
-Agradecimientos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . II
-Resumen . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . III
-1. Introducción 1
-1.1. Objetivos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
-1.1.1. Objetivo general . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
-1.1.2. Objetivos específicos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
-1.2. Preguntas de investigación . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
-1.3. Alcances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
-1.4. Metodología . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3
-1.5. Estructura del documento . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
-2. Marco Teórico 5
-2.1. Modelos de redes financieras . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
-2.2. Competencia entre infraestructuras financieras . . . . . . . . . . . . . . . . . . . . . . . 7
-2.2.1. Mercados de dos lados y competencia entre plataformas . . . . . . . . . . . . . 7
-2.2.2. Arbitraje regulatorio . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
-2.2.3. Adopción tecnológica, efectos de red y dependencia de trayectoria . . . . . . . . 8
-2.3. Blockchain y finanzas descentralizadas . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
-2.4. Un modelo de redes duales . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
-2.4.1. Resultado central: recuperación de bienestar . . . . . . . . . . . . . . . . . . . . 11
-2.4.2. Oportunidades de mejora identificadas . . . . . . . . . . . . . . . . . . . . . . . 11
-3. Desarrollo Metodológico 12
-3.1. Objetivo general de PT2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
-3.2. Actualización del orden de hitos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
-3.3. Hito I — 27 de septiembre de 2026: prueba de factibilidad empírica . . . . . . . . . . . 13
-3.4. Hito II — 8 de noviembre de 2026: calibración y aplicación . . . . . . . . . . . . . . . . 13
-3.5. Hitos de cierre — 21 de agosto y 28 de diciembre de 2026 . . . . . . . . . . . . . . . . 13
-4. Análisis de Resultados 14
-iv
 \newcommand{\mydef}
 	{\stackrel{\mathrm{def}}{=}}
 \newcommand{\e}
