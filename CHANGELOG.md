@@ -21,6 +21,13 @@ repositorio.
   ni referencias cruzadas rotas (`ed9dacd`).
 
 ### Cambiado
+- `caballero_corrida_caso_chileno.py` persiste una entrada de precio de
+  equilibrio por arista, a saber `P_corfo_ifnb`, `P_ifnb_mipyme` y
+  `P_mipyme_banco`. El precio es antisimétrico, de modo que una entrada por
+  arista basta. El CSV se regeneró con las mismas 812 filas y las mismas
+  cifras en todas las columnas previas, de manera que ningún resultado del
+  Capítulo 4 se mueve. Habilita `tab:escenario-mediano`, que reporta el
+  contrato y el precio del escenario cuya cuota iguala la mediana.
 - El `\resumen` de
   [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
   pasa de 200 palabras a tres párrafos de unas 360, porque el límite real de la
