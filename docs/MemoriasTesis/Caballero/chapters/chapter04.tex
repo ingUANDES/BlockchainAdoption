@@ -600,9 +600,37 @@ Antes de leer las cifras que siguen conviene tener presente la Sección~\ref{c3:
 
 El barrido recorre 768 combinaciones de los intervalos declarados. De ellas resultan admisibles 312, bajo el doble criterio de que el margen del intermediario sea positivo, sin el cual el programa no opera, y de que la posición en la red Alternativa no sea negativa, sin lo cual la cuota no admite lectura como uso del canal.
 
-La cuota de la red Alternativa tiene mediana de 21,5 por ciento con la matriz equicorrelada y de 17,3 por ciento con la de ciclo, con rangos intercuartiles de 15,4 a 38,2 y de 10,4 a 34,1 puntos respectivamente, y un rango completo que va de 0,1 a 53,4 por ciento. Reportar un valor puntual sería engañoso, porque varios supuestos entran como intervalo y no como cifra, de modo que el resultado defendible es que el modelo predice una participación minoritaria de la red Alternativa, del orden de un quinto a un tercio de la actividad.
+La cuota de la red Alternativa tiene mediana de 21,5 por ciento con la matriz equicorrelada y de 17,3 por ciento con la de ciclo, con rangos intercuartiles de 15,4 a 38,2 y de 10,4 a 34,1 puntos respectivamente, y un rango completo que va de 0,1 a 53,4 por ciento. Reportar un valor puntual sería engañoso, porque varios supuestos entran como intervalo y no como cifra, de modo que el resultado defendible es que el modelo predice una participación minoritaria de la red Alternativa, del orden de un quinto a un tercio de la actividad. La Figura~\ref{fig:escenarios-admisibles} muestra la dispersión completa, que es lo que una cifra puntual escondería.
+
+\input{fig_escenarios_admisibles}
 
 El parámetro que más mueve esa predicción es el beneficio de transparencia, y conviene declarar que los dos barridos no tienen la misma amplitud, puesto que ese parámetro recorre el intervalo de cero a 0,20 mientras que la fricción de acceso recorre el de cero a cinco. Dentro de sus respectivos rangos, el primero mueve la cuota 54,8 puntos porcentuales con la matriz equicorrelada y 81,9 con la de ciclo, mientras que el segundo la mueve 16,8 y 0,05 puntos. El enunciado correcto no es que un parámetro sea más elástico que el otro, sino que dentro del rango que cada uno recorre el beneficio de transparencia domina el resultado. Llevar la cuota de la red Alternativa por sobre la mitad exige un beneficio del orden de diez puntos de tasa, magnitud comparable al subsidio completo, lo que constituye en sí mismo un hallazgo sobre cuán exigente resulta esa predicción.
+
+Las cifras anteriores son agregados sobre la grilla, de modo que conviene fijar también un escenario concreto para que los tamaños de contrato y los precios queden a la vista. La Tabla~\ref{tab:escenario-mediano} recoge el escenario admisible cuya cuota coincide con la mediana de la matriz equicorrelada, que es 21,5 por ciento.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption[Escenario cuya cuota iguala la mediana]{Tamaño de contrato y
+    precio de equilibrio en el escenario admisible cuya cuota de la red
+    Alternativa coincide con la mediana bajo la matriz equicorrelada. El precio
+    es antisimétrico, de manera que una entrada por arista basta, y el signo
+    sigue la convención de la entrada correspondiente de la matriz.}
+    \label{tab:escenario-mediano}
+    \begin{tabular}{lrr}
+        \toprule
+        Arista & Tamaño de contrato & Precio \\
+        \midrule
+        CORFO--IFNB & $-$0,0060 & 0,0314 \\
+        IFNB--MiPyME & 0,0521 & $-$0,0414 \\
+        MiPyME--Banco & 0,0159 & 0,0243 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Dos precisiones acompañan a esta tabla. La primera es que el escenario toma valores extremos en varios de sus intervalos, lo que no es una peculiaridad suya sino una propiedad de la grilla, puesto que el barrido recorre los extremos de cada intervalo declarado y por lo tanto ninguno de los 768 escenarios es central. La segunda es que el tamaño negativo en la arista mayorista es el residuo de cobertura que la Sección~\ref{c3:supuestos-modulo} documenta y no una predicción sobre el programa.
+
+Sobre las 312 combinaciones admisibles, el contrato entre el intermediario y la MiPyME recorre de 0,0252 a 0,0640, el de la MiPyME con el banco de 0,0001 a 0,0544 y el del tramo mayorista de $-$0,0070 a 0,0173. Los precios recorren de 0,0295 a 0,0806 en la arista mayorista, de $-$0,0811 a $-$0,0018 en la del programa y de $-$0,0138 a 0,0778 en la de mercado.
 
 Queda una limitación del ejercicio que conviene dejar anotada. Con los supuestos declarados, el ingreso de CORFO y el costo del intermediario en el tramo mayorista son exactamente opuestos, de modo que el excedente conjunto de esa arista es nulo y nada en el modelo obliga al intermediario a tomar ese fondeo. La causa es que el modelo heredado no incorpora una restricción de balance que ate lo que el intermediario coloca con aquello de lo que se fondea. De las 312 combinaciones admisibles, 84 conservan alguna posición negativa en ese tramo, lo que confirma que no se trata de un caso de borde sino de una propiedad de la especificación.
 
@@ -658,7 +686,9 @@ Por sobre ese umbral la fracción recuperada se vuelve negativa, y corresponde p
 
 \paragraph{Con qué precisión el ejercicio aísla el mandato.} Como la red Alternativa de esta rama no tiene restricción, habilita los tres pares y no solo el del mandato, de modo que el cambio de bienestar no es atribuible por completo a que CORFO preste directo. El par del mandato concentra el 70,2 por ciento del volumen de la red Alternativa y el 82,4 por ciento de la desviación respecto del bienestar de referencia, de manera que el ejercicio lo aísla en torno a cuatro quintos. El resto se reparte entre el par que une al intermediario con la MiPyME, que esta red también habilita, y las posiciones propias de cada agente.
 
-\paragraph{El resultado principal de la rama.} Está en cómo varían ambas magnitudes con la covarianza entre CORFO y la MiPyME, que es la única entrada que la estructura bipartita identifica y por lo tanto el único resultado del trabajo que no descansa sobre un supuesto de covarianza. La Tabla~\ref{tab:contrafactual-sigma} la recorre en el punto central de los intervalos de tasas, condición que conviene retener, puesto que las medianas citadas antes se calculan en cambio sobre la grilla de combinaciones admisibles y por eso no coinciden con ninguna fila de la tabla.
+\paragraph{El resultado principal de la rama.} Está en cómo varían ambas magnitudes con la covarianza entre CORFO y la MiPyME, que es la única entrada que la estructura bipartita identifica y por lo tanto el único resultado del trabajo que no descansa sobre un supuesto de covarianza. La Figura~\ref{fig:contrafactual-curvas} y la Tabla~\ref{tab:contrafactual-sigma} la recorren en el punto central de los intervalos de tasas, condición que conviene retener, puesto que las medianas citadas antes se calculan en cambio sobre la grilla de combinaciones admisibles y por eso no coinciden con ninguna fila de la tabla.
+
+\input{fig_contrafactual_curvas}
 
 \begin{table}[H]
     \centering

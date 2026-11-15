@@ -78,6 +78,11 @@ def corrida(Sigma, M, lambda_A, tau):
         W_corfo_ifnb=float(r["W"][cc.CORFO, cc.IFNB]),
         W_ifnb_mipyme=float(r["W"][cc.IFNB, cc.MIPYME]),
         W_mipyme_banco=float(r["W"][cc.MIPYME, cc.BANCO]),
+        # El precio es antisimétrico, de modo que una entrada por arista basta.
+        # Se registra el precio que paga la parte nombrada en segundo lugar.
+        P_corfo_ifnb=float(r["P"][cc.CORFO, cc.IFNB]),
+        P_ifnb_mipyme=float(r["P"][cc.IFNB, cc.MIPYME]),
+        P_mipyme_banco=float(r["P"][cc.MIPYME, cc.BANCO]),
         volumen_T=d["volumen_T"], volumen_A=d["volumen_A"],
         adopcion_A=d["adopcion_A"],
         contrato_negativo=";".join(d["contrato_negativo"]),
