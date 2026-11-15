@@ -23,6 +23,12 @@ repositorio.
 ### Cambiado
 - El `\resumen` de
   [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
+  pasa de 200 palabras a tres párrafos de unas 360, porque el límite real de la
+  entrega es una página y no un recuento. Con el espacio adicional entran el
+  levantamiento de fuentes, la auditoría de la implementación heredada, la capa
+  propia y las cifras del Capítulo 4.
+- El `\resumen` de
+  [`docs/MemoriasTesis/Caballero/Caballero.tex`](docs/MemoriasTesis/Caballero/Caballero.tex)
   se reescribe para un lector que no conoce las fuentes, de modo que presenta la
   motivación, lo desarrollado y los resultados sin vocabulario heredado. En el
   mismo commit se elimina del preámbulo un índice general y cinco líneas `edit`
