@@ -221,6 +221,32 @@ Ninguna de estas dos fuentes se distribuye junto con el código que acompaña a 
 
 El Anexo~\ref{anexo:fuentes} resume las fuentes consultadas y el insumo que aporta cada una.
 
+\subsection{Obstáculos de comparabilidad detectados}
+\label{c3:obstaculos}
+
+El levantamiento descrito en la Sección~\ref{c4:levantamiento} dejó al descubierto cuatro problemas que afectan la comparabilidad de las cifras entre sí.
+
+\begin{enumerate}
+    \item Ambigüedad entre flujo y saldo. Las Cuentas Públicas reportan
+    desembolsos, mientras que la serie bancaria más cercana de la CMF reporta
+    saldos de cartera vigente, y el modelo trata la arista como una posición
+    única, por lo que mezclar ambas naturalezas entre aristas rompe la
+    comparabilidad.
+    \item Multiplicidad de bases de pesos reales. Las fichas de DIPRES reexpresan
+    cada año en la base del año de publicación, de modo que un mismo ejercicio
+    aparece con cifras distintas según la ficha que se consulte. El gasto de 2018
+    figura como 12.517,5 millones de pesos de 2020 y como 12.459,3 millones de
+    pesos de 2021, mientras que el de 2019 figura como 7.519,0 y como 7.658,4 en
+    esas mismas dos bases.
+    \item Períodos parciales. La cifra de 2018 cubre entre enero y noviembre, y
+    la de 2021 también, de manera que ninguna de las dos es comparable con un año
+    completo sin un ajuste declarado.
+    \item Distinción entre aprobación y desembolso. La única cifra disponible
+    para 2017 corresponde a líneas de crédito aprobadas y no a montos girados.
+\end{enumerate}
+
+A estos cuatro se suma un problema de agregación. Las fuentes públicas reportan a los intermediarios como un único agregado, de modo que la red observable tiene un solo nodo intermediario, cuando en realidad el programa opera con varias instituciones distinguibles entre sí.
+
 \section{Supuestos del modelo para las variables no observadas}
 \label{c3:supuestos}
 
@@ -278,6 +304,19 @@ Conviene cerrar con un rasgo de la distribución que condiciona cómo leer estas
 \label{c3:supuesto-lambda}
 
 $\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el parámetro que determina cuán costoso o restringido resulta para la MiPyME acceder a la red Alternativa en comparación con la red Tradicional, y por lo tanto gobierna cómo la MiPyME reparte su portafolio entre ambos canales. Un $\lambda_A$ alto implica que, aun si el modelo predijera una tasa competitiva en la red Alternativa, la MiPyME en la práctica no podría aprovecharla con facilidad. Como segunda ancla, independiente de la anterior, se utiliza la tasa de rechazo condicional a la solicitud de crédito reportada en el informe oficial de resultados de la ELE-7 \cite{ele7_informe_2024}, que llega a 15\% para MiPyMEs frente a 3\% para empresas grandes (cinco veces mayor). Adicionalmente, 111 de las 1.018 empresas que necesitaban crédito pero nunca lo solicitaron declaran autocensura, una población disjunta de las 819 empresas que sí solicitaron crédito. Esta brecha de acceso, combinada con la brecha de tasa anterior, sustenta por lo tanto el supuesto de que $\lambda_A$ es sustancialmente mayor que la fricción de acceso a la red Tradicional para el agente MiPyME.
+
+\subsection{Los supuestos que hubo que agregar y sus límites}
+\label{c3:supuestos-modulo}
+
+Correr el modelo exige fijar primitivos que ninguna fuente entrega. Conviene separarlos de los que sí tienen respaldo, porque de esa separación depende cuánto puede afirmarse.
+
+Tienen fuente en el Capítulo~\ref{c3} la tasa mayorista que CORFO cobra al intermediario, entre 4,23 y 4,73 por ciento anual, la tasa de mercado que enfrenta la MiPyME, entre 12,68 y 14,03 por ciento anual, la tasa subsidiada que el intermediario cobra a la MiPyME, declarada entre 3 y 6 por ciento, y el coeficiente de aversión al riesgo, fijado en uno para todos los agentes por el alcance del Capítulo~\ref{c1}.
+
+Quedan fijados por supuesto el retorno esperado del proyecto de la MiPyME, que determina el nivel de su columna de creencias, el margen del banco sobre su costo de fondo, la fricción de acceso de la red Alternativa, el beneficio de transparencia y la matriz de covarianzas completa. Los dos últimos se reportan únicamente por sensibilidad, dado que ninguna fuente los mide.
+
+La fricción de acceso merece una precisión, porque de ella dependen varias cifras del Capítulo~\ref{c4}. El Capítulo~\ref{c3} la ancla de forma cualitativa mediante la evidencia de que la MiPyME enfrenta una tasa de rechazo del 15 por ciento frente al 3 por ciento de la empresa grande, y de que 111 de 1.018 empresas declaran autocensura, aunque no le asigna valor. La propuesta de cierre adoptada consiste en anclarla en la probabilidad de no obtener el crédito en el canal bancario, que combina ambos eventos sobre poblaciones disjuntas y da 0,243. Es una propuesta y no una medición, y su punto más frágil es que traducir una probabilidad a una penalización cuadrática no es una operación única, de modo que el factor de escala que esa traducción requiere queda fijado en uno por convención. Por eso el barrido acompaña siempre al valor propuesto.
+
+La matriz de covarianzas se reporta en dos versiones, puesto que no es estimable con la información disponible y elegir una sola escondería cuánto depende el resultado de esa elección. La primera es equicorrelada y asigna la misma correlación a todos los pares, de manera que no privilegia ninguna estructura y sirve de referencia. La segunda ordena las correlaciones por exposición al ciclo en tres bloques, con correlación alta entre el intermediario y el banco por ser ambos oferta de crédito privada, moderada entre la MiPyME y los oferentes de crédito por pertenecer al sector real, y negativa entre CORFO y los agentes privados, dado que un programa público de fomento se expande cuando el crédito privado se contrae.
 
 \section{Diagnóstico de factibilidad empírica}
 \label{c3:diagnostico}
