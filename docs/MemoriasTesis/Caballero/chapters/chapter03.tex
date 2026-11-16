@@ -212,7 +212,7 @@ No existe, hasta donde se ha buscado, una fuente pública que reporte esta arist
 \subsection{Datos para la red Alternativa}
 \label{c3:datos-alternativa}
 
-Se utilizan dos fuentes públicas. La primera es la Dirección de Presupuestos (DIPRES), organismo dependiente del Ministerio de Hacienda que elabora el presupuesto del sector público y realiza el monitoreo y seguimiento de los programas públicos, entre ellos el programa Crédito Corfo Mipyme. Su Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales). La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
+Se utilizan dos fuentes públicas. La primera es la Dirección de Presupuestos (DIPRES), organismo dependiente del Ministerio de Hacienda que elabora el presupuesto del sector público y realiza el monitoreo y seguimiento de los programas públicos, entre ellos el programa Crédito Corfo Mipyme. Su Informe de Detalle de Programas Sociales con cierre a diciembre de 2021 \cite{dipres_detalle_2021} reporta la tasa de interés mayorista CORFO$\to$IFNB (4,23\%--4,73\% anual) y cuyo Informe de Monitoreo 2021 \cite{dipres_monitoreo_2021} reporta el spread de la tasa a cliente final IFNB respecto al benchmark de mercado ACHEF/EFA ($-7$ a $-10$ puntos porcentuales), sigla que designa una referencia de tasas de la industria del factoring. La segunda es la ELE-7 (Séptima Encuesta Longitudinal de Empresas), cuyos microdatos completos \cite{ele7_microdatos_2024} (\texttt{ele7-full.csv}, 6.592 empresas) permiten obtener la tasa de interés del crédito de mayor monto aprobado en 2022 (variable \texttt{B066}), segmentada por tamaño de empresa (variable \texttt{TAMANO}) y anualizada según periodicidad reportada (variables \texttt{B067}/\texttt{B068}). Complementariamente, el informe oficial de resultados de la misma encuesta \cite{ele7_informe_2024} reporta la tasa de rechazo condicional a la solicitud de crédito por tamaño de empresa.
 
 Todas las cifras que este trabajo obtiene de la ELE-7 se ponderan por el factor de expansión transversal de la encuesta, de modo que se leen como representativas de la población de empresas y no de la muestra. Esa convención admite una sola excepción, que corresponde declarar en vez de dejarla implícita. Las dos cifras que anclan la fricción de acceso de la Sección~\ref{c3:supuesto-lambda}, a saber la tasa de rechazo y la razón de autocensura, provienen del informe oficial de resultados y no del microdato, y el extracto disponible no trae las variables necesarias para recalcularlas ponderadas.
 
@@ -228,7 +228,7 @@ El levantamiento descrito en la Sección~\ref{c4:levantamiento} dejó al descubi
 
 \begin{enumerate}
     \item Ambigüedad entre flujo y saldo. Las Cuentas Públicas reportan
-    desembolsos, mientras que la serie bancaria más cercana de la CMF reporta
+    desembolsos, mientras que la serie bancaria más cercana de la Comisión para el Mercado Financiero (CMF) reporta
     saldos de cartera vigente, y el modelo trata la arista como una posición
     única, por lo que mezclar ambas naturalezas entre aristas rompe la
     comparabilidad.
@@ -303,28 +303,60 @@ Conviene cerrar con un rasgo de la distribución que condiciona cómo leer estas
 \subsection[Supuesto para la fricción de acceso lambda A]{Supuesto para la fricción de acceso $\lambda_A$}
 \label{c3:supuesto-lambda}
 
-$\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el parámetro que determina cuán costoso o restringido resulta para la MiPyME acceder a la red Alternativa en comparación con la red Tradicional, y por lo tanto gobierna cómo la MiPyME reparte su portafolio entre ambos canales. Un $\lambda_A$ alto implica que, aun si el modelo predijera una tasa competitiva en la red Alternativa, la MiPyME en la práctica no podría aprovecharla con facilidad. Como segunda ancla, independiente de la anterior, se utiliza la tasa de rechazo condicional a la solicitud de crédito reportada en el informe oficial de resultados de la ELE-7 \cite{ele7_informe_2024}, que llega a 15\% para MiPyMEs frente a 3\% para empresas grandes (cinco veces mayor). Adicionalmente, 111 de las 1.018 empresas que necesitaban crédito pero nunca lo solicitaron declaran autocensura, una población disjunta de las 819 empresas que sí solicitaron crédito. Esta brecha de acceso, combinada con la brecha de tasa anterior, sustenta por lo tanto el supuesto de que $\lambda_A$ es sustancialmente mayor que la fricción de acceso a la red Tradicional para el agente MiPyME.
+$\lambda_A$ es, en el modelo dual de la Ecuación~\eqref{eq:utilidad-dual}, el parámetro que determina cuán costoso o restringido resulta para la MiPyME acceder a la red Alternativa en comparación con la red Tradicional, y por lo tanto gobierna cómo la MiPyME reparte su portafolio entre ambos canales. Un $\lambda_A$ alto implica que, aun si el modelo predijera una tasa competitiva en la red Alternativa, la MiPyME en la práctica no podría aprovecharla con facilidad. Dos anclas independientes entre sí lo sustentan. La primera es la brecha de tasa de la Sección~\ref{c3:tasa-mercado}, que muestra cuánto más cara resulta la tasa de mercado para los tramos menores. La segunda es la tasa de rechazo condicional a la solicitud de crédito reportada en el informe oficial de resultados de la ELE-7 \cite{ele7_informe_2024}, que llega a 15\% para MiPyMEs frente a 3\% para empresas grandes, es decir cinco veces mayor. A ello se agrega que 111 de las 1.018 empresas que necesitaban crédito pero nunca lo solicitaron declaran autocensura, una población disjunta de las 819 empresas que sí solicitaron crédito. Ambas brechas sustentan por lo tanto el supuesto de que $\lambda_A$ es sustancialmente mayor que la fricción de acceso a la red Tradicional para el agente MiPyME.
+
+Esa evidencia ancla el parámetro de forma cualitativa, aunque no le asigna valor, de modo que corresponde declarar la propuesta de cierre adoptada. Dicha propuesta consiste en anclar $\lambda_A$ en la probabilidad de no obtener el crédito en el canal bancario, que combina ambos eventos sobre poblaciones disjuntas y entrega 0,243. Es una propuesta y no una medición, y su punto más frágil es que traducir una probabilidad a una penalización cuadrática no es una operación única, de manera que el factor de escala que esa traducción requiere queda fijado en uno por convención. Por esa razón el barrido acompaña siempre al valor propuesto.
 
 \subsection{Los supuestos que hubo que agregar y sus límites}
 \label{c3:supuestos-modulo}
 
 Correr el modelo exige fijar primitivos que ninguna fuente entrega. Conviene separarlos de los que sí tienen respaldo, porque de esa separación depende cuánto puede afirmarse.
 
-Tienen fuente en el Capítulo~\ref{c3} la tasa mayorista que CORFO cobra al intermediario, entre 4,23 y 4,73 por ciento anual, la tasa de mercado que enfrenta la MiPyME, entre 12,68 y 14,03 por ciento anual, la tasa subsidiada que el intermediario cobra a la MiPyME, declarada entre 3 y 6 por ciento, y el coeficiente de aversión al riesgo, fijado en uno para todos los agentes por el alcance del Capítulo~\ref{c1}.
+La Tabla~\ref{tab:rejilla-supuestos} reúne los nueve supuestos que la corrida recorre, con los valores que toma cada uno, su procedencia y la vía por la que entra al modelo. Los intervalos de las tres tasas son los que las Secciones~\ref{c3:supuesto-w23} y~\ref{c3:tasa-mercado} establecen, y el coeficiente de aversión al riesgo no aparece porque el alcance del Capítulo~\ref{c1} lo fija en uno para todos los agentes.
 
-Quedan fijados por supuesto el retorno esperado del proyecto de la MiPyME, que determina el nivel de su columna de creencias, el margen del banco sobre su costo de fondo, la fricción de acceso de la red Alternativa, el beneficio de transparencia y la matriz de covarianzas completa. Los dos últimos se reportan únicamente por sensibilidad, dado que ninguna fuente los mide.
+\begin{table}[htbp]
+\centering
+\small
+\caption[Rejilla de supuestos de la corrida]{Supuestos que recorre la corrida del Capítulo~\ref{c4}, con sus valores, su procedencia y la vía por la que entran al modelo. Las tasas se expresan en términos anuales. Elaboración propia a partir del módulo de primitivos versionado junto con este trabajo (\texttt{caballero\_caso\_chileno.py}).}
+\label{tab:rejilla-supuestos}
+\begin{tabular}{p{3.0cm}p{2.7cm}p{1.9cm}p{5.0cm}}
+\hline
+Supuesto & Valores & Procedencia & Entrada al modelo \\
+\hline
+Tasa mayorista $r_w$ & 4,23\% y 4,73\% & medido & Ingreso de CORFO y costo de fondeo del intermediario en la arista mayorista \\
+Tasa de mercado $r_m$ & 12,68\% y 14,03\% & medido & Fija el subsidio $s = r_m - r_s$ de la columna de la MiPyME \\
+Tasa subsidiada $r_s$ & 3\% y 6\% & declarado & Ingreso del intermediario al colocar a la MiPyME \\
+Beneficio extra de la MiPyME & $0$ y $s$ & estipulado & Nivel de la columna de creencias de la MiPyME \\
+Margen del banco & 0,5\% y 4\% & estipulado & Creencia del banco sobre la arista de mercado \\
+Valoración de política de CORFO & $0$ y 5\% & estipulado & Se suma al ingreso de CORFO en la arista mayorista \\
+Fricción de acceso $\lambda_A$ & $0$, $0{,}243$ y $2$ & estipulado & Penaliza la posición en la red Alternativa \\
+Beneficio de transparencia $\tau$ & $0$ y $0{,}05$ & estipulado & Se suma a las coordenadas de la red Alternativa \\
+Matriz $\Sigma$ & equicorrelada y de ciclo & estipulado & Riesgo percibido de cada par de agentes \\
+\hline
+\end{tabular}
+\end{table}
 
-La fricción de acceso merece una precisión, porque de ella dependen varias cifras del Capítulo~\ref{c4}. El Capítulo~\ref{c3} la ancla de forma cualitativa mediante la evidencia de que la MiPyME enfrenta una tasa de rechazo del 15 por ciento frente al 3 por ciento de la empresa grande, y de que 111 de 1.018 empresas declaran autocensura, aunque no le asigna valor. La propuesta de cierre adoptada consiste en anclarla en la probabilidad de no obtener el crédito en el canal bancario, que combina ambos eventos sobre poblaciones disjuntas y da 0,243. Es una propuesta y no una medición, y su punto más frágil es que traducir una probabilidad a una penalización cuadrática no es una operación única, de modo que el factor de escala que esa traducción requiere queda fijado en uno por convención. Por eso el barrido acompaña siempre al valor propuesto.
+Siete de esos supuestos entran con dos valores, la fricción de acceso con tres y la matriz de covarianzas con dos versiones, de modo que la rejilla tiene $2^{7}\times 3\times 2 = 768$ combinaciones, que es el número que recorre el barrido de la Sección~\ref{c4:prediccion-reparto}. Conviene no confundir esa rejilla con los barridos de una sola dimensión que esa misma sección reporta, puesto que aquellos recorren un parámetro a la vez sobre un rango propio y más amplio, mientras que aquí cada supuesto entra solo con los valores de la tabla.
+
+Los cuatro supuestos estipulados requieren justificar por qué sus valores acotan el rango razonable. El beneficio extra de la MiPyME recorre desde cero hasta el subsidio completo, ya que el cero significa que la MiPyME marginal es indiferente ante el crédito bancario, lo que anula el valor del canal de mercado y constituye el borde inferior del rango admisible y no un valor central, puesto que las MiPyMEs efectivamente se endeudan con bancos a tasa de mercado. La cota superior equivale a suponer que el canal de mercado, por sí solo, vale tanto como el subsidio entero. El margen del banco sobre su costo de fondo no lo observa ninguna fuente pública, de manera que se recorre desde medio punto porcentual, que es un margen apenas positivo, hasta cuatro puntos, que es un margen holgado para crédito comercial. La fricción de acceso recorre el caso sin fricción, el valor propuesto en la Sección~\ref{c3:supuesto-lambda} y un valor alto que representa un canal prácticamente cerrado. El beneficio de transparencia recorre el cero, que es el supuesto conservador de no atribuir ninguna ventaja a la red Alternativa, y cinco puntos de tasa.
+
+La valoración de política de CORFO merece un tratamiento aparte, porque de ella depende cómo leer el tamaño de la arista mayorista. Con solo los supuestos de este capítulo, el ingreso de CORFO y el costo del intermediario en esa arista son exactamente opuestos, de modo que su excedente conjunto es cero y no existe ganancia de intercambio que la sostenga. El contrato no se anula por ello, sin embargo, ya que lo que persiste es una posición de cobertura cuyo signo lo fija la matriz de covarianzas y no la economía del programa, razón por la cual puede resultar negativo. Un tamaño negativo en esa arista debe leerse entonces como ese residuo de cobertura y no como una predicción sobre el programa. La causa de fondo es que el modelo no impone una restricción de balance que ate lo que el intermediario coloca a lo que se fondea, de manera que nada lo obliga a tomar el fondeo mayorista. Agregar a CORFO una valoración de política por unidad colocada, que es lo que distingue a una agencia de fomento de un prestamista comercial, cierra ese hueco sin alterar el modelo, mientras que imponer la restricción de balance sería la vía estructural y queda anotada como tal.
 
 La matriz de covarianzas se reporta en dos versiones, puesto que no es estimable con la información disponible y elegir una sola escondería cuánto depende el resultado de esa elección. La primera es equicorrelada y asigna la misma correlación a todos los pares, de manera que no privilegia ninguna estructura y sirve de referencia. La segunda ordena las correlaciones por exposición al ciclo en tres bloques, con correlación alta entre el intermediario y el banco por ser ambos oferta de crédito privada, moderada entre la MiPyME y los oferentes de crédito por pertenecer al sector real, y negativa entre CORFO y los agentes privados, dado que un programa público de fomento se expande cuando el crédito privado se contrae.
 
 \section{Diagnóstico de factibilidad empírica}
 \label{c3:diagnostico}
 
-\subsection{Aplicación del Teorema 5 al caso de estudio}
+\subsection[Suficiencia del panel para estimar Sigma]{Suficiencia del panel para estimar $\Sigma$}
 \label{c3:teorema5-aplicado}
 
-Con $n=4$ agentes (CORFO, Intermediario, MiPyME y Banco tradicional), la cota del Teorema 5 recogida en la Ecuación~\eqref{eq:teorema5} exige un mínimo de $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes para que la estimación de $\Sigma$ no degrade sustancialmente la convergencia del algoritmo de negociación bilateral. Sin embargo, según el levantamiento de la Sección~\ref{c3:panel-w12}, los años en que se dispone simultáneamente de $W_{12}$ y $W_{23}$ son 2019, 2020 y 2024, a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor. Esas tres observaciones quedan por debajo del mínimo de seis que exige la Ecuación~\eqref{eq:teorema5}. La restricción es aún más severa por la vía de la Proposición~1, que opera sobre las diferencias $\Delta W(t) = W(t+1)-W(t)$, ya que de esos tres años solo el par 2019--2020 es consecutivo y aporta, por lo tanto, una única diferencia utilizable frente a los seis parámetros libres de $\Sigma$ en la red Tradicional. Tomando las dos redes en conjunto, que es el sistema de cuatro agentes sobre el que está definida $\Sigma$, no hay ninguna diferencia utilizable, puesto que ningún año dispone de todas sus aristas.
+El panel levantado no alcanza para estimar $\Sigma$, y conviene exponer desde el inicio el fundamento correcto de esa insuficiencia, que es la escasez de diferencias utilizables junto con el déficit de rango, y no el incumplimiento de una cota muestral.
+
+El estimador de la Proposición~1 opera sobre las diferencias $\Delta W(t) = W(t+1)-W(t)$, de modo que una sola celda faltante elimina el período completo. Según el levantamiento de la Sección~\ref{c3:panel-w12}, los años en que se dispone simultáneamente de $W_{12}$ y $W_{23}$ son 2019, 2020 y 2024, a los que se agrega 2016 únicamente con la cifra de colocaciones del programa antecesor. De esos tres años solo el par 2019--2020 es consecutivo y aporta, por lo tanto, una única diferencia utilizable en la red Tradicional, frente a los seis parámetros libres que tiene $\Sigma$ restringida a sus tres agentes. Tomando las dos redes en conjunto, que es el sistema de cuatro agentes sobre el que está definida $\Sigma$, no hay ninguna diferencia utilizable, puesto que ningún año dispone de todas sus aristas.
+
+A esa escasez se agrega un límite que ningún volumen de datos levanta, dado que la red del programa es bipartita y por esa vía una parte de $\Sigma$ no queda determinada, según se cuantifica en la Sección~\ref{c3:identificabilidad}.
+
+El Teorema 5, recogido en la Ecuación~\eqref{eq:teorema5}, sirve aquí como referencia de orden de magnitud y no como criterio, salvedad que corresponde declarar. Con $n=4$ agentes su cota pide $m \geq \lceil 4\ln 4\rceil = 6$ observaciones independientes, cifra que el panel tampoco alcanza. Sin embargo, esa cota no decide la suficiencia del panel por dos razones, puesto que su $m$ cuenta muestras de retornos con que cada agente estima su propia covarianza y no períodos de la red observada, y puesto que el teorema supone que no hay aristas prohibidas, condición que la red del programa no cumple.
 
 \subsection[Identificabilidad de Sigma en la red del programa]{Identificabilidad de $\Sigma$ en la red del programa}
 \label{c3:identificabilidad}
@@ -402,8 +434,8 @@ El Algoritmo~\ref{alg:negociaciones}, en cambio, cobra relevancia práctica en u
 \section{Procedimiento de calibración}
 \label{c3:calibracion}
 
-Establecida la factibilidad, la calibración y la aplicación del modelo sobre el
-caso seleccionado comprenden las tareas siguientes.
+Establecido el diagnóstico anterior, la calibración y la aplicación del modelo
+sobre el caso seleccionado comprenden las tareas siguientes.
 
 \begin{enumerate}
     \item Construcción de los primitivos $(M,\Gamma,\Sigma)$ a partir de las
@@ -457,8 +489,8 @@ por ambos parámetros y sus amplitudes.
 \label{c3:limitaciones}
 
 \begin{enumerate}
-    \item Ambigüedad entre flujo y saldo. En varios años, la cifra reportada de ``colocaciones'' a MiPyMEs mezcla desembolso nuevo con cartera rotativa de años anteriores, lo que impide tratarla como $W_{23}(t)$ en el sentido estricto del modelo, es decir, como una fotografía del contrato vigente en un punto estable.
+    \item Ambigüedad entre flujo y saldo, primero de los obstáculos de comparabilidad de la Sección~\ref{c3:obstaculos}, que impide tratar la cifra de colocaciones como $W_{23}(t)$ en el sentido estricto del modelo.
     \item Asimetría de agregación entre redes. $W_{12}$ proviene de un programa e institución identificables, mientras que los supuestos de la red Alternativa provienen de promedios de mercado a nivel nacional (ELE-7), no de una relación bilateral banco--MiPyME específica.
-    \item Identificabilidad estructural de $\Sigma$. La red del programa es bipartita, de modo que el programa semidefinido de la Ecuación~\eqref{eq:prop1} no determina las varianzas propias ni las covarianzas a lo largo de las aristas observadas, independientemente del volumen de datos disponible, según se argumenta en la Sección~\ref{c24:identificacion} y se cuantifica en la Sección~\ref{c3:identificabilidad}. Solo las covarianzas entre agentes que no contratan entre sí, como $\Sigma_{13}$, quedan determinadas.
+    \item Identificabilidad estructural de $\Sigma$, que la bipartición de la red del programa limita cualquiera sea el volumen de datos, según se cuantifica en la Sección~\ref{c3:identificabilidad}.
     \item Cobertura incompleta del panel CORFO. Existen años cuyos datos desagregados de este programa no están publicados. Esto significa que los años disponibles no son una muestra representativa del período completo, lo que introduce un sesgo de selección no cuantificado.
 \end{enumerate}
