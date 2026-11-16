@@ -4,37 +4,44 @@
 \centering
 \begin{tikzpicture}
 \begin{groupplot}[
-    group style={group size=1 by 2, vertical sep=1.0cm, x descriptions at=edge bottom},
-    width=0.80\textwidth, height=0.28\textwidth,
-    xmin=-0.55, xmax=0.95, axis lines=left,
-    tick label style={font=\small}, label style={font=\small},
-    title style={font=\small, at={(0,1.02)}, anchor=south west}]
-\nextgroupplot[ymin=30, ymax=95, ytick={40,60,80},
-    ylabel={\% del bienestar sin restricción},
-    title={Costo del mandato}]
-\addplot[red!75!black, line width=1.1pt, mark=*, mark size=1.8pt] coordinates {(-0.45,39.0) (-0.30,40.0) (-0.15,41.9) (0.00,44.2) (0.15,47.0) (0.30,50.5) (0.45,54.9) (0.60,60.8) (0.75,69.4) };
-\node[red!75!black, font=\scriptsize, anchor=west] at (axis cs:0.78,69.4) {equicorrelada};
-\addplot[orange!85!black, line width=1.1pt, mark=triangle*, mark size=2.2pt, dashed] coordinates {(-0.45,54.9) (-0.30,54.5) (-0.15,55.4) (0.00,57.3) (0.15,60.3) (0.30,64.5) (0.45,70.3) (0.60,78.3) (0.75,89.7) };
-\node[orange!85!black, font=\scriptsize, anchor=west] at (axis cs:0.78,89.7) {por ciclo};
-\draw[gray, dotted] (axis cs:0,30) -- (axis cs:0,95);
-\nextgroupplot[ymin=-135, ymax=90, ytick={-120,-60,0,60},
+    group style={group size=1 by 2, vertical sep=1.4cm},
+    width=0.78\textwidth,
+    height=0.30\textwidth,
+    xmin=-0.55, xmax=0.95,
+    tick label style={font=\small},
+    label style={font=\small},
+    legend style={font=\small, draw=none, fill=none},
+]
+\nextgroupplot[
+    ymin=30, ymax=95, ytick={40,60,80},
+    xlabel={}, ylabel={\% del bienestar sin restricción},
+    legend pos=north west]
+\addplot[red!75!black, line width=1pt, mark=*, mark size=1.7pt]
+  coordinates {(-0.45,39.0) (-0.30,40.0) (-0.15,41.9) (0.00,44.2) (0.15,47.0) (0.30,50.5) (0.45,54.9) (0.60,60.8) (0.75,69.4) };
+\addlegendentry{equicorrelada}
+\addplot[orange!85!black, line width=1pt, mark=triangle*, mark size=2pt, dashed]
+  coordinates {(-0.45,54.9) (-0.30,54.5) (-0.15,55.4) (0.00,57.3) (0.15,60.3) (0.30,64.5) (0.45,70.3) (0.60,78.3) (0.75,89.7) };
+\addlegendentry{por ciclo}
+\nextgroupplot[
+    ymin=-135, ymax=90, ytick={-120,-60,0,60},
     xlabel={Covarianza supuesta entre CORFO y la MiPyME},
     ylabel={\% de ese costo},
-    title={Fracción que recupera la red Alternativa}]
-\addplot[green!35!black, line width=1.1pt, mark=square*, mark size=1.8pt] coordinates {(-0.45,55.1) (-0.30,65.4) (-0.15,69.7) (0.00,71.0) (0.15,70.1) (0.30,66.8) (0.45,60.3) (0.60,47.2) (0.75,16.3) };
-\node[green!35!black, font=\scriptsize, anchor=west] at (axis cs:0.78,16.3) {equicorrelada};
-\addplot[teal!70!black, line width=1.1pt, mark=diamond*, mark size=2.2pt, dashed] coordinates {(-0.45,60.5) (-0.30,66.0) (-0.15,67.9) (0.00,67.3) (0.15,64.0) (0.30,56.9) (0.45,42.9) (0.60,10.2) (0.75,-125.1) };
-\node[teal!70!black, font=\scriptsize, anchor=west] at (axis cs:0.78,-125.1) {por ciclo};
-\draw[gray, dotted] (axis cs:0,-135) -- (axis cs:0,90);
-\draw[gray] (axis cs:-0.55,0) -- (axis cs:0.75,0);
+    legend pos=south west]
+\addplot[green!35!black, line width=1pt, mark=square*, mark size=1.7pt]
+  coordinates {(-0.45,55.1) (-0.30,65.4) (-0.15,69.7) (0.00,71.0) (0.15,70.1) (0.30,66.8) (0.45,60.3) (0.60,47.2) (0.75,16.3) };
+\addlegendentry{equicorrelada}
+\addplot[teal!70!black, line width=1pt, mark=diamond*, mark size=2pt, dashed]
+  coordinates {(-0.45,60.5) (-0.30,66.0) (-0.15,67.9) (0.00,67.3) (0.15,64.0) (0.30,56.9) (0.45,42.9) (0.60,10.2) (0.75,-125.1) };
+\addlegendentry{por ciclo}
 \end{groupplot}
 \end{tikzpicture}
 \caption[Costo del mandato y fracción recuperada]{Costo del mandato de segundo
-piso y fracción de ese costo que recupera la red Alternativa, según la
-covarianza entre CORFO y la MiPyME, en el punto central de los intervalos de
-tasas y con beneficio de transparencia nulo. Los dos paneles no comparten
-denominador, puesto que el superior es porcentaje del bienestar sin restricción
-y el inferior es porcentaje de ese costo. Los valores exactos están en la
-Tabla~\ref{tab:contrafactual-sigma}. Elaboración propia.}
+piso, en el panel superior, y fracción de ese costo que recupera la red
+Alternativa, en el inferior, según la covarianza entre CORFO y la MiPyME, en el
+punto central de los intervalos de tasas y con beneficio de transparencia nulo.
+Los dos paneles no comparten denominador, puesto que el superior es porcentaje
+del bienestar sin restricción y el inferior es porcentaje de ese costo. Los
+valores exactos están en la Tabla~\ref{tab:contrafactual-sigma}. Elaboración
+propia.}
 \label{fig:contrafactual-curvas}
 \end{figure}
