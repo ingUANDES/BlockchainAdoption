@@ -13,11 +13,7 @@
 
 %%%%%%%%%%Aqui se escribe el resumen%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\resumen}{
-En el programa Crédito Corfo Mipyme el Estado no presta de forma directa a las empresas de menor tamaño, sino que entrega los recursos a intermediarios financieros que contratan con ellas, de modo que el contrato entre el Estado y la empresa queda prohibido por diseño. Un modelo reciente de redes de crédito, propuesto por Venegas sobre el marco de Jalan, Chakrabarti y Sarkar, sostiene que esa prohibición destruye bienestar y que habilitar un segundo canal donde el contrato prohibido sí pueda ejecutarse lo recupera por completo. Dicha predicción se obtuvo con parámetros supuestos y sin contraste con un caso real.
-
-Este trabajo la pone a prueba en ese programa, cuya red se reconstruyó documento a documento, porque ninguna fuente la publica, a partir de Cuentas Públicas, fichas de la Dirección de Presupuestos y la Séptima Encuesta Longitudinal de Empresas. Se auditó la implementación heredada, que supera 30 pruebas aunque solo reproduce 7 de los 32 resultados publicados, y se programó la parte del modelo que acopla ambos canales, ausente en el código original y verificada con 62 pruebas propias. La forma de esa red deja además indeterminados casi todos los parámetros de riesgo, salvo el que vincula a CORFO con la empresa.
-
-El resultado principal es que el caso no reproduce ese mecanismo, ya que el segundo canal existente es la banca comercial, que financia a la empresa pero no reemplaza al crédito del Estado, de modo que el contrato prohibido no reaparece. Bajo supuestos declarados el modelo predice que ese canal sería minoritario, con una mediana cercana al 21 por ciento, mientras que la encuesta muestra lo contrario, ya que el 82,6 por ciento de esas empresas usa banco y solo el 6,0 por ciento un canal como el del programa. Un ejercicio contrafactual sitúa el costo de la prohibición en torno a la mitad del bienestar alcanzable, del que un canal alternativo con barreras de acceso recupera dos tercios, y tanto menos cuanto más cara resulta. Se concluye que la recuperación prometida depende de cómo esté conectada la red y no de cuántos datos se reúnan, y que el contraste con los registros del programa queda pendiente de su entrega.
+Este trabajo evalúa si el modelo de redes financieras duales de Venegas, que extiende el marco de negociación bilateral de Jalan, Chakrabarti y Sarkar, puede validarse con datos reales. El caso es el programa Crédito Corfo Mipyme, con un panel reconstruido desde fuentes públicas. Se audita la implementación heredada de Venegas y se implementa la capa que acopla ambas redes. El hallazgo central es que el caso no instancia el mecanismo del modelo, puesto que la red Alternativa no vuelve a conectar al par que la prohibición separa, de modo que la recuperación de bienestar no se traslada y ninguna cantidad de datos la restituiría. Bajo supuestos declarados el modelo predice una participación minoritaria de dicha red, cercana a un quinto, mientras que en la Séptima Encuesta Longitudinal de Empresas el canal bancario es mayoritario y lo usa el 82,6~\% de las MiPyMEs. Una rama contrafactual cifra el costo del mandato de segundo piso en torno a la mitad del bienestar alcanzable y muestra que el canal alternativo recupera dos tercios de ese costo, aunque recupera menos donde la prohibición más cuesta. Ese resultado descansa en la única entrada de la covarianza que la red bipartita identifica.
 }
 
 \newcommand{\agradecimientos}{
@@ -33,6 +29,7 @@ ok..
 % Por favor coloque todas las definiciones de simbolos a continuacion
 % y no en los archivos de capitulos. Esto evitara la  existencia de
 % multiples definiciones para las mismas palabras.
+
 \newcommand{\mydef}
 	{\stackrel{\mathrm{def}}{=}}
 \newcommand{\e}
