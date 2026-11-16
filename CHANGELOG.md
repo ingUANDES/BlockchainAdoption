@@ -7,6 +7,13 @@ repositorio.
 
 ## [No publicado] — Memoria de Eduardo Caballero, segundo semestre 2026
 
+### Añadido
+- [`code/caballero/caballero_figuras_tikz.py`](code/caballero/caballero_figuras_tikz.py):
+  productor versionado de `fig:escenarios-admisibles` y `fig:contrafactual-curvas`,
+  cuyas coordenadas estaban escritas a mano dentro del `.tex`. Con
+  [`test_caballero_figuras_tikz.py`](code/caballero/test_caballero_figuras_tikz.py)
+  la figura ya no puede quedar vieja en silencio al rehacerse una corrida.
+
 ### Corregido
 - El merge `67a8f7a` del PR #9 (rama `overleaf-2026-09-09-1613`) resolvió
   [`chapters/chapter02.tex`](docs/MemoriasTesis/Caballero/chapters/chapter02.tex)

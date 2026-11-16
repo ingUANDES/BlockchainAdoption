@@ -72,11 +72,15 @@ versionadas que el documento cita.
 | 4 | [`caballero_ele7_canales.py`](code/caballero/caballero_ele7_canales.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `ele7_reparto_canales_mipyme.csv` | `tab:ele7-canales` y las tres cifras derivadas del texto |
 | 5 | [`caballero_verificacion_tasas.py`](code/caballero/caballero_verificacion_tasas.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | nada, sólo imprime | el recálculo independiente de `tab:ele7-tasas`, la regla de anualización y la derivación del 3–6 % |
 | 6 | [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py) | `ele7_financiamiento_mipyme.csv`, **no distribuido** | `fig_ele7_distribucion_tasas.png` | `fig:ele7-distribucion` y las medias, asimetrías y medias recortadas que cita el Capítulo 3 |
+| 7 | [`caballero_figuras_tikz.py`](code/caballero/caballero_figuras_tikz.py) | los dos CSV de arriba, ya versionados | `fig_escenarios_admisibles.tex` y `fig_contrafactual_curvas.tex` | `fig:escenarios-admisibles` y `fig:contrafactual-curvas` |
 
-El orden es de dependencia conceptual y no de ejecución: los seis son
-independientes entre sí y pueden correrse en cualquier orden. El primero no
-produce archivo y conviene correrlo antes porque establece bajo qué
-especificación son válidos los demás.
+El séptimo corre después del segundo y el tercero, puesto que lee lo que ellos
+escriben. Es el único con esa dependencia.
+
+Los primeros seis son independientes entre sí y pueden correrse en cualquier
+orden; el primero no produce archivo y conviene correrlo antes porque establece
+bajo qué especificación son válidos los demás. El séptimo es el único que sí
+depende de otros, puesto que lee los CSV que escriben el segundo y el tercero.
 
 ```bash
 python code/caballero/caballero_verificacion_objeciones.py
@@ -86,6 +90,7 @@ python code/caballero/caballero_ele7_canales.py <ruta>/ele7_financiamiento_mipym
 python code/caballero/caballero_verificacion_tasas.py <ruta>/ele7_financiamiento_mipyme.csv
 python code/caballero/caballero_figura_ele7.py <ruta>/ele7_financiamiento_mipyme.csv \
     docs/MemoriasTesis/Caballero/fig_ele7_distribucion_tasas.png
+python code/caballero/caballero_figuras_tikz.py
 ```
 
 Las versiones con las que se verificó están en
@@ -111,13 +116,27 @@ repositorio. Se declara aquí en vez de dejarlo implícito.
   la sustenta, y sus cifras están fijadas en `test_caballero_dual.py`, pero el
   módulo no deja planilla, de modo que hoy se reproduce ejecutándolo a mano o
   leyendo la suite.
-- **Cuatro de las cinco figuras del documento.** La excepción es
-  `fig_ele7_distribucion_tasas.png`, que sí tiene productor versionado desde que
-  se agregó [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py).
-  Las otras cuatro, a saber `diagrama_redes.png`, `fig_cadena_corfo.png`,
-  `fig_jalan_ocde_resultados.png` y `fig_panel_ocde_vs_corfo.png`, se
-  construyeron fuera de los scripts: no hay ningún `savefig` que las produzca y
-  las cuatro apariciones en `Financial_Networks_Stability.qmd` están comentadas.
+- **Cuatro de las siete figuras del documento.** El documento tiene siete, a
+  saber cinco PNG que entran por `\includegraphics` y dos TikZ que entran por
+  `\input`. Tres tienen productor versionado y cuatro no.
+
+  | Figura | Productor |
+  |---|---|
+  | `fig_ele7_distribucion_tasas.png` | [`caballero_figura_ele7.py`](code/caballero/caballero_figura_ele7.py) |
+  | `fig_escenarios_admisibles.tex` | [`caballero_figuras_tikz.py`](code/caballero/caballero_figuras_tikz.py) |
+  | `fig_contrafactual_curvas.tex` | [`caballero_figuras_tikz.py`](code/caballero/caballero_figuras_tikz.py) |
+  | `diagrama_redes.png` | **ninguno** |
+  | `fig_cadena_corfo.png` | **ninguno** |
+  | `fig_jalan_ocde_resultados.png` | **ninguno** |
+  | `fig_panel_ocde_vs_corfo.png` | **ninguno** |
+
+  Las cuatro sin productor se construyeron fuera de los scripts: no hay ningún
+  `savefig` que las produzca y las cuatro apariciones en
+  `Financial_Networks_Stability.qmd` están comentadas. Las dos TikZ tenían
+  además sus coordenadas escritas a mano dentro del `.tex`, de modo que podían
+  quedar viejas sin aviso al rehacerse una corrida; desde que existe su
+  productor, `test_caballero_figuras_tikz.py` compara el `.tex` versionado
+  contra los CSV y falla si se separan.
 
 No proceden de código, por su naturaleza, `tab:venegas-escenarios`, que es de la
 fuente, ni `tab:comparacion-venegas` y `tab:comparacion-ocde-corfo`, que son del
